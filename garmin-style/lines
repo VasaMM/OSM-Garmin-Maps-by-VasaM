@@ -1,0 +1,142 @@
+# Levels:
+# 0: <= 120 m, zoom 24, city
+# 1: <= 300 m, zoom 23, hiking
+# 2: <= 1.2 km, zoom 20, cycling
+# 3: <= 8 km, zoom 18, car
+# 4: <= 30 km, zoom 16, overview
+
+# Routable roads first
+# Used roads: 0x01 - 0x06, 0x08 - 0x13
+#    0x01 motorway
+#    0x02 trunk
+#    0x03 primary road
+#    0x04 secondary road
+#    0x05 tertiary 
+#    0x06 unclassified, motorway-trunk-primary links
+#    0x07 service road, street road 
+#    0x08 footway
+#    0x09 cycleway
+#    0x0a path
+#    0x0b hiking_route
+#    0x0c cycle_route
+#    0x16 track
+#    0x1a steps
+#    0x1b ferry
+
+
+
+# Overways
+bridge=yes [0x10e0e level 2 continue]
+tunnel=yes [0x10e0f level 2 continue]
+
+
+# Barriers
+barrier=hedge [0x10e15 level 2]
+barrier=fence [0x10e13 level 2]
+barrier=wall | wall=* [0x10e14 level 2]
+natural=cliff [0x10e16 level 2]
+
+
+# Hiking trails with "continue" to draw the tracks too
+mkgmap:red=yes    | osmc:symbol ~ 'red.*' [0x10e04 level 2 continue]
+mkgmap:blue=yes   | osmc:symbol ~ 'blue.*' [0x10e05 level 2 continue]
+mkgmap:green=yes  | ( osmc:symbol ~ 'green.*' & osmc:symbol!=green:white:green_backslash )  [0x10e06 level 2 continue]
+mkgmap:ns=yes       [0x10e0c level 2 continue]
+mkgmap:yellow=yes | osmc:symbol ~ 'yellow.*' [0x10e07 level 2 continue]
+mkgmap:black=yes  | osmc:symbol ~ 'black.*' [0x10108 level 2 continue]
+mkgmap:bikeroute=yes   [0x10e09 level 2 continue]
+
+
+# Borders
+boundary=administrative & admin_level=2 [0x1e level 4]
+boundary=national_park | boundary=protected_area [0x1c level 3]
+
+
+# Railway a transportation
+railway=tram [0x10e0d level 2 continue]
+railway=light_rail [0x15 level 4]
+railway=rail & usage=main [0x15 level 4]
+railway=rail & usage=branch [0x15 level 3]
+railway=rail [0x15 level 2]
+route=ferry [0x1b road_class 0 level 2]
+
+
+# Cycling
+cycleway=lane | ycleway=opposite_lane | cycleway=share_busway [0x10e0a level 2 continue]
+
+
+# Highway
+highway=* & access=no [0x10e10 level 2]
+highway=motorway [0x01 road_class 4 road_speed 7 level 4]
+highway=trunk [0x02 road_class 4 road_speed 6 level 4]
+highway=primary | highway=primary_link [0x03 road_class 3 road_speed 5 level 4]
+highway=secondary | highway=secondary_link [0x04 road_class 2 road_speed 4 level 3]
+highway=tertiary | highway=tertiary_link [0x05 road_class 1 road_speed 3 level 3]
+highway=residential | highway=living_street [0x06 road_class 0 road_speed 2 level 2]
+highway=pedestrian & area!=yes [0x06 road_class 0 level 2]
+highway=trunk_link [0x07 road_class 1 road_speed 5 level 2]
+highway=motorway_link [0x07 road_class 1 road_speed 6 level 2]
+
+
+# Tracks
+highway=service | (highway=track & tracktype=grade1) | highway=unclassified [0x0b road_class 0 level 2]
+highway=track & tracktype=grade2 [0x0d road_class 0 level 2]
+highway=track & tracktype=grade3 [0x0e road_class 0 level 2]
+highway=track & tracktype=grade4 [0x0f road_class 0 level 2]
+highway=track & tracktype=grade5 [0x10 road_class 0 level 2]
+highway=track | highway=byway | highway=minor [0x16 road_class 0 level 2]
+
+
+# No cars
+highway=footway [0x08 road_class 0 level 1]
+highway=cycleway & foot=no [0x09 road_class 0 level 2]
+highway=path | highway=bridleway [0x0a road_class 0 level 1]
+highway=cycleway [0x0c road_class 0 level 2]
+highway=steps [0x1a road_class 0 level 1]
+
+
+# Mop up any unrecognised highway types
+highway=* & highway!=abandoned & highway!=disused & area!=yes [0x06 road_class 0 level 1]
+
+
+# Lifts of different kinds
+aerialway=cable_car | aerialway=gondola | aerialway~'.*_lift' [0x10e01 level 2]
+aerialway=* [0x10e02 level 1]
+
+
+#Power
+power=line [0x29 level 1]
+power=minor_line [0x29 level 1]
+
+
+# Rivers
+waterway=canal [0x1f level 2]
+waterway=drain [0x1f level 1]
+waterway=river [0x1f level 3]
+waterway=stream [0x18 level 2]
+
+
+# Contour lines
+contour=elevation & contour_ext=elevation_major
+	{ name '${ele|conv:m=>ft}'; }
+	[0x22 level 4]
+contour=elevation & contour_ext=elevation_medium
+	{ name '${ele|conv:m=>ft}'; }
+	[0x21 level 2]
+contour=elevation & contour_ext=elevation_minor
+        { name '${ele|conv:m=>ft}'; }
+        [0x20 level 1]
+
+
+# Natural
+natural=coastline [0x10e00 level 4]
+natural=valley [0x23 level 4]
+natural=arete [0x24 level 4]
+natural=ridge [0x25 level 4]
+man_made=cutline | cutline=* [0x10e12 level 2] 	# Lesni prusek
+
+
+# Final - for compatibility with previous mkgmap.
+<finalize>
+include './inc/compat_lines';
+include './inc/access';
