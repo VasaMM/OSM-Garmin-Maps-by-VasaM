@@ -1,7 +1,9 @@
 hgt/hgtIndex_3_v3.0.txt
 *.tif
-*.pbf
 *.bnd
 *.hgt
-pbf/*
+pbf/*SPLITTED*
+pbf/*SRTM*
+sea/*.pbf
 bounds/version.txt
+pbf/CZ.osm.pbf
