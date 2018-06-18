@@ -18,9 +18,9 @@ Každá mapa je vytvořena ve dvou variantách:
 ## Instalce do GPS
 1) Stáhněte soubor *\*.img*
 2) Máte-li velmi starou GPS (např. Garmin Etrex Legend HCx):
-* Ta nepodporuje více mapových souborů - musíte proto nejdříve původní mapy zazálohovat
-* Stažený soubor přejmenujte na *gmapsupp.img* a nahrejte do kořene paměťové karty vaší GPS
-* Takto nelze provozovat více map, proto raději doporučuji instalaci do BaseCamp a následné nahrání map pomocí programu
+	* Ta nepodporuje více mapových souborů - musíte proto nejdříve původní mapy zazálohovat
+	* Stažený soubor přejmenujte na *gmapsupp.img* a nahrejte do kořene paměťové karty vaší GPS
+	* Takto nelze provozovat více map, proto raději doporučuji instalaci do BaseCamp a následné nahrání map pomocí programu
 3) Máte-li novější GPS, stačí vám soubor jednoduše uložit na paměťovou kartu zařízení.
 
 **Pozor, raději mapu neukládejte do paměti GPS - mohlo by dojít k zablokování přístroje. Používate je na vlastní riziko a já, jakožto autor nenesu žádnou odpovědnost za škody jimi způsobené!**
