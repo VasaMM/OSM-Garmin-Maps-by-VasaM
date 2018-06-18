@@ -20,46 +20,32 @@ function end {
 }
 
 function viewHelp {
-	echo "NAPOVEDA"
+	echo "# Skript pro generovani OSM map pro Garmin"
 	echo ""
-	echo "# Skript pro generování OSM map pro Garmin"
+	echo "## Pozadavky"
+	echo "  * Linux"
+	echo "  * Java verze 8"
+	echo "  * Python verze 3 (testovano na 3.4)"
+	echo "  * Program phyghtmap (http://katze.tfiu.de/projects/phyghtmap/)"
 	echo ""
-	echo "## Požadavky"
-	echo "	* Linux"
-	echo "	* Java verze 8"
-	echo "	* Python verze 3 (testováno na 3.4)"
-	echo "	* Program [phyghtmap](http://katze.tfiu.de/projects/phyghtmap/)"
+	echo "## Pouziti"
+	echo "  Skript je nezvykle ukecany (do budoucna je v planu i \"ticha\" verze) a na zacatku spusteni se uzivatele pta, co chce udelat. Proto jej staci spustit bez parametru."
+	echo "  Pro bezobsluzne automaticke spousteni lze chovani ovlivnit pomoci parametru:"
+	echo "    * -a <stat> | --area <stat> definuje stat/oblast, pro kterou je mapa generovana. Viz seznam statu."
+	echo "    * -dy | --download_yes vynuti vzdy nové stažení mapových dat"
+	echo "    * -dn | --download_no v pripade, ze byli drive stazena mapova data, nebudou se znovu stahovat."
+	echo "        **POZOR**, neni provadena validace techto dat. Jedna-li se o fragment z prechoziho preruseneho stahovani, dojde k chybe."
+	echo "    * -ns | --no_split zakaze deleni mapovych souboru na mensi dily. Vhodne pouze u velmi malych oblasti a pro pocitace s dostatkem RAM."
+	echo "    * -h | --help zobrazi tuto napovedu."
 	echo ""
-	echo "## Instalace"
-	echo "	1) Nejdříve splňte požadavky"
-	echo "	2) Uložte si obsah celého repozitáže (vpravo nahoře: *Clone or download*). Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte."
-	echo "	3) Ze stránek [http://www.mkgmap.org.uk](http://www.mkgmap.org.uk/download/mkgmap.html) stáhněte soubory *bounds.zip* a *sea.zip*."
-	echo "	4) Tyto soubory rozbalte do složek *bounds* a *sea*, bez dalších podsložek!"
-	echo "	5) Chcete-li, můžete aktualizovat programy **mkgmap** a **splitter** - NENÍ NUTNÉ."
-	echo ""
-	echo "## Použití"
-	echo "	Skript je nezvykle ukecaný (do budoucna je v plánu i \"tichá\" verze) a na začátku spuštění se uživatle ptá, co chce udělat. Proto jej stačí spustit bez parametrů: \`./makeMap.sh\`."
-	echo "	Pro bezobslužné automatické spouštění lze chování ovlivnit pomocí parametrů:"
-	echo "		* \`-a <stát>\` nebo \`--area <stát>\` definuje stát (oblast), pro který je mapa generována. Viz [seznam států](Seznam států)"
-	echo "		* \`-dy\` nebo \`--download_yes\` vynutí vždy nové stažení mapových dat"
-	echo "		* \`-dn\` nebo \`--download_no\` v případě, že byli dříve stažená mapová data, nebudou se znovu stahovat. **POZOR**, není nijak prováděna validace těchto dat, tedy jedná-li se o fragment z přechozího přerušeného stahování, dojde k chybě. Není-li zadáno *download_yes* nebo *download_no*, skript se zeptá."
-	echo "		* \`-ns\` nebo \`--no_split\` zakáže dělení mapových souborů na menší díly. Vhodné pouze u velmi malých oblastí a pro počítače s dostatkem RAM. "
-	echo "		* \`-h\` nebo \`--help\` zobrazí tuto nápovědu."
-	echo ""
-	echo "## Seznam států"
-	echo "	Státy jsou přímo definovány ve skriptu. Jejich definice začíná okolo řádku \`90\`. Příklad definice pro ČR:"
-	echo "		* \`CZ|cz )\` - použitelné zkratky státu pro paramter \`--area\`, zde *CZ* a *cz*"
-	echo "		* \`echo \"Tvorim mapu pro Ceskou republiku\"\` - Výpis na konzoly"
-	echo "		* \`STATE=\"CZ\"\` - Zkratka státu použitá v názvech souborů"
-	echo "		* \`DATA_URL=\"http://download.geofabrik.de/europe/czech-republic-latest.osm.pbf\"\` - Zdroj mapových dat, jsou-li mapová data stahována ručně, použijte \`false\`"
-	echo "		* \`POLY_URL=\"http://download.geofabrik.de/europe/czech-republic.poly\"\` - Zdroj hraničních polygonů, je-li polygon definován ručně, použijte \`false\`"
-	echo "		* \`COUNTRY_NAME=\"Ceska republika - VasaM\"\` - Název mapy vypsaný v GPS a BaseCamp"
-	echo "		* \`VERSION=20\` - Verze mapy děleno stem, tedy 20 = 0.20."
-	echo "		* \`COUNTRY_ID=8801\` - Jedinečné ID mapy"
-	echo "		* \`break\`"
-	echo "		* \`;;\`"
-	echo ""
-	echo "	Chcete-li přidat další mapu či oblsat, nejednoduší je zkoírovat existjící a upravit ji. Nezapomeňte změnit ID na nějaké jiné. Pro vlastní mapy doporučuji jiné, než \`88xx\`. Toto čislování budu používat pro mnou generované mapy a mohlo by dojít ke konfliktu."
+	echo "## Seznam statu"
+	echo "  Staty jsou primo definovany ve skriptu. Jejich definice zacina okolo radku 120."
+	echo "    * OL - Olomouc - vhodne pro testovani"
+	echo "    * CZ - Ceska republika"
+	echo "    * SK - Slovenska republika"
+	echo "    * UA - Ukrajina"
+	echo "    * RO - Rumunsko"
+	echo "    * KG - Kyrgyzstan"
 }
 
 
@@ -126,6 +112,16 @@ while [ true ]; do
 
 	# Vytvorim odkaz na dany stat
 	case $STATE in
+		OL|ol )
+			echo "Tvorim mapu pro Olomouc"
+			DATA_URL=false
+			POLY_URL=false
+			COUNTRY_NAME="Olomouc - VasaM"
+			VERSION=20
+			COUNTRY_ID=8800
+			break
+			;;
+
 		CZ|cz )
 			echo "Tvorim mapu pro Ceskou republiku"
 			STATE="CZ"
@@ -137,12 +133,12 @@ while [ true ]; do
 			break
 			;;
 
-		KG|kg )
-			echo "Tvorim mapu pro Kyrgyzstan"
-			STATE="KG"
-			DATA_URL="http://download.geofabrik.de/asia/kyrgyzstan-latest.osm.pbf"
-			POLY_URL="http://download.geofabrik.de/asia/kyrgyzstan.poly"
-			COUNTRY_NAME="Kyrgyzstan - VasaM"
+		SK|sk )
+			echo "Tvorim mapu pro Slovensko"
+			STATE="SK"
+			DATA_URL="http://download.geofabrik.de/europe/slovakia-latest.osm.pbf"
+			POLY_URL="http://download.geofabrik.de/europe/slovakia.poly"
+			COUNTRY_NAME="Slovenska republika - VasaM"
 			VERSION=20
 			COUNTRY_ID=8802
 			break
@@ -155,18 +151,7 @@ while [ true ]; do
 			POLY_URL="http://download.geofabrik.de/europe/ukraine.poly"
 			COUNTRY_NAME="Ukrajina - VasaM"
 			VERSION=20
-			COUNTRY_ID=8804
-			break
-			;;
-
-		SK|sk )
-			echo "Tvorim mapu pro Slovensko"
-			STATE="SK"
-			DATA_URL="http://download.geofabrik.de/europe/slovakia-latest.osm.pbf"
-			POLY_URL="http://download.geofabrik.de/europe/slovakia.poly"
-			COUNTRY_NAME="Slovenska republika - VasaM"
-			VERSION=20
-			COUNTRY_ID=8805
+			COUNTRY_ID=8811
 			break
 			;;
 
@@ -177,7 +162,19 @@ while [ true ]; do
 			POLY_URL="http://download.geofabrik.de/europe/romania.poly"
 			COUNTRY_NAME="Rumunsko - VasaM"
 			VERSION=20
-			COUNTRY_ID=8805
+			COUNTRY_ID=8812
+			break
+			;;
+
+
+		KG|kg )
+			echo "Tvorim mapu pro Kyrgyzstan"
+			STATE="KG"
+			DATA_URL="http://download.geofabrik.de/asia/kyrgyzstan-latest.osm.pbf"
+			POLY_URL="http://download.geofabrik.de/asia/kyrgyzstan.poly"
+			COUNTRY_NAME="Kyrgyzstan - VasaM"
+			VERSION=20
+			COUNTRY_ID=8821
 			break
 			;;
 
@@ -267,7 +264,7 @@ fi
 
 
 # Stahnu HGT soubory
-PYTHON ./hgt/hgt-downloader.py ./hgt/SRTM3v3.0 ./hgt
+$PYTHON ./hgt/hgt-downloader.py ./hgt/SRTM3v3.0 ./hgt
 
 
 # Rozdelim soubory

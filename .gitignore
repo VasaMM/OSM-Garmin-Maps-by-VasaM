@@ -1,3 +1,7 @@
 hgt/hgtIndex_3_v3.0.txt
 *.tif
 *.pbf
+*.bnd
+*.hgt
+pbf/*
+bounds/version.txt

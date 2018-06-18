@@ -3,6 +3,7 @@
 **Web:** [https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM](https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM)
 **Mapy:** [https://drive.google.com/drive/folders/1K3PjVVYU77PY3USZXQ19TNtDStcKYq-B](https://drive.google.com/drive/folders/1K3PjVVYU77PY3USZXQ19TNtDStcKYq-B) 
 
+
 Mapový generátor využívá *Open Street Maps (OSM)* šířené pod licencí Creative Commons - uveďte autora-Zachovejte licenci 2.0 (CC-BY-SA). Více viz [© Přispěvatelé OpenStreetMap](https://www.openstreetmap.org/copyright).
 
 Mapová data jsou stahována ze serveru [http://download.geofabrik.de](http://download.geofabrik.de).
