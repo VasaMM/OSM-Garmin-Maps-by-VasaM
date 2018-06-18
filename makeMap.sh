@@ -114,6 +114,7 @@ while [ true ]; do
 	case $STATE in
 		OL|ol )
 			echo "Tvorim mapu pro Olomouc"
+			STATE="OL"
 			DATA_URL=false
 			POLY_URL=false
 			COUNTRY_NAME="Olomouc - VasaM"
@@ -189,7 +190,7 @@ done
 if [ -f ./pbf/$STATE.osm.pbf ]; then	# Data jiz byla stazena
 	echo "Nalezen soubor ${STATE}.osm.pbf"
 
-	if [ -z ${DOWNLOAD+x} ]; then	# Uzivatel nespecifikoval, co se ma stat
+	if [ -z ${DOWNLOAD+x} ] && [ $DATA_URL != false ]; then	# Uzivatel nespecifikoval, co se ma stat
 	 	while [ true ]; do
 		 	read -p "Data pro mapu byla uz stazena, chcete je pouzit? [A/n] " -r
 			if [[ $REPLY =~ ^[Aa]$ ]]; then
@@ -300,7 +301,7 @@ java -Xmx8000m -jar ./mkgmap/mkgmap.jar \
      --dem-poly=./poly/$STATE.poly \
      $INPUT_FILE \
      $INPUT_SRTM_FILE \
-     ./style/style.txt
+     ./garmin-style/style.txt
 
 
 # Vytvorim instalacni bat soubor

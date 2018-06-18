@@ -7,3 +7,8 @@ pbf/*SRTM*
 sea/*.pbf
 bounds/version.txt
 pbf/CZ.osm.pbf
+img/*VasaM/*
+img/*.zip
+img/*.img
+sea/index.txt.gz
+sea/version.txt

@@ -1,1 +1,2 @@
-Soubory obsažené v této složce definují které mapové prvky má program **mkgmap** vykreslit. Dále definují úroveň, od které se vykreslují, popisky atd. Soubor *style.txt* je nezkompilovaný soubor *style.typ*, který definuje výsledný vzhled mapy.
+Soubory obsažené v této složce definují které mapové prvky má program **mkgmap** vykreslit. Dále definují úroveň, od které se vykreslují, popisky atd.  
+Soubor *style.txt* je nezkompilovaný soubor *style.typ*, který definuje výsledný vzhled mapy.
