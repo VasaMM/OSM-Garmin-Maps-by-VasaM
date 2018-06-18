@@ -22,9 +22,9 @@ if( outputDir[-1] != '/' ):
 	outputDir = outputDir + '/'
 
 
-# Ctu soubor po radcich
+# Ctu postupne nazvy suboru
 for file in os.listdir( inputDir ):
-	# Ziskam souradnice z radku
+	# Ziskam nazev souboru
 	fileName = re.search('([NS]\d{2}[EW]\d{3})\.tif', file)
 
 	if ( fileName == None ):
