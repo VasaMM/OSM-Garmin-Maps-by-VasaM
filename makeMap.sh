@@ -104,7 +104,7 @@ while [ true ]; do
 		echo "  * Slovenska republika - [SK]"
 		echo "  * Kyrgyzstan - [KG]"
 		echo "  * Ukrajina - [UA]"
-		echo "  * Rumunsku - [RO]"
+		echo "  * Rumunsko - [RO]"
 		echo ""
 	 	read -p "Vybrana mapa: " -r
 	 	STATE=$REPLY
