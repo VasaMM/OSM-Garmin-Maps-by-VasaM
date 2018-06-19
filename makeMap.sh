@@ -187,6 +187,10 @@ done
 
 
 # Zjistim, zda mam stahovat data
+if [ $DATA_URL = false ]; then
+	DOWNLOAD=false
+fi
+
 if [ -f ./pbf/$STATE.osm.pbf ]; then	# Data jiz byla stazena
 	echo "Nalezen soubor ${STATE}.osm.pbf"
 

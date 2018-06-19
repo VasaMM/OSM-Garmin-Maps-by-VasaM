@@ -4,6 +4,7 @@
 # 2: under 2 km, zoom 20, cycling
 # 3: under 8 km, zoom 18, car
 # 4: under 30 km, zoom 16, overview
+# 5: zoom 0, overview
 
 # We use --add-pois-to-areas so most of the polygons are processed in points.
 
@@ -29,8 +30,7 @@ landuse=vineyard [0x10f00 level 2]
 landuse=allotments [0x10f04 level 2]
 landuse=farm [0x10f0b level 2]
 landuse=farmyard [0x10f0b level 2]
-#landuse=farmland [0x10f16 level 3]
-landuse=orchard [0x4e level 2]
+landuse=farmland [0x10f16 level 4]
 landuse=basin [0x3c level 2]
 landuse=reservoir [0x3c level 2]
 landuse=cemetary | landuse=cemetery [0x1a level 2]
@@ -43,13 +43,79 @@ landuse=greenfield [0x17 level 2]
 landuse=military [0x04 level 2]
 landuse=quarry [0x10f05 level 2]
 landuse=retail [0x08 level 2]
-landuse=forest [0x50 level 4]
 landuse=hop_garden [0x10f03 level 4]
 landuse=landfill [0x10f12 level 2]
-landuse=meadow & meadow=agricultural { name '${name} (${meadow})' | 'Prirodni louka' }    [0x10f01 level 4]
-landuse=meadow & meadow=perpetual    { name '${name} (${meadow})' | 'Secena louka' }      [0x10f01 level 4]
-landuse=meadow & meadow=transitional { name '${name} (${meadow})' | 'Zarustajici louka' } [0x10f01 level 4]
-landuse=meadow { name '${name}' | 'Louka' } [0x10f01 level 4]
+landuse=plant_nursery [0x10f17 level 4]
+
+
+# Forests
+( landuse=forest | natural=wood ) & leaf_type=broadleaved [0x10f19 level 4] 	# Listnaty
+( landuse=forest | natural=wood ) & leaf_type=needleleaved [0x10f1a level 4]	# Jehlicnaty
+( landuse=forest | natural=wood ) & leaf_type=mixed [0x10f18 level 4]
+landuse=forest | natural=wood [0x50 level 4]
+
+
+# Meadows (louky)
+landuse=meadow & meadow=agricultural { name '${name} (prirodni)'    | 'Prirodni louka' }    [0x10f01 level 4]
+landuse=meadow & meadow=perpetual    { name '${name} (secena)'      | 'Secena louka' }      [0x10f01 level 4]
+landuse=meadow & meadow=transitional { name '${name} (zarustajici)' | 'Zarustajici louka' } [0x10f01 level 4]
+landuse=meadow [0x10f01 level 4]
+
+
+# Orchards (sady)
+landuse=orchard & trees=banana_plants     { name 'Bananovy sad' }       [0x10f01 level 4]
+landuse=orchard & trees=cacao_plants      { name 'Kakaovy sad' }        [0x10f01 level 4]
+landuse=orchard & trees=coconut_palms     { name 'Kokosovy sad' }       [0x10f01 level 4]
+landuse=orchard & trees=coffea_plants     { name 'Kavovy sad' }         [0x10f01 level 4]
+landuse=orchard & trees=durian_trees      { name 'Durianovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=guava_trees       { name 'Kvajavovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=jabuticaba_trees  { name 'Jabuticabovy sad' }   [0x10f01 level 4]
+landuse=orchard & trees=longan_trees      { name 'Longanovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=mango_trees       { name 'Mangovy sad' }        [0x10f01 level 4]
+landuse=orchard & trees=papaya_trees      { name 'Papajovy sad' }       [0x10f01 level 4]
+landuse=orchard & trees=pineapple_plants  { name 'Ananasovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=rambutan_trees    { name 'Rambutanovy sad' }    [0x10f01 level 4]
+landuse=orchard & trees=soursop_trees     { name 'Soursopovy sad' }     [0x10f01 level 4]
+landuse=orchard & trees=tamarind_trees    { name 'Tamarindovy sad' }    [0x10f01 level 4]
+landuse=orchard & trees=agave_plants      { name 'Agavovy sad' }        [0x10f01 level 4]
+landuse=orchard & trees=avocado_trees     { name 'Avokadovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=cherimoya_trees   { name 'Cerimojovy sad' }     [0x10f01 level 4]
+landuse=orchard & trees=date_palms        { name 'Datlovy sad' }        [0x10f01 level 4]
+landuse=orchard & trees=fig_trees         { name 'Fikovy sad' }         [0x10f01 level 4]
+landuse=orchard & trees=jujube_trees      { name 'Cicimkovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=lemon_trees       { name 'Citronovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=lychee_trees      { name 'Liciovy sad' }        [0x10f01 level 4]
+landuse=orchard & trees=macadamia_trees   { name 'Makadamiovy sad' }    [0x10f01 level 4]
+landuse=orchard & trees=mandarin_trees    { name 'Mandarinkovy sad' }   [0x10f01 level 4]
+landuse=orchard & trees=olive_trees       { name 'Olivovy sad' }        [0x10f01 level 4]
+landuse=orchard & trees=orange_trees      { name 'Pomerancovy sad' }    [0x10f01 level 4]
+landuse=orchard & trees=pitaya_plants     { name 'Pitahayaovy sad' }    [0x10f01 level 4]
+landuse=orchard & trees=pomegranate_trees { name 'Granatovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=sapodilla_trees   { name 'Zapotaovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=tea_plants        { name 'Cajovy sad' }         [0x10f01 level 4]
+landuse=orchard & trees=almond_trees      { name 'Mandlonovy sad' }     [0x10f01 level 4]
+landuse=orchard & trees=apple_trees       { name 'Jablonovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=apricot_trees     { name 'Merunkovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=bayberry          { name 'Voskovy sad' }        [0x10f01 level 4]
+landuse=orchard & trees=blackberry        { name 'Ostruzinovy sad' }    [0x10f01 level 4]
+landuse=orchard & trees=blueberry         { name 'Boruvkovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=cherry_trees      { name 'Tresnovy sad' }       [0x10f01 level 4]
+landuse=orchard & trees=chestnut_trees    { name 'Kastanovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=cranberry         { name 'Brusinkovy sad' }     [0x10f01 level 4]
+landuse=orchard & trees=ginkgo_trees      { name 'Jinanovy sad' }       [0x10f01 level 4]
+landuse=orchard & trees=governor          { name 'Madagarske svestky' } [0x10f01 level 4]
+landuse=orchard & trees=hazel_plants      { name 'Liskovy sad' }        [0x10f01 level 4]
+landuse=orchard & trees=mulberrie_trees   { name 'Morusovy sad' }       [0x10f01 level 4]
+landuse=orchard & trees=peach_trees       { name 'Broskvonovy sad' }    [0x10f01 level 4]
+landuse=orchard & trees=pear_trees        { name 'Hrusnovy sad' }       [0x10f01 level 4]
+landuse=orchard & trees=pecan_trees       { name 'Pekanovy sad' }       [0x10f01 level 4]
+landuse=orchard & trees=persimmon_trees   { name 'Kaki sad' }           [0x10f01 level 4]
+landuse=orchard & trees=pistachio_trees   { name 'Pistaciovy sad' }     [0x10f01 level 4]
+landuse=orchard & trees=plum_trees        { name 'Svestkovy sad' }      [0x10f01 level 4]
+landuse=orchard & trees=raspberry         { name 'Malinovy sad' }       [0x10f01 level 4]
+landuse=orchard & trees=sand_pear         { name 'Nashi sad' }          [0x10f01 level 4]
+landuse=orchard & trees=walnut_trees      { name 'Oresakovy sad' }      [0x10f01 level 4]
+landuse=orchard [0x4e level 2]
 
 
 # Leisure
@@ -75,7 +141,6 @@ military=range [0x04 level 1]
 natural=glacier [0x4d level 4]
 natural=heath [0x10f0f level 4]
 natural=scrub [0x4f level 2]
-natural=wood [0x50 level 2]
 natural=wetland | natural=marsh | natural=mud [0x51 level 2]
 natural=scree [0x10f10 level 2]
 natural=sea [0x32 level 4]

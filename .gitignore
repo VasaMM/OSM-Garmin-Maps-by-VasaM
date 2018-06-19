@@ -12,3 +12,11 @@ img/*.zip
 img/*.img
 sea/index.txt.gz
 sea/version.txt
+Cruiser/*
+map/*
+MapEdit/*
+Mapsforge/*
+
+
+*TEST*
+*.lnk

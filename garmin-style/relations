@@ -3,42 +3,42 @@
 type=route & (route=hiking | route=foot) & osmc:symbol ~ 'red.*' {
 	apply {
 		set mkgmap:red=yes;
-		add name='${name}';
+		add touristname='${name}';
 	}
 }
 
 type=route & (route=hiking | route=foot) & osmc:symbol ~ 'blue.*' {
 	apply {	
 		set mkgmap:blue=yes;
-		add name='${name}';
+		add touristname='${name}';
 	}
 }
 
 type=route & (route=hiking | route=foot) & osmc:symbol ~ 'green.*' & osmc:symbol!=green:white:green_backslash {
 	apply {
 		set mkgmap:green=yes;
-		add name='${name}';
+		add touristname='${name}';
 	}
 }
 
 type=route & (route=hiking | route=foot) & osmc:symbol=green:white:green_backslash {
 	apply {
 		set mkgmap:ns=yes;
-		add name='${name}';
+		add touristname='${name}';
 	}
 }
 
 type=route & (route=hiking | route=foot) & osmc:symbol ~ 'yellow.*' {
 	apply {
 		set mkgmap:yellow=yes;
-		add name='${name}';
+		add touristname='${name}';
 	}
 }
 
 type=route & (route=hiking | route=foot) & osmc:symbol ~ 'black.*' {
 	apply {
 		set mkgmap:black=yes;
-		add name='${name}';
+		add touristname='${name}';
 	}
 }
 
@@ -48,13 +48,13 @@ type=route & (route=hiking | route=foot) & osmc:symbol ~ 'black.*' {
 type=route & (route=bicycle | route=mtb) {
 	apply {
 		set mkgmap:bikeroute=yes;
-		add name='${ref}';
+		add bikeroutename='${ref}: ${name}' | '${name}' | '${ref}';
 	}
 }
 
 type=route & route=ferry {
 	apply {
 		set route=ferry;
-		add name='${name}';
+		add ferryname='${name}';
 	}
 }

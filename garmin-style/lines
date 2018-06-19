@@ -4,6 +4,7 @@
 # 2: <= 1.2 km, zoom 20, cycling
 # 3: <= 8 km, zoom 18, car
 # 4: <= 30 km, zoom 16, overview
+# 5: zoom 0, overview
 
 # Routable roads first
 # Used roads: 0x01 - 0x06, 0x08 - 0x13
@@ -38,17 +39,17 @@ natural=cliff [0x10e16 level 2]
 
 
 # Hiking trails with "continue" to draw the tracks too
-mkgmap:red=yes    | osmc:symbol ~ 'red.*' [0x10e04 level 2 continue]
-mkgmap:blue=yes   | osmc:symbol ~ 'blue.*' [0x10e05 level 2 continue]
-mkgmap:green=yes  | ( osmc:symbol ~ 'green.*' & osmc:symbol!=green:white:green_backslash )  [0x10e06 level 2 continue]
-mkgmap:ns=yes       [0x10e0c level 2 continue]
-mkgmap:yellow=yes | osmc:symbol ~ 'yellow.*' [0x10e07 level 2 continue]
-mkgmap:black=yes  | osmc:symbol ~ 'black.*' [0x10108 level 2 continue]
-mkgmap:bikeroute=yes   [0x10e09 level 2 continue]
+mkgmap:red=yes    |   osmc:symbol ~ 'red.*'                                                { name '${touristname}'   } [0x10e04 level 2 continue]
+mkgmap:blue=yes   |   osmc:symbol ~ 'blue.*'                                               { name '${touristname}'   } [0x10e05 level 2 continue]
+mkgmap:yellow=yes |   osmc:symbol ~ 'yellow.*'                                             { name '${touristname}'   } [0x10e07 level 2 continue]
+mkgmap:black=yes  |   osmc:symbol ~ 'black.*'                                              { name '${touristname}'   } [0x10108 level 2 continue]
+mkgmap:green=yes  | ( osmc:symbol ~ 'green.*' & osmc:symbol!=green:white:green_backslash ) { name '${touristname}'   } [0x10e06 level 2 continue]
+mkgmap:ns=yes                                                                              { name '${touristname}'   } [0x10e0c level 2 continue]
+mkgmap:bikeroute=yes                                                                       { name '${bikeroutename}' } [0x10e09 level 2 continue]
 
 
 # Borders
-boundary=administrative & admin_level=2 [0x1e level 4]
+boundary=administrative & admin_level=2 [0x1e level 5]
 boundary=national_park | boundary=protected_area [0x1c level 3]
 
 
@@ -58,7 +59,7 @@ railway=light_rail [0x15 level 4]
 railway=rail & usage=main [0x15 level 4]
 railway=rail & usage=branch [0x15 level 3]
 railway=rail [0x15 level 2]
-route=ferry [0x1b road_class 0 level 2]
+route=ferry { name '${ferryname}' } [0x1b road_class 0 level 2]
 
 
 # Cycling
@@ -67,15 +68,15 @@ cycleway=lane | ycleway=opposite_lane | cycleway=share_busway [0x10e0a level 2 c
 
 # Highway
 highway=* & access=no [0x10e10 level 2]
-highway=motorway [0x01 road_class 4 road_speed 7 level 4]
-highway=trunk [0x02 road_class 4 road_speed 6 level 4]
-highway=primary | highway=primary_link [0x03 road_class 3 road_speed 5 level 4]
-highway=secondary | highway=secondary_link [0x04 road_class 2 road_speed 4 level 3]
-highway=tertiary | highway=tertiary_link [0x05 road_class 1 road_speed 3 level 3]
-highway=residential | highway=living_street [0x06 road_class 0 road_speed 2 level 2]
-highway=pedestrian & area!=yes [0x06 road_class 0 level 2]
-highway=trunk_link [0x07 road_class 1 road_speed 5 level 2]
-highway=motorway_link [0x07 road_class 1 road_speed 6 level 2]
+highway=motorway                             { name '${name}: ${ref}' | '${name}' | '${ref}' } [0x01 road_class 4 road_speed 7 level 5]
+highway=trunk                                { name '${name}: ${ref}' | '${name}' | '${ref}' } [0x02 road_class 4 road_speed 6 level 5]
+highway=primary | highway=primary_link       { name '${name}: ${ref}' | '${name}' | '${ref}' } [0x03 road_class 3 road_speed 5 level 4]
+highway=secondary | highway=secondary_link   { name '${name}: ${ref}' | '${name}' | '${ref}' } [0x04 road_class 2 road_speed 4 level 3]
+highway=tertiary | highway=tertiary_link     { name '${name}: ${ref}' | '${name}' | '${ref}' } [0x05 road_class 1 road_speed 3 level 3]
+highway=residential | highway=living_street  { name '${name}: ${ref}' | '${name}' | '${ref}' } [0x06 road_class 0 road_speed 2 level 2]
+highway=pedestrian & area!=yes               { name '${name}: ${ref}' | '${name}' | '${ref}' } [0x06 road_class 0 level 2]
+highway=trunk_link                           { name '${name}: ${ref}' | '${name}' | '${ref}' } [0x07 road_class 1 road_speed 5 level 2]
+highway=motorway_link                        { name '${name}: ${ref}' | '${name}' | '${ref}' } [0x07 road_class 1 road_speed 6 level 2]
 
 
 # Tracks
