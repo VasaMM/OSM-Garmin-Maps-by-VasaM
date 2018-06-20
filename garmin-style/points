@@ -151,10 +151,10 @@ leisure=golf_course [0x2d05 level 0]
 leisure=ice_rink [0x2d08 level 0]
 leisure=marina [0x4300 level 0]
 leisure=park [0x2c06 level 0]
-leisure=pitch [0x2d0a level 0]
+#leisure=pitch [0x2d0a level 0]
 leisure=sports_center | leisure=sports_centre [0x2d0a level 0]
 leisure=stadium [0x2d0a level 1]
-leisure=track [0x2d0a level 0]
+#leisure=track [0x2d0a level 0]
 leisure=water_park [0x2d09 level 0]
 
 
@@ -217,7 +217,8 @@ barrier=stile | highway=stile | barrier=gate | barrier=lift_gate | barrier=entra
 
 
 # Other
-power=pole [0x2909 level 0]	# Sloup el. vedeni
+power=pole  [0x2909 level 0]	# Sloup el. vedeni
+power=tower [0x2909 level 0]	# Sloup el. vedeni
 landuse=farmyard [0x2f14 level 0]
 power=generator & generator:source=wind [0x290e level 2]
 historic=boundary_stone [0x2912 level 1]

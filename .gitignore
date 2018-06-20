@@ -4,6 +4,8 @@ hgt/hgtIndex_3_v3.0.txt
 *.hgt
 pbf/*SPLITTED*
 pbf/*SRTM*
+pbf/*
+poly/*
 sea/*.pbf
 bounds/version.txt
 pbf/CZ.osm.pbf

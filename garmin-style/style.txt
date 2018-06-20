@@ -16,12 +16,13 @@ CodePage=1252
 ;=========== POLYGONES : PRIORITE DANS L'AFFICHAGE ======
 [_drawOrder]
 Type=0x10102,1
-Type=0x03200,1
-Type=0x00400,3
-Type=0x00700,3
-Type=0x00800,3
+Type=0x032,1
+Type=0x004,3
+Type=0x007,3
+Type=0x008,3
 Type=0x10902,3
-Type=0x00c00,3
+Type=0x00c,3
+Type=0x10f02,3
 Type=0x10f04,3
 Type=0x10f05,3
 Type=0x10f06,3
@@ -32,26 +33,24 @@ Type=0x10f17,3
 Type=0x10f18,3
 Type=0x10f19,3
 Type=0x10f1a,3
-Type=0x03c00,3
-Type=0x04600,3
-Type=0x04d00,3
-Type=0x04e00,3
-Type=0x05000,3
-Type=0x00900,5
-Type=0x00e00,5
+Type=0x03c,3
+Type=0x046,3
+Type=0x04d,3
+Type=0x04e,3
+Type=0x050,3
+Type=0x009,5
+Type=0x00e,5
 Type=0x10f00,5
 Type=0x10f01,5
-Type=0x10f02,5
 Type=0x10f03,5
 Type=0x10f07,5
 Type=0x10f0f,5
-Type=0x01700,5
-Type=0x01800,5
-Type=0x01800,5
-Type=0x01900,5
-Type=0x01a00,5
-Type=0x01f00,5
-Type=0x04f00,5
+Type=0x017,5
+Type=0x018,5
+Type=0x019,5
+Type=0x01a,5
+Type=0x01f,5
+Type=0x04f,5
 Type=0x10f08,7
 Type=0x10f09,7
 Type=0x10f0a,7
@@ -62,10 +61,10 @@ Type=0x10f12,7
 Type=0x10f13,7
 Type=0x10f14,7
 Type=0x10f15,7
-Type=0x05100,7
+Type=0x051,7
 Type=0x10908,8
 Type=0x10f16,8
-Type=0x01300,8
+Type=0x013,8
 [End]
 
 
@@ -78,6 +77,7 @@ Type=0x01300,8
 [_polygon]
 Type=0x04
 ;GRMN_TYPE: Large Manmade Areas/MILITARY_BASE/Military base area/Non NT
+String1=0x12,Vojensky prostor
 ExtendedLabels=N
 Xpm="32 32 2 1"
 "! c #FF0000"
@@ -360,6 +360,7 @@ Xpm="0 0 1 0"
 [_polygon]
 Type=0x18
 ;GRMN_TYPE: Large Manmade Areas/GOLF_COURSE/Golf course area/Non NT
+String1=0x12,Golf
 ExtendedLabels=N
 Xpm="32 32 2 1"
 "! c #7BCA41"
@@ -370,7 +371,7 @@ Xpm="32 32 2 1"
 "##!!############################"
 "###!############################"
 "###!############################"
-"##!!!###########################"
+"##!!!##################!########"
 "#!#!#!##########################"
 "!##!##!#########################"
 "#!###!##########################"
@@ -491,6 +492,7 @@ Xpm="32 32 2 1"
 [_polygon]
 Type=0x32
 ;GRMN_TYPE: Water Areas/SEA/Sea/Non NT
+String1=0x12,More
 ExtendedLabels=Y
 FontStyle=Default
 CustomColor=Day
@@ -503,6 +505,7 @@ Xpm="0 0 1 0"
 [_polygon]
 Type=0x3c
 ;GRMN_TYPE: Water Areas/LAKE_100MI/Lake less than 250 sq mi but greater or equal to 100 sq mi in area/Non NT
+String1=0x12,Jezero/rybnik
 ExtendedLabels=Y
 FontStyle=Default
 CustomColor=Day
@@ -515,12 +518,22 @@ Xpm="0 0 1 0"
 [_polygon]
 Type=0x46
 ;GRMN_TYPE: Water Areas/LARGE_RIVER/Major river, typically at least 700 ft in width/Non NT
+String1=0x12,Reka
 ExtendedLabels=Y
 FontStyle=Default
 CustomColor=Day
 DaycustomColor:#0000D5
 Xpm="0 0 1 0"
 "1 c #7B95FF"
+[end]
+
+
+[_polygon]
+Type=0x4b
+;GRMN_TYPE: Map Bounds/DATA_BOUNDS/Bounds of map after creation/Non NT
+ExtendedLabels=N
+Xpm="0 0 1 0"
+"1 c #FFFFE6"
 [end]
 
 
@@ -620,36 +633,36 @@ ExtendedLabels=N
 Xpm="32 32 2 1"
 "! c #3B9500"
 "# c #7BFF6A"
-"#!!#############################"
-"!##!############################"
-"!##!############################"
-"#!!!!###########################"
+"#!!!############################"
+"!###!###########################"
+"!###!###########################"
+"!###!###########################"
+"#!!!!!##########################"
 "################################"
-"################################"
-"###################!!###########"
-"##################!##!##########"
-"##################!##!##########"
-"###################!!!!#########"
-"################################"
-"################################"
-"################################"
-"################################"
-"################################"
-"################################"
-"######!!########################"
-"#####!##!#######################"
-"#####!##!#######################"
-"######!!!!######################"
+"###################!!!##########"
+"##################!###!#########"
+"##################!###!#########"
+"##################!###!#########"
+"###################!!!!!########"
 "################################"
 "################################"
 "################################"
 "################################"
 "################################"
-"###########################!!###"
-"##########################!##!##"
-"##########################!##!##"
-"###########################!!!!#"
+"######!!!#######################"
+"#####!###!######################"
+"#####!###!######################"
+"#####!###!######################"
+"######!!!!!#####################"
 "################################"
+"################################"
+"################################"
+"################################"
+"###########################!!!##"
+"##########################!###!#"
+"##########################!###!#"
+"##########################!###!#"
+"###########################!!!!!"
 "################################"
 "################################"
 ;12345678901234567890123456789012
@@ -1154,6 +1167,7 @@ Xpm="32 32 2 1"
 [_polygon]
 Type=0x10f07
 ;GRMN_TYPE: Customizable Areas/CUSTOMIZABLE_AREA_8/Customizable area/Non NT, NT
+String1=0x12,Sportoviste
 ExtendedLabels=N
 Xpm="32 32 2 1"
 "! c #FF0041"
@@ -2036,7 +2050,7 @@ Xpm="32 32 2 1"
 [_line]
 Type=0x01
 ;GRMN_TYPE: Roads/INTERSTATE, MAJOR_HWY/Primary, divided, limited-access highway, akin to an interstate in the US/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=4
 BorderWidth=2
 Xpm="0 0 2 0"
@@ -2050,7 +2064,7 @@ ExtendedLabels=N
 [_line]
 Type=0x02
 ;GRMN_TYPE: Roads/PRINCIPAL_HWY/Principal highway, usually divided and limited access, akin to US highways/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=4
 BorderWidth=2
 Xpm="0 0 2 0"
@@ -2064,7 +2078,7 @@ ExtendedLabels=N
 [_line]
 Type=0x03
 ;GRMN_TYPE: Roads/OTHER_HWY/Other highway road, akin to a state highway in the US/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=3
 BorderWidth=2
 Xpm="0 0 2 0"
@@ -2078,7 +2092,7 @@ ExtendedLabels=N
 [_line]
 Type=0x04
 ;GRMN_TYPE: Roads/ARTERIAL/Main city thoroughfare/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=2
 BorderWidth=1
 Xpm="0 0 2 0"
@@ -2092,7 +2106,7 @@ ExtendedLabels=N
 [_line]
 Type=0x05
 ;GRMN_TYPE: Roads/COLLECTOR/Secondary city thoroughfare/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=2
 BorderWidth=1
 Xpm="0 0 2 0"
@@ -2106,7 +2120,7 @@ ExtendedLabels=N
 [_line]
 Type=0x06
 ;GRMN_TYPE: Roads/RESIDENTIAL/Residential street, these are typically the most numerous roads in a detailed city map and do not show up until the user is zoomed in quite far/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=2
 BorderWidth=1
 Xpm="0 0 2 0"
@@ -2120,7 +2134,7 @@ ExtendedLabels=N
 [_line]
 Type=0x07
 ;GRMN_TYPE: Roads/ALLEY, DRIVEWAY/Alleyway, private driveway to residence/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=4
 BorderWidth=2
 Xpm="0 0 2 0"
@@ -2134,7 +2148,7 @@ ExtendedLabels=N
 [_line]
 Type=0x08
 ;GRMN_TYPE: Roads/LOW_SPEED_RAMP/Highway ramp which is to be driven at low speeds/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 4 2  1"
 "! c #313131"
 "# c #C5C5C5"
@@ -2151,7 +2165,7 @@ ExtendedLabels=N
 [_line]
 Type=0x09
 ;GRMN_TYPE: Roads/HIGH_SPEED_RAMP, RAMP/Highway ramp which is to be driven at high speeds/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=4
 Xpm="0 0 1 0"
 "1 c #FF658B"
@@ -2163,7 +2177,7 @@ ExtendedLabels=N
 [_line]
 Type=0x0a
 ;GRMN_TYPE: Roads/UNPAVED_ROAD/Gravel or dirt road/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 3 2  1"
 "! c #313131"
 "  c none"
@@ -2179,7 +2193,7 @@ ExtendedLabels=N
 [_line]
 Type=0x0b
 ;GRMN_TYPE: Roads/MAJOR_CONNECTOR/Major highway connector/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=2
 Xpm="0 0 1 0"
 "1 c #101010"
@@ -2191,7 +2205,7 @@ ExtendedLabels=N
 [_line]
 Type=0x0c
 ;GRMN_TYPE: Roads/ROUNDABOUT/Roundabout/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 5 2  1"
 "! c #313131"
 "# c #FF658B"
@@ -2209,7 +2223,7 @@ ExtendedLabels=N
 [_line]
 Type=0x0d
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_ROUTE_LINE_1/Routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #000000"
 "  c none"
@@ -2224,7 +2238,7 @@ ExtendedLabels=N
 [_line]
 Type=0x0e
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_ROUTE_LINE_2/Routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #000000"
 "  c none"
@@ -2239,7 +2253,7 @@ ExtendedLabels=N
 [_line]
 Type=0x0f
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_ROUTE_LINE_3/Routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #000000"
 "  c none"
@@ -2254,7 +2268,7 @@ ExtendedLabels=N
 [_line]
 Type=0x10
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_ROUTE_LINE_4/Routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #000000"
 "  c none"
@@ -2269,7 +2283,7 @@ ExtendedLabels=N
 [_line]
 Type=0x15
 ;GRMN_TYPE: Misc. Line Types/SHORELINE/Shoreline of water body (typically only used when a water area is not available)/Non NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 4 2  1"
 "! c #000000"
 "# c #FFFFFF"
@@ -2286,7 +2300,7 @@ ExtendedLabels=N
 [_line]
 Type=0x16
 ;GRMN_TYPE: Roads/TRAIL/Walkway or trail/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #000000"
 "  c none"
@@ -2301,7 +2315,7 @@ ExtendedLabels=N
 [_line]
 Type=0x18
 ;GRMN_TYPE: Water Features/STREAM/Small stream or creek/Non NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 3 2  1"
 "! c #7B95FF"
 "# c #BDFFFF"
@@ -2317,7 +2331,7 @@ ExtendedLabels=N
 [_line]
 Type=0x1a
 ;GRMN_TYPE: Roads/INTERNATIONAL_FERRY/Major water or rail ferry/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 4 2  1"
 "! c #313131"
 "# c #C5C5C5"
@@ -2334,7 +2348,7 @@ ExtendedLabels=N
 [_line]
 Type=0x1b
 ;GRMN_TYPE: Roads/FERRY/Water or rail ferry/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #0000B4"
 "  c none"
@@ -2349,7 +2363,7 @@ ExtendedLabels=N
 [_line]
 Type=0x1c
 ;GRMN_TYPE: Political Borders/MJR_PLTCL_BDRY/Major political boundary (typically used for state, provincial borders)/Non NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 5 2  1"
 "! c #396500"
 "  c none"
@@ -2387,7 +2401,7 @@ ExtendedLabels=N
 [_line]
 Type=0x1f
 ;GRMN_TYPE: Water Features/RIVER/Large stream or river/Non NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 5 2  1"
 "! c #7B95FF"
 "# c #BDFFFF"
@@ -2405,7 +2419,7 @@ ExtendedLabels=N
 [_line]
 Type=0x20
 ;GRMN_TYPE: Contour Lines/MINOR_CONTOUR/Minor land-based contour line/Non NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=1
 Xpm="0 0 1 0"
 "1 c #BD9541"
@@ -2419,7 +2433,7 @@ DaycustomColor:#7B3000
 [_line]
 Type=0x21
 ;GRMN_TYPE: Contour Lines/INT_CONTOUR/Intermediate contour (should be used for about every 5th contour line)/Non NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=2
 Xpm="0 0 1 0"
 "1 c #BD9541"
@@ -2433,7 +2447,7 @@ DaycustomColor:#7B3000
 [_line]
 Type=0x22
 ;GRMN_TYPE: Contour Lines/MAJOR_CONTOUR/Major contour (should be used for about every 10th contour line)/Non NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=2
 Xpm="0 0 1 0"
 "1 c #BD9541"
@@ -2465,7 +2479,7 @@ ExtendedLabels=N
 [_line]
 Type=0x24
 ;GRMN_TYPE: Contour Lines/INT_BATHY_CONTOUR/Intermediate bathymetric, or depth, contour (should be used for about every 5th contour line)/Non NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 1 2  1"
 "! c #BD9520"
 "  c none"
@@ -2479,7 +2493,7 @@ ExtendedLabels=N
 [_line]
 Type=0x25
 ;GRMN_TYPE: Contour Lines/MAJOR_BATHY_CONTOUR/Major bathymetric, or depth, contour (should be used for about every 10th contour line)/Non NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 1 2  1"
 "! c #BD9520"
 "  c none"
@@ -2514,7 +2528,7 @@ DaycustomColor:#FF6500
 [_line]
 Type=0x10e00
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_1/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #7B95FF"
 "  c none"
@@ -2532,7 +2546,7 @@ DaycustomColor:#0000D5
 [_line]
 Type=0x10e01
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_2/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 3 2  1"
 "! c #00306A"
 "  c none"
@@ -2548,7 +2562,7 @@ ExtendedLabels=N
 [_line]
 Type=0x10e02
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_3/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 3 2  1"
 "! c #00306A"
 "  c none"
@@ -2684,7 +2698,7 @@ ExtendedLabels=N
 [_line]
 Type=0x10e09
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_10/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 22 2  1"
 "! c #FF658B"
 "  c none"
@@ -2722,7 +2736,7 @@ DaycustomColor:#BD008B
 [_line]
 Type=0x10e0a
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_11/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 8 2  1"
 "! c #FF658B"
 "  c none"
@@ -2787,7 +2801,7 @@ ExtendedLabels=N
 [_line]
 Type=0x10e0e
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_15/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 10 2  1"
 "! c #313131"
 "  c none"
@@ -2810,7 +2824,7 @@ ExtendedLabels=N
 [_line]
 Type=0x10e0f
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_16/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 9 2  1"
 "! c #313131"
 "  c none"
@@ -2832,7 +2846,7 @@ ExtendedLabels=N
 [_line]
 Type=0x10e10
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_17/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 3 2  1"
 "! c #FF0000"
 "  c none"
@@ -2887,7 +2901,7 @@ ExtendedLabels=N
 [_line]
 Type=0x10e13
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_20/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 5 2  1"
 "! c #000000"
 "  c none"

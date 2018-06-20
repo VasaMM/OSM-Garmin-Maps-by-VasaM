@@ -8,6 +8,9 @@ PASS=Password123
 PYTHON=python3.4
 
 
+VERSION=30
+
+
 # Ukoncovaci funkce
 function end {
 	TMP=$(date)
@@ -123,13 +126,13 @@ while [ true ]; do
 			break
 			;;
 
+		#Stredni Evropa ID: 8801 - 8810
 		CZ|cz )
 			echo "Tvorim mapu pro Ceskou republiku"
 			STATE="CZ"
 			DATA_URL="http://download.geofabrik.de/europe/czech-republic-latest.osm.pbf"
 			POLY_URL="http://download.geofabrik.de/europe/czech-republic.poly"
 			COUNTRY_NAME="Ceska republika - VasaM"
-			VERSION=20
 			COUNTRY_ID=8801
 			break
 			;;
@@ -140,18 +143,17 @@ while [ true ]; do
 			DATA_URL="http://download.geofabrik.de/europe/slovakia-latest.osm.pbf"
 			POLY_URL="http://download.geofabrik.de/europe/slovakia.poly"
 			COUNTRY_NAME="Slovenska republika - VasaM"
-			VERSION=20
 			COUNTRY_ID=8802
 			break
 			;;
 
+		#Ostatni Evropa ID: 8811 - 8820
 		UA|ua )
 			STATE="UA"
 			echo "Tvorim mapu pro Ukrajinu"
 			DATA_URL="http://download.geofabrik.de/europe/ukraine-latest.osm.pbf"
 			POLY_URL="http://download.geofabrik.de/europe/ukraine.poly"
 			COUNTRY_NAME="Ukrajina - VasaM"
-			VERSION=20
 			COUNTRY_ID=8811
 			break
 			;;
@@ -162,19 +164,18 @@ while [ true ]; do
 			DATA_URL="http://download.geofabrik.de/europe/romania-latest.osm.pbf"
 			POLY_URL="http://download.geofabrik.de/europe/romania.poly"
 			COUNTRY_NAME="Rumunsko - VasaM"
-			VERSION=20
 			COUNTRY_ID=8812
 			break
 			;;
 
 
+		#Ostatni ID: 8821 - 8890
 		KG|kg )
 			echo "Tvorim mapu pro Kyrgyzstan"
 			STATE="KG"
 			DATA_URL="http://download.geofabrik.de/asia/kyrgyzstan-latest.osm.pbf"
 			POLY_URL="http://download.geofabrik.de/asia/kyrgyzstan.poly"
 			COUNTRY_NAME="Kyrgyzstan - VasaM"
-			VERSION=20
 			COUNTRY_ID=8821
 			break
 			;;
