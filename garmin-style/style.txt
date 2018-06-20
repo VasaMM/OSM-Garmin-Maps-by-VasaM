@@ -16,11 +16,12 @@ CodePage=1252
 ;=========== POLYGONES : PRIORITE DANS L'AFFICHAGE ======
 [_drawOrder]
 Type=0x10102,1
-Type=0x032,1
-Type=0x007,2
-Type=0x008,2
+Type=0x03200,1
+Type=0x00400,2
+Type=0x00700,2
+Type=0x00800,2
 Type=0x10902,2
-Type=0x00c,2
+Type=0x00c00,2
 Type=0x10f04,3
 Type=0x10f0b,3
 Type=0x10f10,3
@@ -28,43 +29,42 @@ Type=0x10f11,3
 Type=0x10f18,3
 Type=0x10f19,3
 Type=0x10f1a,3
-Type=0x03c,3
-Type=0x046,3
-Type=0x04d,3
-Type=0x04e,3
-Type=0x050,3
+Type=0x03c00,3
+Type=0x04600,3
+Type=0x04d00,3
+Type=0x04e00,3
+Type=0x05000,3
 Type=0x10f02,4
 Type=0x10f05,4
 Type=0x10f06,4
 Type=0x10f17,4
-Type=0x009,5
-Type=0x00e,5
+Type=0x00900,5
+Type=0x00e00,5
 Type=0x10f00,5
 Type=0x10f01,5
 Type=0x10f03,5
 Type=0x10f07,5
 Type=0x10f0f,5
-Type=0x017,5
-Type=0x018,5
-Type=0x019,5
-Type=0x01a,5
-Type=0x01f,5
-Type=0x04f,5
-Type=0x10f08,7
-Type=0x10f09,7
-Type=0x10f0a,7
-Type=0x10f0c,7
-Type=0x10f0d,7
-Type=0x10f0e,7
-Type=0x10f12,7
-Type=0x10f13,7
-Type=0x10f14,7
-Type=0x10f15,7
-Type=0x051,7
-Type=0x004,8
+Type=0x01700,5
+Type=0x01800,5
+Type=0x01900,5
+Type=0x01a00,5
+Type=0x01f00,5
+Type=0x04f00,5
+Type=0x05100,5
+Type=0x10f08,6
+Type=0x10f09,6
+Type=0x10f0a,6
+Type=0x10f0c,6
+Type=0x10f0d,6
+Type=0x10f0e,6
+Type=0x10f12,6
+Type=0x10f13,6
+Type=0x10f14,6
+Type=0x10f15,6
+Type=0x01300,7
 Type=0x10908,8
 Type=0x10f16,8
-Type=0x013,8
 [End]
 
 
@@ -4612,33 +4612,6 @@ DayXpm="14 14 3 1"   Colormode=16
 "#!!!!!!!!!!!!#"
 " ############ "
 ;12345678901234
-[end]
-
-
-[_point]
-Type=0x02e0a
-;GRMN_TYPE: Business - Shopping/SPECIALTY_RETAIL/Specialty store/Non NT
-String1=0x12,Sportovni vybaveni
-ExtendedLabels=N
-DayXpm="12 13 4 1"   Colormode=16
-"!	c #BD0000"
-"#	c #FFFFFF"
-"%	c #00FFFF"
-"  	c none"
-"    ###   # "
-"   #%%%# #!#"
-" ##%%#%##!# "
-"#!!!!!!!!!# "
-"#!#!%!#!#!# "
-"#!#!#!%!#!# "
-"#!#!#!%!#!# "
-"#!#!%!#!#!# "
-" #!!!!!!!!# "
-" #########  "
-"#!!!!!!!!!# "
-"#!!#####!!# "
-" ##     ##  "
-;123456789012
 [end]
 
 
