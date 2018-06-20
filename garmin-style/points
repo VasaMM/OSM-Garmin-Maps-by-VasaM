@@ -138,7 +138,7 @@ amenity=zoo [0x2c07 level 1]
 amenity=fountain [0x2911 level 1]
 amenity=game_feeding | amenity=feeding_place | amenity=watering_place [0x2913 level 1]
 amenity=hunting_stand [0x2914 level 1]
-
+amenity=post_box [0x11500 level 0]
 
 # Sports & leisure
 sport=9pin [0x2d07 level 0]
@@ -181,33 +181,137 @@ waterway=waterfall [0x6508 level 1]
 
 
 # Shops
-shop=outdoor | shop=sports [0x2e0a level 0]
-shop=supermarket | amenity=supermarket [0x2e04 level 0]
-shop=* [0x2e02 level 0]
-# shop=mall [0x2e02 level 0]
-# shop=bakers [0x2e02 level 0]
-# shop=bakery [0x2e02 level 0]
-# shop=bicycle [0x2e02 level 0]
-# shop=butcher [0x2e02 level 0]
-# shop=chemist [0x2e02 level 0]
-# shop=clothes [0x2e02 level 0]
-# shop=computer [0x2e02 level 0]
-# shop=convenience [0x2e02 level 0]
-# shop=department_store [0x2e02 level 0]
-# shop=doityourself [0x2e02 level 0]
-# shop=fashion [0x2e02 level 0]
-# shop=garden_centre [0x2e02 level 0]
-# shop=garden_center [0x2e02 level 0]
-# shop=general [0x2e02 level 0]
-# shop=hardware [0x2e02 level 0]
-# shop=organic [0x2e02 level 0]
+shop=* & opening_hours!=* { add opening_hours = '' }
+shop=* & name!=* { add name = 'Obchod' }
+
+shop=bakery { set shop = 'Pekarstvi' }
+shop=butcher { set shop = 'Reznictvi' }
+shop=confectionery { set shop = 'Cukrovinky' }
+shop=cheese { set shop = 'Syry' }
+shop=chocolate { set shop = 'Cokolada' }
+shop=coffee { set shop = 'Kava' }
+shop=convenience { set shop = 'Smisene zbozi' }
+shop=deli { set shop = 'Lahudky' }
+shop=dairy { set shop = 'Mlecne vyrobky' }
+shop=farm { set shop = 'Farmarske produkty' }
+shop=greengrocer { set shop = 'Ovoce zelenina' }
+shop=pastry { set shop = 'Sladke pecivo' }
+shop=seafood { set shop = 'Morske plody' }
+shop=spices { set shop = 'Koreni' }
+shop=tea { set shop = 'Caj' }
+
+shop=department_store { set shop = 'Obchodni dum'; add cart_icon = 'yes'; }
+shop=general { set shop = 'Smisene zbozi' }
+shop=kiosk { set shop = 'Stanek' }
+shop=mall { set shop = 'Obchodni stredisko'; add cart_icon = 'yes'; }
+shop=supermarket { set shop = 'Supermarket'; add cart_icon = 'yes'; }
+shop=wholesale { set shop = 'Velkoobchod'; add cart_icon = 'yes'; }
+
+shop=clothes { set shop = 'Odevy' }
+shop=fashion { set shop = 'Moda' }
+shop=shoes { set shop = 'Obuv' }
+shop=tailor { set shop = 'Krejcovstvi' }
+shop=watches { set shop = 'Hodinky' }
+
+shop=second_hand { set shop = 'Second hand' }
+shop=variety_store { set shop = 'Drobnosti' }
+
+shop=beauty { set shop = 'Kosmeticky salon' }
+shop=chemist { set shop = 'Drogerie' }
+shop=cosmetics { set shop = 'Kosmetika' }
+shop=erotic { set shop = 'Sex shop' }
+shop=hairdresser { set shop = 'Kadernictvi' }
+shop=herbalist { set shop = 'Bylinky' }
+shop=massage { set shop = 'Masazni salon' }
+shop=medical_supply { set shop = 'Zdravotnicke potreby' }
+shop=nutrition_supplements { set shop = 'Potravinove doplnky' }
+shop=optician { set shop = 'Ocni optika' }
+shop=perfumery { set shop = 'Parfumerie' }
+shop=tattoo { set shop = 'Tetovaci salon' }
+
+shop=doityourself { set shop = 'Produkty pro kutily' }
+shop=electrical { set shop = 'Elektricke zarizeni' }
+shop=florist { set shop = 'Kvetinarstvi' }
+shop=garden_centre { set shop = 'Zahradnicke centrum' }
+shop=gas { set shop = 'Technicke plyny' }
+shop=glaziery { set shop = 'Sklenarstvi' }
+shop=hardware { set shop = 'Zelezarstvi' }
+shop=houseware { set shop = 'Domaci potreby' }
+shop=locksmith { set shop = 'Zamky, klice' }
+shop=paint { set shop = 'Barvy, laky' }
+shop=security { set shop = 'Bezpecnostni zarizeni' }
+shop=trade { set shop = 'Produkty pro remeslniky' }
+
+shop=antiques { set shop = 'Starozitnosti' }
+
+shop=computer { set shop = 'Pocitace' }
+shop=robot { set shop = 'Roboti' }
+shop=electronics { set shop = 'Elektro' }
+shop=hifi { set shop = 'Hi-Fi' }
+shop=mobile_phone { set shop = 'Mobilni telefony' }
+shop=radiotechnics { set shop = 'Elektrosoucastky' }
+
+shop=bicycle { set shop = 'Kola' }
+shop=boat { set shop = 'Lode' }
+shop=car { set shop = 'Auta' }
+shop=fuel { set shop = 'Paliva' }
+shop=fishing { set shop = 'Rybarstvi' }
+shop=hunting { set shop = 'Lov' }
+shop=motorcycle { set shop = 'Motocykly' }
+shop=outdoor { set shop = 'Outdoor' }
+shop=scuba_diving { set shop = 'Potapeni' }
+shop=ski { set shop = 'Lyze' }
+shop=sports { set shop = 'Sportovni potreby' }
+
+shop=art { set shop = 'Umeni' }
+shop=collector { set shop = 'Sberatele' }
+shop=craft { set shop = 'Umelecke potreby' }
+shop=games { set shop = 'Hry' }
+shop=model { set shop = 'Modelarstvi' }
+shop=music { set shop = 'Hudba' }
+shop=musical_instrument { set shop = 'Hudebni nastroje' }
+shop=photo { set shop = 'Fotografie' }
+shop=camera { set shop = 'Fotoaparaty' }
+shop=video { set shop = 'Filmy' }
+shop=video_games { set shop = 'Pocitacove hry' }
+
+shop=books { set shop = 'Knihkupectvi' }
+shop=gift { set shop = 'Suvenyry' }
+shop=lottery { set shop = 'Loterie' }
+shop=newsagent { set shop = 'Novinovy' }
+shop=stationery { set shop = 'Kancelarse potreby' }
+shop=ticket { set shop = 'Vstupenky' }
+
+shop=bookmaker { set shop = 'Sazkova kancelar' }
+shop=copyshop { set shop = 'Kopy centrum' }
+shop=dry_cleaning { set shop = 'cistirna odevů' }
+shop=laundry { set shop = 'Pradelna' }
+shop=money_lender { set shop = 'Lichvar' }
+shop=party { set shop = 'Party' }
+shop=pawnbroker { set shop = 'Zastavarna' }
+shop=pet { set shop = 'Zverimex' }
+shop=pyrotechnics { set shop = 'Pyrotechnika' }
+shop=religion { set shop = 'Nabozenstvi' }
+shop=tobacco { set shop = 'Tabak' }
+shop=toys { set shop = 'Hrackarna' }
+shop=travel_agency { set shop = 'Cestovni kancelar' }
+shop=vacant { set shop = 'Prazdny obchod' }
+shop=weapons { set shop = 'Zbrane' }
+
+shop=* & cart_icon = 'yes' { set name = '${name} ${opening_hours} (${shop})' } [0x2e04 level 0]
+shop=* { set name = '${name} ${opening_hours} (${shop})' } [0x2e02 level 0]
+
+amenity=shop { set name = '${name} FIXME' } [0x2e02 level 0]
+amenity=shopping { set name = '${name} FIXME' } [0x2e02 level 0]
+
+
 
 
 # For cars
 amenity=fuel & shop=convenience [0x2e02 level 0]
 amenity=fuel { name '${operator}: ${name}' | '${name}' | '${operator}' } [0x2f01 level 0]
 amenity=car_rental [0x2f02 level 0]
-shop=car_repair [0x2f03 level 0]
+shop=car_repair | shop=car_parts [0x2f03 level 0]
 
 
 # Barriers

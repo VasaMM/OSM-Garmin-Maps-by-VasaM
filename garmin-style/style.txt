@@ -17,19 +17,14 @@ CodePage=1252
 [_drawOrder]
 Type=0x10102,1
 Type=0x032,1
-Type=0x004,3
-Type=0x007,3
-Type=0x008,3
-Type=0x10902,3
-Type=0x00c,3
-Type=0x10f02,3
+Type=0x007,2
+Type=0x008,2
+Type=0x10902,2
+Type=0x00c,2
 Type=0x10f04,3
-Type=0x10f05,3
-Type=0x10f06,3
 Type=0x10f0b,3
 Type=0x10f10,3
 Type=0x10f11,3
-Type=0x10f17,3
 Type=0x10f18,3
 Type=0x10f19,3
 Type=0x10f1a,3
@@ -38,6 +33,10 @@ Type=0x046,3
 Type=0x04d,3
 Type=0x04e,3
 Type=0x050,3
+Type=0x10f02,4
+Type=0x10f05,4
+Type=0x10f06,4
+Type=0x10f17,4
 Type=0x009,5
 Type=0x00e,5
 Type=0x10f00,5
@@ -62,6 +61,7 @@ Type=0x10f13,7
 Type=0x10f14,7
 Type=0x10f15,7
 Type=0x051,7
+Type=0x004,8
 Type=0x10908,8
 Type=0x10f16,8
 Type=0x013,8
@@ -6040,4 +6040,35 @@ DayXpm="12 16 5 1"   Colormode=16
 "?!!!!!!!!!!?"
 " ?????????? "
 ;123456789012
+[end]
+
+
+[_point]
+Type=0x11500
+;GRMN_TYPE: User Customizable Points/CUSTOMIZABLE_POINT_1/User customizable point type/Non NT, NT
+String1=0x12,Postovni schranka
+ExtendedLabels=N
+DayXpm="16 17 4 1"   Colormode=16
+"!	c #FFCA00"
+"#	c #FFFFFF"
+"%	c #000000"
+"  	c none"
+"   ##########   "
+"  #%%%%%%%%%%#  "
+" #%!!!!!!!!!!%# "
+" #%!%%%%%%%%!%# "
+" #%!%%%%%%%%!%# "
+" #%!!!!!!!!!!%# "
+" #%!!!!!!!!!!%# "
+" #%!!%%%%%%!!%# "
+" #%!%!!!!!!%!%# "
+" #%!%%!!!!%%!%# "
+" #%!%!%!!%!%!%# "
+" #%!%!!%%!!%!%# "
+" #%!%!!!!!!%!%# "
+" #%!%%%%%%%%!%# "
+" #%!!!!!!!!!!%# "
+"#%%%%%%%%%%%%%%#"
+" ############## "
+;1234567890123456
 [end]

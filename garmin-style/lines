@@ -39,12 +39,12 @@ natural=cliff [0x10e16 level 2]
 
 
 # Hiking trails with "continue" to draw the tracks too
-mkgmap:red=yes    |   osmc:symbol ~ 'red.*'                                                { name '${touristname}' }         [0x10e04 level 2 continue]
-mkgmap:blue=yes   |   osmc:symbol ~ 'blue.*'                                               { name '${touristname}' }         [0x10e05 level 2 continue]
-mkgmap:yellow=yes |   osmc:symbol ~ 'yellow.*'                                             { name '${touristname}' }         [0x10e07 level 2 continue]
-mkgmap:black=yes  |   osmc:symbol ~ 'black.*'                                              { name '${touristname}' }         [0x10108 level 2 continue]
-mkgmap:green=yes  | ( osmc:symbol ~ 'green.*' & osmc:symbol!=green:white:green_backslash ) { name '${touristname}' }         [0x10e06 level 2 continue]
-mkgmap:ns=yes                                                                              { name '${touristname}' }         [0x10e0c level 2 continue]
+mkgmap:red=yes    |   osmc:symbol ~ 'red.*'                                                { name '${redname}' }    [0x10e04 level 2 continue]
+mkgmap:blue=yes   |   osmc:symbol ~ 'blue.*'                                               { name '${bluename}' }   [0x10e05 level 2 continue]
+mkgmap:yellow=yes |   osmc:symbol ~ 'yellow.*'                                             { name '${yellowname}' } [0x10e07 level 2 continue]
+mkgmap:black=yes  |   osmc:symbol ~ 'black.*'                                              { name '${blackname}' }  [0x10108 level 2 continue]
+mkgmap:green=yes  | ( osmc:symbol ~ 'green.*' & osmc:symbol!=green:white:green_backslash ) { name '${greenname}' }  [0x10e06 level 2 continue]
+mkgmap:ns=yes                                                                              { name '${nsname}' }     [0x10e0c level 2 continue]
 mkgmap:bikeroute=yes                                                                       { name 'Cyklo ${bikeroutename}' } [0x10e09 level 2 continue]
 
 
