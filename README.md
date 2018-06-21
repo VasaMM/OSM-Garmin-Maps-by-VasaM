@@ -11,7 +11,8 @@
 2) Uložte si obsah celého repozitáže (vpravo nahoře: *Clone or download*). Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte.
 3) Ze stránek [http://www.mkgmap.org.uk](http://www.mkgmap.org.uk/download/mkgmap.html) stáhněte soubory *bounds.zip* a *sea.zip*.
 4) Tyto soubory rozbalte do složek *bounds* a *sea*, bez dalších podsložek!
-5) Chcete-li, můžete aktualizovat programy **mkgmap** a **splitter** - NENÍ NUTNÉ.
+5) V souboru *mkaMap.sh* upravte první řádky, tedy doplňte **USER** a **PASS**, popř. bude-li potřeba, upravte verzi pythonu v proměnné **PYTHON**.
+6) Chcete-li, můžete aktualizovat programy **mkgmap** a **splitter** - NENÍ NUTNÉ.
 
 ## Použití
 Skript je nezvykle ukecaný (do budoucna je v plánu i "tichá" verze) a na začátku spuštění se uživatele ptá, co chce udělat. Proto jej stačí spustit bez parametrů: `./makeMap.sh`.  
