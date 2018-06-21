@@ -1,8 +1,11 @@
 #!/bin/bash
 
 # Prihlasovaci udaje pro https://ers.cr.usgs.gov/
-USER=VasaM
-PASS=Password123
+# Vytvorte si ucet a odkomentujte nasedujici dva radky
+# !POZOR heslo je ulozeno v nesifrovane podobe viditelne pro vsechny uzivatele!
+
+# USER=Name
+# PASS=Password
 
 # Dalsi nastevni
 PYTHON=python3.4
