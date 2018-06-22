@@ -38,8 +38,13 @@ for file in os.listdir( inputDir ):
 		print ( '\r' + fileName + ': Stahuji hgt', end = '' )
 		sys.stdout.flush()
 
-		urllib.request.urlretrieve( 'http://rmd.neoknet.com/srtm3/' + fileName + '.hgt.zip', outputDir + fileName + '.zip' )
+		try:
+			# urllib.request.urlretrieve( 'http://rmd.neoknet.com/srtm3/' + fileName + '.hgt.zip', outputDir + fileName + '.zip' )
+			urllib.request.urlretrieve( 'http://firmware.ardupilot.org/SRTM/Eurasia/' + fileName + '.hgt.zip', outputDir + fileName + '.zip' )
 		
+		except Exception:
+		    continue
+
 		print ( '\r' + fileName + ': Rozbaluji  ', end = '' )
 		sys.stdout.flush()
 
