@@ -5,7 +5,7 @@ Každá mapa je vytvořena ve dvou variantách:
 * Soubor \*.zip obsahuje soubory pro použití v BaseCamp
 * Soubor \*.img slouží pro přímé nahrání do GPS
 
-## Instalce do BaseCamp
+## Instalace do BaseCamp
 0) Nemáte-li nainstauljte si BaseCamp, Mapsource nebyl testován
 1) Stáhněte archiv s mapou (přípona \*.zip)
 2) Rozbalte ho do složky s Vašimi mapami (nejčastěji *C:/Garmin*)
@@ -15,7 +15,7 @@ Každá mapa je vytvořena ve dvou variantách:
 6) Aktualizace map (nebude-li zmíněno jinak) se provádí pouhým přepisem původních souborů za ty v archivu (nejjednodušší je původní soubory smazat a nové nahrát)
 7) Případná odinstalace se provádí souborem *uninstall.bat*, opět ho musíte spustit jako správce
 
-## Instalce do GPS
+## Instalace do GPS
 1) Stáhněte soubor *\*.img*
 2) Máte-li velmi starou GPS (např. Garmin Etrex Legend HCx):
 	* Ta nepodporuje více mapových souborů - musíte proto nejdříve původní mapy zazálohovat

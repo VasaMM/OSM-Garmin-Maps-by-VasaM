@@ -1,16 +1,24 @@
 #!/bin/bash
+set -e		# Konec v pripade chyby
 
 # Prihlasovaci udaje pro https://ers.cr.usgs.gov/
 # Vytvorte si ucet a odkomentujte nasedujici dva radky
 # !POZOR heslo je ulozeno v nesifrovane podobe viditelne pro vsechny uzivatele!
 
-# USER=Name
-# PASS=Password
+# USERNAME=Name
+# PASSWORD=Password
+
+# Nactu prihlasovaci udaje ze souboru username a password pokud existuji
+if [ -f ./username ]; then
+	USERNAME=`cat username`
+fi
+
+if [ -f ./password ]; then
+	PASSWORD=`cat password`
+fi
 
 # Dalsi nastevni
-PYTHON=python3.4
-
-
+PYTHON=python3.5
 VERSION=30
 
 
@@ -25,6 +33,8 @@ function end {
 	exit
 }
 
+
+# Napoveda
 function viewHelp {
 	echo "# Skript pro generovani OSM map pro Garmin"
 	echo ""
@@ -124,7 +134,6 @@ while [ true ]; do
 			DATA_URL=false
 			POLY_URL=false
 			COUNTRY_NAME="Olomouc - VasaM"
-			VERSION=20
 			COUNTRY_ID=8800
 			break
 			;;
@@ -180,6 +189,17 @@ while [ true ]; do
 			POLY_URL="http://download.geofabrik.de/asia/kyrgyzstan.poly"
 			COUNTRY_NAME="Kyrgyzstan - VasaM"
 			COUNTRY_ID=8821
+			break
+			;;
+
+
+		KZ|kz )
+			echo "Tvorim mapu pro Kazachstan"
+			STATE="KZ"
+			DATA_URL="http://download.geofabrik.de/asia/kazakhstan-latest.osm.pbf"
+			POLY_URL="http://download.geofabrik.de/asia/kazakhstan.poly"
+			COUNTRY_NAME="Kazachstan - VasaM"
+			COUNTRY_ID=8822
 			break
 			;;
 
@@ -257,8 +277,8 @@ if [ ! -f ./pbf/$STATE-SRTM.osm.pbf ]; then
 		--start-way-id=10000000000 \
 		--write-timestamp \
 		--max-nodes-per-tile=0 \
-		--earthexplorer-user=$USER \
-		--earthexplorer-password=$PASS
+		--earthexplorer-user=$USERNAME \
+		--earthexplorer-password=$PASSWORD
 
 	mv ./pbf/$STATE-SRTM* ./pbf/$STATE-SRTM.osm.pbf
 else
@@ -375,5 +395,15 @@ cd img
 rm ${STATE}_VasaM.zip
 zip -r ${STATE}_VasaM.zip ${STATE}_VasaM/
 cd ..
+
+
+# Vytvorim info soubory
+echo "{"                                       > ./img/${STATE}_VasaM.zip.info
+echo "    \"version\": \"$VERSION\","         >> ./img/${STATE}_VasaM.zip.info
+echo "    \"timestamp\": \""`date +"%s"`"\""  >> ./img/${STATE}_VasaM.zip.info
+echo "}"                                      >> ./img/${STATE}_VasaM.zip.info
+
+cp  ./img/${STATE}_VasaM.zip.info ./img/${STATE}_VasaM.img.info  
+
 
 end

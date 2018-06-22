@@ -12,12 +12,16 @@ pbf/CZ.osm.pbf
 img/*VasaM/*
 img/*.zip
 img/*.img
+img/*.info
 sea/index.txt.gz
 sea/version.txt
 Cruiser/*
 map/*
 MapEdit/*
 Mapsforge/*
+WWW/*
+password
+username
 
 
 *TEST*
