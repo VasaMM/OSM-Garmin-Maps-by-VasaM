@@ -16,9 +16,8 @@ img/*.info
 sea/index.txt.gz
 sea/version.txt
 Cruiser/*
-map/*
+map/*.map
 MapEdit/*
-Mapsforge/*
 WWW/*
 password
 username
