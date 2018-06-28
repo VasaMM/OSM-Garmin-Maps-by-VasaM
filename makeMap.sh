@@ -73,6 +73,7 @@ echo "Spusteno v $TMP"
 
 # Nactu arumenty
 SPLIT=true
+MAPSFORGE=false
 while [[ $# -gt 0 ]]
 do
 	key="$1"
@@ -96,6 +97,11 @@ do
 		
 		-ns|--no_split )
 		SPLIT=false
+		shift # past argument
+		;;
+
+		-m|--mapsforge )
+		MAPSFORGE=true
 		shift # past argument
 		;;
 		
@@ -203,6 +209,17 @@ while [ true ]; do
 			break
 			;;
 
+
+		TEST|test )
+			echo "Testuji"
+			STATE="TEST"
+			DATA_URL=false
+			POLY_URL=false
+			COUNTRY_NAME="Test - VasaM"
+			COUNTRY_ID=8899
+			break
+			;;
+
 		* )
 			echo "Neznamy stat '${STATE}'. Zkuste to znovu"
 			unset STATE
@@ -296,114 +313,132 @@ fi
 $PYTHON ./hgt/hgt-downloader.py ./hgt/SRTM3v3.0 ./hgt
 
 
-# Rozdelim soubory
-INPUT_FILE=./pbf/${STATE}.osm.pbf
-INPUT_SRTM_FILE=./pbf/${STATE}-SRTM.osm.pbf
 
-if [ $SPLIT != false ]; then
-	if [ ! -d ./pbf/${STATE}-SPLITTED/ ]; then
-		java -Xmx8000m -jar ./splitter/splitter.jar $INPUT_FILE --output-dir=./pbf/${STATE}-SPLITTED/
-	fi
-	INPUT_FILE=./pbf/${STATE}-SPLITTED/*.osm.pbf
+# Generuji Mapsforge
+if [ $MAPSFORGE = true ]; then
+	cd "./Mapsforge/bin"
+	export JAVACMD_OPTIONS="-Xmx8000m"
+	
+	# Vlozim vrstevnice do mapy
+	# if [ $DOWNLOAD = true ] || [ ! -f ../pbf/$STATE-MERGE.osm.pbf ]; then
+		# ./osmosis --rb file="../../pbf/$STATE.osm.pbf" --sort-0.6 --rb "../../pbf/$STATE-SRTM.osm.pbf" --sort-0.6 --merge --wb "../../pbf/$STATE-MERGE.osm.pbf"
+	# fi
 
-	if [ ! -d ./pbf/${STATE}-SPLITTED-SRTM/ ]; then
-		java -Xmx8000m -jar ./splitter/splitter.jar $INPUT_SRTM_FILE --output-dir=./pbf/${STATE}-SPLITTED-SRTM/
+	# Generuji mapu
+	# ./osmosis --rb file="../../pbf/$STATE-MERGE.osm.pbf" --mapfile-writer file="../../map/$STATE.map" type=hd preferred-languages=en,cs threads=4 tag-conf-file="../tag-mapping.xml"
+	./osmosis --rb file="../../pbf/$STATE.osm.pbf" --mapfile-writer file="../../map/$STATE.map" type=ram preferred-languages=en tag-conf-file="../tag-mapping.xml"
+
+	cd "./../.."
+else
+	# Rozdelim soubory
+	INPUT_FILE=./pbf/${STATE}.osm.pbf
+	INPUT_SRTM_FILE=./pbf/${STATE}-SRTM.osm.pbf
+
+	if [ $SPLIT != false ]; then
+		if [ ! -d ./pbf/${STATE}-SPLITTED/ ]; then
+			java -Xmx8000m -jar ./splitter/splitter.jar $INPUT_FILE --output-dir=./pbf/${STATE}-SPLITTED/
+		fi
+		INPUT_FILE=./pbf/${STATE}-SPLITTED/*.osm.pbf
+
+		if [ ! -d ./pbf/${STATE}-SPLITTED-SRTM/ ]; then
+			java -Xmx8000m -jar ./splitter/splitter.jar $INPUT_SRTM_FILE --output-dir=./pbf/${STATE}-SPLITTED-SRTM/
+		fi
+		INPUT_SRTM_FILE=./pbf/${STATE}-SPLITTED-SRTM/*.osm.pbf
 	fi
-	INPUT_SRTM_FILE=./pbf/${STATE}-SPLITTED-SRTM/*.osm.pbf
+
+
+	# Spustim generator
+	java -Xmx8000m -jar ./mkgmap/mkgmap.jar \
+	     -c ./mkgmap-settings.conf \
+	     --mapname="${COUNTRY_ID}0001" \
+	     --overview-mapnumber="${COUNTRY_ID}0000" \
+	     --family-id="${COUNTRY_ID}" \
+	     --description="Turisticka mapa ${COUNTRY_NAME}" \
+	     --family-name="${COUNTRY_NAME}" \
+	     --series-name="${COUNTRY_NAME}" \
+	     --country-name="${COUNTRY_NAME}" \
+	     --country-abbr="${STATE}" \
+	     --product-version=$VERSION \
+	     --output-dir=./img/${STATE}_VasaM \
+	     --dem-poly=./poly/$STATE.poly \
+	     $INPUT_FILE \
+	     $INPUT_SRTM_FILE \
+	     ./garmin-style/style.txt
+
+
+	# Vytvorim instalacni bat soubor
+	# Prevedu ID do hexa tvaru
+	a=$(printf "%x\n" $COUNTRY_ID | egrep -o '[a-fA-F0-9]{2}$')
+	b=$(printf "%x\n" $COUNTRY_ID | egrep -o '^[a-fA-F0-9]{2}')
+
+	echo "echo off"                                                                                     > ./img/${STATE}_VasaM/install.bat
+	echo "echo - Instalce mapy do Mapsource/Basecamp"                                                  >> ./img/${STATE}_VasaM/install.bat
+	echo "echo - "                                                                                     >> ./img/${STATE}_VasaM/install.bat
+	echo "echo - Mapa:  \"${COUNTRY_NAME}\""                                                           >> ./img/${STATE}_VasaM/install.bat
+	echo "echo -  FID:  ${COUNTRY_ID}"                                                                 >> ./img/${STATE}_VasaM/install.bat
+	echo "echo -  PID:  1"                                                                             >> ./img/${STATE}_VasaM/install.bat
+	echo "echo - "                                                                                     >> ./img/${STATE}_VasaM/install.bat
+	echo "echo - Instalaci zrusite stiskem Ctrl-C."                                                    >> ./img/${STATE}_VasaM/install.bat
+	echo "echo - "                                                                                     >> ./img/${STATE}_VasaM/install.bat
+	echo "pause"                                                                                       >> ./img/${STATE}_VasaM/install.bat
+	echo " "                                                                                           >> ./img/${STATE}_VasaM/install.bat
+	echo "echo Zapisuji do registru:."                                                                 >> ./img/${STATE}_VasaM/install.bat
+	echo " "                                                                                           >> ./img/${STATE}_VasaM/install.bat
+	echo "set KEY=HKLM\SOFTWARE\Wow6432Node\Garmin\MapSource"                                          >> ./img/${STATE}_VasaM/install.bat
+	echo "if %PROCESSOR_ARCHITECTURE% == AMD64 goto key_ok"                                            >> ./img/${STATE}_VasaM/install.bat
+	echo "set KEY=HKLM\SOFTWARE\Garmin\MapSource"                                                      >> ./img/${STATE}_VasaM/install.bat
+	echo ":key_ok"                                                                                     >> ./img/${STATE}_VasaM/install.bat
+	echo " "                                                                                           >> ./img/${STATE}_VasaM/install.bat
+	echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID} /v ID /t REG_BINARY /d ${a}${b} /f"              >> ./img/${STATE}_VasaM/install.bat
+	echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID} /v IDX /t REG_SZ /d \"%~dp0mapset.mdx\" /f"      >> ./img/${STATE}_VasaM/install.bat
+	echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID} /v MDR /t REG_SZ /d \"%~dp0mapset_mdr.img\" /f"  >> ./img/${STATE}_VasaM/install.bat
+	echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID} /v TYP /t REG_SZ /d \"%~dp0style.typ\" /f"       >> ./img/${STATE}_VasaM/install.bat
+	echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID}\1 /v Loc /t REG_SZ /d \"%~dp0\\\" /f"            >> ./img/${STATE}_VasaM/install.bat
+	echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID}\1 /v Bmap /t REG_SZ /d \"%~dp0mapset.img\" /f"   >> ./img/${STATE}_VasaM/install.bat
+	echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID}\1 /v Tdb /t REG_SZ /d \"%~dp0mapset.tdb\" /f"    >> ./img/${STATE}_VasaM/install.bat
+	echo " "                                                                                           >> ./img/${STATE}_VasaM/install.bat
+	echo "pause"                                                                                       >> ./img/${STATE}_VasaM/install.bat
+	echo "exit 0"                                                                                      >> ./img/${STATE}_VasaM/install.bat
+
+
+	echo "echo off"                                             > ./img/${STATE}_VasaM/uninstall.bat
+	echo "echo - Odinstalace mapy z Mapsource/Basecamp"        >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "echo - "                                             >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "echo - Mapa:  \"${COUNTRY_NAME}\""                   >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "echo -  FID:  ${COUNTRY_ID}"                         >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "echo -  PID:  1"                                     >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "echo - "                                             >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "echo - Instalaci zrusite stiskem Ctrl-C."            >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "echo - "                                             >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "pause"                                               >> ./img/${STATE}_VasaM/uninstall.bat
+	echo " "                                                   >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "set KEY=HKLM\SOFTWARE\Wow6432Node\Garmin\MapSource"  >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "if %PROCESSOR_ARCHITECTURE% == AMD64 goto key_ok"    >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "set KEY=HKLM\SOFTWARE\Garmin\MapSource"              >> ./img/${STATE}_VasaM/uninstall.bat
+	echo ":key_ok"                                             >> ./img/${STATE}_VasaM/uninstall.bat
+	echo " "                                                   >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "reg DELETE %KEY%\Families\FAMILY_${COUNTRY_ID} /f"   >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "pause"                                               >> ./img/${STATE}_VasaM/uninstall.bat
+	echo "exit 0"                                              >> ./img/${STATE}_VasaM/uninstall.bat
+
+	# Prejmenuji vystupni soubor
+	mv ./img/${STATE}_VasaM/gmapsupp.img ./img/${STATE}_VasaM.img
+
+	# Vytvorim archiv
+	cd img
+	rm -f ${STATE}_VasaM.zip
+	zip -r ${STATE}_VasaM.zip ${STATE}_VasaM/
+	cd ..
+
+
+	# Vytvorim info soubory
+	echo "{"                                       > ./img/${STATE}_VasaM.zip.info
+	echo "    \"version\": \"$VERSION\","         >> ./img/${STATE}_VasaM.zip.info
+	echo "    \"timestamp\": \""`date +"%s"`"\""  >> ./img/${STATE}_VasaM.zip.info
+	echo "}"                                      >> ./img/${STATE}_VasaM.zip.info
+
+	cp  ./img/${STATE}_VasaM.zip.info ./img/${STATE}_VasaM.img.info  
+
 fi
-
-
-# Spustim generator
-java -Xmx8000m -jar ./mkgmap/mkgmap.jar \
-     -c ./mkgmap-settings.conf \
-     --mapname="${COUNTRY_ID}0001" \
-     --overview-mapnumber="${COUNTRY_ID}0000" \
-     --family-id="${COUNTRY_ID}" \
-     --description="Turisticka mapa ${COUNTRY_NAME}" \
-     --family-name="${COUNTRY_NAME}" \
-     --series-name="${COUNTRY_NAME}" \
-     --country-name="${COUNTRY_NAME}" \
-     --country-abbr="${STATE}" \
-     --product-version=$VERSION \
-     --output-dir=./img/${STATE}_VasaM \
-     --dem-poly=./poly/$STATE.poly \
-     $INPUT_FILE \
-     $INPUT_SRTM_FILE \
-     ./garmin-style/style.txt
-
-
-# Vytvorim instalacni bat soubor
-# Prevedu ID do hexa tvaru
-a=$(printf "%x\n" $COUNTRY_ID | egrep -o '[a-fA-F0-9]{2}$')
-b=$(printf "%x\n" $COUNTRY_ID | egrep -o '^[a-fA-F0-9]{2}')
-
-echo "echo off"                                                                                     > ./img/${STATE}_VasaM/install.bat
-echo "echo - Instalce mapy do Mapsource/Basecamp"                                                  >> ./img/${STATE}_VasaM/install.bat
-echo "echo - "                                                                                     >> ./img/${STATE}_VasaM/install.bat
-echo "echo - Mapa:  \"${COUNTRY_NAME}\""                                                           >> ./img/${STATE}_VasaM/install.bat
-echo "echo -  FID:  ${COUNTRY_ID}"                                                                 >> ./img/${STATE}_VasaM/install.bat
-echo "echo -  PID:  1"                                                                             >> ./img/${STATE}_VasaM/install.bat
-echo "echo - "                                                                                     >> ./img/${STATE}_VasaM/install.bat
-echo "echo - Instalaci zrusite stiskem Ctrl-C."                                                    >> ./img/${STATE}_VasaM/install.bat
-echo "echo - "                                                                                     >> ./img/${STATE}_VasaM/install.bat
-echo "pause"                                                                                       >> ./img/${STATE}_VasaM/install.bat
-echo " "                                                                                           >> ./img/${STATE}_VasaM/install.bat
-echo "echo Zapisuji do registru:."                                                                 >> ./img/${STATE}_VasaM/install.bat
-echo " "                                                                                           >> ./img/${STATE}_VasaM/install.bat
-echo "set KEY=HKLM\SOFTWARE\Wow6432Node\Garmin\MapSource"                                          >> ./img/${STATE}_VasaM/install.bat
-echo "if %PROCESSOR_ARCHITECTURE% == AMD64 goto key_ok"                                            >> ./img/${STATE}_VasaM/install.bat
-echo "set KEY=HKLM\SOFTWARE\Garmin\MapSource"                                                      >> ./img/${STATE}_VasaM/install.bat
-echo ":key_ok"                                                                                     >> ./img/${STATE}_VasaM/install.bat
-echo " "                                                                                           >> ./img/${STATE}_VasaM/install.bat
-echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID} /v ID /t REG_BINARY /d ${a}${b} /f"              >> ./img/${STATE}_VasaM/install.bat
-echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID} /v IDX /t REG_SZ /d \"%~dp0mapset.mdx\" /f"      >> ./img/${STATE}_VasaM/install.bat
-echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID} /v MDR /t REG_SZ /d \"%~dp0mapset_mdr.img\" /f"  >> ./img/${STATE}_VasaM/install.bat
-echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID} /v TYP /t REG_SZ /d \"%~dp0style.typ\" /f"       >> ./img/${STATE}_VasaM/install.bat
-echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID}\1 /v Loc /t REG_SZ /d \"%~dp0\\\" /f"            >> ./img/${STATE}_VasaM/install.bat
-echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID}\1 /v Bmap /t REG_SZ /d \"%~dp0mapset.img\" /f"   >> ./img/${STATE}_VasaM/install.bat
-echo "reg ADD %KEY%\Families\FAMILY_${COUNTRY_ID}\1 /v Tdb /t REG_SZ /d \"%~dp0mapset.tdb\" /f"    >> ./img/${STATE}_VasaM/install.bat
-echo " "                                                                                           >> ./img/${STATE}_VasaM/install.bat
-echo "pause"                                                                                       >> ./img/${STATE}_VasaM/install.bat
-echo "exit 0"                                                                                      >> ./img/${STATE}_VasaM/install.bat
-
-
-echo "echo off"                                             > ./img/${STATE}_VasaM/uninstall.bat
-echo "echo - Odinstalace mapy z Mapsource/Basecamp"        >> ./img/${STATE}_VasaM/uninstall.bat
-echo "echo - "                                             >> ./img/${STATE}_VasaM/uninstall.bat
-echo "echo - Mapa:  \"${COUNTRY_NAME}\""                   >> ./img/${STATE}_VasaM/uninstall.bat
-echo "echo -  FID:  ${COUNTRY_ID}"                         >> ./img/${STATE}_VasaM/uninstall.bat
-echo "echo -  PID:  1"                                     >> ./img/${STATE}_VasaM/uninstall.bat
-echo "echo - "                                             >> ./img/${STATE}_VasaM/uninstall.bat
-echo "echo - Instalaci zrusite stiskem Ctrl-C."            >> ./img/${STATE}_VasaM/uninstall.bat
-echo "echo - "                                             >> ./img/${STATE}_VasaM/uninstall.bat
-echo "pause"                                               >> ./img/${STATE}_VasaM/uninstall.bat
-echo " "                                                   >> ./img/${STATE}_VasaM/uninstall.bat
-echo "set KEY=HKLM\SOFTWARE\Wow6432Node\Garmin\MapSource"  >> ./img/${STATE}_VasaM/uninstall.bat
-echo "if %PROCESSOR_ARCHITECTURE% == AMD64 goto key_ok"    >> ./img/${STATE}_VasaM/uninstall.bat
-echo "set KEY=HKLM\SOFTWARE\Garmin\MapSource"              >> ./img/${STATE}_VasaM/uninstall.bat
-echo ":key_ok"                                             >> ./img/${STATE}_VasaM/uninstall.bat
-echo " "                                                   >> ./img/${STATE}_VasaM/uninstall.bat
-echo "reg DELETE %KEY%\Families\FAMILY_${COUNTRY_ID} /f"   >> ./img/${STATE}_VasaM/uninstall.bat
-echo "pause"                                               >> ./img/${STATE}_VasaM/uninstall.bat
-echo "exit 0"                                              >> ./img/${STATE}_VasaM/uninstall.bat
-
-# Prejmenuji vystupni soubor
-mv ./img/${STATE}_VasaM/gmapsupp.img ./img/${STATE}_VasaM.img
-
-# Vytvorim archiv
-cd img
-rm -f ${STATE}_VasaM.zip
-zip -r ${STATE}_VasaM.zip ${STATE}_VasaM/
-cd ..
-
-
-# Vytvorim info soubory
-echo "{"                                       > ./img/${STATE}_VasaM.zip.info
-echo "    \"version\": \"$VERSION\","         >> ./img/${STATE}_VasaM.zip.info
-echo "    \"timestamp\": \""`date +"%s"`"\""  >> ./img/${STATE}_VasaM.zip.info
-echo "}"                                      >> ./img/${STATE}_VasaM.zip.info
-
-cp  ./img/${STATE}_VasaM.zip.info ./img/${STATE}_VasaM.img.info  
-
 
 end
