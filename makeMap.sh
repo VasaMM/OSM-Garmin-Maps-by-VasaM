@@ -19,7 +19,7 @@ fi
 
 # Dalsi nastevni
 PYTHON=python3.5
-VERSION=30
+VERSION=40
 
 
 # Ukoncovaci funkce
@@ -302,12 +302,12 @@ INPUT_SRTM_FILE=./pbf/${STATE}-SRTM.osm.pbf
 
 if [ $SPLIT != false ]; then
 	if [ ! -d ./pbf/${STATE}-SPLITTED/ ]; then
-		java -Xmx4000m -jar ./splitter/splitter.jar $INPUT_FILE --output-dir=./pbf/${STATE}-SPLITTED/
+		java -Xmx8000m -jar ./splitter/splitter.jar $INPUT_FILE --output-dir=./pbf/${STATE}-SPLITTED/
 	fi
 	INPUT_FILE=./pbf/${STATE}-SPLITTED/*.osm.pbf
 
 	if [ ! -d ./pbf/${STATE}-SPLITTED-SRTM/ ]; then
-		java -Xmx4000m -jar ./splitter/splitter.jar $INPUT_SRTM_FILE --output-dir=./pbf/${STATE}-SPLITTED-SRTM/
+		java -Xmx8000m -jar ./splitter/splitter.jar $INPUT_SRTM_FILE --output-dir=./pbf/${STATE}-SPLITTED-SRTM/
 	fi
 	INPUT_SRTM_FILE=./pbf/${STATE}-SPLITTED-SRTM/*.osm.pbf
 fi
@@ -392,7 +392,7 @@ mv ./img/${STATE}_VasaM/gmapsupp.img ./img/${STATE}_VasaM.img
 
 # Vytvorim archiv
 cd img
-rm ${STATE}_VasaM.zip
+rm -f ${STATE}_VasaM.zip
 zip -r ${STATE}_VasaM.zip ${STATE}_VasaM/
 cd ..
 

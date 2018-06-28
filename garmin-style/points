@@ -178,128 +178,130 @@ mountain_pass=yes { name '${name} - ${ele} m' | '${name}' | '${ele} m' } [0x660b
 natural=tree {name '${name}' | '${description}' } [0x2907 level 1]
 place=island [0x2800 level 2]
 waterway=waterfall [0x6508 level 1]
+waterway=weir [0x11501 level 1] 	# Jez
+waterway=dam  [0x11501 level 1] 	# Hraz
 
 
 # Shops
 shop=* & opening_hours!=* { add opening_hours = '' }
 shop=* & name!=* { add name = 'Obchod' }
 
-shop=bakery { set shop = 'Pekarstvi' }
-shop=butcher { set shop = 'Reznictvi' }
-shop=confectionery { set shop = 'Cukrovinky' }
-shop=cheese { set shop = 'Syry' }
-shop=chocolate { set shop = 'Cokolada' }
-shop=coffee { set shop = 'Kava' }
-shop=convenience { set shop = 'Smisene zbozi' }
-shop=deli { set shop = 'Lahudky' }
-shop=dairy { set shop = 'Mlecne vyrobky' }
-shop=farm { set shop = 'Farmarske produkty' }
-shop=greengrocer { set shop = 'Ovoce zelenina' }
-shop=pastry { set shop = 'Sladke pecivo' }
-shop=seafood { set shop = 'Morske plody' }
-shop=spices { set shop = 'Koreni' }
-shop=tea { set shop = 'Caj' }
+shop=bakery { set shopType = 'Pekarstvi' }
+shop=butcher { set shopType = 'Reznictvi' }
+shop=confectionery { set shopType = 'Cukrovinky' }
+shop=cheese { set shopType = 'Syry' }
+shop=chocolate { set shopType = 'Cokolada' }
+shop=coffee { set shopType = 'Kava' }
+shop=convenience { set shopType = 'Smisene zbozi' }
+shop=deli { set shopType = 'Lahudky' }
+shop=dairy { set shopType = 'Mlecne vyrobky' }
+shop=farm { set shopType = 'Farmarske produkty' }
+shop=greengrocer { set shopType = 'Ovoce zelenina' }
+shop=pastry { set shopType = 'Sladke pecivo' }
+shop=seafood { set shopType = 'Morske plody' }
+shop=spices { set shopType = 'Koreni' }
+shop=tea { set shopType = 'Caj' }
 
-shop=department_store { set shop = 'Obchodni dum'; add cart_icon = 'yes'; }
-shop=general { set shop = 'Smisene zbozi' }
-shop=kiosk { set shop = 'Stanek' }
-shop=mall { set shop = 'Obchodni stredisko'; add cart_icon = 'yes'; }
-shop=supermarket { set shop = 'Supermarket'; add cart_icon = 'yes'; }
-shop=wholesale { set shop = 'Velkoobchod'; add cart_icon = 'yes'; }
+shop=department_store { set shopType = 'Obchodni dum'; add cart_icon = 'yes'; }
+shop=general { set shopType = 'Smisene zbozi' }
+shop=kiosk { set shopType = 'Stanek' }
+shop=mall { set shopType = 'Obchodni stredisko'; add cart_icon = 'yes'; }
+shop=supermarket { set shopType = 'Supermarket'; add cart_icon = 'yes'; }
+shop=wholesale { set shopType = 'Velkoobchod'; add cart_icon = 'yes'; }
 
-shop=clothes { set shop = 'Odevy' }
-shop=fashion { set shop = 'Moda' }
-shop=shoes { set shop = 'Obuv' }
-shop=tailor { set shop = 'Krejcovstvi' }
-shop=watches { set shop = 'Hodinky' }
+shop=clothes { set shopType = 'Odevy' }
+shop=fashion { set shopType = 'Moda' }
+shop=shoes { set shopType = 'Obuv' }
+shop=tailor { set shopType = 'Krejcovstvi' }
+shop=watches { set shopType = 'Hodinky' }
 
-shop=second_hand { set shop = 'Second hand' }
-shop=variety_store { set shop = 'Drobnosti' }
+shop=second_hand { set shopType = 'Second hand' }
+shop=variety_store { set shopType = 'Drobnosti' }
 
-shop=beauty { set shop = 'Kosmeticky salon' }
-shop=chemist { set shop = 'Drogerie' }
-shop=cosmetics { set shop = 'Kosmetika' }
-shop=erotic { set shop = 'Sex shop' }
-shop=hairdresser { set shop = 'Kadernictvi' }
-shop=herbalist { set shop = 'Bylinky' }
-shop=massage { set shop = 'Masazni salon' }
-shop=medical_supply { set shop = 'Zdravotnicke potreby' }
-shop=nutrition_supplements { set shop = 'Potravinove doplnky' }
-shop=optician { set shop = 'Ocni optika' }
-shop=perfumery { set shop = 'Parfumerie' }
-shop=tattoo { set shop = 'Tetovaci salon' }
+shop=beauty { set shopType = 'Kosmeticky salon' }
+shop=chemist { set shopType = 'Drogerie' }
+shop=cosmetics { set shopType = 'Kosmetika' }
+shop=erotic { set shopType = 'Sex shop' }
+shop=hairdresser { set shopType = 'Kadernictvi' }
+shop=herbalist { set shopType = 'Bylinky' }
+shop=massage { set shopType = 'Masazni salon' }
+shop=medical_supply { set shopType = 'Zdravotnicke potreby' }
+shop=nutrition_supplements { set shopType = 'Potravinove doplnky' }
+shop=optician { set shopType = 'Ocni optika' }
+shop=perfumery { set shopType = 'Parfumerie' }
+shop=tattoo { set shopType = 'Tetovaci salon' }
 
-shop=doityourself { set shop = 'Produkty pro kutily' }
-shop=electrical { set shop = 'Elektricke zarizeni' }
-shop=florist { set shop = 'Kvetinarstvi' }
-shop=garden_centre { set shop = 'Zahradnicke centrum' }
-shop=gas { set shop = 'Technicke plyny' }
-shop=glaziery { set shop = 'Sklenarstvi' }
-shop=hardware { set shop = 'Zelezarstvi' }
-shop=houseware { set shop = 'Domaci potreby' }
-shop=locksmith { set shop = 'Zamky, klice' }
-shop=paint { set shop = 'Barvy, laky' }
-shop=security { set shop = 'Bezpecnostni zarizeni' }
-shop=trade { set shop = 'Produkty pro remeslniky' }
+shop=doityourself { set shopType = 'Produkty pro kutily' }
+shop=electrical { set shopType = 'Elektricke zarizeni' }
+shop=florist { set shopType = 'Kvetinarstvi' }
+shop=garden_centre { set shopType = 'Zahradnicke centrum' }
+shop=gas { set shopType = 'Technicke plyny' }
+shop=glaziery { set shopType = 'Sklenarstvi' }
+shop=hardware { set shopType = 'Zelezarstvi' }
+shop=houseware { set shopType = 'Domaci potreby' }
+shop=locksmith { set shopType = 'Zamky, klice' }
+shop=paint { set shopType = 'Barvy, laky' }
+shop=security { set shopType = 'Bezpecnostni zarizeni' }
+shop=trade { set shopType = 'Produkty pro remeslniky' }
 
-shop=antiques { set shop = 'Starozitnosti' }
+shop=antiques { set shopType = 'Starozitnosti' }
 
-shop=computer { set shop = 'Pocitace' }
-shop=robot { set shop = 'Roboti' }
-shop=electronics { set shop = 'Elektro' }
-shop=hifi { set shop = 'Hi-Fi' }
-shop=mobile_phone { set shop = 'Mobilni telefony' }
-shop=radiotechnics { set shop = 'Elektrosoucastky' }
+shop=computer { set shopType = 'Pocitace' }
+shop=robot { set shopType = 'Roboti' }
+shop=electronics { set shopType = 'Elektro' }
+shop=hifi { set shopType = 'Hi-Fi' }
+shop=mobile_phone { set shopType = 'Mobilni telefony' }
+shop=radiotechnics { set shopType = 'Elektrosoucastky' }
 
-shop=bicycle { set shop = 'Kola' }
-shop=boat { set shop = 'Lode' }
-shop=car { set shop = 'Auta' }
-shop=fuel { set shop = 'Paliva' }
-shop=fishing { set shop = 'Rybarstvi' }
-shop=hunting { set shop = 'Lov' }
-shop=motorcycle { set shop = 'Motocykly' }
-shop=outdoor { set shop = 'Outdoor' }
-shop=scuba_diving { set shop = 'Potapeni' }
-shop=ski { set shop = 'Lyze' }
-shop=sports { set shop = 'Sportovni potreby' }
+shop=bicycle { set shopType = 'Kola' }
+shop=boat { set shopType = 'Lode' }
+shop=car { set shopType = 'Auta' }
+shop=fuel { set shopType = 'Paliva' }
+shop=fishing { set shopType = 'Rybarstvi' }
+shop=hunting { set shopType = 'Lov' }
+shop=motorcycle { set shopType = 'Motocykly' }
+shop=outdoor { set shopType = 'Outdoor' }
+shop=scuba_diving { set shopType = 'Potapeni' }
+shop=ski { set shopType = 'Lyze' }
+shop=sports { set shopType = 'Sportovni potreby' }
 
-shop=art { set shop = 'Umeni' }
-shop=collector { set shop = 'Sberatele' }
-shop=craft { set shop = 'Umelecke potreby' }
-shop=games { set shop = 'Hry' }
-shop=model { set shop = 'Modelarstvi' }
-shop=music { set shop = 'Hudba' }
-shop=musical_instrument { set shop = 'Hudebni nastroje' }
-shop=photo { set shop = 'Fotografie' }
-shop=camera { set shop = 'Fotoaparaty' }
-shop=video { set shop = 'Filmy' }
-shop=video_games { set shop = 'Pocitacove hry' }
+shop=art { set shopType = 'Umeni' }
+shop=collector { set shopType = 'Sberatele' }
+shop=craft { set shopType = 'Umelecke potreby' }
+shop=games { set shopType = 'Hry' }
+shop=model { set shopType = 'Modelarstvi' }
+shop=music { set shopType = 'Hudba' }
+shop=musical_instrument { set shopType = 'Hudebni nastroje' }
+shop=photo { set shopType = 'Fotografie' }
+shop=camera { set shopType = 'Fotoaparaty' }
+shop=video { set shopType = 'Filmy' }
+shop=video_games { set shopType = 'Pocitacove hry' }
 
-shop=books { set shop = 'Knihkupectvi' }
-shop=gift { set shop = 'Suvenyry' }
-shop=lottery { set shop = 'Loterie' }
-shop=newsagent { set shop = 'Novinovy' }
-shop=stationery { set shop = 'Kancelarse potreby' }
-shop=ticket { set shop = 'Vstupenky' }
+shop=books { set shopType = 'Knihkupectvi' }
+shop=gift { set shopType = 'Suvenyry' }
+shop=lottery { set shopType = 'Loterie' }
+shop=newsagent { set shopType = 'Novinovy' }
+shop=stationery { set shopType = 'Kancelarse potreby' }
+shop=ticket { set shopType = 'Vstupenky' }
 
-shop=bookmaker { set shop = 'Sazkova kancelar' }
-shop=copyshop { set shop = 'Kopy centrum' }
-shop=dry_cleaning { set shop = 'cistirna odevů' }
-shop=laundry { set shop = 'Pradelna' }
-shop=money_lender { set shop = 'Lichvar' }
-shop=party { set shop = 'Party' }
-shop=pawnbroker { set shop = 'Zastavarna' }
-shop=pet { set shop = 'Zverimex' }
-shop=pyrotechnics { set shop = 'Pyrotechnika' }
-shop=religion { set shop = 'Nabozenstvi' }
-shop=tobacco { set shop = 'Tabak' }
-shop=toys { set shop = 'Hrackarna' }
-shop=travel_agency { set shop = 'Cestovni kancelar' }
-shop=vacant { set shop = 'Prazdny obchod' }
-shop=weapons { set shop = 'Zbrane' }
+shop=bookmaker { set shopType = 'Sazkova kancelar' }
+shop=copyshop { set shopType = 'Kopy centrum' }
+shop=dry_cleaning { set shopType = 'cistirna odevů' }
+shop=laundry { set shopType = 'Pradelna' }
+shop=money_lender { set shopType = 'Lichvar' }
+shop=party { set shopType = 'Party' }
+shop=pawnbroker { set shopType = 'Zastavarna' }
+shop=pet { set shopType = 'Zverimex' }
+shop=pyrotechnics { set shopType = 'Pyrotechnika' }
+shop=religion { set shopType = 'Nabozenstvi' }
+shop=tobacco { set shopType = 'Tabak' }
+shop=toys { set shopType = 'Hrackarna' }
+shop=travel_agency { set shopType = 'Cestovni kancelar' }
+shop=vacant { set shopType = 'Prazdny obchod' }
+shop=weapons { set shopType = 'Zbrane' }
 
-shop=* & cart_icon = 'yes' { set name = '${name} ${opening_hours} (${shop})' } [0x2e04 level 0]
-shop=* { set name = '${name} ${opening_hours} (${shop})' } [0x2e02 level 0]
+shop=* & cart_icon = 'yes' { set name = '${name} ${opening_hours} (${shopType})' } [0x2e04 level 0]
+shop=* { set name = '${name} ${opening_hours} (${shopType})' } [0x2e02 level 0]
 
 amenity=shop { set name = '${name} FIXME' } [0x2e02 level 0]
 amenity=shopping { set name = '${name} FIXME' } [0x2e02 level 0]

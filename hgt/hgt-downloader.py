@@ -59,5 +59,8 @@ for file in os.listdir( inputDir ):
 
 		# urllib.request.urlretrieve( 'http://builder.osmand.net/terrain-aster-srtm-eudem/' + fileName + '.tif', outputDir + 'SRTM3v3.0/' + fileName + '.tif' )
 		
-	print ( '\r' + fileName + ': Stazeno    ' )
+	print ( '\r' + fileName + ': Stazeno    ', end = '' )
+	# print ( '\r' + fileName + ': Stazeno    ' )
 	sys.stdout.flush()
+
+print ( '\rVsechny hgt soubory stazeny' )

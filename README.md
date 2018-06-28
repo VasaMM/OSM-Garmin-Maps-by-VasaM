@@ -43,6 +43,10 @@ Ve skriptu jsou defivány následující státy/oblasti:
 * `UA` - Ukrajina
 * `RO` - Rumunsko
 * `KG` - Kyrgyzstán
+* `KZ` - Kazachstán
+
+### Hotové mapy
+Hotové mapy najdete na stránce [http://www.osmg.brazovic.cz/](http://www.osmg.brazovic.cz/)
 
 
 Chcete-li přidat další mapu či oblast, nejednoduší je zkopírovat existjící a upravit ji. Nezapomeňte změnit ID na nějaké jiné. Pro vlastní mapy doporučuji jiné, než 88xx. Toto čislování budu používat pro mnou generované mapy a mohlo by dojít ke konfliktu.

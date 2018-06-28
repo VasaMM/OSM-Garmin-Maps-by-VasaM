@@ -27,8 +27,8 @@
 
 
 # Overways
-bridge=yes [0x10e0e level 2 continue]
-tunnel=yes [0x10e0f level 2 continue]
+bridge=yes [0x10e0e level 1 continue]
+tunnel=yes [0x10e0f level 1 continue]
 
 
 # Barriers
@@ -97,7 +97,7 @@ highway=steps                    { name '${name}' } [0x1a road_class 0 level 1]
 
 
 # Mop up any unrecognised highway types
-highway=* & highway!=abandoned & highway!=disused & area!=yes [0x06 road_class 0 level 1]
+highway=* & highway!=abandoned & highway!=disused & highway!=proposed & area!=yes [0x06 road_class 0 level 1]
 
 
 # Lifts of different kinds
@@ -111,10 +111,14 @@ power=minor_line { name '${voltage} V' } [0x29 level 1]
 
 
 # Rivers
-waterway=canal [0x1f level 2]
-waterway=drain [0x1f level 1]
+waterway=canal { name '${name}' | 'Kanal' } [0x1f level 2]
+waterway=drain { name '${name}' | 'Umely odtok' } [0x1f level 1]
+waterway=fish_pass { name '${name}' | 'Ryby prechod' } [0x1f level 1]
 waterway=river [0x1f level 3]
 waterway=stream [0x18 level 2]
+
+waterway=weir [0x10e17 level 1] 	# Jez
+waterway=dam  [0x10e18 level 1] 	# Hraz
 
 
 # Contour lines

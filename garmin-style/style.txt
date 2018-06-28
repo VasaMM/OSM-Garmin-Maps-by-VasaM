@@ -46,6 +46,8 @@ Type=0x10f10,5
 Type=0x01a00,5
 Type=0x04d00,5
 Type=0x03c00,6
+Type=0x03f00,6
+Type=0x04000,6
 Type=0x04600,6
 Type=0x00900,7
 Type=0x10902,7
@@ -504,13 +506,73 @@ Xpm="0 0 1 0"
 [_polygon]
 Type=0x3c
 ;GRMN_TYPE: Water Areas/LAKE_100MI/Lake less than 250 sq mi but greater or equal to 100 sq mi in area/Non NT
-String1=0x12,Jezero/rybnik
+String1=0x12,Vodni plocha
 ExtendedLabels=Y
 FontStyle=Default
 CustomColor=Day
 DaycustomColor:#0000D5
 Xpm="0 0 1 0"
 "1 c #7B95FF"
+[end]
+
+
+[_polygon]
+Type=0x3f
+;GRMN_TYPE: Water Areas/LAKE, LAKE_5MI/Medium sized lake, typically between 5 and 30 sq mi in area/Non NT
+String1=0x12,Vodni nadrz
+ExtendedLabels=Y
+FontStyle=Default
+CustomColor=Day
+DaycustomColor:#0000D5
+Xpm="0 0 1 0"
+"1 c #7B95FF"
+[end]
+
+
+[_polygon]
+Type=0x40
+;GRMN_TYPE: Water Areas/LAKE_1MI/Small lake, typically less than 5 sq mi but greater or equal to 1 sq mi in area/Non NT
+String1=0x12,Privalova nadrz
+ExtendedLabels=Y
+FontStyle=Default
+CustomColor=Day
+DaycustomColor:#0000D5
+Xpm="32 32 2 1"
+"! c #7B95FF"
+"  c none"
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+;12345678901234567890123456789012
 [end]
 
 
@@ -2969,6 +3031,35 @@ ExtendedLabels=N
 [end]
 
 
+[_line]
+Type=0x10e17
+;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_24/Non-routable customizable line/Non NT, NT
+UseOrientation=Y
+Xpm="32 1 2  1"
+"! c #0030FF"
+"  c none"
+"!!  !!  !!  !!  !!  !!  !!  !!  "
+;12345678901234567890123456789012
+String1=0x12,Jez
+ExtendedLabels=N
+[end]
+
+
+[_line]
+Type=0x10e18
+;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_25/Non-routable customizable line/Non NT, NT
+UseOrientation=N
+Xpm="32 2 2  1"
+"! c #0030FF"
+"  c none"
+"!!!!    !!!!    !!!!    !!!!    "
+"!!!!    !!!!    !!!!    !!!!    "
+;12345678901234567890123456789012
+String1=0x12,Hraz
+ExtendedLabels=N
+[end]
+
+
 ;====================== POINTS ==========================
 
 
@@ -3155,7 +3246,7 @@ Type=0x02902
 String1=0x12,Banka
 ExtendedLabels=N
 DayXpm="11 13 4 1"   Colormode=16
-"!	c #39CA00"
+"!	c #7B95FF"
 "#	c #FFFFFF"
 "%	c #000000"
 "  	c none"
@@ -6043,4 +6134,48 @@ DayXpm="16 17 4 1"   Colormode=16
 "#%%%%%%%%%%%%%%#"
 " ############## "
 ;1234567890123456
+[end]
+
+
+[_point]
+Type=0x11501
+;GRMN_TYPE: User Customizable Points/CUSTOMIZABLE_POINT_2/User customizable point type/Non NT, NT
+String1=0x12,Jez
+ExtendedLabels=N
+DayXpm="7 7 3 1"   Colormode=16
+"!	c #0030B4"
+"#	c #FFFFFF"
+"  	c none"
+"  ###  "
+" #!!!# "
+"#!!!!!#"
+"#!!!!!#"
+"#!!!!!#"
+" #!!!# "
+"  ###  "
+;1234567
+[end]
+
+
+[_point]
+Type=0x11502
+;GRMN_TYPE: User Customizable Points/CUSTOMIZABLE_POINT_3/User customizable point type/Non NT, NT
+String1=0x12,Hraz
+ExtendedLabels=N
+DayXpm="11 11 3 1"   Colormode=16
+"!	c #0030B4"
+"#	c #FFFFFF"
+"  	c none"
+"    ###    "
+"   #!!!#   "
+"  #!!!!!#  "
+" #!!!!!!!# "
+"#!!!!!!!!!#"
+"#!!!!!!!!!#"
+"#!!!!!!!!!#"
+" #!!!!!!!# "
+"  #!!!!!#  "
+"   #!!!#   "
+"    ###    "
+;12345678901
 [end]

@@ -31,8 +31,7 @@ landuse=allotments [0x10f04 level 2]
 landuse=farm [0x10f0b level 2]
 landuse=farmyard [0x10f0b level 2]
 landuse=farmland [0x10f16 level 4]
-landuse=basin [0x3c level 2]
-landuse=reservoir [0x3c level 2]
+landuse=basin [0x40 level 2]	# Nadrz na privalovou vodu
 landuse=cemetary | landuse=cemetery [0x1a level 2]
 landuse=recreation_ground [0x19 level 2]
 landuse=village_green [0x17 level 2]
@@ -145,13 +144,28 @@ natural=wetland | natural=marsh | natural=mud [0x51 level 2]
 natural=scree [0x10f10 level 2]
 natural=sea [0x32 level 4]
 natural=bare_rock [0x10f06 level 4]
+
+
+# Vodni plochy
+natural=water & water=lake             { set waterType = 'Jezero' }
+natural=water & water=lagoon           { set waterType = 'Laguna' }
+natural=water & water=pond             { set waterType = 'Rybnik' }
+natural=water & water=reflecting_pool  { set waterType = 'Okrasne jezirko' }
+natural=water & water=canal            { set waterType = 'Vodni kanal' }
+natural=water & water=fish_pass        { set waterType = 'Rybi prechod' }
+natural=water & water=oxbow            { set waterType = 'Mrtve rameno' }
+natural=water & water=lock             { set waterType = 'Zdymadlo' }
+natural=water & water=moat             { set waterType = 'Vodni prikop' }
+natural=water & water=stream_pool      { set waterType = 'Jezirko na potoce' }
+
+natural=water {
+	add waterType = 'Vodni plocha';
+	set name = '${name} (${waterType})' | '${waterType}';
+}
+
 natural=water & area_size() > 25000000 [0x3c level 4]
 natural=water [0x3c level 2]
-
-
-# Water
-waterway=riverbank [0x46 level 1]
-water=wastewater [0x10f08 level 2]
+landuse=reservoir | ( natural=water & water=reservoir ) [0x3f level 2]	# Vodni nadrz
 
 
 # Other

@@ -1,5 +1,5 @@
 # Mapy pro Garminy
-Ke stažení na [https://drive.google.com/drive/folders/1K3PjVVYU77PY3USZXQ19TNtDStcKYq-B](https://drive.google.com/drive/folders/1K3PjVVYU77PY3USZXQ19TNtDStcKYq-B) 
+Ke stažení na [http://www.osmg.brazovic.cz/](http://www.osmg.brazovic.cz/) 
 
 Každá mapa je vytvořena ve dvou variantách:
 * Soubor \*.zip obsahuje soubory pro použití v BaseCamp
