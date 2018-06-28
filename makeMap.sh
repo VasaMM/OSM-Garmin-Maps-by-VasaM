@@ -19,6 +19,7 @@ fi
 
 # Dalsi nastevni
 PYTHON=python3.5
+JAVAMEM=-Xmx8000m
 VERSION=40
 
 
@@ -317,16 +318,16 @@ $PYTHON ./hgt/hgt-downloader.py ./hgt/SRTM3v3.0 ./hgt
 # Generuji Mapsforge
 if [ $MAPSFORGE = true ]; then
 	cd "./Mapsforge/bin"
-	export JAVACMD_OPTIONS="-Xmx8000m"
+	export JAVACMD_OPTIONS="$JAVAMEM"
 	
 	# Vlozim vrstevnice do mapy
-	# if [ $DOWNLOAD = true ] || [ ! -f ../pbf/$STATE-MERGE.osm.pbf ]; then
-		# ./osmosis --rb file="../../pbf/$STATE.osm.pbf" --sort-0.6 --rb "../../pbf/$STATE-SRTM.osm.pbf" --sort-0.6 --merge --wb "../../pbf/$STATE-MERGE.osm.pbf"
-	# fi
+	if [ $DOWNLOAD = true ] || [ ! -f ../pbf/$STATE-MERGE.osm.pbf ]; then
+		./osmosis --rb file="../../pbf/$STATE.osm.pbf" --sort-0.6 --rb "../../pbf/$STATE-SRTM.osm.pbf" --sort-0.6 --merge --wb "../../pbf/$STATE-MERGE.osm.pbf"
+	fi
 
 	# Generuji mapu
 	# ./osmosis --rb file="../../pbf/$STATE-MERGE.osm.pbf" --mapfile-writer file="../../map/$STATE.map" type=hd preferred-languages=en,cs threads=4 tag-conf-file="../tag-mapping.xml"
-	./osmosis --rb file="../../pbf/$STATE.osm.pbf" --mapfile-writer file="../../map/$STATE.map" type=ram preferred-languages=en tag-conf-file="../tag-mapping.xml"
+	./osmosis --rb file="../../pbf/$STATE-MERGE.osm.pbf" --mapfile-writer file="../../map/$STATE.map" type=ram preferred-languages=en tag-conf-file="../tag-mapping.xml"
 
 	cd "./../.."
 else
@@ -336,19 +337,19 @@ else
 
 	if [ $SPLIT != false ]; then
 		if [ ! -d ./pbf/${STATE}-SPLITTED/ ]; then
-			java -Xmx8000m -jar ./splitter/splitter.jar $INPUT_FILE --output-dir=./pbf/${STATE}-SPLITTED/
+			java $JAVAMEM -jar ./splitter/splitter.jar $INPUT_FILE --output-dir=./pbf/${STATE}-SPLITTED/
 		fi
 		INPUT_FILE=./pbf/${STATE}-SPLITTED/*.osm.pbf
 
 		if [ ! -d ./pbf/${STATE}-SPLITTED-SRTM/ ]; then
-			java -Xmx8000m -jar ./splitter/splitter.jar $INPUT_SRTM_FILE --output-dir=./pbf/${STATE}-SPLITTED-SRTM/
+			java $JAVAMEM -jar ./splitter/splitter.jar $INPUT_SRTM_FILE --output-dir=./pbf/${STATE}-SPLITTED-SRTM/
 		fi
 		INPUT_SRTM_FILE=./pbf/${STATE}-SPLITTED-SRTM/*.osm.pbf
 	fi
 
 
 	# Spustim generator
-	java -Xmx8000m -jar ./mkgmap/mkgmap.jar \
+	java $JAVAMEM -jar ./mkgmap/mkgmap.jar \
 	     -c ./mkgmap-settings.conf \
 	     --mapname="${COUNTRY_ID}0001" \
 	     --overview-mapnumber="${COUNTRY_ID}0000" \
