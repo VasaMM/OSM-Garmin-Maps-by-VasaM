@@ -1,18 +1,10 @@
-﻿# Levels:
-# 0: under 120 m, zoom 24, city
-# 1: under 300 m, zoom 23, hiking
-# 2: under 2 km, zoom 20, cycling
-# 3: under 8 km, zoom 18, car
-# 4: under 30 km, zoom 16, overview
-# 5: zoom 0, overview
-
-# We use --add-pois-to-areas so most of the polygons are processed in points.
+﻿# We use --add-pois-to-areas so most of the polygons are processed in points.
 
 
 # Buildings
-building=cathedral [0x10f13 level 1]
-building=church [0x10f14 level 1]
-building=chapel [0x10f15 level 1]
+building=cathedral [0x10f13 level 0]
+building=church [0x10f14 level 0]
+building=chapel [0x10f15 level 0]
 
 
 # Transportation
@@ -35,7 +27,6 @@ landuse=basin [0x40 level 2]	# Nadrz na privalovou vodu
 landuse=cemetary | landuse=cemetery [0x1a level 2]
 landuse=recreation_ground [0x19 level 2]
 landuse=village_green [0x17 level 2]
-landuse=residential [0x10102 level 2]
 landuse=commercial [0x0c level 2]
 landuse=industrial [0x0c level 2]
 landuse=greenfield [0x17 level 2]
@@ -45,6 +36,7 @@ landuse=retail [0x08 level 2]
 landuse=hop_garden [0x10f03 level 4]
 landuse=landfill [0x10f12 level 2]
 landuse=plant_nursery [0x10f17 level 4]
+landuse=residential [0x10102 level 3]
 
 
 # Forests
@@ -164,8 +156,9 @@ natural=water {
 }
 
 natural=water & area_size() > 25000000 [0x3c level 4]
-natural=water [0x3c level 2]
-landuse=reservoir | ( natural=water & water=reservoir ) [0x3f level 2]	# Vodni nadrz
+natural=water [0x3c level 1]
+landuse=reservoir | ( natural=water & water=reservoir ) [0x3f level 1]	# Vodni nadrz
+waterway=riverbank [0x046 level 1]
 
 
 # Other
@@ -178,8 +171,9 @@ tourism=camp_site [0x10f11]
 made=spoil_heap [0x10f0d level 2]
 
 
-# Other buildings
-building=* [0x13 level 1]
+# Other buildings and cities
+building=* [0x13 level 0]
+mkgmap:admin_level8=* [0x02 level 3]
 
 
 # add the following lines to your lines file

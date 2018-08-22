@@ -15,45 +15,47 @@ CodePage=1252
 
 ;=========== POLYGONES : PRIORITE DANS L'AFFICHAGE ======
 [_drawOrder]
+Type=0x001,1
+Type=0x002,1
 Type=0x10102,1
-Type=0x03200,1
-Type=0x00700,2
-Type=0x00800,2
-Type=0x00c00,2
+Type=0x032,1
+Type=0x007,2
+Type=0x008,2
+Type=0x00c,2
 Type=0x10f04,2
 Type=0x10f0b,2
 Type=0x10f18,2
 Type=0x10f19,2
 Type=0x10f1a,2
-Type=0x05000,2
+Type=0x050,2
 Type=0x10f01,3
 Type=0x10f02,3
 Type=0x10f0f,3
 Type=0x10f16,3
-Type=0x01700,3
+Type=0x017,3
 Type=0x10f00,4
 Type=0x10f03,4
 Type=0x10f07,4
 Type=0x10f11,4
 Type=0x10f17,4
-Type=0x01800,4
-Type=0x01900,4
-Type=0x04e00,4
-Type=0x04f00,4
+Type=0x018,4
+Type=0x019,4
+Type=0x04e,4
+Type=0x04f,4
 Type=0x10f05,5
 Type=0x10f06,5
 Type=0x10f10,5
-Type=0x01a00,5
-Type=0x04d00,5
-Type=0x03c00,6
-Type=0x03f00,6
-Type=0x04000,6
-Type=0x04600,6
-Type=0x00900,7
+Type=0x01a,5
+Type=0x04d,5
+Type=0x03c,6
+Type=0x03f,6
+Type=0x040,6
+Type=0x046,6
+Type=0x009,7
 Type=0x10902,7
-Type=0x00e00,7
-Type=0x01300,8
-Type=0x05100,8
+Type=0x00e,7
+Type=0x013,8
+Type=0x051,8
 Type=0x10f08,9
 Type=0x10f09,9
 Type=0x10f0a,9
@@ -65,7 +67,7 @@ Type=0x10f13,9
 Type=0x10f14,9
 Type=0x10f15,9
 Type=0x10908,10
-Type=0x00400,11
+Type=0x004,11
 [End]
 
 
@@ -73,6 +75,49 @@ Type=0x00400,11
 
 
 ;===================== POLYGONES ========================
+
+
+[_polygon]
+Type=0x02
+;GRMN_TYPE: Urban Areas/SMALL_CITY/Small urban area, less than 200 000 inhabitants/Non NT
+ExtendedLabels=N
+Xpm="32 32 2 1"
+"! c #FF30FF"
+"  c none"
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+;12345678901234567890123456789012
+[end]
 
 
 [_polygon]
@@ -2171,7 +2216,7 @@ UseOrientation=N
 LineWidth=2
 BorderWidth=1
 Xpm="0 0 2 0"
-"1 c #FFFFFF"
+"1 c #FFFF8B"
 "2 c #000000"
 String1=0x12,3. trida
 ExtendedLabels=N
@@ -2185,7 +2230,7 @@ UseOrientation=N
 LineWidth=2
 BorderWidth=1
 Xpm="0 0 2 0"
-"1 c #E6E6E6"
+"1 c #FFFFFF"
 "2 c #000000"
 String1=0x12,Ulice
 ExtendedLabels=N
@@ -2210,13 +2255,12 @@ ExtendedLabels=N
 Type=0x08
 ;GRMN_TYPE: Roads/LOW_SPEED_RAMP/Highway ramp which is to be driven at low speeds/Non NT, NT
 UseOrientation=N
-Xpm="32 4 2  1"
+Xpm="32 3 2  1"
 "! c #313131"
 "# c #C5C5C5"
-"!!#!!#!!#!!#!!#!!#!!#!!#!!#!!#!!"
+"!!#!!#!!#!!#!!#!!#!!#!!#!!#!!#!#"
 "################################"
-"################################"
-"!!#!!#!!#!!#!!#!!#!!#!!#!!#!!#!!"
+"!!#!!#!!#!!#!!#!!#!!#!!#!!#!!#!#"
 ;12345678901234567890123456789012
 String1=0x12,Chodnik
 ExtendedLabels=N
@@ -2239,12 +2283,10 @@ ExtendedLabels=N
 Type=0x0a
 ;GRMN_TYPE: Roads/UNPAVED_ROAD/Gravel or dirt road/Non NT, NT
 UseOrientation=N
-Xpm="32 3 2  1"
+Xpm="32 1 2  1"
 "! c #313131"
 "  c none"
-"!!!!!!! !!!!!!! !!!!!!! !!!!!!! "
-"!!!!!!! !!!!!!! !!!!!!! !!!!!!! "
-"!!!!!!! !!!!!!! !!!!!!! !!!!!!! "
+"!!! !!! !!! !!! !!! !!! !!! !!! "
 ;12345678901234567890123456789012
 String1=0x12,Pesina
 ExtendedLabels=N
@@ -2393,11 +2435,10 @@ ExtendedLabels=N
 Type=0x1a
 ;GRMN_TYPE: Roads/INTERNATIONAL_FERRY/Major water or rail ferry/Non NT, NT
 UseOrientation=N
-Xpm="32 4 2  1"
+Xpm="32 3 2  1"
 "! c #313131"
 "# c #C5C5C5"
 "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-"###!###!###!###!###!###!###!###!"
 "###!###!###!###!###!###!###!###!"
 "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 ;12345678901234567890123456789012
@@ -2964,7 +3005,7 @@ Type=0x10e13
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_20/Non-routable customizable line/Non NT, NT
 UseOrientation=N
 Xpm="32 5 2  1"
-"! c #000000"
+"! c #626262"
 "  c none"
 "!!      !!      !!      !!      "
 "!!      !!      !!      !!      "
@@ -2982,7 +3023,7 @@ Type=0x10e14
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_21/Non-routable customizable line/Non NT, NT
 UseOrientation=N
 Xpm="32 5 2  1"
-"! c #FF0000"
+"! c #FF6500"
 "  c none"
 "!!      !!      !!      !!      "
 "!!      !!      !!      !!      "
@@ -3018,7 +3059,7 @@ Type=0x10e16
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_23/Non-routable customizable line/Non NT, NT
 UseOrientation=N
 Xpm="32 5 2  1"
-"! c #626262"
+"! c #BD6500"
 "  c none"
 "!!      !!      !!      !!      "
 "!!      !!      !!      !!      "
@@ -5941,7 +5982,7 @@ DayXpm="16 16 7 1"   Colormode=16
 [_point]
 Type=0x06605
 ;GRMN_TYPE: Geographical Named Points of Interest - Land Related/BENCH/Bench/Non NT, NT
-String1=0x12,Lavecka
+String1=0x12,Lavicka
 ExtendedLabels=N
 DayXpm="14 8 3 1"   Colormode=16
 "!	c #BD6500"

@@ -1,1 +1,9 @@
-levels = 0:24,1:23,2:21,3:18,4:16,5:11
+levels = 0:24,1:23,2:22,3:20,4:18,5:12
+
+# Levels:
+# 0: <= 120 m, zoom 24, city
+# 1: <= 300 m, zoom 23, hiking
+# 2: <= 1.2 km, zoom 20, cycling
+# 3: <= 8 km, zoom 18, car
+# 4: <= 30 km, zoom 16, overview
+# 5: zoom 0, overview
