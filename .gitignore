@@ -1,14 +1,12 @@
-hgt/hgtIndex_3_v3.0.txt
-*.tif
 *.bnd
 *.hgt
+viewfinderHgtIndex_3.txt
 pbf/*SPLITTED*
 pbf/*SRTM*
 pbf/*
 poly/*
 sea/*.pbf
 bounds/version.txt
-pbf/CZ.osm.pbf
 img/*VasaM/*
 img/*.zip
 img/*.img
@@ -19,9 +17,13 @@ Cruiser/*
 map/*.map
 MapEdit/*
 WWW/*
-password
-username
+
+
+FTPaddress
+FTPpassword
+FTPusername
 
 
 *TEST*
 *.lnk
+make.cmd
