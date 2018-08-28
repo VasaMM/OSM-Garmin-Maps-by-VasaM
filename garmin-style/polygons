@@ -173,8 +173,17 @@ made=spoil_heap [0x10f0d level 2]
 
 # Other buildings and cities
 building=* [0x13 level 0]
-mkgmap:admin_level8=* [0x02 level 3]
 
+
+
+# Admin levels
+mkgmap:country!=* & mkgmap:admin_level2=* { set mkgmap:country='${mkgmap:admin_level2}' }
+
+mkgmap:city!=* & mkgmap:admin_level8=*  { set mkgmap:city='${mkgmap:admin_level8}'  }
+mkgmap:city!=* & mkgmap:admin_level9=*  { set mkgmap:city='${mkgmap:admin_level9}'  }
+mkgmap:city!=* & mkgmap:admin_level10=* { set mkgmap:city='${mkgmap:admin_level10}' }
+
+mkgmap:city=* [0x02 level 3]
 
 # add the following lines to your lines file
 <finalize>
