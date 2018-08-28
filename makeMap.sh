@@ -1,26 +1,11 @@
 #!/bin/bash
 set -e		# Konec v pripade chyby
 
-# Prihlasovaci udaje pro https://ers.cr.usgs.gov/
-# Vytvorte si ucet a odkomentujte nasedujici dva radky
-# !POZOR heslo je ulozeno v nesifrovane podobe viditelne pro vsechny uzivatele!
-
-# USERNAME=Name
-# PASSWORD=Password
-
-# Nactu prihlasovaci udaje ze souboru username a password pokud existuji
-# if [ -f ./username ]; then
-# 	USERNAME=`cat username`
-# fi
-
-# if [ -f ./password ]; then
-# 	PASSWORD=`cat password`
-# fi
-
-# Dalsi nastevni
-PYTHON=python3.5
+# Nastevni
+PYTHON=python3.5		# Verze pythonu
 JAVAMEM=-Xmx8000m		# Maximalni velikost RAM, kterou lze pouzit
-VERSION=42
+
+VERSION=42				# Verze generovane mapy
 
 
 # Ukoncovaci funkce
@@ -208,10 +193,6 @@ if [ ! -d ./img/${STATE}_VasaM ]; then
 fi
 
 
-# Stahnu HGT soubory
-#$PYTHON ./hgt/hgt-downloader.py ./hgt/SRTM3v3.0 ./hgt
-
-
 # Generuji Mapsforge
 if [ $MAPSFORGE = true ]; then
 	cd "./Mapsforge/bin"
@@ -364,9 +345,6 @@ else
 	echo "    \"hashImg\": \""`sha1sum -b ./img/${STATE}_VasaM.img | awk '{print $1}'`"\","  >> ./img/${STATE}_VasaM.info
 	echo "    \"hashZip\": \""`sha1sum -b ./img/${STATE}_VasaM.zip | awk '{print $1}'`"\""   >> ./img/${STATE}_VasaM.info
 	echo "}"                                                                                 >> ./img/${STATE}_VasaM.info
-
-	# sha1sum -b CZ_VasaM.img | awk '{print $1}'
-
 fi
 
 end
