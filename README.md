@@ -17,7 +17,7 @@
 ## Použití
 Skript je nezvykle ukecaný (do budoucna je v plánu i "tichá" verze) a na začátku spuštění se uživatele ptá, co chce udělat. Proto jej stačí spustit bez parametrů: `./makeMap.sh`.  
 Pro bezobslužné automatické spouštění lze chování ovlivnit pomocí parametrů:
-* `-a <stát>` nebo `--area <stát>` definuje stát (oblast), pro který je mapa generována. Viz [seznam států](#Seznam-států)
+* `-a <stát>` nebo `--area <stát>` definuje stát (oblast), pro který je mapa generována. Viz [seznam států](#seznam-států)
 * `-dy` nebo `--download_yes` vynutí vždy nové stažení mapových dat
 * `-dn` nebo `--download_no` v případě, že byli dříve stažená mapová data, nebudou se znovu stahovat. **POZOR**, není nijak prováděna validace těchto dat, tedy jedná-li se o fragment z přechozího přerušeného stahování, dojde k chybě. Není-li zadáno *download_yes* nebo *download_no*, skript se zeptá.
 * `-ns` nebo `--no_split` zakáže dělení mapových souborů na menší díly. Vhodné pouze u velmi malých oblastí a pro počítače s dostatkem RAM. 
@@ -53,4 +53,4 @@ Chcete-li přidat další mapu či oblast, nejednoduší je zkopírovat existjí
 
 **Pozor, tento skript používáte na vlastní riziko a já, jakožto autor nenesu žádnou odpovědnost za škody jim způsobené!**
 
-Chyby, připomínky, návrhy hlaště v diskuzi na adrese [http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/](http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/).
+Chyby, připomínky, návrhy hlašte v diskuzi na adrese [http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/](http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/).
