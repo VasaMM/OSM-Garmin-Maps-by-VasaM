@@ -11,7 +11,8 @@
 2) Uložte si obsah celého repozitáže (vpravo nahoře: *Clone or download*). Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte.
 3) Ze stránek [http://www.mkgmap.org.uk](http://www.mkgmap.org.uk/download/mkgmap.html) stáhněte soubory *bounds.zip* a *sea.zip*.
 4) Tyto soubory rozbalte do složek *bounds* a *sea*, bez dalších podsložek!
-5) Chcete-li, můžete aktualizovat programy **mkgmap** a **splitter** - NENÍ NUTNÉ.
+5) V souboru *mkaMap.sh* na prvních řádcích lze definovat verzi pythonu, maximální rozsah paměti RAM a číslo verze mapy.
+6) Chcete-li, můžete aktualizovat programy **mkgmap** a **splitter** - NENÍ NUTNÉ.
 
 ## Použití
 Skript je nezvykle ukecaný (do budoucna je v plánu i "tichá" verze) a na začátku spuštění se uživatele ptá, co chce udělat. Proto jej stačí spustit bez parametrů: `./makeMap.sh`.  
@@ -20,17 +21,16 @@ Pro bezobslužné automatické spouštění lze chování ovlivnit pomocí param
 * `-dy` nebo `--download_yes` vynutí vždy nové stažení mapových dat
 * `-dn` nebo `--download_no` v případě, že byli dříve stažená mapová data, nebudou se znovu stahovat. **POZOR**, není nijak prováděna validace těchto dat, tedy jedná-li se o fragment z přechozího přerušeného stahování, dojde k chybě. Není-li zadáno *download_yes* nebo *download_no*, skript se zeptá.
 * `-ns` nebo `--no_split` zakáže dělení mapových souborů na menší díly. Vhodné pouze u velmi malých oblastí a pro počítače s dostatkem RAM. 
-* `-h` nebo `--help` zobrazí tuto nápovědu.
+* `-h` nebo `--help` zobrazí nápovědu.
 
 ## Seznam států
-Státy jsou přímo definovány ve skriptu. Jejich definice začíná okolo řádku `120`. Příklad definice pro ČR:
+Státy jsou definovány ve skriptu *states.sh*. Příklad definice pro ČR:
 * `CZ|cz )` - použitelné zkratky státu pro paramter `--area`, zde *CZ* a *cz*
 * `echo "Tvorim mapu pro Ceskou republiku"` - Výpis na konzoly
 * `STATE="CZ"` - Zkratka státu použitá v názvech souborů
 * `DATA_URL="http://download.geofabrik.de/europe/czech-republic-latest.osm.pbf"` - Zdroj mapových dat, jsou-li mapová data stahována ručně, použijte `false`
 * `POLY_URL="http://download.geofabrik.de/europe/czech-republic.poly"` - Zdroj hraničních polygonů, je-li polygon definován ručně, použijte `false`
 * `COUNTRY_NAME="Ceska republika - VasaM"` - Název mapy vypsaný v GPS a BaseCamp
-* `VERSION=20` - Verze mapy děleno stem, tedy 20 = 0.20.
 * `COUNTRY_ID=8801` - Jedinečné ID mapy
 * `break`
 * `;;`
@@ -41,7 +41,12 @@ Ve skriptu jsou defivány následující státy/oblasti:
 * `SK` - Slovenská republika
 * `UA` - Ukrajina
 * `RO` - Rumunsko
+* `NO` - Norsko
 * `KG` - Kyrgyzstán
+* `KZ` - Kazachstán
+
+### Hotové mapy
+Hotové mapy najdete na stránce [http://www.osmg.brazovic.cz/](http://www.osmg.brazovic.cz/)
 
 
 Chcete-li přidat další mapu či oblast, nejednoduší je zkopírovat existjící a upravit ji. Nezapomeňte změnit ID na nějaké jiné. Pro vlastní mapy doporučuji jiné, než 88xx. Toto čislování budu používat pro mnou generované mapy a mohlo by dojít ke konfliktu.

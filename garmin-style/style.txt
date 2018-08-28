@@ -15,52 +15,59 @@ CodePage=1252
 
 ;=========== POLYGONES : PRIORITE DANS L'AFFICHAGE ======
 [_drawOrder]
+Type=0x001,1
+Type=0x002,1
 Type=0x10102,1
 Type=0x032,1
-Type=0x004,3
-Type=0x007,3
-Type=0x008,3
-Type=0x10902,3
-Type=0x00c,3
-Type=0x10f04,3
-Type=0x10f05,3
-Type=0x10f06,3
-Type=0x10f0b,3
-Type=0x10f10,3
-Type=0x10f11,3
-Type=0x03c,3
-Type=0x046,3
-Type=0x04d,3
-Type=0x04e,3
-Type=0x050,3
-Type=0x009,5
-Type=0x00e,5
-Type=0x10f00,5
-Type=0x10f01,5
-Type=0x10f02,5
-Type=0x10f03,5
-Type=0x10f07,5
-Type=0x10f0f,5
-Type=0x017,5
-Type=0x018,5
-Type=0x018,5
-Type=0x019,5
+Type=0x007,2
+Type=0x008,2
+Type=0x00c,2
+Type=0x10f04,2
+Type=0x10f0b,2
+Type=0x10f18,2
+Type=0x10f19,2
+Type=0x10f1a,2
+Type=0x050,2
+Type=0x10f01,3
+Type=0x10f02,3
+Type=0x10f0f,3
+Type=0x10f16,3
+Type=0x017,3
+Type=0x10f00,4
+Type=0x10f03,4
+Type=0x10f07,4
+Type=0x10f11,4
+Type=0x10f17,4
+Type=0x018,4
+Type=0x019,4
+Type=0x04e,4
+Type=0x04f,4
+Type=0x10f05,5
+Type=0x10f06,5
+Type=0x10f10,5
 Type=0x01a,5
-Type=0x01f,5
-Type=0x04f,5
-Type=0x10f08,7
-Type=0x10f09,7
-Type=0x10f0a,7
-Type=0x10f0c,7
-Type=0x10f0d,7
-Type=0x10f0e,7
-Type=0x10f12,7
-Type=0x10f13,7
-Type=0x10f14,7
-Type=0x10f15,7
-Type=0x051,7
-Type=0x10908,8
+Type=0x04d,5
+Type=0x03c,6
+Type=0x03f,6
+Type=0x040,6
+Type=0x046,6
+Type=0x009,7
+Type=0x10902,7
+Type=0x00e,7
 Type=0x013,8
+Type=0x051,8
+Type=0x10f08,9
+Type=0x10f09,9
+Type=0x10f0a,9
+Type=0x10f0c,9
+Type=0x10f0d,9
+Type=0x10f0e,9
+Type=0x10f12,9
+Type=0x10f13,9
+Type=0x10f14,9
+Type=0x10f15,9
+Type=0x10908,10
+Type=0x004,11
 [End]
 
 
@@ -71,8 +78,52 @@ Type=0x013,8
 
 
 [_polygon]
+Type=0x02
+;GRMN_TYPE: Urban Areas/SMALL_CITY/Small urban area, less than 200 000 inhabitants/Non NT
+ExtendedLabels=N
+Xpm="32 32 2 1"
+"! c #FF30FF"
+"  c none"
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+"                                "
+;12345678901234567890123456789012
+[end]
+
+
+[_polygon]
 Type=0x04
 ;GRMN_TYPE: Large Manmade Areas/MILITARY_BASE/Military base area/Non NT
+String1=0x12,Vojensky prostor
 ExtendedLabels=N
 Xpm="32 32 2 1"
 "! c #FF0000"
@@ -345,61 +396,28 @@ Xpm="0 0 1 0"
 [_polygon]
 Type=0x17
 ;GRMN_TYPE: Park Areas/URBAN_PARK/Small urban park, typically only a few square blocks in size/Non NT
-String1=0x12,Kroviny
+String1=0x12,Zelen/zahrada
 ExtendedLabels=N
-Xpm="32 32 2 1"
-"! c #399500"
-"# c #BDFF6A"
-"#!!#############################"
-"!##!############################"
-"!##!############################"
-"#!!!!###########################"
-"################################"
-"################################"
-"###################!!###########"
-"##################!##!##########"
-"##################!##!##########"
-"###################!!!!#########"
-"################################"
-"################################"
-"################################"
-"################################"
-"################################"
-"################################"
-"######!!########################"
-"#####!##!#######################"
-"#####!##!#######################"
-"######!!!!######################"
-"################################"
-"################################"
-"################################"
-"################################"
-"################################"
-"###########################!!###"
-"##########################!##!##"
-"##########################!##!##"
-"###########################!!!!#"
-"################################"
-"################################"
-"################################"
-;12345678901234567890123456789012
+Xpm="0 0 1 0"
+"1 c #BDFF6A"
 [end]
 
 
 [_polygon]
 Type=0x18
 ;GRMN_TYPE: Large Manmade Areas/GOLF_COURSE/Golf course area/Non NT
+String1=0x12,Golf
 ExtendedLabels=N
 Xpm="32 32 2 1"
-"! c #399500"
-"# c #BDFF6A"
+"! c #7BCA41"
+"# c #BDFFB4"
 "###!############################"
 "##!!############################"
 "#!!!############################"
 "##!!############################"
 "###!############################"
 "###!############################"
-"##!!!###########################"
+"##!!!##################!########"
 "#!#!#!##########################"
 "!##!##!#########################"
 "#!###!##########################"
@@ -520,6 +538,7 @@ Xpm="32 32 2 1"
 [_polygon]
 Type=0x32
 ;GRMN_TYPE: Water Areas/SEA/Sea/Non NT
+String1=0x12,More
 ExtendedLabels=Y
 FontStyle=Default
 CustomColor=Day
@@ -532,6 +551,7 @@ Xpm="0 0 1 0"
 [_polygon]
 Type=0x3c
 ;GRMN_TYPE: Water Areas/LAKE_100MI/Lake less than 250 sq mi but greater or equal to 100 sq mi in area/Non NT
+String1=0x12,Vodni plocha
 ExtendedLabels=Y
 FontStyle=Default
 CustomColor=Day
@@ -542,14 +562,84 @@ Xpm="0 0 1 0"
 
 
 [_polygon]
-Type=0x46
-;GRMN_TYPE: Water Areas/LARGE_RIVER/Major river, typically at least 700 ft in width/Non NT
+Type=0x3f
+;GRMN_TYPE: Water Areas/LAKE, LAKE_5MI/Medium sized lake, typically between 5 and 30 sq mi in area/Non NT
+String1=0x12,Vodni nadrz
 ExtendedLabels=Y
 FontStyle=Default
 CustomColor=Day
 DaycustomColor:#0000D5
 Xpm="0 0 1 0"
 "1 c #7B95FF"
+[end]
+
+
+[_polygon]
+Type=0x40
+;GRMN_TYPE: Water Areas/LAKE_1MI/Small lake, typically less than 5 sq mi but greater or equal to 1 sq mi in area/Non NT
+String1=0x12,Privalova nadrz
+ExtendedLabels=Y
+FontStyle=Default
+CustomColor=Day
+DaycustomColor:#0000D5
+Xpm="32 32 2 1"
+"! c #7B95FF"
+"  c none"
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+" ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !"
+"! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+;12345678901234567890123456789012
+[end]
+
+
+[_polygon]
+Type=0x46
+;GRMN_TYPE: Water Areas/LARGE_RIVER/Major river, typically at least 700 ft in width/Non NT
+String1=0x12,Reka
+ExtendedLabels=Y
+FontStyle=Default
+CustomColor=Day
+DaycustomColor:#0000D5
+Xpm="0 0 1 0"
+"1 c #7B95FF"
+[end]
+
+
+[_polygon]
+Type=0x4b
+;GRMN_TYPE: Map Bounds/DATA_BOUNDS/Bounds of map after creation/Non NT
+ExtendedLabels=N
+Xpm="0 0 1 0"
+"1 c #FFFFE6"
 [end]
 
 
@@ -644,43 +734,43 @@ Xpm="32 32 2 1"
 [_polygon]
 Type=0x4f
 ;GRMN_TYPE: Surface Cover Areas/SCRUB/Scrub brush area/Non NT
-String1=0x12,Liniova vegetace
+String1=0x12,Kroviny
 ExtendedLabels=N
 Xpm="32 32 2 1"
-"! c #399500"
-"# c #BDFF6A"
-"#!!!!!!####!!!!!!!!!!!!!!!######"
-"#!!!!!######!!!!!!!!!!!!!!!!!###"
-"#!!!!#########!!!!!!!!!!!!!!!!##"
-"!!!!!#########!!!!!!!!!!!!!!!!!!"
-"!!!###############!!!!!!!!!!!!!!"
-"!!#################!!!!####!!!!!"
-"!###################!!########!!"
-"!###################!!########!!"
-"!###################!!#########!"
-"!###################!###########"
-"##!#################!!!#########"
-"#!!#################!!!!########"
-"!!!################!!!!!!#######"
-"!!!!#############!!!!!!!!!!#####"
-"!!!!!###########!!!!!!!!!!!!!!!!"
-"!!!!!!!!########!!!!!!!!!!!!!!!!"
-"!!!!!!!!!####!#!!!!!!!!!!!!!!!!!"
-"!!!!!!!!!!!!!!!!!!##!!!!!!!!####"
-"#!!!!!!!!!!!!!!!####!!!!!!!#####"
-"#####!!!!!!!##!######!!!!!######"
-"######!!!!!###########!!!!######"
-"#######!!!############!!########"
-"#######!!!###########!!#########"
-"#######!!!###########!##########"
-"#######!!!!#########!!##########"
-"######!!!!!#########!!##########"
-"#######!!!!!#########!##########"
-"#######!!!!!#########!!#########"
-"#######!!!!!!!#######!!!########"
-"#######!!!!!!!######!!!!########"
-"######!!!!!!!!!#####!!!!########"
-"####!!!!!!!!!!!##!!!!!!!!#######"
+"! c #3B9500"
+"# c #7BFF6A"
+"#!!!############################"
+"!###!###########################"
+"!###!###########################"
+"!###!###########################"
+"#!!!!!##########################"
+"################################"
+"###################!!!##########"
+"##################!###!#########"
+"##################!###!#########"
+"##################!###!#########"
+"###################!!!!!########"
+"################################"
+"################################"
+"################################"
+"################################"
+"################################"
+"######!!!#######################"
+"#####!###!######################"
+"#####!###!######################"
+"#####!###!######################"
+"######!!!!!#####################"
+"################################"
+"################################"
+"################################"
+"################################"
+"###########################!!!##"
+"##########################!###!#"
+"##########################!###!#"
+"##########################!###!#"
+"###########################!!!!!"
+"################################"
+"################################"
 ;12345678901234567890123456789012
 [end]
 
@@ -696,19 +786,19 @@ Xpm="32 32 2 1"
 "################################"
 "################################"
 "################################"
-"#######!!#######################"
-"#######!!#######################"
+"######!!!#######################"
+"#####!#!#!######################"
+"####!#!#!#!#####################"
+"####!!#!#!!#####################"
+"####!#!#!#!#####################"
+"####!!#!#!!#####################"
+"####!#!#!#!#####################"
+"#####!#!#!######################"
+"######!!!#######################"
+"#######!########################"
+"#######!########################"
+"#######!########################"
 "######!!!!######################"
-"#####!!!!!!#####################"
-"#######!!#######################"
-"######!!!!######################"
-"#####!!!!!!#####################"
-"#######!!#######################"
-"#######!!#######################"
-"######!!!!!#####################"
-"################################"
-"################################"
-"################################"
 "#######################!!#######"
 "#######################!!#######"
 "######################!!!!######"
@@ -1183,6 +1273,7 @@ Xpm="32 32 2 1"
 [_polygon]
 Type=0x10f07
 ;GRMN_TYPE: Customizable Areas/CUSTOMIZABLE_AREA_8/Customizable area/Non NT, NT
+String1=0x12,Sportoviste
 ExtendedLabels=N
 Xpm="32 32 2 1"
 "! c #FF0041"
@@ -1839,13 +1930,233 @@ Xpm="32 32 2 1"
 [end]
 
 
+[_polygon]
+Type=0x10f16
+;GRMN_TYPE: Customizable Areas/CUSTOMIZABLE_AREA_23/Customizable area/Non NT, NT
+String1=0x12,Pole
+ExtendedLabels=N
+Xpm="32 32 2 1"
+"! c #FFCAB4"
+"  c none"
+"    !!      !!!!    !!   !!!!!  "
+"            !!!           !!!!  "
+"!!           !             !!   "
+"!!                             !"
+"!!  !!              !!         !"
+"!  !!!!!           !!!!!        "
+"   !!!!!    ! !    !!!!!!       "
+"    !!!    !!!!!    !!!!        "
+"     !!   !!!!!      !!         "
+"!         !!!!                 !"
+"!!         !!            !!   !!"
+"!!              !!      !!!!  !!"
+"!!!            !!!!!    !!!!   !"
+"!!            !!!!!!     !!!!   "
+"        !!     !!!!       !!    "
+"       !!!!     !!!             "
+"   !   !!!!                     "
+"  !!!   !!!!         !!    !!   "
+" !!!     !!        !!!!!  !!!!  "
+"  !!               !!!!   !!!   "
+"                    !!     !!   "
+"!!       !!                     "
+"!!!     !!!!           !!      !"
+"!!!     !!!!    !     !!!!     !"
+"!!!!     !!!!  !!!    !!!!      "
+" !!       !!  !!!!!    !!!! !!  "
+"               !!!!     !!  !!! "
+"                             !!!"
+"   !!              !!        !!!"
+"  !!!!      !!    !!!!        ! "
+"  !!!!!    !!!!   !!!!    !!    "
+"   !!!!    !!!!!   !!!!  !!!!   "
+;12345678901234567890123456789012
+[end]
+
+
+[_polygon]
+Type=0x10f17
+;GRMN_TYPE: Customizable Areas/CUSTOMIZABLE_AREA_24/Customizable area/Non NT, NT
+String1=0x12,Lesni skolka
+ExtendedLabels=N
+Xpm="32 32 2 1"
+"! c #396520"
+"# c #BDCA8B"
+"################################"
+"################################"
+"################################"
+"################################"
+"################################"
+"################################"
+"#######!!#######################"
+"#######!!#######################"
+"######!!!!######################"
+"#####!!!!!!#####################"
+"#######!!#######################"
+"#######!!#######################"
+"######!!!!!#####################"
+"################################"
+"################################"
+"################################"
+"################################"
+"################################"
+"################################"
+"#######################!!#######"
+"#######################!!#######"
+"######################!!!!######"
+"#####################!!!!!!#####"
+"#######################!!#######"
+"#######################!!#######"
+"######################!!!!!#####"
+"################################"
+"################################"
+"################################"
+"################################"
+"################################"
+"################################"
+;12345678901234567890123456789012
+[end]
+
+
+[_polygon]
+Type=0x10f18
+;GRMN_TYPE: Customizable Areas/CUSTOMIZABLE_AREA_25/Customizable area/Non NT, NT
+String1=0x12,Smiseny les
+ExtendedLabels=N
+Xpm="32 32 2 1"
+"! c #396520"
+"# c #7BCA41"
+"################################"
+"################################"
+"################################"
+"######!!!#######################"
+"#####!#!#!######################"
+"####!#!#!#!#####################"
+"####!!#!#!!#####################"
+"####!#!#!#!#####################"
+"####!!#!#!!#####################"
+"####!#!#!#!#####################"
+"#####!#!#!######################"
+"######!!!#######################"
+"#######!########################"
+"#######!########################"
+"#######!########################"
+"######!!!!######################"
+"#######################!!#######"
+"#######################!!#######"
+"######################!!!!######"
+"#####################!!!!!!#####"
+"#######################!!#######"
+"######################!!!!######"
+"#####################!!!!!!#####"
+"#######################!!#######"
+"#######################!!#######"
+"######################!!!!!#####"
+"################################"
+"################################"
+"################################"
+"################################"
+"################################"
+"################################"
+;12345678901234567890123456789012
+[end]
+
+
+[_polygon]
+Type=0x10f19
+;GRMN_TYPE: Customizable Areas/CUSTOMIZABLE_AREA_26/Customizable area/Non NT, NT
+String1=0x12,Jehlicnaty les
+ExtendedLabels=N
+Xpm="32 32 2 1"
+"! c #396520"
+"# c #7BCA41"
+"################################"
+"################################"
+"################################"
+"#######!!#######################"
+"#######!!#######################"
+"######!!!!######################"
+"#####!!!!!!#####################"
+"#######!!#######################"
+"######!!!!######################"
+"#####!!!!!!#####################"
+"#######!!#######################"
+"#######!!#######################"
+"######!!!!!#####################"
+"################################"
+"################################"
+"################################"
+"#######################!!#######"
+"#######################!!#######"
+"######################!!!!######"
+"#####################!!!!!!#####"
+"#######################!!#######"
+"######################!!!!######"
+"#####################!!!!!!#####"
+"#######################!!#######"
+"#######################!!#######"
+"######################!!!!!#####"
+"################################"
+"################################"
+"################################"
+"################################"
+"################################"
+"################################"
+;12345678901234567890123456789012
+[end]
+
+
+[_polygon]
+Type=0x10f1a
+;GRMN_TYPE: Customizable Areas/CUSTOMIZABLE_AREA_27/Customizable area/Non NT, NT
+String1=0x12,Listnaty les
+ExtendedLabels=N
+Xpm="32 32 2 1"
+"! c #396520"
+"# c #7BCA41"
+"################################"
+"################################"
+"################################"
+"######!!!#######################"
+"#####!#!#!######################"
+"####!#!#!#!#####################"
+"####!!#!#!!#####################"
+"####!#!#!#!#####################"
+"####!!#!#!!#####################"
+"####!#!#!#!#####################"
+"#####!#!#!######################"
+"######!!!#######################"
+"#######!########################"
+"#######!########################"
+"#######!########################"
+"######!!!!############!!!#######"
+"#####################!#!#!######"
+"####################!#!#!#!#####"
+"####################!!#!#!!#####"
+"####################!#!#!#!#####"
+"####################!!#!#!!#####"
+"####################!#!#!#!#####"
+"#####################!#!#!######"
+"######################!!!#######"
+"#######################!########"
+"#######################!########"
+"#######################!########"
+"######################!!!!######"
+"################################"
+"################################"
+"################################"
+"################################"
+;12345678901234567890123456789012
+[end]
+
+
 ;====================== LINES ===========================
 
 
 [_line]
 Type=0x01
 ;GRMN_TYPE: Roads/INTERSTATE, MAJOR_HWY/Primary, divided, limited-access highway, akin to an interstate in the US/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=4
 BorderWidth=2
 Xpm="0 0 2 0"
@@ -1859,7 +2170,7 @@ ExtendedLabels=N
 [_line]
 Type=0x02
 ;GRMN_TYPE: Roads/PRINCIPAL_HWY/Principal highway, usually divided and limited access, akin to US highways/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=4
 BorderWidth=2
 Xpm="0 0 2 0"
@@ -1873,7 +2184,7 @@ ExtendedLabels=N
 [_line]
 Type=0x03
 ;GRMN_TYPE: Roads/OTHER_HWY/Other highway road, akin to a state highway in the US/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=3
 BorderWidth=2
 Xpm="0 0 2 0"
@@ -1887,7 +2198,7 @@ ExtendedLabels=N
 [_line]
 Type=0x04
 ;GRMN_TYPE: Roads/ARTERIAL/Main city thoroughfare/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=2
 BorderWidth=1
 Xpm="0 0 2 0"
@@ -1901,11 +2212,11 @@ ExtendedLabels=N
 [_line]
 Type=0x05
 ;GRMN_TYPE: Roads/COLLECTOR/Secondary city thoroughfare/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=2
 BorderWidth=1
 Xpm="0 0 2 0"
-"1 c #FFFFFF"
+"1 c #FFFF8B"
 "2 c #000000"
 String1=0x12,3. trida
 ExtendedLabels=N
@@ -1915,11 +2226,11 @@ ExtendedLabels=N
 [_line]
 Type=0x06
 ;GRMN_TYPE: Roads/RESIDENTIAL/Residential street, these are typically the most numerous roads in a detailed city map and do not show up until the user is zoomed in quite far/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=2
 BorderWidth=1
 Xpm="0 0 2 0"
-"1 c #E6E6E6"
+"1 c #FFFFFF"
 "2 c #000000"
 String1=0x12,Ulice
 ExtendedLabels=N
@@ -1929,7 +2240,7 @@ ExtendedLabels=N
 [_line]
 Type=0x07
 ;GRMN_TYPE: Roads/ALLEY, DRIVEWAY/Alleyway, private driveway to residence/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=4
 BorderWidth=2
 Xpm="0 0 2 0"
@@ -1943,14 +2254,13 @@ ExtendedLabels=N
 [_line]
 Type=0x08
 ;GRMN_TYPE: Roads/LOW_SPEED_RAMP/Highway ramp which is to be driven at low speeds/Non NT, NT
-UseOrientation=Y
-Xpm="32 4 2  1"
+UseOrientation=N
+Xpm="32 3 2  1"
 "! c #313131"
 "# c #C5C5C5"
-"!!#!!#!!#!!#!!#!!#!!#!!#!!#!!#!!"
+"!!#!!#!!#!!#!!#!!#!!#!!#!!#!!#!#"
 "################################"
-"################################"
-"!!#!!#!!#!!#!!#!!#!!#!!#!!#!!#!!"
+"!!#!!#!!#!!#!!#!!#!!#!!#!!#!!#!#"
 ;12345678901234567890123456789012
 String1=0x12,Chodnik
 ExtendedLabels=N
@@ -1960,7 +2270,7 @@ ExtendedLabels=N
 [_line]
 Type=0x09
 ;GRMN_TYPE: Roads/HIGH_SPEED_RAMP, RAMP/Highway ramp which is to be driven at high speeds/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=4
 Xpm="0 0 1 0"
 "1 c #FF658B"
@@ -1972,13 +2282,11 @@ ExtendedLabels=N
 [_line]
 Type=0x0a
 ;GRMN_TYPE: Roads/UNPAVED_ROAD/Gravel or dirt road/Non NT, NT
-UseOrientation=Y
-Xpm="32 3 2  1"
+UseOrientation=N
+Xpm="32 1 2  1"
 "! c #313131"
 "  c none"
-"!!!!!!! !!!!!!! !!!!!!! !!!!!!! "
-"!!!!!!! !!!!!!! !!!!!!! !!!!!!! "
-"!!!!!!! !!!!!!! !!!!!!! !!!!!!! "
+"!!! !!! !!! !!! !!! !!! !!! !!! "
 ;12345678901234567890123456789012
 String1=0x12,Pesina
 ExtendedLabels=N
@@ -1988,10 +2296,11 @@ ExtendedLabels=N
 [_line]
 Type=0x0b
 ;GRMN_TYPE: Roads/MAJOR_CONNECTOR/Major highway connector/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=2
 Xpm="0 0 1 0"
 "1 c #101010"
+String1=0x12,Zpevnena cesta
 ExtendedLabels=N
 [end]
 
@@ -1999,7 +2308,7 @@ ExtendedLabels=N
 [_line]
 Type=0x0c
 ;GRMN_TYPE: Roads/ROUNDABOUT/Roundabout/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 5 2  1"
 "! c #313131"
 "# c #FF658B"
@@ -2017,13 +2326,14 @@ ExtendedLabels=N
 [_line]
 Type=0x0d
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_ROUTE_LINE_1/Routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #000000"
 "  c none"
 "!!!!!!! !!!!!!! !!!!!!! !!!!!!! "
 "!!!!!!! !!!!!!! !!!!!!! !!!!!!! "
 ;12345678901234567890123456789012
+String1=0x12,Sterkovana cesta
 ExtendedLabels=N
 [end]
 
@@ -2031,13 +2341,14 @@ ExtendedLabels=N
 [_line]
 Type=0x0e
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_ROUTE_LINE_2/Routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #000000"
 "  c none"
 "!!!!!!  !!!!!!  !!!!!!  !!!!!!  "
 "!!!!!!  !!!!!!  !!!!!!  !!!!!!  "
 ;12345678901234567890123456789012
+String1=0x12,Lehce zpevnena cesta
 ExtendedLabels=N
 [end]
 
@@ -2045,13 +2356,14 @@ ExtendedLabels=N
 [_line]
 Type=0x0f
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_ROUTE_LINE_3/Routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #000000"
 "  c none"
 "!!!!!   !!!!!   !!!!!   !!!!!   "
 "!!!!!   !!!!!   !!!!!   !!!!!   "
 ;12345678901234567890123456789012
+String1=0x12,Temer nezpevnena cesta
 ExtendedLabels=N
 [end]
 
@@ -2059,13 +2371,14 @@ ExtendedLabels=N
 [_line]
 Type=0x10
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_ROUTE_LINE_4/Routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #000000"
 "  c none"
 "!!!!    !!!!    !!!!    !!!!    "
 "!!!!    !!!!    !!!!    !!!!    "
 ;12345678901234567890123456789012
+String1=0x12,Nezpevnena cesta
 ExtendedLabels=N
 [end]
 
@@ -2073,7 +2386,7 @@ ExtendedLabels=N
 [_line]
 Type=0x15
 ;GRMN_TYPE: Misc. Line Types/SHORELINE/Shoreline of water body (typically only used when a water area is not available)/Non NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 4 2  1"
 "! c #000000"
 "# c #FFFFFF"
@@ -2090,13 +2403,14 @@ ExtendedLabels=N
 [_line]
 Type=0x16
 ;GRMN_TYPE: Roads/TRAIL/Walkway or trail/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #000000"
 "  c none"
 "!!!!!  !!  !!!!!!!!!!  !!  !!!!!"
 "!!!!!  !!  !!!!!!!!!!  !!  !!!!!"
 ;12345678901234567890123456789012
+String1=0x12,Neznama cesta
 ExtendedLabels=N
 [end]
 
@@ -2104,7 +2418,7 @@ ExtendedLabels=N
 [_line]
 Type=0x18
 ;GRMN_TYPE: Water Features/STREAM/Small stream or creek/Non NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 3 2  1"
 "! c #7B95FF"
 "# c #BDFFFF"
@@ -2112,6 +2426,7 @@ Xpm="32 3 2  1"
 "!#!!!#!!!#!!!#!!!#!!!#!!!#!!!#!!"
 "#!!!#!!!#!!!#!!!#!!!#!!!#!!!#!!!"
 ;12345678901234567890123456789012
+String1=0x12,Potok
 ExtendedLabels=N
 [end]
 
@@ -2119,12 +2434,11 @@ ExtendedLabels=N
 [_line]
 Type=0x1a
 ;GRMN_TYPE: Roads/INTERNATIONAL_FERRY/Major water or rail ferry/Non NT, NT
-UseOrientation=Y
-Xpm="32 4 2  1"
+UseOrientation=N
+Xpm="32 3 2  1"
 "! c #313131"
 "# c #C5C5C5"
 "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-"###!###!###!###!###!###!###!###!"
 "###!###!###!###!###!###!###!###!"
 "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 ;12345678901234567890123456789012
@@ -2136,7 +2450,7 @@ ExtendedLabels=N
 [_line]
 Type=0x1b
 ;GRMN_TYPE: Roads/FERRY/Water or rail ferry/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #0000B4"
 "  c none"
@@ -2151,7 +2465,7 @@ ExtendedLabels=N
 [_line]
 Type=0x1c
 ;GRMN_TYPE: Political Borders/MJR_PLTCL_BDRY/Major political boundary (typically used for state, provincial borders)/Non NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 5 2  1"
 "! c #396500"
 "  c none"
@@ -2161,6 +2475,7 @@ Xpm="32 5 2  1"
 "   !!         !!        !!      "
 "   !!         !!        !!      "
 ;12345678901234567890123456789012
+String1=0x12,Hranice rezervace
 ExtendedLabels=N
 [end]
 
@@ -2188,7 +2503,7 @@ ExtendedLabels=N
 [_line]
 Type=0x1f
 ;GRMN_TYPE: Water Features/RIVER/Large stream or river/Non NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 5 2  1"
 "! c #7B95FF"
 "# c #BDFFFF"
@@ -2198,6 +2513,7 @@ Xpm="32 5 2  1"
 "#!!!#!!!#!!!#!!!#!!!#!!!#!!!#!!!"
 "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 ;12345678901234567890123456789012
+String1=0x12,Reka
 ExtendedLabels=N
 [end]
 
@@ -2205,7 +2521,7 @@ ExtendedLabels=N
 [_line]
 Type=0x20
 ;GRMN_TYPE: Contour Lines/MINOR_CONTOUR/Minor land-based contour line/Non NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=1
 Xpm="0 0 1 0"
 "1 c #BD9541"
@@ -2219,7 +2535,7 @@ DaycustomColor:#7B3000
 [_line]
 Type=0x21
 ;GRMN_TYPE: Contour Lines/INT_CONTOUR/Intermediate contour (should be used for about every 5th contour line)/Non NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=2
 Xpm="0 0 1 0"
 "1 c #BD9541"
@@ -2233,7 +2549,7 @@ DaycustomColor:#7B3000
 [_line]
 Type=0x22
 ;GRMN_TYPE: Contour Lines/MAJOR_CONTOUR/Major contour (should be used for about every 10th contour line)/Non NT
-UseOrientation=Y
+UseOrientation=N
 LineWidth=2
 Xpm="0 0 1 0"
 "1 c #BD9541"
@@ -2265,7 +2581,7 @@ ExtendedLabels=N
 [_line]
 Type=0x24
 ;GRMN_TYPE: Contour Lines/INT_BATHY_CONTOUR/Intermediate bathymetric, or depth, contour (should be used for about every 5th contour line)/Non NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 1 2  1"
 "! c #BD9520"
 "  c none"
@@ -2279,7 +2595,7 @@ ExtendedLabels=N
 [_line]
 Type=0x25
 ;GRMN_TYPE: Contour Lines/MAJOR_BATHY_CONTOUR/Major bathymetric, or depth, contour (should be used for about every 10th contour line)/Non NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 1 2  1"
 "! c #BD9520"
 "  c none"
@@ -2303,6 +2619,7 @@ Xpm="32 5 2  1"
 "   !!              !!           "
 "  !!              !!            "
 ;12345678901234567890123456789012
+String1=0x12,El. vedeni
 ExtendedLabels=Y
 FontStyle=SmallFont
 CustomColor=Day
@@ -2313,13 +2630,14 @@ DaycustomColor:#FF6500
 [_line]
 Type=0x10e00
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_1/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 2 2  1"
 "! c #7B95FF"
 "  c none"
 "!!!!!   !!!!!   !!!!!   !!!!!   "
 "!!!!!   !!!!!   !!!!!   !!!!!   "
 ;12345678901234567890123456789012
+String1=0x12,Pobrezi cara
 ExtendedLabels=Y
 FontStyle=Default
 CustomColor=Day
@@ -2330,7 +2648,7 @@ DaycustomColor:#0000D5
 [_line]
 Type=0x10e01
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_2/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 3 2  1"
 "! c #00306A"
 "  c none"
@@ -2338,6 +2656,7 @@ Xpm="32 3 2  1"
 "!  !!!!!!  !!!!!!  !!!!!!  !!!!!"
 "!!!!    !!!!    !!!!    !!!!    "
 ;12345678901234567890123456789012
+String1=0x12,Kabinova lanovka
 ExtendedLabels=N
 [end]
 
@@ -2345,7 +2664,7 @@ ExtendedLabels=N
 [_line]
 Type=0x10e02
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_3/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 3 2  1"
 "! c #00306A"
 "  c none"
@@ -2353,6 +2672,7 @@ Xpm="32 3 2  1"
 "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 "!!      !!      !!      !!      "
 ;12345678901234567890123456789012
+String1=0x12,Lanovka
 ExtendedLabels=N
 [end]
 
@@ -2373,7 +2693,10 @@ Xpm="32 7 2  1"
 "                                "
 ;12345678901234567890123456789012
 String1=0x12,Cervena
-ExtendedLabels=N
+ExtendedLabels=Y
+FontStyle=NormalFont
+CustomColor=Day
+DaycustomColor:#BD0000
 [end]
 
 
@@ -2393,7 +2716,10 @@ Xpm="32 7 2  1"
 "!! !!! !!! !!! !!! !!! !!! !!! !"
 ;12345678901234567890123456789012
 String1=0x12,Modra
-ExtendedLabels=N
+ExtendedLabels=Y
+FontStyle=NormalFont
+CustomColor=Day
+DaycustomColor:#0030B4
 [end]
 
 
@@ -2417,7 +2743,10 @@ Xpm="32 11 2  1"
 "                                "
 ;12345678901234567890123456789012
 String1=0x12,Zelena
-ExtendedLabels=N
+ExtendedLabels=Y
+FontStyle=NormalFont
+CustomColor=Day
+DaycustomColor:#006500
 [end]
 
 
@@ -2441,7 +2770,10 @@ Xpm="32 11 2  1"
 "!! !!! !!! !!! !!! !!! !!! !!! !"
 ;12345678901234567890123456789012
 String1=0x12,Zluta
-ExtendedLabels=N
+ExtendedLabels=Y
+FontStyle=NormalFont
+CustomColor=Day
+DaycustomColor:#FF9500
 [end]
 
 
@@ -2468,7 +2800,7 @@ ExtendedLabels=N
 [_line]
 Type=0x10e09
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_10/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 22 2  1"
 "! c #FF658B"
 "  c none"
@@ -2497,16 +2829,16 @@ Xpm="32 22 2  1"
 ;12345678901234567890123456789012
 String1=0x12,Cyklotrasa
 ExtendedLabels=Y
-FontStyle=Default
+FontStyle=NormalFont
 CustomColor=Day
-DaycustomColor:#FF658B
+DaycustomColor:#BD008B
 [end]
 
 
 [_line]
 Type=0x10e0a
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_11/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 8 2  1"
 "! c #FF658B"
 "  c none"
@@ -2545,7 +2877,10 @@ Xpm="32 12 2  1"
 "!!!!!!!!!!!!                    "
 ;12345678901234567890123456789012
 String1=0x12,Naucna stezka
-ExtendedLabels=N
+ExtendedLabels=Y
+FontStyle=NormalFont
+CustomColor=Day
+DaycustomColor:#006500
 [end]
 
 
@@ -2568,7 +2903,7 @@ ExtendedLabels=N
 [_line]
 Type=0x10e0e
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_15/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 10 2  1"
 "! c #313131"
 "  c none"
@@ -2591,7 +2926,7 @@ ExtendedLabels=N
 [_line]
 Type=0x10e0f
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_16/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 9 2  1"
 "! c #313131"
 "  c none"
@@ -2613,7 +2948,7 @@ ExtendedLabels=N
 [_line]
 Type=0x10e10
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_17/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 3 2  1"
 "! c #FF0000"
 "  c none"
@@ -2668,9 +3003,9 @@ ExtendedLabels=N
 [_line]
 Type=0x10e13
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_20/Non-routable customizable line/Non NT, NT
-UseOrientation=Y
+UseOrientation=N
 Xpm="32 5 2  1"
-"! c #000000"
+"! c #626262"
 "  c none"
 "!!      !!      !!      !!      "
 "!!      !!      !!      !!      "
@@ -2688,7 +3023,7 @@ Type=0x10e14
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_21/Non-routable customizable line/Non NT, NT
 UseOrientation=N
 Xpm="32 5 2  1"
-"! c #FF0000"
+"! c #FF6500"
 "  c none"
 "!!      !!      !!      !!      "
 "!!      !!      !!      !!      "
@@ -2724,7 +3059,7 @@ Type=0x10e16
 ;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_23/Non-routable customizable line/Non NT, NT
 UseOrientation=N
 Xpm="32 5 2  1"
-"! c #626262"
+"! c #BD6500"
 "  c none"
 "!!      !!      !!      !!      "
 "!!      !!      !!      !!      "
@@ -2733,6 +3068,35 @@ Xpm="32 5 2  1"
 "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 ;12345678901234567890123456789012
 String1=0x12,Utes
+ExtendedLabels=N
+[end]
+
+
+[_line]
+Type=0x10e17
+;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_24/Non-routable customizable line/Non NT, NT
+UseOrientation=Y
+Xpm="32 1 2  1"
+"! c #0030FF"
+"  c none"
+"!!  !!  !!  !!  !!  !!  !!  !!  "
+;12345678901234567890123456789012
+String1=0x12,Jez
+ExtendedLabels=N
+[end]
+
+
+[_line]
+Type=0x10e18
+;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_LINE_25/Non-routable customizable line/Non NT, NT
+UseOrientation=N
+Xpm="32 2 2  1"
+"! c #0030FF"
+"  c none"
+"!!!!    !!!!    !!!!    !!!!    "
+"!!!!    !!!!    !!!!    !!!!    "
+;12345678901234567890123456789012
+String1=0x12,Hraz
 ExtendedLabels=N
 [end]
 
@@ -2923,7 +3287,7 @@ Type=0x02902
 String1=0x12,Banka
 ExtendedLabels=N
 DayXpm="11 13 4 1"   Colormode=16
-"!	c #39CA00"
+"!	c #7B95FF"
 "#	c #FFFFFF"
 "%	c #000000"
 "  	c none"
@@ -4383,33 +4747,6 @@ DayXpm="14 14 3 1"   Colormode=16
 
 
 [_point]
-Type=0x02e0a
-;GRMN_TYPE: Business - Shopping/SPECIALTY_RETAIL/Specialty store/Non NT
-String1=0x12,Sportovni vybaveni
-ExtendedLabels=N
-DayXpm="12 13 4 1"   Colormode=16
-"!	c #BD0000"
-"#	c #FFFFFF"
-"%	c #00FFFF"
-"  	c none"
-"    ###   # "
-"   #%%%# #!#"
-" ##%%#%##!# "
-"#!!!!!!!!!# "
-"#!#!%!#!#!# "
-"#!#!#!%!#!# "
-"#!#!#!%!#!# "
-"#!#!%!#!#!# "
-" #!!!!!!!!# "
-" #########  "
-"#!!!!!!!!!# "
-"#!!#####!!# "
-" ##     ##  "
-;123456789012
-[end]
-
-
-[_point]
 Type=0x02f01
 ;GRMN_TYPE: Business - Services/GAS_STATION/Gas, fuel station/Non NT
 String1=0x12,Benzinka
@@ -5185,7 +5522,7 @@ Type=0x04e00
 String1=0x12,Toalety
 ExtendedLabels=N
 DayXpm="14 12 3 1"   Colormode=16
-"!	c #000000"
+"!	c #3900D5"
 "#	c #FFFFFF"
 "  	c none"
 "   ##    ##   "
@@ -5466,7 +5803,10 @@ DayXpm="9 14 3 1"   Colormode=16
 Type=0x06412
 ;GRMN_TYPE: Geographical Named Points of Interest/TRAIL/Trailhead/Non NT, NT
 String1=0x12,Rozcestnik
-ExtendedLabels=N
+ExtendedLabels=Y
+FontStyle=Default
+CustomColor=Day
+DaycustomColor:#000000
 DayXpm="14 18 4 1"   Colormode=16
 "!	c #CC6600"
 "#	c #663300"
@@ -5642,7 +5982,7 @@ DayXpm="16 16 7 1"   Colormode=16
 [_point]
 Type=0x06605
 ;GRMN_TYPE: Geographical Named Points of Interest - Land Related/BENCH/Bench/Non NT, NT
-String1=0x12,Lavecka
+String1=0x12,Lavicka
 ExtendedLabels=N
 DayXpm="14 8 3 1"   Colormode=16
 "!	c #BD6500"
@@ -5804,4 +6144,79 @@ DayXpm="12 16 5 1"   Colormode=16
 "?!!!!!!!!!!?"
 " ?????????? "
 ;123456789012
+[end]
+
+
+[_point]
+Type=0x11500
+;GRMN_TYPE: User Customizable Points/CUSTOMIZABLE_POINT_1/User customizable point type/Non NT, NT
+String1=0x12,Postovni schranka
+ExtendedLabels=N
+DayXpm="16 17 4 1"   Colormode=16
+"!	c #FFCA00"
+"#	c #FFFFFF"
+"%	c #000000"
+"  	c none"
+"   ##########   "
+"  #%%%%%%%%%%#  "
+" #%!!!!!!!!!!%# "
+" #%!%%%%%%%%!%# "
+" #%!%%%%%%%%!%# "
+" #%!!!!!!!!!!%# "
+" #%!!!!!!!!!!%# "
+" #%!!%%%%%%!!%# "
+" #%!%!!!!!!%!%# "
+" #%!%%!!!!%%!%# "
+" #%!%!%!!%!%!%# "
+" #%!%!!%%!!%!%# "
+" #%!%!!!!!!%!%# "
+" #%!%%%%%%%%!%# "
+" #%!!!!!!!!!!%# "
+"#%%%%%%%%%%%%%%#"
+" ############## "
+;1234567890123456
+[end]
+
+
+[_point]
+Type=0x11501
+;GRMN_TYPE: User Customizable Points/CUSTOMIZABLE_POINT_2/User customizable point type/Non NT, NT
+String1=0x12,Jez
+ExtendedLabels=N
+DayXpm="7 7 3 1"   Colormode=16
+"!	c #0030B4"
+"#	c #FFFFFF"
+"  	c none"
+"  ###  "
+" #!!!# "
+"#!!!!!#"
+"#!!!!!#"
+"#!!!!!#"
+" #!!!# "
+"  ###  "
+;1234567
+[end]
+
+
+[_point]
+Type=0x11502
+;GRMN_TYPE: User Customizable Points/CUSTOMIZABLE_POINT_3/User customizable point type/Non NT, NT
+String1=0x12,Hraz
+ExtendedLabels=N
+DayXpm="11 11 3 1"   Colormode=16
+"!	c #0030B4"
+"#	c #FFFFFF"
+"  	c none"
+"    ###    "
+"   #!!!#   "
+"  #!!!!!#  "
+" #!!!!!!!# "
+"#!!!!!!!!!#"
+"#!!!!!!!!!#"
+"#!!!!!!!!!#"
+" #!!!!!!!# "
+"  #!!!!!#  "
+"   #!!!#   "
+"    ###    "
+;12345678901
 [end]

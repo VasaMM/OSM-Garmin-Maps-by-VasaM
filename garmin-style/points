@@ -1,13 +1,5 @@
-﻿# Levels:
-# 0: under 120 m, zoom 24, city
-# 1: under 300 m, zoom 23, hiking
-# 2: under 2 km, zoom 20, cycling
-# 3: under 8 km, zoom 18, car
-# 4: under 30 km, zoom 16, overview
-
-
-# Places
-place=city | population >= 300000 [0x0100 level 4]
+﻿# Places
+place=city | population >= 300000 [0x0100 level 5]
 place=town | population >= 3000 [0x0600 level 3]
 place=suburb [0x0c00 level 2]
 place=village | population >= 200 [0x0b00 level 2]
@@ -137,7 +129,7 @@ amenity=zoo [0x2c07 level 1]
 amenity=fountain [0x2911 level 1]
 amenity=game_feeding | amenity=feeding_place | amenity=watering_place [0x2913 level 1]
 amenity=hunting_stand [0x2914 level 1]
-
+amenity=post_box [0x11500 level 0]
 
 # Sports & leisure
 sport=9pin [0x2d07 level 0]
@@ -150,10 +142,10 @@ leisure=golf_course [0x2d05 level 0]
 leisure=ice_rink [0x2d08 level 0]
 leisure=marina [0x4300 level 0]
 leisure=park [0x2c06 level 0]
-leisure=pitch [0x2d0a level 0]
+#leisure=pitch [0x2d0a level 0]
 leisure=sports_center | leisure=sports_centre [0x2d0a level 0]
 leisure=stadium [0x2d0a level 1]
-leisure=track [0x2d0a level 0]
+#leisure=track [0x2d0a level 0]
 leisure=water_park [0x2d09 level 0]
 
 
@@ -174,39 +166,145 @@ natural=stone [0x6615 level 2]
 natural=cave_entrance [0x6507 level 1]
 natural=saddle { name '${name} - ${ele} m' | '${name}' | '${ele} m' } [0x660b level 2]
 mountain_pass=yes { name '${name} - ${ele} m' | '${name}' | '${ele} m' } [0x660b level 2]
-natural=tree [0x2907 level 1]
+natural=tree {name '${name}' | '${description}' } [0x2907 level 1]
 place=island [0x2800 level 2]
 waterway=waterfall [0x6508 level 1]
+waterway=weir [0x11501 level 1] 	# Jez
+waterway=dam  [0x11501 level 1] 	# Hraz
 
 
 # Shops
-shop=outdoor | shop=sports [0x2e0a level 0]
-shop=supermarket | amenity=supermarket [0x2e04 level 0]
-shop=* [0x2e02 level 0]
-# shop=mall [0x2e02 level 0]
-# shop=bakers [0x2e02 level 0]
-# shop=bakery [0x2e02 level 0]
-# shop=bicycle [0x2e02 level 0]
-# shop=butcher [0x2e02 level 0]
-# shop=chemist [0x2e02 level 0]
-# shop=clothes [0x2e02 level 0]
-# shop=computer [0x2e02 level 0]
-# shop=convenience [0x2e02 level 0]
-# shop=department_store [0x2e02 level 0]
-# shop=doityourself [0x2e02 level 0]
-# shop=fashion [0x2e02 level 0]
-# shop=garden_centre [0x2e02 level 0]
-# shop=garden_center [0x2e02 level 0]
-# shop=general [0x2e02 level 0]
-# shop=hardware [0x2e02 level 0]
-# shop=organic [0x2e02 level 0]
+shop=* & opening_hours!=* { add opening_hours = '' }
+shop=* & name!=* { add name = 'Obchod' }
+
+shop=bakery { set shopType = 'Pekarstvi' }
+shop=butcher { set shopType = 'Reznictvi' }
+shop=confectionery { set shopType = 'Cukrovinky' }
+shop=cheese { set shopType = 'Syry' }
+shop=chocolate { set shopType = 'Cokolada' }
+shop=coffee { set shopType = 'Kava' }
+shop=convenience { set shopType = 'Smisene zbozi' }
+shop=deli { set shopType = 'Lahudky' }
+shop=dairy { set shopType = 'Mlecne vyrobky' }
+shop=farm { set shopType = 'Farmarske produkty' }
+shop=greengrocer { set shopType = 'Ovoce zelenina' }
+shop=pastry { set shopType = 'Sladke pecivo' }
+shop=seafood { set shopType = 'Morske plody' }
+shop=spices { set shopType = 'Koreni' }
+shop=tea { set shopType = 'Caj' }
+
+shop=department_store { set shopType = 'Obchodni dum'; add cart_icon = 'yes'; }
+shop=general { set shopType = 'Smisene zbozi' }
+shop=kiosk { set shopType = 'Stanek' }
+shop=mall { set shopType = 'Obchodni stredisko'; add cart_icon = 'yes'; }
+shop=supermarket { set shopType = 'Supermarket'; add cart_icon = 'yes'; }
+shop=wholesale { set shopType = 'Velkoobchod'; add cart_icon = 'yes'; }
+
+shop=clothes { set shopType = 'Odevy' }
+shop=fashion { set shopType = 'Moda' }
+shop=shoes { set shopType = 'Obuv' }
+shop=tailor { set shopType = 'Krejcovstvi' }
+shop=watches { set shopType = 'Hodinky' }
+
+shop=second_hand { set shopType = 'Second hand' }
+shop=variety_store { set shopType = 'Drobnosti' }
+
+shop=beauty { set shopType = 'Kosmeticky salon' }
+shop=chemist { set shopType = 'Drogerie' }
+shop=cosmetics { set shopType = 'Kosmetika' }
+shop=erotic { set shopType = 'Sex shop' }
+shop=hairdresser { set shopType = 'Kadernictvi' }
+shop=herbalist { set shopType = 'Bylinky' }
+shop=massage { set shopType = 'Masazni salon' }
+shop=medical_supply { set shopType = 'Zdravotnicke potreby' }
+shop=nutrition_supplements { set shopType = 'Potravinove doplnky' }
+shop=optician { set shopType = 'Ocni optika' }
+shop=perfumery { set shopType = 'Parfumerie' }
+shop=tattoo { set shopType = 'Tetovaci salon' }
+
+shop=doityourself { set shopType = 'Produkty pro kutily' }
+shop=electrical { set shopType = 'Elektricke zarizeni' }
+shop=florist { set shopType = 'Kvetinarstvi' }
+shop=garden_centre { set shopType = 'Zahradnicke centrum' }
+shop=gas { set shopType = 'Technicke plyny' }
+shop=glaziery { set shopType = 'Sklenarstvi' }
+shop=hardware { set shopType = 'Zelezarstvi' }
+shop=houseware { set shopType = 'Domaci potreby' }
+shop=locksmith { set shopType = 'Zamky, klice' }
+shop=paint { set shopType = 'Barvy, laky' }
+shop=security { set shopType = 'Bezpecnostni zarizeni' }
+shop=trade { set shopType = 'Produkty pro remeslniky' }
+
+shop=antiques { set shopType = 'Starozitnosti' }
+
+shop=computer { set shopType = 'Pocitace' }
+shop=robot { set shopType = 'Roboti' }
+shop=electronics { set shopType = 'Elektro' }
+shop=hifi { set shopType = 'Hi-Fi' }
+shop=mobile_phone { set shopType = 'Mobilni telefony' }
+shop=radiotechnics { set shopType = 'Elektrosoucastky' }
+
+shop=bicycle { set shopType = 'Kola' }
+shop=boat { set shopType = 'Lode' }
+shop=car { set shopType = 'Auta' }
+shop=fuel { set shopType = 'Paliva' }
+shop=fishing { set shopType = 'Rybarstvi' }
+shop=hunting { set shopType = 'Lov' }
+shop=motorcycle { set shopType = 'Motocykly' }
+shop=outdoor { set shopType = 'Outdoor' }
+shop=scuba_diving { set shopType = 'Potapeni' }
+shop=ski { set shopType = 'Lyze' }
+shop=sports { set shopType = 'Sportovni potreby' }
+
+shop=art { set shopType = 'Umeni' }
+shop=collector { set shopType = 'Sberatele' }
+shop=craft { set shopType = 'Umelecke potreby' }
+shop=games { set shopType = 'Hry' }
+shop=model { set shopType = 'Modelarstvi' }
+shop=music { set shopType = 'Hudba' }
+shop=musical_instrument { set shopType = 'Hudebni nastroje' }
+shop=photo { set shopType = 'Fotografie' }
+shop=camera { set shopType = 'Fotoaparaty' }
+shop=video { set shopType = 'Filmy' }
+shop=video_games { set shopType = 'Pocitacove hry' }
+
+shop=books { set shopType = 'Knihkupectvi' }
+shop=gift { set shopType = 'Suvenyry' }
+shop=lottery { set shopType = 'Loterie' }
+shop=newsagent { set shopType = 'Novinovy' }
+shop=stationery { set shopType = 'Kancelarse potreby' }
+shop=ticket { set shopType = 'Vstupenky' }
+
+shop=bookmaker { set shopType = 'Sazkova kancelar' }
+shop=copyshop { set shopType = 'Kopy centrum' }
+shop=dry_cleaning { set shopType = 'cistirna odevů' }
+shop=laundry { set shopType = 'Pradelna' }
+shop=money_lender { set shopType = 'Lichvar' }
+shop=party { set shopType = 'Party' }
+shop=pawnbroker { set shopType = 'Zastavarna' }
+shop=pet { set shopType = 'Zverimex' }
+shop=pyrotechnics { set shopType = 'Pyrotechnika' }
+shop=religion { set shopType = 'Nabozenstvi' }
+shop=tobacco { set shopType = 'Tabak' }
+shop=toys { set shopType = 'Hrackarna' }
+shop=travel_agency { set shopType = 'Cestovni kancelar' }
+shop=vacant { set shopType = 'Prazdny obchod' }
+shop=weapons { set shopType = 'Zbrane' }
+
+shop=* & cart_icon = 'yes' { set name = '${name} ${opening_hours} (${shopType})' } [0x2e04 level 0]
+shop=* { set name = '${name} ${opening_hours} (${shopType})' } [0x2e02 level 0]
+
+amenity=shop { set name = '${name} FIXME' } [0x2e02 level 0]
+amenity=shopping { set name = '${name} FIXME' } [0x2e02 level 0]
+
+
 
 
 # For cars
 amenity=fuel & shop=convenience [0x2e02 level 0]
 amenity=fuel { name '${operator}: ${name}' | '${name}' | '${operator}' } [0x2f01 level 0]
 amenity=car_rental [0x2f02 level 0]
-shop=car_repair [0x2f03 level 0]
+shop=car_repair | shop=car_parts [0x2f03 level 0]
 
 
 # Barriers
@@ -216,7 +314,8 @@ barrier=stile | highway=stile | barrier=gate | barrier=lift_gate | barrier=entra
 
 
 # Other
-power=pole [0x2909 level 0]	# Sloup el. vedeni
+power=pole  [0x2909 level 0]	# Sloup el. vedeni
+power=tower [0x2909 level 0]	# Sloup el. vedeni
 landuse=farmyard [0x2f14 level 0]
 power=generator & generator:source=wind [0x290e level 2]
 historic=boundary_stone [0x2912 level 1]
