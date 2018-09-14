@@ -3110,6 +3110,7 @@ Type=0x00100
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
+DaycustomColor:#FF30FF
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3124,6 +3125,7 @@ Type=0x00600
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
+DaycustomColor:#FF30FF
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3138,6 +3140,7 @@ Type=0x00b00
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
+DaycustomColor:#FF30FF
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3152,6 +3155,7 @@ Type=0x00b02
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
+DaycustomColor:#FF30FF
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3166,6 +3170,7 @@ Type=0x00b03
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
+DaycustomColor:#FF30FF
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3180,6 +3185,7 @@ Type=0x00c00
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
+DaycustomColor:#FF30FF
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
