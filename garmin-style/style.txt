@@ -3110,7 +3110,6 @@ Type=0x00100
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
-DaycustomColor:#3900D5
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3125,7 +3124,6 @@ Type=0x00600
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
-DaycustomColor:#3900D5
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3140,7 +3138,6 @@ Type=0x00b00
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
-DaycustomColor:#3900D5
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3155,7 +3152,6 @@ Type=0x00b02
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
-DaycustomColor:#3900D5
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3170,7 +3166,6 @@ Type=0x00b03
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
-DaycustomColor:#3900D5
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3185,7 +3180,6 @@ Type=0x00c00
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
-DaycustomColor:#3900D5
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -6219,4 +6213,34 @@ DayXpm="11 11 3 1"   Colormode=16
 "   #!!!#   "
 "    ###    "
 ;12345678901
+[end]
+
+
+[_point]
+Type=0x11503
+;GRMN_TYPE: User Customizable Points/CUSTOMIZABLE_POINT_4/User customizable point type/Non NT, NT
+String1=0x12,
+ExtendedLabels=N
+DayXpm="14 16 4 1"   Colormode=16
+"!	c #FF3000"
+"#	c #00FFFF"
+"%	c #101010"
+"  	c none"
+"     %%%%%%   "
+"    %!!!!!!%  "
+"   %!!!!!!!!% "
+"  %!!%%%%%!!% "
+" %!!%    %!!% "
+" %!!% %% %!!% "
+" %!% %##%%!!% "
+" %!!% %#%%!!% "
+"  %%%%##%%!!% "
+"    %##% %!!% "
+"    %##% %!!% "
+"   %###% %!!% "
+"   %#%#%%%!!% "
+"   %##!!!!!!% "
+"    %!!!!!!%  "
+"     %%%%%%   "
+;12345678901234
 [end]

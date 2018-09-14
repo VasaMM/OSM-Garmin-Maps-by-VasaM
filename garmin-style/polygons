@@ -156,8 +156,6 @@ natural=water {
 }
 
 natural=water & area_size() > 25000000 [0x3c level 4]
-natural=water [0x3c level 1]
-landuse=reservoir | ( natural=water & water=reservoir ) [0x3f level 1]	# Vodni nadrz
 waterway=riverbank [0x046 level 1]
 
 

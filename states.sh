@@ -1,4 +1,8 @@
 function states {
+	DATA_URL=false
+	POLY_URL=false
+	POIS=false
+
 	while [ true ]; do
 		if [ -z ${STATE+x} ]; then
 			echo "Zadejte zkratku statu, pro ktery chcete vytvorit mapu."
@@ -19,8 +23,6 @@ function states {
 			OL|ol )
 				echo "Tvorim mapu pro Olomouc"
 				STATE="OL"
-				DATA_URL=false
-				POLY_URL=false
 				COUNTRY_NAME="Olomouc - VasaM"
 				COUNTRY_ID=8800
 				break
@@ -34,6 +36,7 @@ function states {
 				POLY_URL="http://download.geofabrik.de/europe/czech-republic.poly"
 				COUNTRY_NAME="Ceska republika - VasaM"
 				COUNTRY_ID=8801
+				POIS=( chs )
 				break
 				;;
 
@@ -88,6 +91,16 @@ function states {
 				break
 				;;
 
+			DK|dk )
+				echo "Tvorim mapu pro Dansko"
+				STATE="DK"
+				DATA_URL="http://download.geofabrik.de/europe/denmark-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/europe/denmark.poly"
+				COUNTRY_NAME="Dansko - VasaM"
+				COUNTRY_ID=8815
+				break
+				;;
+
 
 			#Ostatni ID: 8821 - 8890
 			KG|kg )
@@ -111,34 +124,10 @@ function states {
 				break
 				;;
 
-
-			ASIA|asia )
-				echo "Tvorim mapu pro Asia"
-				STATE="ASIA"
-				DATA_URL=false
-				POLY_URL=false
-				COUNTRY_NAME="Asia - VasaM"
-				COUNTRY_ID=8897
-				break
-				;;
-
-
-			ALMATY|almaty )
-				echo "Tvorim mapu pro Almaty"
-				STATE="ALMATY"
-				DATA_URL=false
-				POLY_URL=false
-				COUNTRY_NAME="Almaty - VasaM"
-				COUNTRY_ID=8898
-				break
-				;;
-
-
 			TEST|test )
 				echo "Testuji"
 				STATE="TEST"
-				DATA_URL=false
-				POLY_URL=false
+				POIS=( chs )
 				COUNTRY_NAME="Test - VasaM"
 				COUNTRY_ID=8899
 				break

@@ -171,6 +171,8 @@ place=island [0x2800 level 2]
 waterway=waterfall [0x6508 level 1]
 waterway=weir [0x11501 level 1] 	# Jez
 waterway=dam  [0x11501 level 1] 	# Hraz
+rock=chs  [0x11503 level 1]         # CHS
+
 
 
 # Shops

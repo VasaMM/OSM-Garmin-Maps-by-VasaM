@@ -213,6 +213,7 @@ else
 	# Rozdelim soubory
 	INPUT_FILE=./pbf/${STATE}.osm.pbf
 	INPUT_SRTM_FILE=./pbf/${STATE}-SRTM.osm.pbf
+	POIS_FILES=
 
 	if [ $SPLIT != false ]; then
 		if [ ! -d ./pbf/${STATE}-SPLITTED/ ]; then
@@ -224,6 +225,12 @@ else
 			java $JAVAMEM -jar ./splitter/splitter.jar $INPUT_SRTM_FILE --output-dir=./pbf/${STATE}-SPLITTED-SRTM/
 		fi
 		INPUT_SRTM_FILE=./pbf/${STATE}-SPLITTED-SRTM/*.osm.pbf
+	fi
+
+	if [ $POIS != false ]; then
+		for x in ${POIS[*]}; do
+			POIS_FILES="$TEST ./pois/$x.osm.xml"
+		done
 	fi
 
 
@@ -243,6 +250,7 @@ else
 	     --dem-poly=./poly/$STATE.poly \
 	     $INPUT_FILE \
 	     $INPUT_SRTM_FILE \
+	     $POIS_FILES \
 	     ./garmin-style/style.txt
 
 
