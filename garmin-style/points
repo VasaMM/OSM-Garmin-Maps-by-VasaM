@@ -1,4 +1,4 @@
-﻿# Places
+# Places
 place=city | population >= 300000 [0x0100 level 5]
 place=town | population >= 3000 [0x0600 level 3]
 place=suburb [0x0c00 level 2]

@@ -1936,7 +1936,7 @@ Type=0x10f16
 String1=0x12,Pole
 ExtendedLabels=N
 Xpm="32 32 2 1"
-"! c #FFCAB4"
+"! c #FFCAD5"
 "  c none"
 "    !!      !!!!    !!   !!!!!  "
 "            !!!           !!!!  "
@@ -2024,7 +2024,7 @@ Type=0x10f18
 String1=0x12,Smiseny les
 ExtendedLabels=N
 Xpm="32 32 2 1"
-"! c #396520"
+"! c #399500"
 "# c #7BCA41"
 "################################"
 "################################"
@@ -2068,7 +2068,7 @@ Type=0x10f19
 String1=0x12,Jehlicnaty les
 ExtendedLabels=N
 Xpm="32 32 2 1"
-"! c #396520"
+"! c #399500"
 "# c #7BCA41"
 "################################"
 "################################"
@@ -2112,7 +2112,7 @@ Type=0x10f1a
 String1=0x12,Listnaty les
 ExtendedLabels=N
 Xpm="32 32 2 1"
-"! c #396520"
+"! c #399500"
 "# c #7BCA41"
 "################################"
 "################################"
@@ -3110,7 +3110,7 @@ Type=0x00100
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
-DaycustomColor:#FF30FF
+DaycustomColor:#BD308B
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3125,7 +3125,7 @@ Type=0x00600
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
-DaycustomColor:#FF30FF
+DaycustomColor:#BD308B
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3140,7 +3140,7 @@ Type=0x00b00
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
-DaycustomColor:#FF30FF
+DaycustomColor:#BD308B
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3155,7 +3155,7 @@ Type=0x00b02
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
-DaycustomColor:#FF30FF
+DaycustomColor:#BD308B
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3170,7 +3170,7 @@ Type=0x00b03
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
-DaycustomColor:#FF30FF
+DaycustomColor:#BD308B
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"
@@ -3185,7 +3185,7 @@ Type=0x00c00
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
-DaycustomColor:#FF30FF
+DaycustomColor:#BD308B
 DayXpm="1 1 2 1"   Colormode=16
 "!	c #FFFFFF"
 "  	c none"

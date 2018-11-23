@@ -22,7 +22,7 @@ landuse=vineyard [0x10f00 level 2]
 landuse=allotments [0x10f04 level 2]
 landuse=farm [0x10f0b level 2]
 landuse=farmyard [0x10f0b level 2]
-landuse=farmland [0x10f16 level 4]
+landuse=farmland [0x10f16 level 3]
 landuse=basin [0x40 level 2]	# Nadrz na privalovou vodu
 landuse=cemetary | landuse=cemetery [0x1a level 2]
 landuse=recreation_ground [0x19 level 2]
@@ -183,7 +183,7 @@ mkgmap:city!=* & mkgmap:admin_level8=*  { set mkgmap:city='${mkgmap:admin_level8
 mkgmap:city!=* & mkgmap:admin_level9=*  { set mkgmap:city='${mkgmap:admin_level9}'  }
 mkgmap:city!=* & mkgmap:admin_level10=* { set mkgmap:city='${mkgmap:admin_level10}' }
 
-mkgmap:city=* [0x02 level 3]
+mkgmap:city=* { set name = '# ${name}'} [0x02 level 3]
 
 # add the following lines to your lines file
 <finalize>

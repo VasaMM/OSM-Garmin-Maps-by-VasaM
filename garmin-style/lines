@@ -17,6 +17,25 @@
 #    0x1b ferry
 
 
+# Hide proposed ways
+( highway=proposed | highway=proposal | highway=planned | highway~'.*proposed.*' ) { delete highway; delete junction }
+
+# Hide proposed railways
+( railway=proposed ) { delete railway }
+
+# Hide removed ways
+( highway=razed | highway=dismantled ) { deletealltags }
+
+# Hide abandoned ways
+( ( abandoned:highway=* & highway!=* ) | highway=abandoned ) { deletealltags }
+
+# Hide other non-existent ways
+( highway=unbuilt | highway=neverbuilt | highway=rejected | highway~'x-.*' ) { delete highway; delete junction }
+
+# Hide unaccessible tunnels
+highway=* & tunnel=yes & ( access=private | access=no ) & foot!=* & bicycle!=* { delete highway; delete junction }
+
+
 
 # Overways
 bridge=yes [0x10e0e level 1 continue]
