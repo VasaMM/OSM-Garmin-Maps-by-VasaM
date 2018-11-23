@@ -8,11 +8,19 @@ function states {
 			echo "Zadejte zkratku statu, pro ktery chcete vytvorit mapu."
 			echo "  * Ceska republika - [CZ]"
 			echo "  * Slovenska republika - [SK]"
+			echo "  * Polsko - [PL]"
+			echo "  * Německo - [DE]"
+			echo "  * Rakousko - [AT]"
 			echo "  * Ukrajina - [UA]"
 			echo "  * Rumunsku - [RO]"
 			echo "  * Chorvatsko - [HR]"
+			echo "  * Norsko - [NO]"
+			echo "  * Dansko - [DK]"
+			echo "  * Slovinsko - [SI]"
 			echo "  * Kyrgyzstan - [KG]"
 			echo "  * Kazachstan - [KZ]"
+			echo "  * Maroko - [MA]"
+			echo "  * Nepal - [NP]"
 			echo ""
 		 	read -p "Vybrana mapa: " -r
 		 	STATE=$REPLY
@@ -50,7 +58,37 @@ function states {
 				break
 				;;
 
-			#Ostatni Evropa ID: 8811 - 8820
+			PL|pl )
+				echo "Tvorim mapu pro Polsko"
+				STATE="PL"
+				DATA_URL="http://download.geofabrik.de/europe/poland-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/europe/poland.poly"
+				COUNTRY_NAME="Polsko - VasaM"
+				COUNTRY_ID=8803
+				break
+				;;
+
+			DE|de )
+				echo "Tvorim mapu pro Nemecko"
+				STATE="DE"
+				DATA_URL="http://download.geofabrik.de/europe/germany-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/europe/germany.poly"
+				COUNTRY_NAME="Nemecko - VasaM"
+				COUNTRY_ID=8804
+				break
+				;;
+
+			AT|at )
+				echo "Tvorim mapu pro Rakousko"
+				STATE="AT"
+				DATA_URL="http://download.geofabrik.de/europe/austria-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/europe/austria.poly"
+				COUNTRY_NAME="Rakousko - VasaM"
+				COUNTRY_ID=8805
+				break
+				;;
+
+			#Ostatni Evropa ID: 8811 - 8840
 			UA|ua )
 				STATE="UA"
 				echo "Tvorim mapu pro Ukrajinu"
@@ -101,18 +139,27 @@ function states {
 				break
 				;;
 
+			SI|si )
+				echo "Tvorim mapu pro Slovinsko"
+				STATE="SI"
+				DATA_URL="http://download.geofabrik.de/europe/slovenia-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/europe/slovenia.poly"
+				COUNTRY_NAME="Slovinsko - VasaM"
+				COUNTRY_ID=8816
+				break
+				;;
 
-			#Ostatni ID: 8821 - 8890
+
+			#Ostatni ID: 8831 - 8890
 			KG|kg )
 				echo "Tvorim mapu pro Kyrgyzstan"
 				STATE="KG"
 				DATA_URL="http://download.geofabrik.de/asia/kyrgyzstan-latest.osm.pbf"
 				POLY_URL="http://download.geofabrik.de/asia/kyrgyzstan.poly"
 				COUNTRY_NAME="Kyrgyzstan - VasaM"
-				COUNTRY_ID=8821
+				COUNTRY_ID=8841
 				break
 				;;
-
 
 			KZ|kz )
 				echo "Tvorim mapu pro Kazachstan"
@@ -120,7 +167,27 @@ function states {
 				DATA_URL="http://download.geofabrik.de/asia/kazakhstan-latest.osm.pbf"
 				POLY_URL="http://download.geofabrik.de/asia/kazakhstan.poly"
 				COUNTRY_NAME="Kazachstan - VasaM"
-				COUNTRY_ID=8822
+				COUNTRY_ID=8842
+				break
+				;;
+
+			NP|np )
+				echo "Tvorim mapu pro Nepal"
+				STATE="NP"
+				DATA_URL="http://download.geofabrik.de/asia/nepal-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/asia/nepal.poly"
+				COUNTRY_NAME="Nepal - VasaM"
+				COUNTRY_ID=8843
+				break
+				;;
+
+			MA|ma )
+				echo "Tvorim mapu pro Maroko"
+				STATE="MA"
+				DATA_URL="http://download.geofabrik.de/africa/morocco-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/africa/morocco.poly"
+				COUNTRY_NAME="Maroko - VasaM"
+				COUNTRY_ID=8844
 				break
 				;;
 
