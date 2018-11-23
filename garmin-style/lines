@@ -21,7 +21,7 @@
 ( highway=proposed | highway=proposal | highway=planned | highway~'.*proposed.*' ) { delete highway; delete junction }
 
 # Hide proposed railways
-( railway=proposed ) { delete railway }
+( railway=proposed ) { deletealltags }
 
 # Hide removed ways
 ( highway=razed | highway=dismantled ) { deletealltags }
@@ -38,8 +38,8 @@ highway=* & tunnel=yes & ( access=private | access=no ) & foot!=* & bicycle!=* {
 
 
 # Overways
-bridge=yes [0x10e0e level 1 continue]
-tunnel=yes [0x10e0f level 1 continue]
+bridge=* & bridge!=no & highway!=proposed & bridge!=proposed & railway!=proposed [0x10e0e level 1 continue]
+( tunnel=yes | tunnel=true | tunnel=1 ) & highway!=proposed & railway!=* & waterway!=* [0x10e0f level 1 continue]
 
 
 # Barriers
