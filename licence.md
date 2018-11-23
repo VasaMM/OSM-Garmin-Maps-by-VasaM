@@ -9,4 +9,4 @@ Mapová data jsou stahována ze serveru [http://download.geofabrik.de](http://do
 
 V repozitáři uložené programy **mkgmap** a **splitter** pochází ze stránek [http://www.mkgmap.org.uk/](http://www.mkgmap.org.uk/), autorem je Steve Ratcliffe.
 
-Tento skript i jím vytvořené mapy (dostupné [zde](#)) jsou mým dílem šížené pod licencí Creative Commons, tedy veškeré soubory můžete dále šířít a upravovat bez mého svolní pod podmínkou, že výsledek bude šířen pod stejnou licencí s odkazem zpět na tyto stránky a autora. **POZOR!** Toto se netýká programů mkgmap a splitter!
+Tento skript i jím vytvořené mapy (dostupné [zde](#)) jsou mým dílem šířené pod licencí Creative Commons, tedy veškeré soubory můžete dále šířít a upravovat bez mého svolní pod podmínkou, že výsledek bude šířen pod stejnou licencí s odkazem zpět na tyto stránky a autora. **POZOR!** Toto se netýká programů mkgmap a splitter!

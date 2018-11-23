@@ -5,7 +5,7 @@ set -e		# Konec v pripade chyby
 PYTHON=python3.5		# Verze pythonu
 JAVAMEM=-Xmx8000m		# Maximalni velikost RAM, kterou lze pouzit
 
-VERSION=42				# Verze generovane mapy
+VERSION=44				# Verze generovane mapy
 
 
 # Ukoncovaci funkce
@@ -42,14 +42,21 @@ function viewHelp {
 	echo ""
 	echo "## Seznam statu"
 	echo "  Staty jsou definovany ve skriptu states.sh."
-	echo "    * OL - Olomouc - vhodne pro testovani"
 	echo "    * CZ - Ceska republika"
 	echo "    * SK - Slovenska republika"
+	echo "    * PL - Polsko"
+	echo "    * DE - Nemecko"
+	echo "    * AT - Rakousko"
 	echo "    * UA - Ukrajina"
-	echo "    * RO - Rumunsko"
+	echo "    * RO - Rumunsku"
+	echo "    * HR - Chorvatsko"
 	echo "    * NO - Norsko"
+	echo "    * DK - Dansko"
+	echo "    * SI - Slovinsko"
 	echo "    * KG - Kyrgyzstan"
 	echo "    * KZ - Kazachstan"
+	echo "    * MA - Maroko"
+	echo "    * NP - Nepal"
 }
 
 
@@ -233,26 +240,32 @@ else
 		done
 	fi
 
+	# Vytvorim si docasny soubor s licenci
+	rm -f licence.tmp
+	echo "Generováno: "`LC_ALL=cs_CZ.UTF-8 date -r ./pbf/${STATE}.osm.pbf +"%k:%M %d. %B %Y"` >> licence.tmp
+	cat licence.txt >> licence.tmp
 
 	# Spustim generator
 	java $JAVAMEM -jar ./mkgmap/mkgmap.jar \
-	     -c ./mkgmap-settings.conf \
-	     --mapname="${COUNTRY_ID}0001" \
-	     --overview-mapnumber="${COUNTRY_ID}0000" \
-	     --family-id="${COUNTRY_ID}" \
-	     --description="${COUNTRY_NAME}" \
-	     --family-name="${COUNTRY_NAME}" \
-	     --series-name="${COUNTRY_NAME}" \
-	     --country-name="${COUNTRY_NAME}" \
-	     --country-abbr="${STATE}" \
-	     --product-version=$VERSION \
-	     --output-dir=./img/${STATE}_VasaM \
-	     --dem-poly=./poly/$STATE.poly \
-	     $INPUT_FILE \
-	     $INPUT_SRTM_FILE \
-	     $POIS_FILES \
-	     ./garmin-style/style.txt
+	    -c ./mkgmap-settings.conf \
+	    --mapname="${COUNTRY_ID}0001" \
+	    --overview-mapnumber="${COUNTRY_ID}0000" \
+	    --family-id="${COUNTRY_ID}" \
+	    --description="${COUNTRY_NAME}" \
+	    --family-name="${COUNTRY_NAME}" \
+	    --series-name="${COUNTRY_NAME}" \
+	    --country-name="${COUNTRY_NAME}" \
+	    --country-abbr="${STATE}" \
+	    --product-version=$VERSION \
+	    --output-dir=./img/${STATE}_VasaM \
+	    --dem-poly=./poly/$STATE.poly \
+		--license-file=./licence.tmp \
+	    $INPUT_FILE \
+	    $INPUT_SRTM_FILE \
+	    $POIS_FILES \
+	    ./garmin-style/style.txt
 
+	rm -f licence.tmp
 
 	# Vytvorim instalacni bat soubor
 	# Prevedu ID do hexa tvaru
