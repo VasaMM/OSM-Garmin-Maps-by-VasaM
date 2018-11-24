@@ -223,9 +223,8 @@ else
 	POIS_FILES=
 
 	if [ $SPLIT != false ]; then
-		if [ ! -d ./pbf/${STATE}-SPLITTED/ ]; then
-			java $JAVAMEM -jar ./splitter/splitter.jar $INPUT_FILE --output-dir=./pbf/${STATE}-SPLITTED/
-		fi
+		rm -rf ./pbf/${INPUT_FILE}-SPLITTED
+		java $JAVAMEM -jar ./splitter/splitter.jar $INPUT_FILE --output-dir=./pbf/${STATE}-SPLITTED/
 		INPUT_FILE=./pbf/${STATE}-SPLITTED/*.osm.pbf
 
 		if [ ! -d ./pbf/${STATE}-SPLITTED-SRTM/ ]; then
