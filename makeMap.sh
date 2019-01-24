@@ -5,7 +5,7 @@ set -e		# Konec v pripade chyby
 PYTHON=python3.5		# Verze pythonu
 JAVAMEM=-Xmx8000m		# Maximalni velikost RAM, kterou lze pouzit
 
-VERSION=44				# Verze generovane mapy
+VERSION=45				# Verze generovane mapy
 
 
 # Ukoncovaci funkce
@@ -40,23 +40,7 @@ function viewHelp {
 	echo "    * -ns | --no_split zakaze deleni mapovych souboru na mensi dily. Vhodne pouze u velmi malych oblasti a pro pocitace s dostatkem RAM."
 	echo "    * -h | --help zobrazi tuto napovedu."
 	echo ""
-	echo "## Seznam statu"
 	echo "  Staty jsou definovany ve skriptu states.sh."
-	echo "    * CZ - Ceska republika"
-	echo "    * SK - Slovenska republika"
-	echo "    * PL - Polsko"
-	echo "    * DE - Nemecko"
-	echo "    * AT - Rakousko"
-	echo "    * UA - Ukrajina"
-	echo "    * RO - Rumunsku"
-	echo "    * HR - Chorvatsko"
-	echo "    * NO - Norsko"
-	echo "    * DK - Dansko"
-	echo "    * SI - Slovinsko"
-	echo "    * KG - Kyrgyzstan"
-	echo "    * KZ - Kazachstan"
-	echo "    * MA - Maroko"
-	echo "    * NP - Nepal"
 }
 
 

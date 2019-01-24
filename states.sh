@@ -8,19 +8,24 @@ function states {
 			echo "Zadejte zkratku statu, pro ktery chcete vytvorit mapu."
 			echo "  * Ceska republika - [CZ]"
 			echo "  * Slovenska republika - [SK]"
-			echo "  * Polsko - [PL]"
-			echo "  * Německo - [DE]"
-			echo "  * Rakousko - [AT]"
-			echo "  * Ukrajina - [UA]"
-			echo "  * Rumunsku - [RO]"
-			echo "  * Chorvatsko - [HR]"
-			echo "  * Norsko - [NO]"
 			echo "  * Dansko - [DK]"
-			echo "  * Slovinsko - [SI]"
-			echo "  * Kyrgyzstan - [KG]"
+			echo "  * Chorvatsko - [HR]"
 			echo "  * Kazachstan - [KZ]"
+			echo "  * Kyrgyzstan - [KG]"
+			echo "  * Madarsko - [HU]"
 			echo "  * Maroko - [MA]"
 			echo "  * Nepal - [NP]"
+			echo "  * New York - [NY]"
+			echo "  * Norsko - [NO]"
+			echo "  * Nemecko - [DE]"
+			echo "  * Polsko - [PL]"
+			echo "  * Rakousko - [AT]"
+			echo "  * Recko - [GR]"
+			echo "  * Rumunsku - [RO]"
+			echo "  * Slovinsko - [SI]"
+			echo "  * Tadzikistan - [TJ]"
+			echo "  * Ukrajina - [UA]"
+			echo "  * Vietnam - [VN]"
 			echo ""
 		 	read -p "Vybrana mapa: " -r
 		 	STATE=$REPLY
@@ -149,6 +154,26 @@ function states {
 				break
 				;;
 
+			GR|gr )
+				echo "Tvorim mapu pro Recko"
+				STATE="GR"
+				DATA_URL="http://download.geofabrik.de/europe/greece-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/europe/greece.poly"
+				COUNTRY_NAME="Recko - VasaM"
+				COUNTRY_ID=8817
+				break
+				;;
+
+			HU|hu )
+				echo "Tvorim mapu pro Madarsko"
+				STATE="HU"
+				DATA_URL="http://download.geofabrik.de/europe/hungary-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/europe/hungary.poly"
+				COUNTRY_NAME="Madarsko - VasaM"
+				COUNTRY_ID=8818
+				break
+				;;
+
 
 			#Ostatni ID: 8831 - 8890
 			KG|kg )
@@ -188,6 +213,37 @@ function states {
 				POLY_URL="http://download.geofabrik.de/africa/morocco.poly"
 				COUNTRY_NAME="Maroko - VasaM"
 				COUNTRY_ID=8844
+				break
+				;;
+
+			TJ|tj )
+				echo "Tvorim mapu pro Tádžikistán"
+				STATE="TJ"
+				DATA_URL="http://download.geofabrik.de/asia/tajikistan-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/asia/tajikistan.poly"
+				COUNTRY_NAME="Tadzikistan - VasaM"
+				COUNTRY_ID=8845
+				break
+				;;
+
+			NY|ny )
+				echo "Tvorim mapu pro New York"
+				STATE="NY"
+				DATA_URL="http://download.geofabrik.de/north-america/us/new-york-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/north-america/us/new-york.poly"
+				COUNTRY_NAME="New York - VasaM"
+				COUNTRY_ID=8846
+				break
+				;;
+				;;
+
+			VN|vn )
+				echo "Tvorim mapu pro Vietnam"
+				STATE="VN"
+				DATA_URL="https://download.geofabrik.de/asia/vietnam-latest.osm.pbf"
+				POLY_URL="https://download.geofabrik.de/asia/vietnam.poly"
+				COUNTRY_NAME="Vietnam - VasaM"
+				COUNTRY_ID=8847
 				break
 				;;
 

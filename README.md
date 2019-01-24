@@ -35,24 +35,6 @@ Státy jsou definovány ve skriptu *states.sh*. Příklad definice pro ČR:
 * `break`
 * `;;`
 
-Ve skriptu jsou defivány následující státy/oblasti:
-* `OL` - Olomouc - vhodné pro testování
-* `CZ` - Česká republika
-* `SK` - Slovenská republika
-* `PL` - Polsko
-* `DE` - Německo
-* `AT` - Rakousko
-* `UA` - Ukrajina
-* `RO` - Rumunsko
-* `HR` - Chorvatsko
-* `NO` - Norsko
-* `DK` - Dánsko
-* `SI` - Slovinsko
-* `KG` - Kyrgyzstán
-* `KZ` - Kazachstán
-* `MA` - Maroko
-* `NP` - Nepál
-
 
 ### Hotové mapy
 Hotové mapy najdete na stránce [http://www.osmg.brazovic.cz/](http://www.osmg.brazovic.cz/)
