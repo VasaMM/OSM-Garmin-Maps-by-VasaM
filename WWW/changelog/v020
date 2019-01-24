@@ -1,0 +1,15 @@
+Opraveny názvy luk a sadů (název obsahuje informace o udržování louky: sečená/nesečená)
+Opraveny názvy sadů (nově se vypisuje pěstovaná plodina)
+Doplněny popisy typu cesty
+Opraveno zobrazováni názvu a typu cesty, pokud po ní vede turistická/cyklistická trasa. Nově se vykreslí oba názvy.
+Přidána nejvyšší úroveň oddálení
+Vykreslován typ lesa (listnatý, jehličnatý, smíšený)
+Vykreslována pole
+Změna stylu:
+<ul>
+	<strong>křoviny</strong> - už nejsou tak výrazné
+	<strong>golfového hřiště</strong> - už by se nemělo plést s loukou
+	<strong>zeleně/zahrady</strong> - chybně se vykreslovaly místo toho křoviny
+	Rozcestníky se vykreslují až při větším přiblížení
+</ul>
+Zveřejněn generovací skript
