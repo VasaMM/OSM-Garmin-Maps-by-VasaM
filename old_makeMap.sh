@@ -40,7 +40,7 @@ function viewHelp {
 	echo "    * -ns | --no_split zakaze deleni mapovych souboru na mensi dily. Vhodne pouze u velmi malych oblasti a pro pocitace s dostatkem RAM."
 	echo "    * -h | --help zobrazi tuto napovedu."
 	echo ""
-	echo "  Staty jsou definovany ve skriptu states.sh."
+	echo "  Staty jsou definovany ve skriptu old_states.sh."
 }
 
 
@@ -98,7 +98,7 @@ done
 
 
 # Ziskam stat, nebyl-li zadan
-source ./states.sh
+source ./old_states.sh
 states
 
 
@@ -200,6 +200,8 @@ if [ $MAPSFORGE = true ]; then
 	./osmosis --rb file="../../pbf/$STATE.osm.pbf" --mapfile-writer file="../../map/$STATE.map" type=ram preferred-languages=en,cs,ua tag-conf-file="../tag-mapping.xml"
 
 	cd "./../.."
+
+# Generuji Garmin
 else
 	# Rozdelim soubory
 	INPUT_FILE=./pbf/${STATE}.osm.pbf
@@ -208,18 +210,20 @@ else
 
 	if [ $SPLIT != false ]; then
 		rm -rf ./pbf/${INPUT_FILE}-SPLITTED
-		java $JAVAMEM -jar ./splitter/splitter.jar $INPUT_FILE --output-dir=./pbf/${STATE}-SPLITTED/
+		# java $JAVAMEM -jar ./splitter/splitter.jar $INPUT_FILE --max-areas=512 --max-nodes=1600000 --output-dir=./pbf/${STATE}-SPLITTED/
+		java $JAVAMEM -jar ./splitter/splitter.jar $INPUT_FILE --max-areas=4096 --max-nodes=1048576 --output-dir=./pbf/${STATE}-SPLITTED/
 		INPUT_FILE=./pbf/${STATE}-SPLITTED/*.osm.pbf
 
 		if [ ! -d ./pbf/${STATE}-SPLITTED-SRTM/ ]; then
-			java $JAVAMEM -jar ./splitter/splitter.jar $INPUT_SRTM_FILE --output-dir=./pbf/${STATE}-SPLITTED-SRTM/
+			# java $JAVAMEM -jar ./splitter/splitter.jar $INPUT_SRTM_FILE --max-areas=512 --max-nodes=1600000 --output-dir=./pbf/${STATE}-SPLITTED-SRTM/
+			java $JAVAMEM -jar ./splitter/splitter.jar $INPUT_SRTM_FILE --max-areas=4096 --max-nodes=1048576 --output-dir=./pbf/${STATE}-SPLITTED-SRTM/
 		fi
 		INPUT_SRTM_FILE=./pbf/${STATE}-SPLITTED-SRTM/*.osm.pbf
 	fi
 
 	if [ $POIS != false ]; then
 		for x in ${POIS[*]}; do
-			POIS_FILES="$TEST ./pois/$x.osm.xml"
+			POIS_FILES="$POIS_FILES ./pois/$x.osm.xml"
 		done
 	fi
 
@@ -237,8 +241,11 @@ else
 	    --description="${COUNTRY_NAME}" \
 	    --family-name="${COUNTRY_NAME}" \
 	    --series-name="${COUNTRY_NAME}" \
+	    --area-name="${COUNTRY_NAME}" \
 	    --country-name="${COUNTRY_NAME}" \
 	    --country-abbr="${STATE}" \
+	    --region-name="${COUNTRY_NAME}" \
+	    --region-abbr="${STATE}" \
 	    --product-version=$VERSION \
 	    --output-dir=./img/${STATE}_VasaM \
 	    --dem-poly=./poly/$STATE.poly \

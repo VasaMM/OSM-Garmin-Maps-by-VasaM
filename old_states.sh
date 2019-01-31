@@ -174,6 +174,26 @@ function states {
 				break
 				;;
 
+			ES|es )
+				echo "Tvorim mapu pro Spanelsko"
+				STATE="ES"
+				DATA_URL="http://download.geofabrik.de/europe/spain-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/europe/spain.poly"
+				COUNTRY_NAME="Spanelsko - VasaM"
+				COUNTRY_ID=8819
+				break
+				;;
+
+			IT|it )
+				echo "Tvorim mapu pro Italii"
+				STATE="IT"
+				DATA_URL="http://download.geofabrik.de/europe/italy-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/europe/italy.poly"
+				COUNTRY_NAME="Italie - VasaM"
+				COUNTRY_ID=8820
+				break
+				;;
+
 
 			#Ostatni ID: 8831 - 8890
 			KG|kg )
@@ -235,7 +255,6 @@ function states {
 				COUNTRY_ID=8846
 				break
 				;;
-				;;
 
 			VN|vn )
 				echo "Tvorim mapu pro Vietnam"
@@ -247,12 +266,33 @@ function states {
 				break
 				;;
 
+			LK|lk )
+				echo "Tvorim mapu pro Sri Lanku"
+				STATE="LK"
+				DATA_URL="https://download.geofabrik.de/asia/sri-lanka-latest.osm.pbf"
+				POLY_URL="https://download.geofabrik.de/asia/sri-lanka.poly"
+				COUNTRY_NAME="Sri Lanka - VasaM"
+				COUNTRY_ID=8848
+				break
+				;;
+
 			TEST|test )
 				echo "Testuji"
 				STATE="TEST"
 				POIS=( chs )
 				COUNTRY_NAME="Test - VasaM"
 				COUNTRY_ID=8899
+				break
+				;;
+
+			CZu )
+				echo "Tvorim mapu pro Ceskou republiku"
+				STATE="CZu"
+				DATA_URL="http://download.geofabrik.de/europe/czech-republic-latest.osm.pbf"
+				POLY_URL="http://download.geofabrik.de/europe/czech-republic.poly"
+				COUNTRY_NAME="Ceska republika (unicode) - VasaM"
+				COUNTRY_ID=8888
+				POIS=( chs )
 				break
 				;;
 
