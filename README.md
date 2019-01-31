@@ -5,6 +5,7 @@
 * Java verze 8
 * Python verze 3 (testováno na 3.4)
 * Program [phyghtmap](http://katze.tfiu.de/projects/phyghtmap/)
+* Program [osmium](https://osmcode.org/osmium-tool/)
 
 ## Instalace
 1) Nejdříve splňte požadavky
