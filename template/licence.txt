@@ -1,4 +1,3 @@
---------------------------------------------------
 Autor: VasaM  
 Web: http://www.osmg.brazovic.cz/
 
@@ -11,3 +10,4 @@ Vrstevnice pochází z projektu Viewfinder (http://www.viewfinderpanoramas.org/)
 V repozitáři uložené programy mkgmap a splitter pochází ze stránek http://www.mkgmap.org.uk/, autorem je Steve Ratcliffe.
 
 Tento skript i jím vytvořené mapy jsou mým dílem šířené pod licencí Creative Commons, tedy veškeré soubory můžete dále šířít a upravovat bez mého svolní pod podmínkou, že výsledek bude šířen pod stejnou licencí s odkazem zpět na tyto stránky a autora. POZOR! Toto se netýká programů mkgmap a splitter!
+--------------------------------------------------
