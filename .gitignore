@@ -26,8 +26,10 @@ FTPusername
 *TEST*
 *.lnk
 make.cmd
+upload.cmd
 licence.tmp
 settings.ftp
 *.uploading
 __pycache__/*
 osmium.txt
+Mapsforge/*
