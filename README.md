@@ -1,14 +1,16 @@
 # Skript pro generování OSM map pro Garmin
 
 ## Požadavky
-* Linux
+<!-- * Linux -->
 * Java verze 8
-* Python verze 3 (testováno na 3.4)
-* Program [phyghtmap](http://katze.tfiu.de/projects/phyghtmap/)
-* Program [osmium](https://osmcode.org/osmium-tool/)
+* Python verze 3 (testováno na 3.7.3)
+<!-- * Program [phyghtmap](http://katze.tfiu.de/projects/phyghtmap/) -->
+<!-- * Program [osmium](https://osmcode.org/osmium-tool/) -->
 
 ## Instalace
-1) Nejdříve splňte požadavky
+1) Nejdříve nainstalujte python a javu
+  1) krok 1
+  2) krok 2
 2) Uložte si obsah celého repozitáže (vpravo nahoře: *Clone or download*). Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte.
 3) Ze stránek [http://www.mkgmap.org.uk](http://www.mkgmap.org.uk/download/mkgmap.html) stáhněte soubory *bounds.zip* a *sea.zip*.
 4) Tyto soubory rozbalte do složek *bounds* a *sea*, bez dalších podsložek!
