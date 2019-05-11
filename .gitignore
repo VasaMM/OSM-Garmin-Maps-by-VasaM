@@ -30,3 +30,4 @@ licence.tmp
 settings.ftp
 *.uploading
 __pycache__/*
+osmium.txt
