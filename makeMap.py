@@ -12,9 +12,10 @@ from download import download
 
 
 # Nastevni
-JAVAMEM='-Xmx8000m'		# Maximalni velikost RAM, kterou lze pouzit
+JAVAMEM  = '-Xmx8000m'		# Maximalni velikost RAM, kterou lze pouzit
+MAX_JOBS = 4          		# Maximalni pocet vlaken
 
-VERSION=45				# Verze generovane mapy
+VERSION = 46				# Verze generovane mapy
 
 
 # Ukoncovaci funkce
@@ -23,7 +24,7 @@ def end( time_start ):
 	runtime = time_end - time_start
 	print( '\nKonec v ', time_end, ', beh ', runtime, sep = '' )
 	print( '\007' )
-	exit()
+	exit(0)
 
 
 
@@ -103,9 +104,10 @@ def main():
 	if not state.data_url:
 		download_map = False
 
+	print("data id:", state.data_id)
 	# Data jiz byla stazena
-	if os.path.isfile( './pbf/' + state.id + '.osm.pbf' ):
-		print( 'Nalezen soubor ' + state.id + '.osm.pbf' )
+	if os.path.isfile( './pbf/' + state.data_id + '.osm.pbf' ):
+		print( 'Nalezen soubor ' + state.data_id + '.osm.pbf' )
 		
 		# Uzivatel nespecifikoval, co se ma stat
 		if download_map is None and state.data_url != False:
@@ -130,28 +132,28 @@ def main():
 	# Stahnu data
 	if download_map:
 		print( 'Stahuji aktualni data' )
-		download( state.data_url, './pbf/' + state.id + '.osm.pbf' )
+		download( state.data_url, './pbf/' + state.data_id + '.osm.pbf' )
 
 
 	# Stahnu polygon
-	if not os.path.isfile( './poly/' + state.id + '.poly' ):
+	if not os.path.isfile( './poly/' + state.data_id + '.poly' ):
 		if state.poly_url == False:
-			print( 'NEnalezen soubor ' + state.id + '.poly!' )
+			print( 'NEnalezen soubor ' + state.data_id + '.poly!' )
 			exit(1)
 
 		print( 'Stahuji hranice statu' )
-		download( state.poly_url, './poly/' + state.id + '.poly' )
+		download( state.poly_url, './poly/' + state.data_id + '.poly' )
 
 
 	# Zjistim, zda mam hotove vrstevnice
-	if not os.path.isfile( './pbf/' + state.id + '-SRTM.osm.pbf' ):
+	if not os.path.isfile( './pbf/' + state.data_id + '-SRTM.osm.pbf' ):
 		print( 'Generuji vrstevnice' )
 		
 		# --no-zero-contour
 		os.system(
 			'phyghtmap \
-			--polygon=./poly/' + state.id + '.poly \
-			-o ./pbf/' + state.id + '-SRTM \
+			--polygon=./poly/' + state.data_id + '.poly \
+			-o ./pbf/' + state.data_id + '-SRTM \
 			--pbf \
 			-j 2 \
 			-s 10 \
@@ -162,7 +164,7 @@ def main():
 			--write-timestamp \
 			--max-nodes-per-tile=0 \
 		')
-		os.rename( glob.glob( './pbf/' + state.id + '-SRTM*.osm.pbf' )[0], './pbf/' + state.id + '-SRTM.osm.pbf' )
+		os.rename( glob.glob( './pbf/' + state.data_id + '-SRTM*.osm.pbf' )[0], './pbf/' + state.data_id + '-SRTM.osm.pbf' )
 
 
 	else:
@@ -195,39 +197,41 @@ def main():
 	# Generuji Garmin
 	else:
 		# Rozdelim soubory
-		input_file = './pbf/' + state.id + '.osm.pbf'
-		input_srtm_file = './pbf/' + state.id + '-SRTM.osm.pbf'
+		input_file = './pbf/' + state.data_id + '.osm.pbf'
+		input_srtm_file = './pbf/' + state.data_id + '-SRTM.osm.pbf'
 
 		if split:
-			for file in glob.glob( './pbf/' + state.id + '-SPLITTED/*' ):
-				os.remove(file)
+			if not os.path.exists( './pbf/' + state.data_id + '-SPLITTED' ) or download_map:
+				for file in glob.glob( './pbf/' + state.data_id + '-SPLITTED/*' ):
+					os.remove(file)
 
-			# max-areas = 512
-			# max-nodes = 1600000
-			os.system(
-				'java ' + JAVAMEM + ' -jar ./splitter/splitter.jar \
-				' + input_file + ' \
-				--max-areas=4096 \
-				--max-nodes=1048576 \
-				--output-dir=./pbf/' + state.id + '-SPLITTED \
-			')
+				# max-areas = 512
+				# max-nodes = 1600000
+				os.system(
+					'java ' + JAVAMEM + ' -jar ./splitter/splitter.jar \
+					' + input_file + ' \
+					--max-areas=4096 \
+					--max-nodes=1600000 \
+					--output-dir=./pbf/' + state.data_id + '-SPLITTED \
+				')
+
 
 			input_file = ''
-			for file in glob.glob( './pbf/' + state.id + '-SRTM*.osm.pbf' ):
+			for file in glob.glob( './pbf/' + state.data_id + '-SPLITTED/*.osm.pbf' ):
 				input_file += file + ' '
 
-			if not os.path.isdir( './pbf/' + state.id + '-SPLITTED-SRTM/' ):
+			if not os.path.isdir( './pbf/' + state.data_id + '-SPLITTED-SRTM/' ):
 				os.system(
 					'java ' + JAVAMEM + ' -jar ./splitter/splitter.jar \
 					' + input_srtm_file + ' \
 					--max-areas=4096 \
-					--max-nodes=1048576 \
-					--output-dir=./pbf/' + state.id + '-SPLITTED-SRTM \
+					--max-nodes=1600000 \
+					--output-dir=./pbf/' + state.data_id + '-SPLITTED-SRTM \
 				')
 
-				input_srtm_file = ''
-				for file in glob.glob( './pbf/' + state.id + '-SPLITTED-SRTM*.osm.pbf' ):
-					input_srtm_file += file + ' '
+			input_srtm_file = ''
+			for file in glob.glob( './pbf/' + state.data_id + '-SPLITTED-SRTM/*.osm.pbf' ):
+				input_srtm_file += file + ' '
 
 		pois_files = ''
 		if state.pois is not None:
@@ -244,10 +248,11 @@ def main():
 		license.close()
 
 		# Spustim generator
-		inputs = input_file + ' ' + input_srtm_file + ' ' + pois_files
+		# inputs = input_file + ' ' + input_srtm_file + ' ' + pois_files
 		os.system(
-			'java $JAVAMEM -jar ./mkgmap/mkgmap.jar \
+			'java ' + JAVAMEM + ' -jar ./mkgmap/mkgmap.jar \
 			-c ./mkgmap-settings.conf \
+			--max-jobs=' + str( MAX_JOBS ) + ' \
 			--mapname="' + str( state.number ) + '0001\" \
 			--overview-mapnumber="' + str( state.number ) + '0000\" \
 			--family-id="' + str( state.number ) + '" \
@@ -261,11 +266,13 @@ def main():
 			--region-abbr="' + state.id + '" \
 			--product-version=$VERSION \
 			--output-dir=./img/' + state.id + '_VasaM \
-			--dem-poly=./poly/' + state.id + '.poly \
+			--dem-poly=./poly/' + state.data_id + '.poly \
 			--license-file=./licence.tmp \
+			' + state.lang + ' \
+			' + state.code + ' \
 			' + input_file + ' \
 			' + input_srtm_file + ' \
-			' + str(pois_files) + ' \
+			' + pois_files + ' \
 			./garmin-style/style.txt \
 		')
 

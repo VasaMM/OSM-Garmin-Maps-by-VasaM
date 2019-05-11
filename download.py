@@ -66,9 +66,12 @@ def download( url, output ):
 		if length:
 			size += len( data )
 			percent = round( size / length * 100 )
-			speed = round( ( blocksize // 1048576 ) / time_diff, 2 )
-			eta = round( ( ( length - size ) // 1048576 ) / speed )  # v sekundach
-			eta = str( timedelta( seconds = eta ) )
+			speed = 0
+			if time_diff != 0:
+				round( ( blocksize // 1048576 ) / time_diff, 2 )
+			eta = 0
+			if speed != 0:
+				round( ( ( length - size ) // 1048576 ) / speed )  # v sekundach
 
 			printProgres( percent, size, length, speed, eta )
 
