@@ -1,10 +1,12 @@
 # Skript pro generování OSM map pro Garmin
 
+## Licence
+Licence CC BY 3.0 CZ, uveďte původ.
+
 ## Požadavky
-<!-- * Linux -->
 * Java verze 8
 * Python verze 3 (testováno na 3.6.8)
-<!-- * Program [phyghtmap](http://katze.tfiu.de/projects/phyghtmap/) -->
+* Program [phyghtmap](http://katze.tfiu.de/projects/phyghtmap/), viz [instalace](#Instalace)
 <!-- * Program [osmium](https://osmcode.org/osmium-tool/) -->
 
 ## Instalace
@@ -15,7 +17,7 @@
     2) Vyberte **Customize installation**. Zatrhněte **pip**, ostatní můžete odznačit. **Next**. Zatrhněte **Add python to enviroment variables** a **Precompile standart library**, ostatní nemusíte. **Install**.
     3) Na linuxu použijte `sudo apt install python3.7 python3-pip -y`
 
-2) Nainstalujte javu verze 8 (pokud ji již máte, můžete přeskočit). [Zde](https://www.java.com/en/download/manual.jsp) stáhnete instalátor pro windows. Doporučuji *Windows Online*. Můžete použít výchozí nastavení instalace.
+2) Nainstalujte javu verze 8 (pokud ji již máte, můžete přeskočit). [Zde](https://www.java.com/en/download/manual.jsp) stáhnete instalátor pro windows. Pokud máte 64bitový systém, doporučuji *Windows Offline (64-bit)*. Můžete použít výchozí nastavení instalace.
 
 3) Spusťtě konzoli (na windows `Win + R`). Nainstalujte python moduly `pip install --user matplotlib==2.2.4 cycler==0.10.0 kiwisolver==1.1.0 numpy==1.16.3 pyparsing==2.4.0 python-dateutil==2.8.0 pytz==2019.1 six==1.12.0 beautifulsoup4==4.7.1 bs4==0.0.1 soupsieve==1.9.1`
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+ #!/usr/bin/env python3
 
 import os, sys, glob, zipfile, hashlib
 import urllib.request
@@ -6,50 +6,56 @@ from shutil import copyfile
 from datetime import datetime
 
 
-from areas import State, area
-from download import download
+from python.areas import State, area
+from python.download import download
 
 
 
 # Nastevni
-JAVAMEM  = '-Xmx8000m'		# Maximalni velikost RAM, kterou lze pouzit
-MAX_JOBS = 4          		# Maximalni pocet vlaken
+JAVAMEM  = '-Xmx4g'   # Maximalni velikost RAM, kterou lze pouzit, viz https://stackoverflow.com/questions/14763079/what-are-the-xms-and-xmx-parameters-when-starting-jvm
+MAX_JOBS = 4          # Maximalni pocet vlaken
 
-VERSION = 46				# Verze generovane mapy
+VERSION = 47		  # Verze generovane mapy
+
+quiet = False
+
+def say( msg ):
+	if not quiet:
+		print( msg )
 
 
 # Ukoncovaci funkce
 def end( time_start ):
 	time_end = datetime.now()
 	runtime = time_end - time_start
-	print( '\nKonec v ', time_end, ', beh ', runtime, sep = '' )
-	print( '\007' )
+	say( '\nKonec v ' + str( time_end ) + ', beh ' + str( runtime ) )
+	say( '\007' )
 	exit(0)
 
 
 
 # Napoveda
 def printHelp():
-	print ( '# Skript pro generovani OSM map pro Garmin' )
+	print ( 'CZ: Skript pro generovani OSM map pro navigace Garmin' )
+	print ( 'EN: Script for generating OSM maps for Garmin navigations' )
 	print ()
-	print ( '## Pozadavky ' )
-	print ( '  * Linux ' )
-	print ( '  * Java verze 8 ' )
-	print ( '  * Python verze 3 (testovano na 3.4) ' )
-	print ( '  * Program phyghtmap (http://katze.tfiu.de/projects/phyghtmap/) ' )
-	print ( '  * FIXME ' )
+	print ( 'Author: VasaM' )
+	print ( 'License: CC BY 3.0 CZ' )
+	print ( 'Date: 11. 05. 2019' )
+	print ( 'Web: https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM' )
 	print ()
-	print ( '## Pouziti ' )
-	print ( '  Skript je nezvykle ukecany (do budoucna je v planu i ticha verze) a na zacatku spusteni se uzivatele pta, co chce udelat. Proto jej staci spustit bez parametru. ' )
-	print ( '  Pro bezobsluzne automaticke spousteni lze chovani ovlivnit pomoci parametru: ' )
-	print ( '	* -a <stat> | --area <stat> definuje stat/oblast, pro kterou je mapa generovana. Viz seznam statu. ' )
-	print ( '	* -dy | --download_yes vynuti vzdy nove stazeni mapovych dat ' )
-	print ( '	* -dn | --download_no v pripade, ze byli drive stazena mapova data, nebudou se znovu stahovat. ' )
-	print ( '		**POZOR**, neni provadena validace techto dat. Jedna-li se o fragment z prechoziho preruseneho stahovani, dojde k chybe. ' )
-	print ( '	* -ns | --no_split zakaze deleni mapovych souboru na mensi dily. Vhodne pouze u velmi malych oblasti a pro pocitace s dostatkem RAM. ' )
-	print ( '	* -h | --help zobrazi tuto napovedu. ' )
-	print ()
-	print ( 'Staty jsou definovany ve skriptu areas.py.' )
+	print ( 'Pouziti / Use' )
+	print ( '  -q' )
+	# print ( '  Skript je nezvykle ukecany (do budoucna je v planu i ticha verze) a na zacatku spusteni se uzivatele pta, co chce udelat. Proto jej staci spustit bez parametru. ' )
+	# print ( '  Pro bezobsluzne automaticke spousteni lze chovani ovlivnit pomoci parametru: ' )
+	# print ( '	* -a <stat> | --area <stat> definuje stat/oblast, pro kterou je mapa generovana. Viz seznam statu. ' )
+	# print ( '	* -dy | --download_yes vynuti vzdy nove stazeni mapovych dat ' )
+	# print ( '	* -dn | --download_no v pripade, ze byli drive stazena mapova data, nebudou se znovu stahovat. ' )
+	# print ( '		**POZOR**, neni provadena validace techto dat. Jedna-li se o fragment z prechoziho preruseneho stahovani, dojde k chybe. ' )
+	# print ( '	* -ns | --no_split zakaze deleni mapovych souboru na mensi dily. Vhodne pouze u velmi malych oblasti a pro pocitace s dostatkem RAM. ' )
+	# print ( '	* -h | --help zobrazi tuto napovedu. ' )
+	# print ()
+	# print ( 'Staty jsou definovany ve skriptu areas.py.' )
 
 
 def main():
@@ -239,19 +245,22 @@ def main():
 				pois_files += ' ./pois/' + x + '.osm.xml'
 
 
-		# Vytvorim si docasny soubor s licenci
-		copyfile( './template/licence.txt', 'licence.tmp' )
-		license = open( 'licence.tmp', 'a' ) 
-		license.write( '\nGenerováno: ' )
-		# echo "Generováno: "`LC_ALL=cs_CZ.UTF-8 date -r ./pbf/${STATE}.osm.pbf +"%k:%M %d. %B %Y"` >> licence.tmp
-		license.write( str( datetime.now() ) )		# FIXME formatovat
+		# Vytvorim licencni soubor
+		license = open( './template/license.txt', 'r' )
+		content = license.read()
 		license.close()
+
+		license = open( 'license.txt', 'w' )
+		license.write( content + "\n" + str( datetime.now() ) )
+		license.close()
+
 
 		# Spustim generator
 		# inputs = input_file + ' ' + input_srtm_file + ' ' + pois_files
-		os.system(
+		err = os.system(
 			'java ' + JAVAMEM + ' -jar ./mkgmap/mkgmap.jar \
-			-c ./mkgmap-settings.conf \
+			-c mkgmap-settings.conf \
+			--check-roundabouts \
 			--max-jobs=' + str( MAX_JOBS ) + ' \
 			--mapname="' + str( state.number ) + '0001\" \
 			--overview-mapnumber="' + str( state.number ) + '0000\" \
@@ -267,7 +276,7 @@ def main():
 			--product-version=$VERSION \
 			--output-dir=./img/' + state.id + '_VasaM \
 			--dem-poly=./poly/' + state.data_id + '.poly \
-			--license-file=./licence.tmp \
+			--license-file=license.txt \
 			' + state.lang + ' \
 			' + state.code + ' \
 			' + input_file + ' \
@@ -276,7 +285,11 @@ def main():
 			./garmin-style/style.txt \
 		')
 
-		os.remove( 'licence.tmp' )
+		if err != 0:
+			sys.stderr.write( 'mkgmap error' )
+			sys.exit()
+
+		os.remove( 'license.txt' )
 
 
 		# Prevedu ID do hexa tvaru
@@ -312,6 +325,9 @@ def main():
 
 
 		# Prejmenuji vystupni soubor
+		if os.path.isfile( './img/' + state.id + '_VasaM.img' ):
+			os.remove( './img/' + state.id + '_VasaM.img' )
+
 		os.rename( './img/' + state.id + '_VasaM/gmapsupp.img', './img/' + state.id + '_VasaM.img' )
 
 		# Vytvorim archiv
