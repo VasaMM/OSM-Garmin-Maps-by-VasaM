@@ -1,0 +1,13 @@
+Autor: VasaM  
+Web: http://www.osmg.brazovic.cz/
+
+
+Mapovy generator vyuziva Open Street Maps (OSM) sirene pod licenci Creative Commons - uvedte autora-Zachovejte licenci 2.0 (CC-BY-SA). Vice viz (c) Prispevatele OpenStreetMap (https://www.openstreetmap.org/copyright).
+
+Mapova data jsou stahovana ze serveru http://download.geofabrik.de.
+Vrstevnice pochazi z projektu Viewfinder (http://www.viewfinderpanoramas.org/)
+
+V repozitari ulozene a pouzivane programy mkgmap a splitter pochazi ze stranek http://www.mkgmap.org.uk/, autorem je Steve Ratcliffe.
+
+Tento skript i jim vytvorene mapy jsou mym dilem sirene pod licenci Creative Commons, tedy veskere soubory muzete dale sirit a upravovat bez meho svolni pod podminkou, ze vysledek bude siren pod stejnou licenci s odkazem zpet na tyto stranky a autora. POZOR! Toto se netyka programu mkgmap a splitter!
+--------------------------------------------------

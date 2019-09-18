@@ -3,6 +3,7 @@
 import os	# overit nutnost importu
 import sys	# overit nutnost importu
 from datetime import datetime, timedelta
+from math import floor
 import urllib.request
 
 def makeBar( length, percent, done = '=', pointer = '>', fill = ' ', start = '[', end = ']' ):
@@ -42,7 +43,9 @@ def download( url, output ):
 
 	if length:
 		length = int( length )
-		blocksize = max( 4096, length // 100 )
+		blocksize = max( 4096, length // 1000 )
+		# blocksize = 4096 # just made something up
+		# FIXME
 	else:
 		blocksize = 1000000 # just made something up
 
@@ -68,10 +71,15 @@ def download( url, output ):
 			percent = round( size / length * 100 )
 			speed = 0
 			if time_diff != 0:
-				round( ( blocksize // 1048576 ) / time_diff, 2 )
+				speed = round( ( blocksize // 1048576 ) / time_diff, 2 )
 			eta = 0
 			if speed != 0:
-				round( ( ( length - size ) // 1048576 ) / speed )  # v sekundach
+				eta = round( ( ( length - size ) // 1048576 ) / speed )  # v sekundach
+				if eta > 99:
+					eta = str( floor( eta / 60 ) ) + ' min ' + str( eta % 60 ) + ' s'
+				else:
+					eta = str( eta ) + ' s'
+
 
 			printProgres( percent, size, length, speed, eta )
 

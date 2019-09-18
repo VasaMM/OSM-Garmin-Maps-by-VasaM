@@ -143,6 +143,34 @@ STATES = {
 		number   = 8821,
 	),
 
+	'AD': State(
+		data_url = 'http://download.geofabrik.de/europe/andorra-latest.osm.pbf',
+		poly_url = 'http://download.geofabrik.de/europe/andorra.poly',
+		name     = 'Andorra',
+		number   = 8822,
+	),
+
+	'BG': State(
+		data_url = 'http://download.geofabrik.de/europe/bulgaria-latest.osm.pbf',
+		poly_url = 'http://download.geofabrik.de/europe/bulgaria.poly',
+		name     = 'Bulharsko',
+		number   = 8823,
+	),
+
+	'CH': State(
+		data_url = 'http://download.geofabrik.de/europe/switzerland-latest.osm.pbf',
+		poly_url = 'http://download.geofabrik.de/europe/switzerland.poly',
+		name     = 'Svycarsko',
+		number   = 8824,
+	),
+
+	'GB': State(
+		data_url = 'http://download.geofabrik.de/europe/great-britain-latest.osm.pbf',
+		poly_url = 'http://download.geofabrik.de/europe/great-britain.poly',
+		name     = 'Velka Britanie',
+		number   = 8825,
+	),
+
 
 	#Ostatni ID: 8831 - 8890
 	'KG': State(
@@ -211,6 +239,13 @@ STATES = {
 		number   = 8849,
 		code     = 'unicode',
 		lang     = ['cs','en'],
+	),
+	
+	'Canary_islands': State(
+		data_url = 'https://download.geofabrik.de//africa/canary-islands-latest.osm.pbf',
+		poly_url = 'https://download.geofabrik.de//africa/canary-islands.poly',
+		name     = 'Kanarske ostrovy',
+		number   = 8850,
 	),
 }
 

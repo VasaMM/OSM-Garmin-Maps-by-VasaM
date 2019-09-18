@@ -33,3 +33,6 @@ settings.ftp
 __pycache__/*
 osmium.txt
 Mapsforge/*
+*.pyc
+python/grab_geofabrik/*
+python/geofabrik.py
