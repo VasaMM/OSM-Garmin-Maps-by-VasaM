@@ -19,20 +19,20 @@ Licence CC BY 3.0 CZ, uveďte původ.
 
 2) Nainstalujte javu verze 8 (pokud ji již máte, můžete přeskočit). [Zde](https://www.java.com/en/download/manual.jsp) stáhnete instalátor pro windows. Pokud máte 64bitový systém, doporučuji *Windows Offline (64-bit)*. Můžete použít výchozí nastavení instalace.
 
-3) Spusťtě konzoli (na windows `Win + R`). Nainstalujte python moduly `pip install --user matplotlib==2.2.4 cycler==0.10.0 kiwisolver==1.1.0 numpy==1.16.3 pyparsing==2.4.0 python-dateutil==2.8.0 pytz==2019.1 six==1.12.0 beautifulsoup4==4.7.1 bs4==0.0.1 soupsieve==1.9.1`
+3) Spusťtě konzoli (na windows `Win + R`, napsat `cmd`, *OK*). Nainstalujte python moduly `pip install --user matplotlib==2.2.4 cycler==0.10.0 kiwisolver==1.1.0 numpy==1.16.3 pyparsing==2.4.0 python-dateutil==2.8.0 pytz==2019.1 six==1.12.0 beautifulsoup4==4.7.1 bs4==0.0.1 soupsieve==1.9.1`
 
 4) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*. Doporučuji nejnovější verzi *source distribution*. Např. v květnu 2019 to je [phyghtmap_2.21.orig.tar.gz](phyghtmap_2.21.orig.tar.gz). **Pozor**, verze 2.21 obsahuje ve windows chybu, vytvořil jsem opravenou [kopii](http://www.osmg.brazovic.cz/phyghtmap-2.21_fixed.zip). Archiv rozbalte a ve složce se souborem *setup.py* spusťte konzoli (na windows např. pomocí zapsání příkazu `cmd` do adresního řádku průzkumníku). Příkazem `python setup.py install` nainstalujte *phyghtmap*. Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
 
 5) Ověřte si úspěšnost instalace příkazem `phyghtmap --version`. Mělo by se vám zobrazit `phyghtmap 2.21`. Pokud vše funguje, můžete rozbalený archiv smazat.
 6) Uložte si obsah celého repozitáže (vpravo nahoře: *Clone or download*).
-7) Rozbalte ho do míst, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte.
+7) Rozbalte ho do míst, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte. Na Windows 10 může být problém s antivirem, viz [zde](https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM/issues/2#issuecomment-532711693)
 8) Ze stránek [http://www.mkgmap.org.uk](http://www.mkgmap.org.uk/download/mkgmap.html) stáhněte soubory *bounds.zip* a *sea.zip*.
 9) Tyto soubory rozbalte do složek *bounds* a *sea*, bez dalších podsložek!
 10) V souboru *makeMap.py* na prvních řádcích lze definovat maximální rozsah paměti RAM, povolený počet vláken procesoru a verzi mapy.
 
 
 ## Použití
-Skript je nezvykle ukecaný (do budoucna je v plánu i "tichá" verze) a na začátku spuštění se uživatele ptá, co chce udělat. Proto jej stačí spustit bez parametrů: `./makeMap.sh`.  
+Skript je nezvykle ukecaný (do budoucna je v plánu i "tichá" verze) a na začátku spuštění se uživatele ptá, co chce udělat. Proto jej stačí spustit bez parametrů: `./makeMap.py`.  
 Pro bezobslužné automatické spouštění lze chování ovlivnit pomocí parametrů:
 * `-a <stát>` nebo `--area <stát>` definuje stát (oblast), pro který je mapa generována. Viz [seznam států](#seznam-států)
 * `-dy` nebo `--download_yes` vynutí vždy nové stažení mapových dat
@@ -41,20 +41,11 @@ Pro bezobslužné automatické spouštění lze chování ovlivnit pomocí param
 * `-h` nebo `--help` zobrazí nápovědu.
 
 ## Seznam států
-Státy jsou definovány ve skriptu *states.sh*. Příklad definice pro ČR:
-* `CZ|cz )` - použitelné zkratky státu pro paramter `--area`, zde *CZ* a *cz*
-* `echo "Tvorim mapu pro Ceskou republiku"` - Výpis na konzoly
-* `STATE="CZ"` - Zkratka státu použitá v názvech souborů
-* `DATA_URL="http://download.geofabrik.de/europe/czech-republic-latest.osm.pbf"` - Zdroj mapových dat, jsou-li mapová data stahována ručně, použijte `false`
-* `POLY_URL="http://download.geofabrik.de/europe/czech-republic.poly"` - Zdroj hraničních polygonů, je-li polygon definován ručně, použijte `false`
-* `COUNTRY_NAME="Ceska republika - VasaM"` - Název mapy vypsaný v GPS a BaseCamp
-* `COUNTRY_ID=8801` - Jedinečné ID mapy
-* `break`
-* `;;`
+Státy jsou definovány ve skriptu *python/areas.py*. **Dodělat návod na přidání vlastního státu!**
 
 
 ### Hotové mapy
-Hotové mapy najdete na stránce [http://www.osmg.brazovic.cz/](http://www.osmg.brazovic.cz/)
+Hotové mapy najdete na stránce [https://www.brazovic.cz/subdom/osmg/](https://www.brazovic.cz/subdom/osmg/)
 
 
 Chcete-li přidat další mapu či oblast, nejednoduší je zkopírovat existující a upravit ji. Nezapomeňte změnit ID na nějaké jiné. Pro vlastní mapy doporučuji jiné, než 88xx. Toto čislování budu používat pro mnou generované mapy a mohlo by dojít ke konfliktu.
