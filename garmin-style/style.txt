@@ -2308,17 +2308,12 @@ ExtendedLabels=N
 [_line]
 Type=0x0c
 ;GRMN_TYPE: Roads/ROUNDABOUT/Roundabout/Non NT, NT
-UseOrientation=N
-Xpm="32 5 2  1"
-"! c #313131"
-"# c #FF658B"
-"################################"
-"################################"
-"################################"
-"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-;12345678901234567890123456789012
-String1=0x12,Chodci + cyklisti
+UseOrientation=Y
+LineWidth=1
+BorderWidth=1
+Xpm="0 0 2 0"
+"1 c #D88C00"
+"2 c #806400"
 ExtendedLabels=N
 [end]
 
@@ -2379,6 +2374,24 @@ Xpm="32 2 2  1"
 "!!!!    !!!!    !!!!    !!!!    "
 ;12345678901234567890123456789012
 String1=0x12,Nezpevnena cesta
+ExtendedLabels=N
+[end]
+
+
+[_line]
+Type=0x11
+;GRMN_TYPE: Customizable Line Types/CUSTOMIZABLE_ROUTE_LINE_5/Routable customizable line/Non NT, NT
+UseOrientation=N
+Xpm="32 5 2  1"
+"! c #313131"
+"# c #FF658B"
+"################################"
+"################################"
+"################################"
+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+;12345678901234567890123456789012
+String1=0x12,Chodci + cyklisti
 ExtendedLabels=N
 [end]
 
