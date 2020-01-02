@@ -36,3 +36,4 @@ Mapsforge/*
 *.pyc
 python/grab_geofabrik/*
 python/geofabrik.py
+makeMap.log

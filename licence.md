@@ -1,6 +1,6 @@
 # Licence
 **Autor:** VasaM  
-**Web:** [http://www.osmg.brazovic.cz/](http://www.osmg.brazovic.cz/)  
+**Web:** [http://www.osmg.brazovic.cz/](https://www.brazovic.cz/subdom/osmg/)  
 
 
 Mapový generátor využívá *Open Street Maps (OSM)* šířené pod licencí Creative Commons - uveďte autora-Zachovejte licenci 2.0 (CC-BY-SA). Více viz [© Přispěvatelé OpenStreetMap](https://www.openstreetmap.org/copyright).
