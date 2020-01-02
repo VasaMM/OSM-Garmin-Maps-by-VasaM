@@ -40,7 +40,7 @@
 				Byly přidány další podrobnosti, upraven jejich vzhled a  vytvořen univerzální generátor pro libovolnou zemi. Více o generátoru najdete na <a href="https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM" title="GitHub">GitHubu</a>.
 			</p>
 			<p>
-				Výsledkem je vcelku podrobná mapa vhodná jak pro turistiku, tak pro kolo. Ta je generována buď v podobě instalátoru do programu BaseCamp nebo jako <em>*.img</em> soubor pro přímé použití v GPS. <strong>Mapy jsou aktualizovány nepravidelně.</strong> Pokud si myslíte, že je na čase další aktualizace nebo Vám tu chybí nějaká země, zkuste mi napsat do <a href="http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/" title="Diskuze">diskuze</a>.
+				Výsledkem je vcelku podrobná mapa vhodná jak pro turistiku, tak pro kolo. Ta je generována buď v podobě instalátoru do programu BaseCamp (MapSource) nebo jako <em>*.img</em> soubor pro přímé použití v GPS. <strong>Mapy jsou aktualizovány nepravidelně.</strong> Pokud si myslíte, že je na čase další aktualizace nebo Vám tu chybí nějaká země, zkuste mi napsat do <a href="http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/" title="Diskuze">diskuze</a> nebo v rámci dotazníku níže.
 				Chcete-li být pravidelně informováni o novinkách, můžete využítít <a href="./rss.php" target="_blank" title="RSS feed">RSS čtečku</a>.
 			</p>
 		</section>
@@ -52,7 +52,7 @@
 				<li>cyklostezky</li>
 				<li>vrstevnice včetně výškových dat (funguje výpočet výškového profilu trasy)</li>
 				<li>turisticky zajímavé informace (lavička, přístřešek, koš, brána v plotě, ...)</li>
-				<li>instalátor do BaseCamp</li>
+				<li>instalátor do BaseCamp/MapSource</li>
 			</ul>
 		</section>
 
@@ -61,6 +61,55 @@
 			<a href="2.png" target="_blank" title="Klikněte pro detail"><img src="2_thumb.png" width="33%" style="float: left"></a>
 			<a href="3.png" target="_blank" title="Klikněte pro detail"><img src="3_thumb.png" width="33%" style="float: left; margin-left: 0.5%;"></a>
 		</section>
+
+		<section class="survey" id="survey-section">
+			<h3>Průzkum</h3>
+			<p>
+				Rád bych mapy dále vylepšoval, ovšem k tomu potřebuji znát Vaše názory a preference.​ Věnujte mi proto prosím několik vašich minutek a vyplňte tento krátký dotazník. Děkuji
+			</p>
+
+			<script type="text/javascript">
+				function add_survey() {
+					var frame = document.createElement( "iframe" );
+					frame.src = "https://docs.google.com/forms/d/e/1FAIpQLSdVayQBjqUhRjmdXY-84hNFLiVoUo_qJeFOzBg4vbPqC_u0jg/viewform?embedded=true";
+					frame.width = "100%";
+					frame.height = "4100";
+					frame.frameBorder = "0";
+					frame.marginHeight = "0";
+					document.getElementById( "survey-section" ).appendChild( frame );
+
+					document.getElementById( "survey-button" ).classList.add( "hide" );
+				}
+			</script>
+			
+			<div class="button" id="survey-button" onclick="add_survey()">Otevřít dotazník</div>
+		</section>
+		
+		<section class="survey" id="add-map-section">
+			<h3>Přidání/aktualizace map</h3>
+			<p>
+				Chybý Vám tu nějaká mapa nebo je příliš stará?
+			</p>
+
+			<script type="text/javascript">
+				function add_survey() {
+					var frame = document.createElement( "iframe" );
+					frame.src = "https://docs.google.com/forms/d/e/1FAIpQLSd1sUAJ-ZKMw-Gf2sFjUz2zG0tfkByKBxh0NDtJiMaMklhkpw/viewform?embedded=true";
+					frame.width = "100%";
+					frame.height = "550";
+					frame.frameBorder = "0";
+					frame.marginHeight = "0";
+					document.getElementById( "add-map-section" ).appendChild( frame );
+
+					document.getElementById( "add-map-button" ).classList.add( "hide" );
+				}
+			</script>
+			
+			<div class="button" id="add-map-button" onclick="add_survey()">Dejte mi o tom vědět!</div>
+		</section>
+
+
+
 
 		<section class="changelog">
 			<?php include( 'changelog.php' ) ?>
@@ -87,7 +136,7 @@
 			?>
 
 			<br>
-			<strong>Chybý Vám tu mapa pro jiný stát nebo je zastaralá? Tak mi napište do <a href="http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/" title="Diskuze">diskuze</a>.</strong>
+			<strong>Chybý Vám tu mapa pro jiný stát nebo je zastaralá? Tak mi napište do <a href="http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/" title="Diskuze">diskuze</a> nebo do <a href="#survey-section" onclick="add_survey()">dotazníku</a>.</strong>
 			
 			
 		</section>
@@ -95,13 +144,13 @@
 		<section class="manual">
 			Každá mapa je vytvořena ve dvou variantách:
 			<ul>
-				<li>soubor <em>*.zip</em> obsahuje soubory pro použití v BaseCamp</li>
+				<li>soubor <em>*.zip</em> obsahuje soubory pro použití v BaseCamp/MapSource</li>
 				<li>soubor <em>*.img</em> slouží pro přímé nahrání do GPS</li>
 			</ul>
 
-			<h3>Instalace do BaseCamp</h3>
+			<h3>Instalace do BaseCamp/MapSource</h3>
 			<ol>
-				<li>Nemáte-li, nainstauljte si BaseCamp, Mapsource nebyl testován</li>
+				<li>Nemáte-li, nainstauljte si BaseCamp nebo Mapsource</li>
 				<li>Stáhněte archiv s mapou (přípona *.zip)</li>
 				<li>Rozbalte ho do složky s Vašimi mapami (nejčastěji <em>C:/Garmin</em>)</li>
 				<li>Otevřete složku, najděte soubor <em>install.bat</em>, klikněte na něj pravým tlačítkem myši a zvlite <em>Spustit jako správce</em></li>
@@ -109,7 +158,7 @@
 				<li>Užívejte si mapu</li>
 				<li>Aktualizace map (nebude-li zmíněno jinak) se provádí pouhým přepisem původních souborů za ty v archivu (nejjednodušší je původní soubory smazat a nové nahrát)</li>
 				<li>Případná odinstalace se provádí souborem <em>uninstall.bat</em>, opět ho musíte spustit jako správce</li>
-				<li><strong>POZOR! Zatím nefunguje instalace map z programu BaseCamp do GPS (Mapsource se tato chyba zřejmě netýká). Pro instalaci mapy do GPS použijte návod níže.</strong></li>
+				<li><strong>POZOR! Zatím nefunguje instalace map z programu BaseCamp do GPS (Mapsource se tato chyba netýká). Pro instalaci mapy do GPS použijte návod níže.</strong></li>
 			</ol>
 
 			<h3>Instalace do GPS</h3>
@@ -117,9 +166,9 @@
 				<li>Stáhněte soubor <em>*.img</em></li>
 				<li>Máte-li velmi starou GPS (např. Garmin Etrex Legend HCx):
 					<ul>
-						<li>Ta nepodporuje více mapových souborů - musíte proto nejdříve původní mapy zazálohovat</li>
+						<li>Ta nepodporuje více mapových souborů - musíte proto nejdříve původní mapy <strong>zazálohovat!</strong></li>
 						<li>Stažený soubor přejmenujte na <em>gmapsupp.img</em> a nahrejte do složky <em>Garmin</em> na paměťové kartě vaší GPS</li>
-						<li>Takto nelze provozovat více map, proto raději doporučuji instalaci do BaseCamp a následné nahrání map pomocí programu</li>
+						<li>Takto nelze provozovat více map, proto raději doporučuji instalaci do BaseCamp/MapSource a následné nahrání map pomocí programu</li>
 					</ul>
 				</li>
 				<li>Máte-li novější GPS, stačí vám soubor jednoduše uložit do složky <em>Garmin</em> na paměťové kartě zařízení.</li>

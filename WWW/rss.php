@@ -1,8 +1,9 @@
 <?php
-	$URL = "http://www.osmg.brazovic.cz";
+	$URL = "https://brazovic.cz/subdom/osmg";
 
 	// Funkce pro vytvoreni jedne mapy v RSS
 	function mapItem( $id, $name, $suffix ) {
+		global $URL;
 		if ( file_exists( './maps/' . $id . '_VasaM.' . $suffix ) ) {
 			$title = 'Mapa: ' . $name;
 
@@ -31,6 +32,7 @@
 	
 	// Funkce pro vytvoreni jedne zmeny v RSS
 	function changeItem( $version, $pubDate, $description ) {
+		global $URL;
 		$title = 'Nová verze ' . $version;
 		$link = $URL . '#v' . $version;
 
@@ -69,9 +71,11 @@
 	include( 'areas.php' );
 
 	// Vypisu vsechny mapy
-	foreach ($areas as $id => $name) {
-		mapItem( $id, $name, 'zip' );
-		mapItem( $id, $name, 'img' );
+	foreach ($area as $subareaName => $subareas) {
+		foreach ($subareas as $id => $name) {
+			mapItem( $id, $name, 'zip' );
+			mapItem( $id, $name, 'img' );
+		}
 	}
 
 	// Vypisu changelog

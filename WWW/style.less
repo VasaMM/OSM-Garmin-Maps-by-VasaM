@@ -1,6 +1,15 @@
 .center { text-align: center; }
 .italic { font-style: italic; }
 .small { font-size: small; }
+.hide { display: none; }
+.noselect {
+-webkit-touch-callout: none!important; /* iOS Safari */
+  -webkit-user-select: none!important; /* Safari */
+   -khtml-user-select: none!important; /* Konqueror HTML */
+     -moz-user-select: none!important; /* Firefox */
+      -ms-user-select: none!important; /* Internet Explorer/Edge */
+          user-select: none!important; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
 
 
 body {
@@ -30,6 +39,21 @@ section{
 	&.about {
 		p {
 			text-align: justify;
+		}
+	}
+
+	&.survey {
+		.button {
+			text-align: center;
+			border: 2px solid #95832d;
+			padding: 5px 10px;
+			font-weight: bold;
+			border-radius: 15px;
+			background-color: #e8e1c2;
+			margin: 0 auto;
+			width: 8em;
+			cursor: pointer;
+			.noselect();
 		}
 	}
 

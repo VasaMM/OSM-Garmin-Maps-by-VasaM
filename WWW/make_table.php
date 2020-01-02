@@ -94,7 +94,7 @@ function make_table( $subarea ) {
 		}
 		
 		echo "<tr>";
-		echo "<td>$name <div class=\"pc-no center italic\">v $version</div></td>";
+		echo "<td title=\"$id\">$name <div class=\"pc-no center italic\">v $version</div></td>";
 
 		printDownloadLink( './maps/' . $id . '_VasaM.zip', $hashZip );
 		printDownloadLink( './maps/' . $id . '_VasaM.img', $hashImg );
