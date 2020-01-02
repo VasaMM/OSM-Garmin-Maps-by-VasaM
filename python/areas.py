@@ -1,5 +1,8 @@
+from python.print import say
+
+
 class State:
-	def __init__( self, name, number, data_url = False, poly_url = False, data_id = None, pois = None, code = 'code-page=1250', lang = [] ):
+	def __init__(self, name, number, data_url = False, poly_url = False, data_id = None, pois = None, code = 'code-page=1250', lang = []):
 		self.data_url = data_url
 		self.poly_url = poly_url
 		self.name     = name
@@ -9,7 +12,7 @@ class State:
 		self.data_id  = data_id
 		self.code     = ' --' + code + ' '
 		
-		if len( lang ) > 0:
+		if len(lang) > 0:
 			self.lang = ' --name-tag-list='
 			for l in lang:
 				self.lang += 'name:' + l + ','
@@ -34,7 +37,7 @@ STATES = {
 		poly_url = 'http://download.geofabrik.de/europe/czech-republic.poly',
 		name     = 'Ceska republika',
 		number   = 8801,
-		pois     = ( 'chs', ),
+		pois     = ('chs',),
 	),
 
 	'SK': State(
@@ -250,16 +253,28 @@ STATES = {
 }
 
 
-def area( state ):
+def get_area(o):
 	while True:
-		if state in STATES:
-			STATES[ state ].id = state
-			if STATES[ state ].data_id is None:
-				STATES[ state ].data_id = state
-			return STATES[ state ]
-		else:
-			print( 'Zadejte zkratku statu, pro ktery chcete vytvorit mapu.' )
-			for state in STATES:
-				print( '  * [' + state + '] - ' + STATES[ state ].name )
+		if o.state in STATES:
+			# doplnim id
+			STATES[ o.state ].id = o.state
 
-			state = input( 'Vybrana mapa: ' )
+			# popr. i data_id
+			if STATES[ o.state ].data_id is None:
+				STATES[ o.state ].data_id = o.state
+			
+			# Vratim hodnotu
+			o.state = STATES[ o.state ]
+
+			say('Area id: ' + o.state.id, o)
+			say('Data id: ' + o.state.data_id, o)
+
+			return
+		
+		else:
+			print('Zadejte zkratku statu, pro ktery chcete vytvorit mapu.')
+			for o.state in STATES:
+				print('  * [' + o.state + '] - ' + STATES[ o.state ].name)
+
+			o.state = input('Vybrana mapa: ')
+
