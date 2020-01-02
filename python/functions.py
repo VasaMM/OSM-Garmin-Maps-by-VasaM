@@ -54,11 +54,11 @@ Web: https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM''')
 
 
 	parser.add_argument('--area', '-a', help='Id generované oblasti, viz seznam\nId of generated area, see list')
-	parser.add_argument('--download', '-d', type=checkBool, choices=['[y]es', '[n]o'], help='TODO')
+	parser.add_argument('--download', '-d', type=checkBool, choices=['[y]es', '[n]o'], help='Vynuti / zakaze stazeni novych dat. Neni-li definovano, skript zobrazi dotaz.')
 	parser.add_argument('--quiet', '-q', action='store_true', help='Zadne vypisy na stdout\nNo messages on stdout')
-	parser.add_argument('--no_split', action='store_true', help='Nedelit na podsoubory')
+	parser.add_argument('--no_split', action='store_true', help='Zakaze deleni mapy na podsoubory - vhodne jen pro velmi male oblasti')
 	# parser.add_argument('--mapsforge', '-m',action='store_true', help='mapsforge - nenni hotovo')
-	parser.add_argument('--logging', '-l',action='store_true', help='vytvarinsoubor .log')
+	parser.add_argument('--logging', '-l',action='store_true', help='Vytvori logovaci soubor makeMap.log')
 	
 
 	args = parser.parse_args()
