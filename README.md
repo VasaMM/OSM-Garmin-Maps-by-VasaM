@@ -21,7 +21,7 @@ Licence CC BY 3.0 CZ, uveďte původ.
 
 3) Spusťtě konzoli (na windows `Win + R`, napsat `cmd`, *OK*). Nainstalujte python moduly `pip install --user matplotlib==2.2.4 cycler==0.10.0 kiwisolver==1.1.0 numpy==1.16.3 pyparsing==2.4.0 python-dateutil==2.8.0 pytz==2019.1 six==1.12.0 beautifulsoup4==4.7.1 bs4==0.0.1 soupsieve==1.9.1 lxml`
 
-4) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*. Doporučuji nejnovější verzi *source distribution*. Např. v květnu 2019 to je [phyghtmap_2.21.orig.tar.gz](phyghtmap_2.21.orig.tar.gz). **Pozor**, verze 2.21 obsahuje ve windows chybu, vytvořil jsem opravenou [kopii](http://www.osmg.brazovic.cz/phyghtmap-2.21_fixed.zip). Archiv rozbalte a ve složce se souborem *setup.py* spusťte konzoli (na windows např. pomocí zapsání příkazu `cmd` do adresního řádku průzkumníku). Příkazem `python setup.py install` nainstalujte *phyghtmap*. Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
+4) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*. Doporučuji nejnovější verzi *source distribution*. Např. v květnu 2019 to je [phyghtmap_2.21.orig.tar.gz](phyghtmap_2.21.orig.tar.gz). **Pozor**, verze 2.21 obsahuje ve windows chybu, vytvořil jsem opravenou [kopii](http://www.osm.vasam.cz/phyghtmap-2.21_fixed.zip). Archiv rozbalte a ve složce se souborem *setup.py* spusťte konzoli (na windows např. pomocí zapsání příkazu `cmd` do adresního řádku průzkumníku). Příkazem `python setup.py install` nainstalujte *phyghtmap*. Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
 
 5) Ověřte si úspěšnost instalace příkazem `phyghtmap --version`. Mělo by se vám zobrazit `phyghtmap 2.21`. Pokud vše funguje, můžete rozbalený archiv smazat.
 6) Uložte si obsah celého repozitáže (vpravo nahoře: *Clone or download*).
@@ -45,7 +45,7 @@ Státy jsou definovány ve skriptu *python/areas.py*. **Dodělat návod na přid
 
 
 ### Hotové mapy
-Hotové mapy najdete na stránce [https://www.brazovic.cz/subdom/osmg/](https://www.brazovic.cz/subdom/osmg/)
+Hotové mapy najdete na stránce [https://www.osm.vasam.cz](https://www.osm.vasam.cz)
 
 
 Chcete-li přidat další mapu či oblast, nejednoduší je zkopírovat existující a upravit ji. Nezapomeňte změnit ID na nějaké jiné. Pro vlastní mapy doporučuji jiné, než 88xx. Toto čislování budu používat pro mnou generované mapy a mohlo by dojít ke konfliktu.
