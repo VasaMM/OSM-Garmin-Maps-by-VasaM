@@ -45,7 +45,7 @@ Státy jsou definovány ve skriptu *python/areas.py*. **Dodělat návod na přid
 
 
 ### Hotové mapy
-Hotové mapy najdete na stránce [https://www.osm.vasam.cz](https://www.osm.vasam.cz)
+Hotové mapy najdete na stránce [http://www.osm.vasam.cz](http://www.osm.vasam.cz)
 
 
 Chcete-li přidat další mapu či oblast, nejednoduší je zkopírovat existující a upravit ji. Nezapomeňte změnit ID na nějaké jiné. Pro vlastní mapy doporučuji jiné, než 88xx. Toto čislování budu používat pro mnou generované mapy a mohlo by dojít ke konfliktu.
