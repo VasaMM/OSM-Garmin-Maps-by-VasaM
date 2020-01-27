@@ -1,8 +1,6 @@
-
-
 [_id]
 ProductCode=1
-FID=8800
+;FID=8800
 CodePage=1250
  [End]
 
