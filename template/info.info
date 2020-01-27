@@ -1,6 +1,0 @@
-{
-    "version": "%VERSION%",
-    "timestamp": "%TIMESTAMP%",
-    "hashImg": "%HASH_IMG%",
-    "hashZip": "%HASH_ZIP%"
-}
