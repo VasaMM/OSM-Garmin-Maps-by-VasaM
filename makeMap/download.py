@@ -1,8 +1,8 @@
-import os	# overit nutnost importu
-import sys	# overit nutnost importu
-from datetime import datetime, timedelta
+import os, sys
+from datetime import datetime, timezone, timedelta
 from math import floor
 import urllib.request
+from makeMap.prints import say, error
 
 
 
@@ -27,8 +27,8 @@ def makeBar(length, percent, done = '=', pointer = '>', fill = ' ', start = '[',
 def printProgres(percent, size, length, speed, eta):
 	bar = makeBar(30, percent)
 
-	sys.stdout.write("\033[K") # Clear to the end of line
-	print("{0:3}%  {1}  {2} MB / {3} MB   {4} MB/s   eta {5}\r".format(percent, bar, size // 1048576, length // 1048576, speed, eta), end='')
+	sys.stdout.write("\r") # Clear to the end of line
+	print("{0:3}%  {1}  {2} MB / {3} MB   {4} MB/s   eta {5}      \r".format(percent, bar, size // 1048576, length // 1048576, speed, eta), end='')
 
 
 
@@ -86,3 +86,52 @@ def download(url, output, quiet = False):
 
 	if not quiet:
 		print()
+
+
+def mapData(o):
+	say('Start map data download', o)
+	# Zjistim, zda mam stahovat data
+	if not o.state.data_url:
+		say('I don\'t have data url - skip downloading', o)
+		if o.state.fileHeader is None:
+			error('Map file does NOT exist!', o)
+		return;
+
+	if o.downloadMap is 'skip':
+		say('User set "--download skip" - skip downloading', o)
+		return;
+
+
+	downloadData = False
+	if o.downloadMap is 'auto':
+		if o.state.timestamp is None:
+			downloadData = True
+		else:
+			diff = datetime.now(timezone.utc) - o.state.timestamp
+
+			if diff.total_seconds() > o.maximumDataAge:
+				downloadData = True
+			else:
+				say('Map data is to young - skip downloading', o)
+	
+
+
+	if o.downloadMap is 'force' or downloadData is True:
+		try:
+			say('Downloading map data', o)
+			download(o.state.data_url, './pbf/' + o.state.data_id + '.osm.pbf')
+		except:
+			error("Cann't download map data!", o)
+
+
+
+	# Stahnu polygon
+	try:
+		if not os.path.isfile('./poly/' + o.state.data_id + '.poly'):
+			if o.state.poly_url == False:
+				error("Polygon '" + o.state.data_id + "' does NOT exist!", o)
+
+			say('Downloading polygon', o)
+			download(o.state.poly_url, './poly/' + o.state.data_id + '.poly')
+	except:
+		error("Cann't download polygon!", o)

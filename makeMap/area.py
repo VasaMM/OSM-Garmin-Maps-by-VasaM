@@ -1,25 +1,25 @@
-from python.print import say
+import os
+from makeMap.prints import say
 
 
 class State:
-	def __init__(self, name, number, data_url = False, poly_url = False, data_id = None, pois = None, code = 'code-page=1250', lang = []):
-		self.data_url = data_url
-		self.poly_url = poly_url
-		self.name     = name
-		self.number   = number
-		self.pois     = pois
-		self.id       = ''
-		self.data_id  = data_id
-		self.code     = ' --' + code + ' '
+	def __init__(self, name, number, data_url = False, poly_url = False, data_id = None, pois = None):
+		self.data_url = data_url      # map data url address (*.osm.pbf file)
+		self.poly_url = poly_url      # polygon url address (*.poly or *.geojson file)
+		self.name     = name          # Full name of map
+		self.number   = number        # Map number id
+		self.pois     = pois          # List of files with pois
+		self.data_id  = data_id       # If you want use another id
+		# self.code     = ' --code-page=1250 + code + ' '
 		
-		if len(lang) > 0:
-			self.lang = ' --name-tag-list='
-			for l in lang:
-				self.lang += 'name:' + l + ','
+		# if len(lang) > 0:
+		# 	self.lang = ' --name-tag-list='
+		# 	for l in lang:
+		# 		self.lang += 'name:' + l + ','
 	
-			self.lang = self.lang[ 0 : -1 ] + ' '
-		else:
-			self.lang = ' '
+		# 	self.lang = self.lang[ 0 : -1 ] + ' '
+		# else:
+		# 	self.lang = ' '
 
 
 STATES = {
@@ -28,7 +28,7 @@ STATES = {
 		poly_url = False,
 		name     = 'Olomouc',
 		number   = 8800,
-		code     = 'unicode',
+		# code     = 'unicode',
 	),
 
 	#Stredni Evropa ID: 8801 - 8810
@@ -230,8 +230,8 @@ STATES = {
 		poly_url = 'https://download.geofabrik.de/asia/iran.poly',
 		name     = 'Iran',
 		number   = 8848,
-		code     = 'unicode',
-		lang     = ['cs','en'],
+		# code     = 'unicode',
+		# lang     = ['cs','en'],
 	),
 	
 	'IR_en': State(
@@ -240,8 +240,8 @@ STATES = {
 		data_id  = 'IR',
 		name     = 'Iran - en',
 		number   = 8849,
-		code     = 'unicode',
-		lang     = ['cs','en'],
+		# code     = 'unicode',
+		# lang     = ['cs','en'],
 	),
 	
 	'Canary_islands': State(
@@ -253,7 +253,7 @@ STATES = {
 }
 
 
-def get_area(o):
+def get(o):
 	while True:
 		if o.state in STATES:
 			# doplnim id
@@ -268,7 +268,6 @@ def get_area(o):
 
 			say('Area id: ' + o.state.id, o)
 			say('Data id: ' + o.state.data_id, o)
-
 			return
 		
 		else:

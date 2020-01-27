@@ -1,10 +1,39 @@
-import os, glob, zipfile, hashlib
+import os, glob, zipfile, hashlib, json
 from datetime import datetime
+from makeMap.prints import say, error
+import osmium
 
-from python.print import say
+
+def contours(o):
+	# Zjistim, zda mam hotove vrstevnice
+	try:
+		if not os.path.isfile('./pbf/' + o.state.data_id + '-SRTM.osm.pbf'):
+			say('Generate contour line', o)
+			
+			# --no-zero-contour
+			os.system(
+				'phyghtmap \
+				--polygon=./poly/' + o.state.data_id + '.poly \
+				-o ./pbf/' + o.state.data_id + '-SRTM \
+				--pbf \
+				-j 2 \
+				-s 10 \
+				-c 200,100 \
+				--source=view3 \
+				--start-node-id=20000000000 \
+				--start-way-id=10000000000 \
+				--write-timestamp \
+				--max-nodes-per-tile=0 \
+			')
+			os.rename(glob.glob('./pbf/' + o.state.data_id + '-SRTM*.osm.pbf')[0], './pbf/' + o.state.data_id + '-SRTM.osm.pbf')
+		else:
+			say('Use previously generated contour lines', o)
+	except:
+		error("Cann't generate contour lines!", o)
 
 
-def make_garmin( o ):
+
+def garmin( o ):
 	say( 'Making map for garmin...', o )
 	state = o.state
 
@@ -57,12 +86,13 @@ def make_garmin( o ):
 	license.close()
 
 	license = open( 'license.txt', 'w' )
-	license.write( content + "\n" + str( datetime.now() ) )
+	license.write( content + "\n" + o.state.timestamp)
 	license.close()
 
 
 	# Spustim generator
-	# inputs = input_file + ' ' + input_srtm_file + ' ' + pois_files
+	# ' + state.lang + ' \
+		
 	err = os.system(
 		'java ' + o.JAVAMEM + ' -jar ./mkgmap/mkgmap.jar \
 		-c mkgmap-settings.conf \
@@ -83,8 +113,7 @@ def make_garmin( o ):
 		--output-dir=./img/' + state.id + '_VasaM \
 		--dem-poly=./poly/' + state.data_id + '.poly \
 		--license-file=license.txt \
-		' + state.lang + ' \
-		' + state.code + ' \
+		--code-page=' + o.code + ' \
 		' + input_file + ' \
 		' + input_srtm_file + ' \
 		' + pois_files + ' \
@@ -147,12 +176,6 @@ def make_garmin( o ):
 	os.chdir( '..' )
 
 
-	# Vytvorim info soubor
-	info = open( './template/info.info', 'r' )
-	content = info.read()
-	info.close()
-
-
 	# Spocitam hashe
 	def sha1( filename ):
 		hash_func = hashlib.sha1()
@@ -167,15 +190,39 @@ def make_garmin( o ):
 		return hash_func.hexdigest()
 
 
-	hash_zip = sha1( './img/' + state.id + '_VasaM.zip' )
-	hash_img = sha1( './img/' + state.id + '_VasaM.img' )
-	map_timestamp = round( o.time_start.timestamp() )
-	
-	content = content.replace( '%VERSION%', str( o.VERSION ) )
-	content = content.replace( '%TIMESTAMP%', str( map_timestamp ) )
-	content = content.replace( '%HASH_IMG%', hash_img )
-	content = content.replace( '%HASH_ZIP%', hash_zip )
+	# Vytvorim info soubor
+	infoData = {
+		'version': str(o.VERSION),
+		'timestamp':     o.state.timestamp,
+		'hashImg':       sha1( './img/' + state.id + '_VasaM.img' ),
+		'hashZip':       sha1( './img/' + state.id + '_VasaM.zip' ),
+		'codePage':      o.code
+	}
 
 	info = open( './img/' + state.id + '_VasaM.info', 'w' )
-	info.write( content )
+	info.write(json.dumps(infoData))
 	info.close()
+
+
+
+
+
+
+
+
+# def mapsforge( o ):
+# 	print( 'NENI HOTOVO' )
+	# 	cd "./Mapsforge/bin"
+	# 	export JAVACMD_OPTIONS="$JAVAMEM"
+		
+	# 	# Vlozim vrstevnice do mapy
+	# 	# if [ $DOWNLOAD = true ] || [ ! -f ../pbf/$STATE-MERGE.osm.pbf ]; then
+	# 	# 	./osmosis --rb file="../../pbf/$STATE.osm.pbf" --sort-0.6 --rb "../../pbf/$STATE-SRTM.osm.pbf" --sort-0.6 --merge --wb "../../pbf/$STATE-MERGE.osm.pbf"
+	# 	# fi
+
+	# 	# Generuji mapu
+	# 	# ./osmosis --rb file="../../pbf/$STATE-MERGE.osm.pbf" --mapfile-writer file="../../map/$STATE.map" type=hd preferred-languages=en,cs threads=4 tag-conf-file="../tag-mapping.xml"
+	# 	# ./osmosis --rb file="../../pbf/$STATE-MERGE.osm.pbf" --mapfile-writer file="../../map/$STATE.map" type=ram preferred-languages=en tag-conf-file="../tag-mapping.xml"
+	# 	./osmosis --rb file="../../pbf/$STATE.osm.pbf" --mapfile-writer file="../../map/$STATE.map" type=ram preferred-languages=en,cs,ua tag-conf-file="../tag-mapping.xml"
+
+	# 	cd "./../.."

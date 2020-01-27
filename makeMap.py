@@ -3,13 +3,8 @@
 import os
 from datetime import datetime
 
-
-from python.areas import State, get_area
-from python.print import say, error
-from python.functions import parse_args, make_log_file, download_map_data, make_contours, end
-from python.mapsforge import make_mapsforge
-from python.garmin import make_garmin
-from python.polygons import parse_poly
+from makeMap import *
+from makeMap.prints import say, error, end
 
 
 
@@ -36,25 +31,26 @@ def main():
 
 
 		# Nactu arumenty
-		parse_args(o)
-
-
-		# Vytvorim logovaci soubor
-		make_log_file(o)
+		args.parse(o)
 
 
 		say('Start at ' + str(o.time_start), o)
 
 
 		# Ziskam stat, nebyl-li zadan
-		get_area(o)
+		area.get(o)
+
+
+		#Nactu informace z hlavicky
+		parser.fileHeader(o)
+
 
 		# Stahnu mapova data a polygon
-		download_map_data(o)
+		download.mapData(o)
 
 
 		# Vytvorim vrstevnice
-		make_contours(o)
+		generator.contours(o)
 
 
 		# Vytvorim cilovou podslozku
@@ -64,13 +60,8 @@ def main():
 
 		# parse_poly(o)
 
-		# Generuji Mapsforge
-		o.mapsforge = False
-		if o.mapsforge:
-			make_mapsforge(o)
-		# Generuji Garmin
-		else:
-			make_garmin(o)
+		# Generuji Garmin mapu
+		generator.garmin(o)
 
 
 		# Ukoncim generovani
@@ -86,9 +77,9 @@ def main():
 
 
 	finally:
-		if hasattr(o, 'log_file'):
-			if o.log_file and o.log_file.close:
-				o.log_file.close()
+		if hasattr(o, 'logFile'):
+			if o.logFile and o.logFile.close:
+				o.logFile.close()
 
 
 if __name__ == "__main__":
