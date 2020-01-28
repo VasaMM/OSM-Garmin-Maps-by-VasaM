@@ -1,7 +1,12 @@
 # https://wiki.openstreetmap.org/wiki/Osmosis/Polygon_Filter_File_Python_Parsing
-import pyclipper, re
+import pyclipper, re, os
 from pprint import pprint
+import geojson
 from geojson import Polygon, Feature, FeatureCollection
+
+# from shapely.geometry import Polygon, mapping
+import functools
+
 
 
 
@@ -110,6 +115,76 @@ def parse_poly(o):
 
 
 def load(o):
+	# o.extend
 	# Pokud existuje *.poly nactu ho
-	# if not os.path.isfile('./polygons/' + o.state.data_id + '.poly'):
-	return
+	
+	# Neexistuje *.poly soubor, vytvorim ho z *.geojson
+	if not os.path.isfile(o.polygons + o.state.data_id + '.poly'):
+		if not os.path.isfile(o.polygons + o.state.data_id + '.geojson'):
+			raise ValueError(o.state.data_id + '.poly or ' + o.state.data_id + '.geojson missing!')
+
+		polygon = None
+		with open(o.polygons + o.state.data_id + '.geojson') as geojsonFIle:
+			data = geojson.load(geojsonFIle)
+
+
+			# Nactu prvni polygon
+			for feature in data['features']:
+				if polygon is not None: break
+				
+				for key,value in feature.items():
+					if key == 'geometry' and value['type'] == 'Polygon':
+						polygon = value['coordinates'][0]
+						break
+
+		with open(o.polygons + o.state.data_id + '.poly', 'w') as polyFile:
+			polyFile.write(o.state.data_id + "\n")
+			polyFile.write('0' + "\n")
+			for coord in polygon:
+				polyFile.write("\t" + str(coord[0]) + "\t" + str(coord[1]) + "\n")
+			polyFile.write('END' + "\n")
+			polyFile.write('END' + "\n")
+
+	# Existuje *.poly soubor, vytvorim *.geojson, pokud jeste neexistuje
+	elif not os.path.isfile(o.polygons + o.state.data_id + '.geojson'):
+		# https://github.com/ustroetz/polygon2osm/blob/master/polygon2geojson.py
+		coordinates = None
+		with open(o.polygons + o.state.data_id + '.poly') as polyFile:
+			coordinates = polyFile.readlines()[2:][:-2]
+
+
+		coordinates = [re.split(r'[\s\t]+', item) for item in coordinates]
+		coordinates = [list(filter(None, item)) for item in coordinates]
+		coordinates = functools.reduce(lambda a,b: a[-1].pop(0) and a if len(a[-1]) == 1 and a[-1][0] == 'END' else a.append(['END']) or a if b[0].startswith('END') else a[-1].append(b) or a, [[[]]] + coordinates)
+		coordinates = [[(float(item[0]), float(item[1])) for item in coordgroup] for coordgroup in coordinates]
+
+		print(coordinates)
+		# TODO
+
+
+	    # write_geojson(coordinates, o.polygons + o.state.data_id + '.geojson2')
+
+		raise ValueError("konec")
+
+
+
+
+
+
+
+
+
+
+# def write_geojson(data, polygon_filename):
+#     geojson_filename = '.'.join(polygon_filename.split('.')[:-1]) + ".geojson"
+
+#     schema = {'geometry': 'Polygon', 'properties': {}}
+
+#     with fiona.open(geojson_filename, 'w', 'GeoJSON', schema) as output:
+#         for elem in data:
+#             output.write({'geometry': mapping(Polygon(elem)), 'properties': {}})
+
+
+# def main(polygon_filename):
+
+

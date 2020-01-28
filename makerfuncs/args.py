@@ -58,14 +58,20 @@ Web: https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM''')
 		default='[a]uto',
 		help='force - Mapová data se při každém spuštění znovu stáhnou | Every time it starts, the data is downloaded again\n\
 skip - Mapová data se nebudou stahovat | Map data will not be downloaded\n\
-auto - Mapová data se stáhnou pouze pokud jsou starší než --maximum-date-age | Map data will be downloaded only if they is older than --maximum-date-age'
+auto - Mapová data se stáhnou pouze pokud jsou starší než --maximum-date-age <výchozí>| Map data will be downloaded only if they is older than --maximum-date-age <default>'
 	)
 	argParser.add_argument(
 		'--maximum-data-age',
 		type=_ageType,
 		default='1d',
-		help='Maximalni stari mapovych dat pri automatickem stahovani. Hodnoty ve tvaru [0-9]+[hdm], kde h znaci hodinu, d znaci den (24 hodin) a m znaci mesic (30 dni)\n\
-Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], where h is hour, d is day (24 hours) and m is month (30 days)'
+		help='Maximalni stari mapovych dat pri automatickem stahovani. Hodnoty ve tvaru [0-9]+[hdm], kde h znaci hodinu, d znaci den (24 hodin) a m znaci mesic (30 dni) <výchozí hodnota 1d>\n\
+Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], where h is hour, d is day (24 hours) and m is month (30 days) <default value is 1d>'
+	)
+	argParser.add_argument(
+		'--extend', '-e',
+		type=float,
+		default=0.0,
+		help='Zvětší polygon o zadaný počet kilometrů <výchozí hodnota je 0>\nExtend the polygon by the specified number of kilometers <default is 0>'
 	)
 	argParser.add_argument(
 		'--quiet', '-q',
@@ -73,7 +79,7 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 		help='Zadne vypisy na stdout\nNo messages on stdout'
 	)
 	argParser.add_argument(
-		'--no_split',
+		'--no-split',
 		action='store_true',
 		help='Zakaze deleni mapy na podsoubory - vhodne jen pro velmi male oblasti'
 	)
@@ -92,6 +98,7 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 	o.state          = args.area
 	o.downloadMap    = parser.downloadType(args.download)
 	o.maximumDataAge = parser.age(args.maximum_data_age)
+	o.extend         = args.extend
 	o.quiet          = args.quiet
 	o.logFile        = args.logging
 	o.code           = args.code_page
