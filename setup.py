@@ -9,4 +9,9 @@ setup(
     license='CC BY 3.0',
     url='https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM',
     packages=['makerfuncs'],
+	entry_points={
+		'console_scripts': [
+			'gmapmaker = gmapmaker:main',
+		],
+	},
 )
