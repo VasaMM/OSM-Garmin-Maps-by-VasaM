@@ -101,11 +101,10 @@ def mapData(o):
 	o.downloaded = False
 	
 	# Zjistim, zda mam stahovat data
-	if o.state.data_url is False or o.state.data_url is None:
+	if o.state.data_url is None:
 		say('I don\'t have data url - skip downloading', o)
 		if o.state.fileHeader is None:
-			error('Map file does NOT exist!', o)
-		return;
+			raise ValueError('Map file does NOT exist!', o)
 
 	if o.downloadMap is 'skip':
 		say('User set "--download skip" - skip downloading', o)
@@ -132,22 +131,26 @@ def mapData(o):
 			parser.fileHeader(o)
 
 		except:
-			error("Cann't download map data!", o)
+			raise ValueError("Cann't download map data!")
 
 
 
 # Stahnu polygon
 def polygon(o):
 	try:
-		if re.match(r'^.+\.poly$', o.state.polyUrl):
-			if not os.path.isfile(o.polygons + o.state.data_id + '.poly'):
-				say('Downloading *.poly polygon', o)
-				download(o.state.polyUrl, o.polygons + o.state.data_id + '.poly')
-		
-		elif re.match(r'^.+\.geojson$', o.state.polyUrl):
-			if not os.path.isfile(o.polygons + o.state.data_id + '.geojson'):
-				say('Downloading *.geojson polygon', o)
-				download(o.state.polyUrl, o.polygons + o.state.data_id + '.geojson')
+		if o.state.data_url is not None:
+			if re.match(r'^.+\.poly$', o.state.polyUrl):
+				if not os.path.isfile(o.polygons + o.state.data_id + '.poly'):
+					say('Downloading *.poly polygon', o)
+					download(o.state.polyUrl, o.polygons + o.state.data_id + '.poly')
+			
+			elif re.match(r'^.+\.geojson$', o.state.polyUrl):
+				if not os.path.isfile(o.polygons + o.state.data_id + '.geojson'):
+					say('Downloading *.geojson polygon', o)
+					download(o.state.polyUrl, o.polygons + o.state.data_id + '.geojson')
+		else:
+			say('I don\'t have polygon url - skip downloading', o)
+
 	
 	except:
-		error("Cann't download polygon!", o)
+		raise ValueError("Cann't download polygon!")
