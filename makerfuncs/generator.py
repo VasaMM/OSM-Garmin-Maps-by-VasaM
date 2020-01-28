@@ -1,7 +1,21 @@
 import os, glob, zipfile, hashlib, json
 from datetime import datetime
-from makeMap.prints import say, error
+from makerfuncs.prints import say, error
 import osmium
+
+
+def _sha1( filename ):
+	hash_func = hashlib.sha1()
+
+	with open( filename, 'rb') as f:
+		while True:
+			data = f.read( 67108864 )  # read 64Mb of file
+			if not data:
+				break
+			hash_func.update( data )
+
+	return hash_func.hexdigest()
+
 
 
 def contours(o):
@@ -42,6 +56,7 @@ def garmin( o ):
 	input_srtm_file = './pbf/' + state.data_id + '-SRTM.osm.pbf'
 
 	if o.split:
+		say('Split files start',o)
 		if not os.path.exists( './pbf/' + state.data_id + '-SPLITTED' ) or o.download_map:
 			for file in glob.glob( './pbf/' + state.data_id + '-SPLITTED/*' ):
 				os.remove(file)
@@ -81,18 +96,20 @@ def garmin( o ):
 
 
 	# Vytvorim licencni soubor
+	say('Prepare license file', o)
 	license = open( './template/license.txt', 'r' )
 	content = license.read()
 	license.close()
 
 	license = open( 'license.txt', 'w' )
-	license.write( content + "\n" + o.state.timestamp)
+	license.write( content + "\n" + str(o.state.timestamp))
 	license.close()
 
 
 	# Spustim generator
 	# ' + state.lang + ' \
-		
+	
+	say('Generating map', o)
 	err = os.system(
 		'java ' + o.JAVAMEM + ' -jar ./mkgmap/mkgmap.jar \
 		-c mkgmap-settings.conf \
@@ -133,6 +150,7 @@ def garmin( o ):
 
 
 	# Vytvorim instalacni bat soubor
+	say('Make install.bat file', o)
 	install = open( './template/install.bat', 'r' )
 	content = install.read()
 	install.close()
@@ -147,6 +165,7 @@ def garmin( o ):
 
 
 	# Vytvorim odinstalacni bat soubor
+	say('Make uninstall.bat file', o)
 	uninstall = open( './template/uninstall.bat', 'r' )
 	content = uninstall.read()
 	uninstall.close()
@@ -160,12 +179,14 @@ def garmin( o ):
 
 
 	# Prejmenuji vystupni soubor
+	say('Rename files', o)
 	if os.path.isfile( './img/' + state.id + '_VasaM.img' ):
 		os.remove( './img/' + state.id + '_VasaM.img' )
 
 	os.rename( './img/' + state.id + '_VasaM/gmapsupp.img', './img/' + state.id + '_VasaM.img' )
 
 	# Vytvorim archiv
+	say('Make zip file', o)
 	os.chdir( './img/' )
 	zip = zipfile.ZipFile( './' + state.id + '_VasaM.zip', 'w' )
 	for dirname, subdirs, files in os.walk( './' + state.id + '_VasaM/' ):
@@ -176,26 +197,13 @@ def garmin( o ):
 	os.chdir( '..' )
 
 
-	# Spocitam hashe
-	def sha1( filename ):
-		hash_func = hashlib.sha1()
-	
-		with open( filename, 'rb') as f:
-			while True:
-				data = f.read( 67108864 )  # read 64Mb of file
-				if not data:
-					break
-				hash_func.update( data )
-
-		return hash_func.hexdigest()
-
-
 	# Vytvorim info soubor
+	say('Make info file', o)
 	infoData = {
 		'version': str(o.VERSION),
-		'timestamp':     o.state.timestamp,
-		'hashImg':       sha1( './img/' + state.id + '_VasaM.img' ),
-		'hashZip':       sha1( './img/' + state.id + '_VasaM.zip' ),
+		'timestamp':     str(o.state.timestamp),
+		'hashImg':       _sha1( './img/' + state.id + '_VasaM.img' ),
+		'hashZip':       _sha1( './img/' + state.id + '_VasaM.zip' ),
 		'codePage':      o.code
 	}
 

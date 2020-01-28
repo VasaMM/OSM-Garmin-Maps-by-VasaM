@@ -1,8 +1,6 @@
-import textwrap
-import argparse
+import textwrap, argparse, re
 from argparse import RawTextHelpFormatter
-import re
-from makeMap import parser
+from makerfuncs import parser
 
 def _downloadType(data):
 	if str(data).lower() in ('force', 'f'):

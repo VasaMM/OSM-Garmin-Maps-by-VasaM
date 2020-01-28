@@ -3,8 +3,8 @@
 import os
 from datetime import datetime
 
-from makeMap import *
-from makeMap.prints import say, error, end
+from makerfuncs import *
+from makerfuncs.prints import say, error, end
 
 
 
@@ -41,12 +41,16 @@ def main():
 		area.get(o)
 
 
-		#Nactu informace z hlavicky
+		# Nactu informace z hlavicky
 		parser.fileHeader(o)
 
 
-		# Stahnu mapova data a polygon
+		# Stahnu mapova data
 		download.mapData(o)
+
+
+		# Stahnu polygon
+		download.polygon(o)
 
 
 		# Vytvorim vrstevnice

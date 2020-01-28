@@ -1,9 +1,9 @@
 import os
-from makeMap.prints import say
+from makerfuncs.prints import say
 
 
 class State:
-	def __init__(self, name, number, data_url = False, poly_url = False, data_id = None, pois = None):
+	def __init__(self, name, number, data_url = None, poly_url = None, data_id = None, pois = None):
 		self.data_url = data_url      # map data url address (*.osm.pbf file)
 		self.poly_url = poly_url      # polygon url address (*.poly or *.geojson file)
 		self.name     = name          # Full name of map
@@ -24,8 +24,6 @@ class State:
 
 STATES = {
 	'OL': State(
-		data_url = False,
-		poly_url = False,
 		name     = 'Olomouc',
 		number   = 8800,
 		# code     = 'unicode',

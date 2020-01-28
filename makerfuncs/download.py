@@ -2,7 +2,7 @@ import os, sys
 from datetime import datetime, timezone, timedelta
 from math import floor
 import urllib.request
-from makeMap.prints import say, error
+from makerfuncs.prints import say, error
 
 
 
@@ -91,7 +91,7 @@ def download(url, output, quiet = False):
 def mapData(o):
 	say('Start map data download', o)
 	# Zjistim, zda mam stahovat data
-	if not o.state.data_url:
+	if o.state.data_url is False or o.state.data_url is None:
 		say('I don\'t have data url - skip downloading', o)
 		if o.state.fileHeader is None:
 			error('Map file does NOT exist!', o)
@@ -120,15 +120,18 @@ def mapData(o):
 		try:
 			say('Downloading map data', o)
 			download(o.state.data_url, './pbf/' + o.state.data_id + '.osm.pbf')
+			parser.fileHeader(o)
+
 		except:
 			error("Cann't download map data!", o)
 
 
 
-	# Stahnu polygon
+# Stahnu polygon
+def polygon(o):
 	try:
 		if not os.path.isfile('./poly/' + o.state.data_id + '.poly'):
-			if o.state.poly_url == False:
+			if o.state.poly_url is False or o.state.poly_url is None:
 				error("Polygon '" + o.state.data_id + "' does NOT exist!", o)
 
 			say('Downloading polygon', o)

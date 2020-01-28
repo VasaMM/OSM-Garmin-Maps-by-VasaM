@@ -1,13 +1,15 @@
-import os, osmium
-from makeMap.prints import say, error
+import os
+import osmium
+from makerfuncs.prints import say, error
 from datetime import datetime, timezone
 
 
 def fileHeader(o):
+	say("Parsing file header", o)
 	o.state.timestamp = None
 	if os.path.isfile('./pbf/' + o.state.data_id + '.osm.pbf'):
-		fileHeader = osmium.io.Reader('./pbf/' + o.state.id + '.osm.pbf', osmium.osm.osm_entity_bits.NOTHING).header()
-		o.state.timestamp = fileHeader.get("osmosis_replication_timestamp")
+		o.state.fileHeader = osmium.io.Reader('./pbf/' + o.state.id + '.osm.pbf', osmium.osm.osm_entity_bits.NOTHING).header()
+		o.state.timestamp = o.state.fileHeader.get("osmosis_replication_timestamp")
 		try:
 			o.state.timestamp = datetime.strptime(o.state.timestamp, "%Y-%m-%dT%H:%M:%SZ")
 			o.state.timestamp = o.state.timestamp.replace(tzinfo=timezone.utc)
