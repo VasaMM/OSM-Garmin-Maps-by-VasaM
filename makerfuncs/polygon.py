@@ -1,5 +1,5 @@
 # https://wiki.openstreetmap.org/wiki/Osmosis/Polygon_Filter_File_Python_Parsing
-import pyclipper
+import pyclipper, re
 from pprint import pprint
 from geojson import Polygon, Feature, FeatureCollection
 
@@ -105,3 +105,11 @@ def parse_poly(o):
 
 	print()
 	print(feature_collection)
+
+
+
+
+def load(o):
+	# Pokud existuje *.poly nactu ho
+	# if not os.path.isfile('./polygons/' + o.state.data_id + '.poly'):
+	return

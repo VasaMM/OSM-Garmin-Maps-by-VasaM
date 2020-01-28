@@ -1,5 +1,4 @@
-import os
-import osmium
+import os, osmium
 from makerfuncs.prints import say, error
 from datetime import datetime, timezone
 
@@ -7,8 +6,8 @@ from datetime import datetime, timezone
 def fileHeader(o):
 	say("Parsing file header", o)
 	o.state.timestamp = None
-	if os.path.isfile('./pbf/' + o.state.data_id + '.osm.pbf'):
-		o.state.fileHeader = osmium.io.Reader('./pbf/' + o.state.id + '.osm.pbf', osmium.osm.osm_entity_bits.NOTHING).header()
+	if os.path.isfile(o.pbf + o.state.data_id + '.osm.pbf'):
+		o.state.fileHeader = osmium.io.Reader(o.pbf + o.state.id + '.osm.pbf', osmium.osm.osm_entity_bits.NOTHING).header()
 		o.state.timestamp = o.state.fileHeader.get("osmosis_replication_timestamp")
 		try:
 			o.state.timestamp = datetime.strptime(o.state.timestamp, "%Y-%m-%dT%H:%M:%SZ")
@@ -26,11 +25,11 @@ def fileHeader(o):
 def age(age):
 	unit = age[-1]
 
-	if unit is 'h':
+	if unit == 'h':
 		return int(age[0:-1]) * 3600
-	elif unit is 'd':
+	elif unit == 'd':
 		return int(age[0:-1]) * 3600 * 24
-	elif unit is 'm':
+	elif unit == 'm':
 		return int(age[0:-1]) * 3600 * 24 * 30
 
 

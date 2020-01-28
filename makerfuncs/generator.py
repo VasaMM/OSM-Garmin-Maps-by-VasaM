@@ -1,4 +1,4 @@
-import os, glob, zipfile, hashlib, json
+import os, sys, glob, zipfile, hashlib, json
 from datetime import datetime
 from makerfuncs.prints import say, error
 import osmium
@@ -21,25 +21,26 @@ def _sha1( filename ):
 def contours(o):
 	# Zjistim, zda mam hotove vrstevnice
 	try:
-		if not os.path.isfile('./pbf/' + o.state.data_id + '-SRTM.osm.pbf'):
+		if not os.path.isfile(o.pbf + o.state.data_id + '-SRTM.osm.pbf'):
 			say('Generate contour line', o)
 			
 			# --no-zero-contour
 			os.system(
 				'phyghtmap \
-				--polygon=./poly/' + o.state.data_id + '.poly \
-				-o ./pbf/' + o.state.data_id + '-SRTM \
+				--polygon=' + o.polygons + o.state.data_id + '.poly \
+				-o ' + o.pbf + o.state.data_id + '-SRTM \
 				--pbf \
 				-j 2 \
 				-s 10 \
 				-c 200,100 \
+				--hgtdir=' + o.hgt + '\
 				--source=view3 \
 				--start-node-id=20000000000 \
 				--start-way-id=10000000000 \
 				--write-timestamp \
 				--max-nodes-per-tile=0 \
 			')
-			os.rename(glob.glob('./pbf/' + o.state.data_id + '-SRTM*.osm.pbf')[0], './pbf/' + o.state.data_id + '-SRTM.osm.pbf')
+			os.rename(glob.glob(o.pbf + o.state.data_id + '-SRTM*.osm.pbf')[0], o.pbf + o.state.data_id + '-SRTM.osm.pbf')
 		else:
 			say('Use previously generated contour lines', o)
 	except:
@@ -51,42 +52,48 @@ def garmin( o ):
 	say( 'Making map for garmin...', o )
 	state = o.state
 
+
+	# Vytvorim cilovou podslozku
+	if not os.path.exists(o.img + o.state.id + '_VasaM'):
+		os.makedirs(o.img + o.state.id + '_VasaM')
+
+
 	# Rozdelim soubory
-	input_file = './pbf/' + state.data_id + '.osm.pbf'
-	input_srtm_file = './pbf/' + state.data_id + '-SRTM.osm.pbf'
+	input_file = o.pbf + state.data_id + '.osm.pbf'
+	input_srtm_file = o.pbf + state.data_id + '-SRTM.osm.pbf'
 
 	if o.split:
 		say('Split files start',o)
-		if not os.path.exists( './pbf/' + state.data_id + '-SPLITTED' ) or o.download_map:
-			for file in glob.glob( './pbf/' + state.data_id + '-SPLITTED/*' ):
+		if not os.path.exists( o.pbf + state.data_id + '-SPLITTED' ) or o.downloaded:
+			for file in glob.glob( o.pbf + state.data_id + '-SPLITTED/*' ):
 				os.remove(file)
 
 			# max-areas = 512
 			# max-nodes = 1600000
 			os.system(
-				'java ' + o.JAVAMEM + ' -jar ./splitter/splitter.jar \
+				'java ' + o.JAVAMEM + ' -jar ./splitter-r' + str(o.splitter) + '/splitter.jar \
 				' + input_file + ' \
 				--max-areas=4096 \
 				--max-nodes=1600000 \
-				--output-dir=./pbf/' + state.data_id + '-SPLITTED \
+				--output-dir=' + o.pbf + state.data_id + '-SPLITTED \
 			')
 
 
 		input_file = ''
-		for file in glob.glob( './pbf/' + state.data_id + '-SPLITTED/*.osm.pbf' ):
+		for file in glob.glob( o.pbf + state.data_id + '-SPLITTED/*.osm.pbf' ):
 			input_file += file + ' '
 
-		if not os.path.isdir( './pbf/' + state.data_id + '-SPLITTED-SRTM/' ):
+		if not os.path.isdir( o.pbf + state.data_id + '-SPLITTED-SRTM/' ):
 			os.system(
-				'java ' + o.JAVAMEM + ' -jar ./splitter/splitter.jar \
+				'java ' + o.JAVAMEM + ' -jar ./splitter-r' + str(o.splitter) + '/splitter.jar \
 				' + input_srtm_file + ' \
 				--max-areas=4096 \
 				--max-nodes=1600000 \
-				--output-dir=./pbf/' + state.data_id + '-SPLITTED-SRTM \
+				--output-dir=' + o.pbf + state.data_id + '-SPLITTED-SRTM \
 			')
 
 		input_srtm_file = ''
-		for file in glob.glob( './pbf/' + state.data_id + '-SPLITTED-SRTM/*.osm.pbf' ):
+		for file in glob.glob( o.pbf + state.data_id + '-SPLITTED-SRTM/*.osm.pbf' ):
 			input_srtm_file += file + ' '
 
 	pois_files = ''
@@ -111,9 +118,11 @@ def garmin( o ):
 	
 	say('Generating map', o)
 	err = os.system(
-		'java ' + o.JAVAMEM + ' -jar ./mkgmap/mkgmap.jar \
-		-c mkgmap-settings.conf \
-		--check-roundabouts \
+		'java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
+		-c ./garmin-style/mkgmap-settings.conf \
+		--bounds=./' + o.bounds +'bounds/ \
+		--precomp-sea=./' + o.sea +'sea/ \
+		--dem=./' + o.hgt +'VIEW3/ \
 		--max-jobs=' + str( o.MAX_JOBS ) + ' \
 		--mapname="' + str( state.number ) + '0001\" \
 		--overview-mapnumber="' + str( state.number ) + '0000\" \
@@ -127,8 +136,8 @@ def garmin( o ):
 		--region-name="' + state.name + '_VasaM" \
 		--region-abbr="' + state.id + '" \
 		--product-version=' + str( o.VERSION ) + ' \
-		--output-dir=./img/' + state.id + '_VasaM \
-		--dem-poly=./poly/' + state.data_id + '.poly \
+		--output-dir=' + o.img + state.id + '_VasaM \
+		--dem-poly=' + o.polygons + state.data_id + '.poly \
 		--license-file=license.txt \
 		--code-page=' + o.code + ' \
 		' + input_file + ' \
@@ -137,11 +146,12 @@ def garmin( o ):
 		./garmin-style/style.txt \
 	')
 
+	os.remove( 'license.txt' )
+
 	if err != 0:
 		sys.stderr.write( 'mkgmap error' )
 		sys.exit()
 
-	os.remove( 'license.txt' )
 
 
 	# Prevedu ID do hexa tvaru
@@ -159,7 +169,7 @@ def garmin( o ):
 	content = content.replace( '%ID%', str( state.number ) )
 	content = content.replace( '%ID_HEX%', state.number_hex )
 
-	install = open( './img/' + state.id + '_VasaM/install.bat', 'w' )
+	install = open( o.img + state.id + '_VasaM/install.bat', 'w' )
 	install.write( content )
 	install.close()
 
@@ -173,21 +183,21 @@ def garmin( o ):
 	content = content.replace( '%NAME%', state.name )
 	content = content.replace( '%ID%', str( state.number ) )
 
-	uninstall = open( './img/' + state.id + '_VasaM/uninstall.bat', 'w' )
+	uninstall = open( o.img + state.id + '_VasaM/uninstall.bat', 'w' )
 	uninstall.write( content )
 	uninstall.close()
 
 
 	# Prejmenuji vystupni soubor
 	say('Rename files', o)
-	if os.path.isfile( './img/' + state.id + '_VasaM.img' ):
-		os.remove( './img/' + state.id + '_VasaM.img' )
+	if os.path.isfile( o.img + state.id + '_VasaM.img' ):
+		os.remove( o.img + state.id + '_VasaM.img' )
 
-	os.rename( './img/' + state.id + '_VasaM/gmapsupp.img', './img/' + state.id + '_VasaM.img' )
+	os.rename( o.img + state.id + '_VasaM/gmapsupp.img', o.img + state.id + '_VasaM.img' )
 
 	# Vytvorim archiv
 	say('Make zip file', o)
-	os.chdir( './img/' )
+	os.chdir( o.img )
 	zip = zipfile.ZipFile( './' + state.id + '_VasaM.zip', 'w' )
 	for dirname, subdirs, files in os.walk( './' + state.id + '_VasaM/' ):
 		zip.write( dirname )
@@ -202,12 +212,12 @@ def garmin( o ):
 	infoData = {
 		'version': str(o.VERSION),
 		'timestamp':     str(o.state.timestamp),
-		'hashImg':       _sha1( './img/' + state.id + '_VasaM.img' ),
-		'hashZip':       _sha1( './img/' + state.id + '_VasaM.zip' ),
+		'hashImg':       _sha1( o.img + state.id + '_VasaM.img' ),
+		'hashZip':       _sha1( o.img + state.id + '_VasaM.zip' ),
 		'codePage':      o.code
 	}
 
-	info = open( './img/' + state.id + '_VasaM.info', 'w' )
+	info = open( o.img + state.id + '_VasaM.info', 'w' )
 	info.write(json.dumps(infoData))
 	info.close()
 

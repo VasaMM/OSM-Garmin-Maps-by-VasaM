@@ -1,12 +1,13 @@
-import os, sys
+import os, sys, re
 from datetime import datetime, timezone, timedelta
 from math import floor
 import urllib.request
 from makerfuncs.prints import say, error
+from makerfuncs import parser
 
 
 
-def makeBar(length, percent, done = '=', pointer = '>', fill = ' ', start = '[', end = ']'):
+def _makeBar(length, percent, done = '=', pointer = '>', fill = ' ', start = '[', end = ']'):
 	part_size = 100 / length
 
 	output = start
@@ -24,8 +25,8 @@ def makeBar(length, percent, done = '=', pointer = '>', fill = ' ', start = '[',
 
 
 
-def printProgres(percent, size, length, speed, eta):
-	bar = makeBar(30, percent)
+def _printProgres(percent, size, length, speed, eta):
+	bar = _makeBar(30, percent)
 
 	sys.stdout.write("\r") # Clear to the end of line
 	print("{0:3}%  {1}  {2} MB / {3} MB   {4} MB/s   eta {5}      \r".format(percent, bar, size // 1048576, length // 1048576, speed, eta), end='')
@@ -36,6 +37,12 @@ def download(url, output, quiet = False):
 	# url = 'https://speed.hetzner.de/100MB.bin'
 	# url = 'https://speed.hetzner.de/1GB.bin'
 
+	if not os.path.exists(os.path.dirname(output)):
+		try:
+			os.makedirs(os.path.dirname(output))
+		except OSError as exc:
+			if exc.errno != errno.EEXIST:
+				raise
 	output = open(output, 'wb')
 
 	response = urllib.request.urlopen(url)
@@ -47,11 +54,12 @@ def download(url, output, quiet = False):
 		# blocksize = 4096 # just made something up
 		# FIXME
 	else:
+		length = 0
 		blocksize = 1000000 # just made something up
 
 	if not quiet:
 		print("Stahuji '" + url + "'  ", length // 1048576, "MB")  # Prevedu na megabyte
-		printProgres(0, 0, length, 0, 0)
+		_printProgres(0, 0, length, 0, 0)
 
 	size = 0
 	while True:
@@ -82,7 +90,7 @@ def download(url, output, quiet = False):
 					eta = str(eta) + ' s'
 
 			if not quiet:
-				printProgres(percent, size, length, speed, eta)
+				_printProgres(percent, size, length, speed, eta)
 
 	if not quiet:
 		print()
@@ -90,6 +98,8 @@ def download(url, output, quiet = False):
 
 def mapData(o):
 	say('Start map data download', o)
+	o.downloaded = False
+	
 	# Zjistim, zda mam stahovat data
 	if o.state.data_url is False or o.state.data_url is None:
 		say('I don\'t have data url - skip downloading', o)
@@ -102,24 +112,23 @@ def mapData(o):
 		return;
 
 
-	downloadData = False
 	if o.downloadMap is 'auto':
 		if o.state.timestamp is None:
-			downloadData = True
+			o.downloaded = True
 		else:
 			diff = datetime.now(timezone.utc) - o.state.timestamp
 
 			if diff.total_seconds() > o.maximumDataAge:
-				downloadData = True
+				o.downloaded = True
 			else:
 				say('Map data is to young - skip downloading', o)
 	
 
 
-	if o.downloadMap is 'force' or downloadData is True:
+	if o.downloadMap is 'force' or o.downloaded is True:
 		try:
 			say('Downloading map data', o)
-			download(o.state.data_url, './pbf/' + o.state.data_id + '.osm.pbf')
+			download(o.state.data_url, o.pbf + o.state.data_id + '.osm.pbf')
 			parser.fileHeader(o)
 
 		except:
@@ -130,11 +139,15 @@ def mapData(o):
 # Stahnu polygon
 def polygon(o):
 	try:
-		if not os.path.isfile('./poly/' + o.state.data_id + '.poly'):
-			if o.state.poly_url is False or o.state.poly_url is None:
-				error("Polygon '" + o.state.data_id + "' does NOT exist!", o)
-
-			say('Downloading polygon', o)
-			download(o.state.poly_url, './poly/' + o.state.data_id + '.poly')
+		if re.match(r'^.+\.poly$', o.state.polyUrl):
+			if not os.path.isfile(o.polygons + o.state.data_id + '.poly'):
+				say('Downloading *.poly polygon', o)
+				download(o.state.polyUrl, o.polygons + o.state.data_id + '.poly')
+		
+		elif re.match(r'^.+\.geojson$', o.state.polyUrl):
+			if not os.path.isfile(o.polygons + o.state.data_id + '.geojson'):
+				say('Downloading *.geojson polygon', o)
+				download(o.state.polyUrl, o.polygons + o.state.data_id + '.geojson')
+	
 	except:
 		error("Cann't download polygon!", o)
