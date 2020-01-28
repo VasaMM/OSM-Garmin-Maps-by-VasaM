@@ -1,6 +1,8 @@
 import sys
 from datetime import datetime
 
+LOG_FILE_NAME = 'gmapmaker.log'
+
 
 def say( msg, o ):
 	if not o.quiet:
@@ -8,12 +10,24 @@ def say( msg, o ):
 
 	if o.logFile is True:
 		try:
-			o.logFile = open("makeMap.log", "w+")
+			o.logFile = open(LOG_FILE_NAME, "w+")
 		except:
-			error("Cann't open file 'makeMap.log'", o)
+			error("Cann't open file " + LOG_FILE_NAME, o)
 	
 	if o.logFile:
 		o.logFile.write( '[INFO] ' + msg + '\n' )
+		o.logFile.flush()
+
+
+def log( msg, o ):
+	if o.logFile is True:
+		try:
+			o.logFile = open(LOG_FILE_NAME, "w+")
+		except:
+			error("Cann't open file " + LOG_FILE_NAME, o)
+	
+	if o.logFile:
+		o.logFile.write(msg)
 		o.logFile.flush()
 
 
@@ -23,9 +37,9 @@ def error( msg, o = None ):
 
 	if o and o.logFile is True:
 		try:
-			o.logFile = open("makeMap.log", "w+")
+			o.logFile = open(LOG_FILE_NAME, "w+")
 		except:
-			error("Cann't open file 'makeMap.log'", o)
+			error("Cann't open file " + LOG_FILE_NAME, o)
 	
 	if o and o.logFile:
 		o.logFile.write( '[ERROR] ' + msg + '\n' )
