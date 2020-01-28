@@ -20,10 +20,12 @@ class Options:
 
 
 def main():
-
 	try:
 		# Objekt pro ulozeni globalnich promennych a nastaveni
 		o = Options()
+
+
+		config.load(o)
 
 
 		# Zaznamenam cas spusteni
@@ -51,15 +53,14 @@ def main():
 
 		# Stahnu polygon
 		download.polygon(o)
+		
+
+		# Zpracuji polygon
+		polygon.load(o)
 
 
 		# Vytvorim vrstevnice
 		generator.contours(o)
-
-
-		# Vytvorim cilovou podslozku
-		if not os.path.exists('./img/' + o.state.id + '_VasaM'):
-			os.makedirs('./img/' + o.state.id + '_VasaM')
 
 
 		# parse_poly(o)
