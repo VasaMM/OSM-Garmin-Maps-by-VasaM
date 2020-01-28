@@ -1,8 +1,12 @@
 _*/
-FTP*.secret
+*.secret
 MapEdit/
 sea/
+bounds/
+splitter-r*/
+mkgmap-r*/
 *.lnk
 
 # FIXME
 *.cmd
+gmapmaker.config

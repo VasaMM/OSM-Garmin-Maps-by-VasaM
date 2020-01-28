@@ -21,9 +21,9 @@ def prepare():
 	# TODO phyghtmap
 
 
-	# d.download('http://osm.thkukuk.de/data/sea-latest.zip', './sea.zip')
-	# with zipfile.ZipFile('./sea.zip', 'r') as zipRef:
-	# 	zipRef.extractall(data['sea'])
+	d.download('http://osm.thkukuk.de/data/sea-latest.zip', './sea.zip')
+	with zipfile.ZipFile('./sea.zip', 'r') as zipRef:
+		zipRef.extractall(data['sea'])
 	os.remove('./sea.zip')
 
 	d.download('http://osm.thkukuk.de/data/bounds-latest.zip', './bounds.zip')
