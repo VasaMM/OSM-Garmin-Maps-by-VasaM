@@ -3,6 +3,10 @@ _*/
 MapEdit/
 sea/
 bounds/
+pbf/
+maps/
+polygons/
+hgt/
 splitter-r*/
 mkgmap-r*/
 *.lnk
