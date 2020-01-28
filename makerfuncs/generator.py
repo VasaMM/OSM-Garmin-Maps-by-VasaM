@@ -1,54 +1,67 @@
 import os, sys, glob, zipfile, hashlib, json
+import subprocess
+
 from datetime import datetime
-from makerfuncs.prints import say, error
+from makerfuncs.prints import say, error, log
 import osmium
 
 
-def _sha1( filename ):
+def _sha1(filename):
 	hash_func = hashlib.sha1()
 
-	with open( filename, 'rb') as f:
+	with open(filename, 'rb') as f:
 		while True:
-			data = f.read( 67108864 )  # read 64Mb of file
+			data = f.read(67108864)  # read 64Mb of file
 			if not data:
 				break
-			hash_func.update( data )
+			hash_func.update(data)
 
 	return hash_func.hexdigest()
 
 
 
 def contours(o):
-	# Zjistim, zda mam hotove vrstevnice
 	try:
+		# Zjistim, zda mam hotove vrstevnice
 		if not os.path.isfile(o.pbf + o.state.data_id + '-SRTM.osm.pbf'):
 			say('Generate contour line', o)
-			
-			# --no-zero-contour
-			os.system(
-				'phyghtmap \
-				--polygon=' + o.polygons + o.state.data_id + '.poly \
-				-o ' + o.pbf + o.state.data_id + '-SRTM \
-				--pbf \
-				-j 2 \
-				-s 10 \
-				-c 200,100 \
-				--hgtdir=' + o.hgt + '\
-				--source=view3 \
-				--start-node-id=20000000000 \
-				--start-way-id=10000000000 \
-				--write-timestamp \
-				--max-nodes-per-tile=0 \
-			')
+
+			err = subprocess.run([
+				'phyghtmap',
+				'--polygon=' + o.polygons + o.state.data_id + '.poly',
+				'-o', o.pbf +  o.state.data_id + '-SRTM',
+				'--pbf',
+				'-j', '2',
+				'-s', '10',
+				'-c', '200,100',
+				'--hgtdir=' + o.hgt,
+				'--source=view3',
+				'--start-node-id=20000000000',
+				'--start-way-id=10000000000',
+				'--write-timestamp',
+				'--max-nodes-per-tile=0'
+			], shell=True, capture_output=True)
+			log(err.stdout.decode(), o)
+
+			if err.returncode != 0:
+				error(err.stderr.decode(), o)
+				raise ValueError('phyghtmap return ' + str(err.returncode) + ' (0 expected)')
+
 			os.rename(glob.glob(o.pbf + o.state.data_id + '-SRTM*.osm.pbf')[0], o.pbf + o.state.data_id + '-SRTM.osm.pbf')
+
 		else:
 			say('Use previously generated contour lines', o)
 	except:
+		if os.path.isfile(glob.glob(o.pbf + o.state.data_id + '-SRTM*.osm.pbf')[0]):
+			os.remove(glob.glob(o.pbf + o.state.data_id + '-SRTM*.osm.pbf')[0])
+
+		# TODO remove files
 		error("Cann't generate contour lines!", o)
+		raise
 
 
 
-def garmin( o ):
+def garmin(o):
 	say( 'Making map for garmin...', o )
 	state = o.state
 
@@ -64,42 +77,53 @@ def garmin( o ):
 
 	if o.split:
 		say('Split files start',o)
+		# Data neexistuji nebo jsem stahl nova
 		if not os.path.exists( o.pbf + state.data_id + '-SPLITTED' ) or o.downloaded:
+			# SMazu puvodni soubory
 			for file in glob.glob( o.pbf + state.data_id + '-SPLITTED/*' ):
 				os.remove(file)
 
-			# max-areas = 512
-			# max-nodes = 1600000
-			os.system(
-				'java ' + o.JAVAMEM + ' -jar ./splitter-r' + str(o.splitter) + '/splitter.jar \
-				' + input_file + ' \
-				--max-areas=4096 \
-				--max-nodes=1600000 \
-				--output-dir=' + o.pbf + state.data_id + '-SPLITTED \
-			')
+			# Spustim splitter
+			err = subprocess.run([
+				'java', o.JAVAMEM,
+				'-jar', './splitter-r' + str(o.splitter) + '/splitter.jar',
+				input_file,
+				'--max-areas=4096',
+				'--max-nodes=1600000',
+				'--output-dir=' + o.pbf + state.data_id + '-SPLITTED'
+			], shell=True, capture_output=True)
+			log(err.stdout.decode(), o)
+			
+			if err.returncode != 0:
+				error(err.stderr.decode(), o)
+				raise ValueError('splitter return ' + str(err.returncode) + ' on map data (0 expected)')
 
 
-		input_file = ''
+		# Aktualizuji seznam vstupnich souboru
+		input_file = []
 		for file in glob.glob( o.pbf + state.data_id + '-SPLITTED/*.osm.pbf' ):
-			input_file += file + ' '
+			input_file.append(file)
 
+		# Rozdelim soubor s vrstevnicemi
 		if not os.path.isdir( o.pbf + state.data_id + '-SPLITTED-SRTM/' ):
-			os.system(
-				'java ' + o.JAVAMEM + ' -jar ./splitter-r' + str(o.splitter) + '/splitter.jar \
-				' + input_srtm_file + ' \
-				--max-areas=4096 \
-				--max-nodes=1600000 \
-				--output-dir=' + o.pbf + state.data_id + '-SPLITTED-SRTM \
-			')
+			err = subprocess.run([
+				'java', o.JAVAMEM,
+				'-jar', './splitter-r' + str(o.splitter) + '/splitter.jar',
+				input_srtm_file,
+				'--max-areas=4096',
+				'--max-nodes=1600000',
+				'--output-dir=' + o.pbf + state.data_id + '-SPLITTED-SRTM'
+			], shell=True, capture_output=True)
+			log(err.stdout.decode(), o)
 
-		input_srtm_file = ''
+			if err.returncode != 0:
+				error(err.stderr.decode(), o)
+				raise ValueError('splitter return ' + str(err.returncode) + ' on srtm data (0 expected)')
+
+		# Aktualizuji seznam vstupnich souboru
+		input_srtm_file = []
 		for file in glob.glob( o.pbf + state.data_id + '-SPLITTED-SRTM/*.osm.pbf' ):
-			input_srtm_file += file + ' '
-
-	pois_files = ''
-	if state.pois is not None:
-		for x in state.pois:
-			pois_files += ' ./pois/' + x + '.osm.xml'
+			input_srtm_file.append(file)
 
 
 	# Vytvorim licencni soubor
@@ -117,12 +141,38 @@ def garmin( o ):
 	# ' + state.lang + ' \
 	
 	say('Generating map', o)
-	err = os.system(
-		'java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
+	# FIXME najit chybu
+	# mkgmap = [
+	# 	'java', o.JAVAMEM,
+	# 	'-jar', './mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar',
+	# 	'-c', './garmin-style/mkgmap-settings.conf',
+	# 	'--bounds=' + o.bounds,
+	# 	'--precomp-sea=' + o.sea +'sea/',
+	# 	'--dem=' + o.hgt +'VIEW3/',
+	# 	'--max-jobs=' + str( o.MAX_JOBS ),
+	# 	'--mapname="' + str( state.number ) + '0001\"',
+	# 	'--overview-mapnumber="' + str( state.number ) + '0000\"',
+	# 	'--family-id="' + str( state.number ) + '"',
+	# 	'--description="' + state.name + '_VasaM"',
+	# 	'--family-name="' + state.name + '_VasaM"',
+	# 	'--series-name="' + state.name + '_VasaM"',
+	# 	'--area-name="' + state.name + '_VasaM"',
+	# 	'--country-name="' + state.name + '_VasaM"',
+	# 	'--country-abbr="' + state.id + '"',
+	# 	'--region-name="' + state.name + '_VasaM"',
+	# 	'--region-abbr="' + state.id + '"',
+	# 	'--product-version=' + str( o.VERSION ),
+	# 	'--output-dir=' + o.img + state.id + '_VasaM',
+	# 	'--dem-poly=' + o.polygons + state.data_id + '.poly',
+	# 	'--license-file=license.txt',
+	# 	'--code-page=' + o.code,
+	# ] + input_file + input_srtm_file + state.pois + ['./garmin-style/style.txt']
+
+	mkgmap = 'java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
 		-c ./garmin-style/mkgmap-settings.conf \
-		--bounds=./' + o.bounds +'bounds/ \
-		--precomp-sea=./' + o.sea +'sea/ \
-		--dem=./' + o.hgt +'VIEW3/ \
+		--bounds=' + o.bounds + ' \
+		--precomp-sea=' + o.sea + 'sea/ \
+		--dem=' + o.hgt +'VIEW3/ \
 		--max-jobs=' + str( o.MAX_JOBS ) + ' \
 		--mapname="' + str( state.number ) + '0001\" \
 		--overview-mapnumber="' + str( state.number ) + '0000\" \
@@ -140,18 +190,19 @@ def garmin( o ):
 		--dem-poly=' + o.polygons + state.data_id + '.poly \
 		--license-file=license.txt \
 		--code-page=' + o.code + ' \
-		' + input_file + ' \
-		' + input_srtm_file + ' \
-		' + pois_files + ' \
-		./garmin-style/style.txt \
-	')
+		' + ' '.join(input_file) + ' \
+		' + ' '.join(input_srtm_file) + ' \
+		' + ' '.join(state.pois) + ' \
+		./garmin-style/style.txt'
+
+	err = subprocess.run(mkgmap, shell=True, capture_output=True)
+	log(err.stdout.decode(), o)
 
 	os.remove( 'license.txt' )
 
-	if err != 0:
-		sys.stderr.write( 'mkgmap error' )
-		sys.exit()
-
+	if err.returncode != 0:
+		error(err.stderr.decode(), o)
+		raise ValueError('mkgmap return ' + str(err.returncode) + ' (0 expected)')
 
 
 	# Prevedu ID do hexa tvaru
@@ -194,6 +245,7 @@ def garmin( o ):
 		os.remove( o.img + state.id + '_VasaM.img' )
 
 	os.rename( o.img + state.id + '_VasaM/gmapsupp.img', o.img + state.id + '_VasaM.img' )
+
 
 	# Vytvorim archiv
 	say('Make zip file', o)
