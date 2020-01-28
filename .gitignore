@@ -14,3 +14,5 @@ mkgmap-r*/
 # FIXME
 *.cmd
 gmapmaker.config
+gmapmaker.log
+test.py

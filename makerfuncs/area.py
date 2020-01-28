@@ -3,7 +3,7 @@ from makerfuncs.prints import say
 
 
 class State:
-	def __init__(self, name, number, data_url = None, polyUrl = None, data_id = None, pois = None):
+	def __init__(self, name, number, data_url = None, polyUrl = None, data_id = None, pois = []):
 		self.data_url = data_url      # map data url address (*.osm.pbf file)
 		self.polyUrl  = polyUrl       # polygon url address (*.poly or *.geojson file)
 		self.name     = name          # Full name of map
@@ -25,7 +25,7 @@ STATES = {
 	'OL': State(
 		name     = 'Olomouc',
 		number   = 8800,
-		# code     = 'unicode',
+		pois     = ['./pois/chs.osm.xml',],
 	),
 
 	#Stredni Evropa ID: 8801 - 8810
@@ -34,7 +34,7 @@ STATES = {
 		polyUrl = 'http://download.geofabrik.de/europe/czech-republic.poly',
 		name     = 'Ceska republika',
 		number   = 8801,
-		pois     = ('chs',),
+		pois     = ['./pois/chs.osm.xml',],
 	),
 
 	'SK': State(
