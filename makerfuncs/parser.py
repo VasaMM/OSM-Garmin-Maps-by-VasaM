@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 def fileHeader(o):
 	say("Parsing file header", o)
 	o.state.timestamp = None
+	o.state.fileHeader = None
 	if os.path.isfile(o.pbf + o.state.data_id + '.osm.pbf'):
 		o.state.fileHeader = osmium.io.Reader(o.pbf + o.state.id + '.osm.pbf', osmium.osm.osm_entity_bits.NOTHING).header()
 		o.state.timestamp = o.state.fileHeader.get("osmosis_replication_timestamp")

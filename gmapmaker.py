@@ -39,7 +39,7 @@ def main():
 		say('Start at ' + str(o.time_start), o)
 
 
-		# Ziskam stat, nebyl-li zadan
+		# Ziskam informace o statu
 		area.get(o)
 
 
@@ -75,8 +75,7 @@ def main():
 
 
 	except Exception as e:
-		error('Some error...')
-		print(e)
+		error(str(e))
 
 		exit(1)
 

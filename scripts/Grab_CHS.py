@@ -1,5 +1,6 @@
 # Skript postupne projde vsechny lezecke oblasti na strankach CHS
 # Ke kazde skale stahne jeji GPS souradnice, jmeno a dalsi atributy
+# https://github.com/rory/openstreetmap-writer
 
 import re
 from urllib.request import urlopen
