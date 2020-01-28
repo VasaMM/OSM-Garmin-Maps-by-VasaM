@@ -1,1 +1,0 @@
-Složka pro ukládání mapových dat. Ty jsou buď automaticky stahována z [http://download.geofabrik.de](http://download.geofabrik.de), nebo mohou být vytvořena i jinak - v tom případě je nutné patřične upravit skript. Před generováním jsou data rozdělena na menší díly a uložena do patřičně pojmenovaných podsložek.
