@@ -1,190 +1,108 @@
 # https://wiki.openstreetmap.org/wiki/Osmosis/Polygon_Filter_File_Python_Parsing
-import pyclipper, re, os
-from pprint import pprint
-import geojson
+import pyclipper, re, os, geojson, functools
 from geojson import Polygon, Feature, FeatureCollection
-
-# from shapely.geometry import Polygon, mapping
-import functools
+from makerfuncs.prints import say
 
 
+def _loadPoly(fileName):
+	# https://github.com/ustroetz/polygon2osm/blob/master/polygon2geojson.py
+	coordinates = None
+	with open(fileName) as polyFile:
+		coordinates = polyFile.readlines()[2:][:-2]
+
+	coordinates = [re.split(r'[\s\t]+', item) for item in coordinates]
+	coordinates = [list(filter(None, item)) for item in coordinates]
+	coordinates = functools.reduce(lambda a,b: a[-1].pop(0) and a if len(a[-1]) == 1 and a[-1][0] == 'END' else a.append(['END']) or a if b[0].startswith('END') else a[-1].append(b) or a, [[[]]] + coordinates)
+	coordinates = [[(float(item[0]), float(item[1])) for item in coordgroup] for coordgroup in coordinates]
+
+	return coordinates[0]
 
 
 
+def _loadGeojson(fileName):
+	with open(fileName) as geojsonFIle:
+		data = geojson.load(geojsonFIle)
 
-def parse_poly(o):
-	fp = open('./poly/' + o.state.data_id + '.poly', "r")
-	lines = fp.readlines()
-
-	in_ring = False
-	coords = []
-	
-	for (index, line) in enumerate(lines):
-		if index == 0:
-			# first line is junk.
-			continue
-		
-		elif index == 1:
-			# second line is the first polygon ring.
-			coords.append([[], []])
-			ring = coords[-1][0]
-			in_ring = True
-		
-		elif in_ring and line.strip() == 'END':
-			# we are at the end of a ring, perhaps with more to come.
-			in_ring = False
-	
-		elif in_ring:
-			# we are in a ring and picking up new coordinates.
-			ring.append(map(float, line.split()))
-	
-		elif not in_ring and line.strip() == 'END':
-			# we are at the end of the whole polygon.
-			break
-	
-		elif not in_ring and line.startswith('!'):
-			# we are at the start of a polygon part hole.
-			coords[-1][1].append([])
-			ring = coords[-1][1][-1]
-			in_ring = True
-	
-		elif not in_ring:
-			# we are at the start of a polygon part.
-			coords.append([[], []])
-			ring = coords[-1][0]
-			in_ring = True
-
-	pco = pyclipper.PyclipperOffset()
+		# Nactu prvni polygon
+		for feature in data['features']:
+			for key,value in feature.items():
+				if key == 'geometry' and value['type'] == 'Polygon':
+					return value['coordinates'][0]
 
 
-	print("len coords =",len(coords))
-	
+def _savePoly(fileName, polygon):
+	if not os.path.exists(os.path.dirname(fileName)):
+		os.makedirs(os.path.dirname(fileName))
+
+	with open(fileName, 'w') as polyFile:
+		polyFile.write('None' + "\n")
+		polyFile.write('1' + "\n")
+		for coord in polygon:
+			polyFile.write("\t" + str(coord[0]) + "\t" + str(coord[1]) + "\n")
+		polyFile.write('END' + "\n")
+		polyFile.write('END' + "\n")
+
+
+def _saveGeojson(fileName, polygon):
+	if not os.path.exists(os.path.dirname(fileName)):
+		os.makedirs(os.path.dirname(fileName))
+
+	feature = Feature(geometry=Polygon([polygon]))
+	collection = FeatureCollection([feature])
+
+	with open(fileName, 'w') as polyFile:
+		polyFile.write(geojson.dumps(collection))
+
+
+
+def _extend(o):
+	say('Extending polygon', o)
+	# [[17.25743, 49.58712], [17.24355, 49.58712], [17.24355, 49.5964], [17.25743, 49.5964], [17.25743, 49.58712]]
+
+	extender = pyclipper.PyclipperOffset()
+
+	MULTIPLIER = 100000
 	path = []
-	for polygon in coords:
-		if len(polygon[0]) == 0:
-			continue
-
-		path = []
-		for points in polygon:
-			for point in points:
-				coord = list(point)
-				print("coord", coord[0], coord[1])
-				coord = (int(coord[0]*100000), int(coord[1]*100000))
-				print("coord", coord[0], coord[1])
-				path.append( coord )
-
-		print(path)
-		print("--------------")
-		
-
-		# FIXME
+	for point in o.polygon:
+		path.append([int(point[0] * MULTIPLIER), int(point[1] * MULTIPLIER)])
 
 
-	# path = ((171, 495), (171, 497), (175, 497), (175, 495), (171, 495))
-	# path = ((180, 200), (260, 200), (260, 150), (180, 150))
-
-	print("path", path)
 	# http://www.angusj.com/delphi/clipper/documentation/Docs/Units/ClipperLib/Classes/ClipperOffset/Methods/AddPath.htm
-	pco.AddPath(path, pyclipper.JT_MITER, pyclipper.ET_CLOSEDPOLYGON)
+	extender.AddPath(path, pyclipper.JT_MITER, pyclipper.ET_CLOSEDPOLYGON)
+	solution = extender.Execute(1600 * o.extend)[0]   # FIXME hodnota 1600 experimentálně funguje pro CR
 
-			
-	solution = pco.Execute(2.0)		#0.84 cca 1 m
-	solution = solution[0]
-
-	print("solution", solution)
+	for i in range(len(solution)):
+		point = solution[i]
+		solution[i] = [point[0]/MULTIPLIER, point[1]/MULTIPLIER]
 
 	solution.append(solution[0])
-	print("solution", solution)
 
-	i = 0
-	for point in solution:
-		solution[i] = (point[0]/100000, point[1]/100000)
-		i += 1
-
-	print("solution", solution)
-	test = Polygon([solution])
-
-
-	my_feature = Feature(geometry=test)
-	feature_collection = FeatureCollection([my_feature])
-
-	print()
-	print(feature_collection)
-
-
+	o.polygon = solution
 
 
 def load(o):
-	# o.extend
-	# Pokud existuje *.poly nactu ho
-	
 	# Neexistuje *.poly soubor, vytvorim ho z *.geojson
 	if not os.path.isfile(o.polygons + o.state.data_id + '.poly'):
+		# Neexistuje ani *.geojson -> chyba
 		if not os.path.isfile(o.polygons + o.state.data_id + '.geojson'):
 			raise ValueError(o.state.data_id + '.poly or ' + o.state.data_id + '.geojson missing!')
 
-		polygon = None
-		with open(o.polygons + o.state.data_id + '.geojson') as geojsonFIle:
-			data = geojson.load(geojsonFIle)
 
-
-			# Nactu prvni polygon
-			for feature in data['features']:
-				if polygon is not None: break
-				
-				for key,value in feature.items():
-					if key == 'geometry' and value['type'] == 'Polygon':
-						polygon = value['coordinates'][0]
-						break
-
-		with open(o.polygons + o.state.data_id + '.poly', 'w') as polyFile:
-			polyFile.write(o.state.data_id + "\n")
-			polyFile.write('0' + "\n")
-			for coord in polygon:
-				polyFile.write("\t" + str(coord[0]) + "\t" + str(coord[1]) + "\n")
-			polyFile.write('END' + "\n")
-			polyFile.write('END' + "\n")
+		o.polygon = _loadGeojson(o.polygons + o.state.data_id + '.geojson')
+		_savePoly(o.polygons + o.state.data_id + '.poly', o.polygon)
+		
 
 	# Existuje *.poly soubor, vytvorim *.geojson, pokud jeste neexistuje
 	elif not os.path.isfile(o.polygons + o.state.data_id + '.geojson'):
-		# https://github.com/ustroetz/polygon2osm/blob/master/polygon2geojson.py
-		coordinates = None
-		with open(o.polygons + o.state.data_id + '.poly') as polyFile:
-			coordinates = polyFile.readlines()[2:][:-2]
+		o.polygon = _loadPoly(o.polygons + o.state.data_id + '.poly')
+		_saveGeojson(o.polygons + o.state.data_id + '.geojson', o.polygon)
 
 
-		coordinates = [re.split(r'[\s\t]+', item) for item in coordinates]
-		coordinates = [list(filter(None, item)) for item in coordinates]
-		coordinates = functools.reduce(lambda a,b: a[-1].pop(0) and a if len(a[-1]) == 1 and a[-1][0] == 'END' else a.append(['END']) or a if b[0].startswith('END') else a[-1].append(b) or a, [[[]]] + coordinates)
-		coordinates = [[(float(item[0]), float(item[1])) for item in coordgroup] for coordgroup in coordinates]
+	# Existuje *.poly i *.geojson, nactu geojson
+	else:
+		o.polygon = _loadGeojson(o.polygons + o.state.data_id + '.geojson')
 
-		print(coordinates)
-		# TODO
+	if o.extend is not None:
+		_extend(o)
 
-
-	    # write_geojson(coordinates, o.polygons + o.state.data_id + '.geojson2')
-
-		raise ValueError("konec")
-
-
-
-
-
-
-
-
-
-
-# def write_geojson(data, polygon_filename):
-#     geojson_filename = '.'.join(polygon_filename.split('.')[:-1]) + ".geojson"
-
-#     schema = {'geometry': 'Polygon', 'properties': {}}
-
-#     with fiona.open(geojson_filename, 'w', 'GeoJSON', schema) as output:
-#         for elem in data:
-#             output.write({'geometry': mapping(Polygon(elem)), 'properties': {}})
-
-
-# def main(polygon_filename):
-
-
+	_savePoly(o.temp + 'polygon.poly', o.polygon)
