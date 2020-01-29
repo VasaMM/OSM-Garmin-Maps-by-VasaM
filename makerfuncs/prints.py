@@ -5,30 +5,32 @@ LOG_FILE_NAME = 'gmapmaker.log'
 
 
 def say( msg, o ):
-	if not o.quiet:
+	if hasattr(o, 'quiet') and not o.quiet:
 		print( '[INFO]', msg )
 
-	if o.logFile is True:
-		try:
-			o.logFile = open(LOG_FILE_NAME, "w+")
-		except:
-			error("Cann't open file " + LOG_FILE_NAME, o)
-	
-	if o.logFile:
-		o.logFile.write( '[INFO] ' + msg + '\n' )
-		o.logFile.flush()
+	if hasattr(o, 'logFile'):
+		if o.logFile is True:
+			try:
+				o.logFile = open(LOG_FILE_NAME, "w+")
+			except:
+				error("Cann't open file " + LOG_FILE_NAME, o)
+		
+		if o.logFile:
+			o.logFile.write( '[INFO] ' + msg + '\n' )
+			o.logFile.flush()
 
 
 def log( msg, o ):
-	if o.logFile is True:
-		try:
-			o.logFile = open(LOG_FILE_NAME, "w+")
-		except:
-			error("Cann't open file " + LOG_FILE_NAME, o)
-	
-	if o.logFile:
-		o.logFile.write(msg)
-		o.logFile.flush()
+	if hasattr(o, 'logFile'):
+		if o.logFile is True:
+			try:
+				o.logFile = open(LOG_FILE_NAME, "w+")
+			except:
+				error("Cann't open file " + LOG_FILE_NAME, o)
+		
+		if o.logFile:
+			o.logFile.write(msg)
+			o.logFile.flush()
 
 
 
@@ -61,7 +63,13 @@ def error( msg, o = None ):
 
 # Ukoncovaci funkce
 def end(o):
+	runtime = 0
 	timeEnd = datetime.now()
-	runtime = timeEnd - o.time_start
+	if hasattr(o, 'timeStart'):
+		runtime = timeEnd - o.timeStart
+	
 	say('Konec v ' + str(timeEnd) + ', beh ' + str(runtime), o)
 	print('\007')
+
+	if hasattr(o, 'logFile') and o.logFile and o.logFile.close:
+		o.logFile.close()

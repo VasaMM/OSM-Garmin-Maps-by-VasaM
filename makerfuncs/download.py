@@ -104,11 +104,12 @@ def mapData(o):
 	if o.state.data_url is None:
 		say('I don\'t have data url - skip downloading', o)
 		if o.state.fileHeader is None:
-			raise ValueError('Map file does NOT exist!', o)
+			raise ValueError('Map file does NOT exist!')
+		return
 
 	if o.downloadMap is 'skip':
 		say('User set "--download skip" - skip downloading', o)
-		return;
+		return
 
 
 	if o.downloadMap is 'auto':

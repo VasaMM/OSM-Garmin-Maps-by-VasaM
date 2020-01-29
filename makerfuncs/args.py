@@ -22,7 +22,7 @@ def _ageType(data):
 # Nactu arumenty
 def parse(o):
 	argParser = argparse.ArgumentParser(
-		#prog = 'makeMap2',
+		prog = 'gmapmaker',
 		formatter_class = argparse.RawTextHelpFormatter,
 		description = textwrap.dedent('''\
 CZ: Skript pro generovani OSM map pro navigace Garmin
@@ -70,8 +70,7 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 	argParser.add_argument(
 		'--extend', '-e',
 		type=float,
-		default=0.0,
-		help='Zvětší polygon o zadaný počet kilometrů <výchozí hodnota je 0>\nExtend the polygon by the specified number of kilometers <default is 0>'
+		help='Zvětší polygon o zadaný počet kilometrů\nExtend the polygon by the specified number of kilometers'
 	)
 	argParser.add_argument(
 		'--quiet', '-q',

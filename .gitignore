@@ -7,6 +7,7 @@ pbf/
 maps/
 polygons/
 hgt/
+temp/
 splitter-r*/
 mkgmap-r*/
 *.lnk
