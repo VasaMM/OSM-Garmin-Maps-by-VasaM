@@ -10,6 +10,7 @@ def prepare():
 	data['pbf'] = input('The name of the folder for map data download: ')
 	data['polygons'] = input('The name of the folder for polygons: ')
 	data['hgt'] = input('The name of the folder for height data: ')
+	data['temp'] = input('The name of the folder for temporary data: ')
 	
 	data['sea'] = input('The name of the folder for sea data: ')
 	data['bounds'] = input('The name of the folder for bounds data: ')

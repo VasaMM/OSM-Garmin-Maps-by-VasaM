@@ -13,6 +13,7 @@ def load(o):
 		o.pbf      = data['pbf']
 		o.polygons = data['polygons']
 		o.hgt      = data['hgt']
+		o.temp     = data['temp']
 		o.sea      = data['sea']
 		o.bounds   = data['bounds']
 		o.splitter = data['splitter']
