@@ -101,9 +101,9 @@ def mapData(o):
 	o.downloaded = False
 	
 	# Zjistim, zda mam stahovat data
-	if o.state.data_url is None:
+	if o.area.dataUrl is None:
 		say('I don\'t have data url - skip downloading', o)
-		if o.state.fileHeader is None:
+		if o.area.fileHeader is None:
 			raise ValueError('Map file does NOT exist!')
 		return
 
@@ -113,10 +113,10 @@ def mapData(o):
 
 
 	if o.downloadMap is 'auto':
-		if o.state.timestamp is None:
+		if o.area.timestamp is None:
 			o.downloaded = True
 		else:
-			diff = datetime.now(timezone.utc) - o.state.timestamp
+			diff = datetime.now(timezone.utc) - o.area.timestamp
 
 			if diff.total_seconds() > o.maximumDataAge:
 				o.downloaded = True
@@ -128,7 +128,7 @@ def mapData(o):
 	if o.downloadMap is 'force' or o.downloaded is True:
 		try:
 			say('Downloading map data', o)
-			download(o.state.data_url, o.pbf + o.state.data_id + '.osm.pbf')
+			download(o.area.dataUrl, o.area.mapDataName)
 			parser.fileHeader(o)
 
 		except:
@@ -139,16 +139,16 @@ def mapData(o):
 # Stahnu polygon
 def polygon(o):
 	try:
-		if o.state.data_url is not None:
-			if re.match(r'^.+\.poly$', o.state.polyUrl):
-				if not os.path.isfile(o.polygons + o.state.data_id + '.poly'):
+		if o.area.polyUrl is not None:
+			if re.match(r'^.+\.poly$', o.area.polyUrl):
+				if not os.path.isfile(o.polygons + o.area.id + '.poly'):
 					say('Downloading *.poly polygon', o)
-					download(o.state.polyUrl, o.polygons + o.state.data_id + '.poly')
+					download(o.area.polyUrl, o.polygons + o.area.id + '.poly')
 			
-			elif re.match(r'^.+\.geojson$', o.state.polyUrl):
-				if not os.path.isfile(o.polygons + o.state.data_id + '.geojson'):
+			elif re.match(r'^.+\.geojson$', o.area.polyUrl):
+				if not os.path.isfile(o.polygons + o.area.id + '.geojson'):
 					say('Downloading *.geojson polygon', o)
-					download(o.state.polyUrl, o.polygons + o.state.data_id + '.geojson')
+					download(o.area.polyUrl, o.polygons + o.area.id + '.geojson')
 		else:
 			say('I don\'t have polygon url - skip downloading', o)
 

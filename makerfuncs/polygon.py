@@ -82,25 +82,25 @@ def _extend(o):
 
 def load(o):
 	# Neexistuje *.poly soubor, vytvorim ho z *.geojson
-	if not os.path.isfile(o.polygons + o.state.data_id + '.poly'):
+	if not os.path.isfile(o.polygons + o.area.id + '.poly'):
 		# Neexistuje ani *.geojson -> chyba
-		if not os.path.isfile(o.polygons + o.state.data_id + '.geojson'):
-			raise ValueError(o.state.data_id + '.poly or ' + o.state.data_id + '.geojson missing!')
+		if not os.path.isfile(o.polygons + o.area.id + '.geojson'):
+			raise ValueError(o.area.id + '.poly or ' + o.area.id + '.geojson missing!')
 
 
-		o.polygon = _loadGeojson(o.polygons + o.state.data_id + '.geojson')
-		_savePoly(o.polygons + o.state.data_id + '.poly', o.polygon)
+		o.polygon = _loadGeojson(o.polygons + o.area.id + '.geojson')
+		_savePoly(o.polygons + o.area.id + '.poly', o.polygon)
 		
 
 	# Existuje *.poly soubor, vytvorim *.geojson, pokud jeste neexistuje
-	elif not os.path.isfile(o.polygons + o.state.data_id + '.geojson'):
-		o.polygon = _loadPoly(o.polygons + o.state.data_id + '.poly')
-		_saveGeojson(o.polygons + o.state.data_id + '.geojson', o.polygon)
+	elif not os.path.isfile(o.polygons + o.area.id + '.geojson'):
+		o.polygon = _loadPoly(o.polygons + o.area.id + '.poly')
+		_saveGeojson(o.polygons + o.area.id + '.geojson', o.polygon)
 
 
 	# Existuje *.poly i *.geojson, nactu geojson
 	else:
-		o.polygon = _loadGeojson(o.polygons + o.state.data_id + '.geojson')
+		o.polygon = _loadGeojson(o.polygons + o.area.id + '.geojson')
 
 	if o.extend is not None:
 		_extend(o)
