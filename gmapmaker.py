@@ -38,7 +38,7 @@ def main():
 		say('Start at ' + str(o.timeStart), o)
 
 		# Ziskam informace o statu
-		area.get(o)
+		parser.area(o)
 
 		# Nactu informace z hlavicky
 		parser.fileHeader(o)
@@ -55,11 +55,18 @@ def main():
 		# Vytvorim vrstevnice
 		generator.contours(o)
 
+		# Oriznu mapovy soubor
+		generator.crop(o)
+
 		# Generuji Garmin mapu
 		generator.garmin(o)
 
 		# TODO remove temp
 
+
+	except KeyboardInterrupt:
+		error("\nUkonceno uzivatelem")
+		
 
 	except Exception as e:
 		error(str(e))

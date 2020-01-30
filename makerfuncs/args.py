@@ -1,6 +1,7 @@
 import textwrap, argparse, re
 from argparse import RawTextHelpFormatter
 from makerfuncs import parser
+from makerfuncs.prints import say
 
 def _downloadType(data):
 	if str(data).lower() in ('force', 'f'):
@@ -73,6 +74,11 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 		help='Zvětší polygon o zadaný počet kilometrů\nExtend the polygon by the specified number of kilometers'
 	)
 	argParser.add_argument(
+		'--crop', '-r',
+		action='store_true',
+		help='Ořízne mapový soubor podle polygonu\nCrop the map file by the polygon'
+	)
+	argParser.add_argument(
 		'--quiet', '-q',
 		action='store_true',
 		help='Zadne vypisy na stdout\nNo messages on stdout'
@@ -94,13 +100,11 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 
 
 	o.split          = not args.no_split
-	o.state          = args.area
+	o.area           = args.area
 	o.downloadMap    = parser.downloadType(args.download)
 	o.maximumDataAge = parser.age(args.maximum_data_age)
 	o.extend         = args.extend
 	o.quiet          = args.quiet
 	o.logFile        = args.logging
 	o.code           = args.code_page
-
-	return o
-
+	o.crop           = args.crop
