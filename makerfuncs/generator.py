@@ -19,51 +19,62 @@ def _sha1(filename):
 	return hash_func.hexdigest()
 
 
-def _run(o, program, args=[]):
-	err = subprocess.run([program] + args, shell=True, capture_output=True)
-	log(err.stdout.decode(), o)
+def _run(program, o):
+	program = ' '.join(program.split())
+	say(program, o, '[RUN] ')
+	process = subprocess.Popen(program, universal_newlines = True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-	if err.returncode != 0:
-		error(err.stderr.decode(), o)
-		raise ValueError(program + ' return ' + str(err.returncode) + ' (0 expected)')
+	while True:
+		output = process.stdout.readline()
+
+		if output == '' and process.poll() is not None:
+			break;
+		if output:
+			say(output, o, '', '')
+			log(output, o)
+
+	if process.poll() != 0:
+		error('stderr: ' + process.stderr.read(), o)
+		raise ValueError(program + ' return ' + str(process.poll()) + ' (0 expected)')
 
 
 def contours(o):
-	try:
-		# Zjistim, zda mam hotove vrstevnice
-		if not os.path.isfile(o.pbf + o.area.id + '-SRTM.osm.pbf'):
-			say('Generate contour line', o)
-			_run(o, 'phyghtmap', [
-				'--polygon=' + o.temp + 'polygon.poly',
-				'-o', o.pbf +  o.area.id + '-SRTM',
-				'--pbf',
-				'-j', '2',
-				'-s', '10',
-				'-c', '200,100',
-				'--hgtdir=' + o.hgt,
-				'--source=view3',
-				'--start-node-id=20000000000',
-				'--start-way-id=10000000000',
-				'--write-timestamp',
-				'--max-nodes-per-tile=0'
-			])
+	say('Generuji vrstevnice', o)
+	# try:
+	# Zjistim, zda mam hotove vrstevnice
+	if not os.path.isfile(o.pbf + o.area.id + '-SRTM.osm.pbf'):
+		say('Generate contour line', o)
+		_run('phyghtmap \
+			--polygon=' + o.temp + 'polygon.poly \
+			-o ' + o.pbf + o.area.id + '-SRTM \
+			--pbf \
+			-j 2 \
+			-s 10 \
+			-c 200,100 \
+			--hgtdir=' + o.hgt +' \
+			--source=view3 \
+			--start-node-id=20000000000 \
+			--start-way-id=10000000000 \
+			--write-timestamp \
+			--max-nodes-per-tile=0'
+		, o)
 
-			os.rename(glob.glob(o.pbf + o.area.id + '-SRTM*.osm.pbf')[0], o.pbf + o.area.id + '-SRTM.osm.pbf')
+		os.rename(glob.glob(o.pbf + o.area.id + '-SRTM*.osm.pbf')[0], o.pbf + o.area.id + '-SRTM.osm.pbf')
 
-		else:
-			say('Use previously generated contour lines', o)
-	except:
-		if os.path.isfile(glob.glob(o.pbf + o.area.id + '-SRTM*.osm.pbf')[0]):
-			os.remove(glob.glob(o.pbf + o.area.id + '-SRTM*.osm.pbf')[0])
+	else:
+		say('Use previously generated contour lines', o)
+	# except:
+	# 	if os.path.isfile(glob.glob(o.pbf + o.area.id + '-SRTM*.osm.pbf')[0]):
+	# 		os.remove(glob.glob(o.pbf + o.area.id + '-SRTM*.osm.pbf')[0])
 
-		error("Cann't generate contour lines!", o)
-		raise
+	# 	error("Cann't generate contour lines!", o)
+	# 	raise
 
 
 def crop(o):
-	say('Vytvarim vyrez oblasti', o)
 	# FIXME
 	if o.crop or o.area.crop:
+		say('Vytvarim vyrez oblasti', o)
 		# os.chdir( 'osmconvert' )
 		# _run(o, 'osmconvert64-0.8.8p.exe', [
 		# 	'../' + o.area.mapDataName,
@@ -94,8 +105,8 @@ def _prepareLicence(o):
 
 
 def _splitFiles(o):
-	input_file = [o.area.mapDataName]
-	input_srtm_file = [o.pbf + o.area.id + '-SRTM.osm.pbf']
+	input_file = o.area.mapDataName
+	input_srtm_file = o.pbf + o.area.id + '-SRTM.osm.pbf'
 
 	if o.split:
 		say('Split files start',o)
@@ -106,14 +117,13 @@ def _splitFiles(o):
 				os.remove(file)
 
 			# Spustim splitter
-			_run(o, 'java', [
-				o.JAVAMEM,
-				'-jar', './splitter-r' + str(o.splitter) + '/splitter.jar',
-				input_file,
-				'--max-areas=4096',
-				'--max-nodes=1600000',
-				'--output-dir=' + o.pbf + o.area.id + '-SPLITTED'
-			])
+			_run('java ' + o.JAVAMEM + ' -jar \
+				./splitter-r' + str(o.splitter) + '/splitter.jar ' + 
+				input_file +
+				' --max-areas=4096 \
+				--max-nodes=1600000 \
+				--output-dir=' + o.pbf + o.area.id + '-SPLITTED'
+			, o)
 
 		# Aktualizuji seznam vstupnich souboru
 		input_file = []
@@ -121,15 +131,17 @@ def _splitFiles(o):
 			input_file.append(file)
 
 		# Rozdelim soubor s vrstevnicemi
-		if not os.path.isdir( o.pbf + o.area.id + '-SPLITTED-SRTM/' ):
-			_run(o, 'java', [
-				o.JAVAMEM,
-				'-jar', './splitter-r' + str(o.splitter) + '/splitter.jar',
-				input_srtm_file,
-				'--max-areas=4096',
-				'--max-nodes=1600000',
-				'--output-dir=' + o.pbf + o.area.id + '-SPLITTED-SRTM'
-			])
+		if not os.path.isdir( o.pbf + o.area.id + '-SPLITTED-SRTM' ):
+			_run('java ' + o.JAVAMEM + ' -jar \
+				./splitter-r' + str(o.splitter) + '/splitter.jar ' + 
+				input_srtm_file +
+				' --max-areas=4096 \
+				--max-nodes=1600000 \
+				--output-dir=' + o.pbf + o.area.id + '-SPLITTED-SRTM'
+			, o)
+
+		say('Split files DONE',o)
+
 
 		# Aktualizuji seznam vstupnich souboru
 		input_srtm_file = []
@@ -140,7 +152,7 @@ def _splitFiles(o):
 
 
 def _makeBat(name, o):
-	say('Make install.bat file', o)
+	say('Make ' + name + '.bat file', o)
 
 	if name not in ['install', 'uninstall']:
 		raise ValueError('Invalid bat file name')
@@ -154,11 +166,11 @@ def _makeBat(name, o):
 	with open( './template/' + name + '.bat', 'r' ) as batFile:
 		content = batFile.read()
 
-	content = content.replace( '%NAME%', o.area.name )
-	content = content.replace( '%ID%', str( o.area.number ) )
+	content = content.replace( '%NAME%', o.area.nameCs )
+	content = content.replace( '%ID%', str(o.area.number).zfill(4) )
 	content = content.replace( '%ID_HEX%', numberHex )
 
-	with open( o.img + o.area.id + '_VasaM/' + name + '.bat', 'w' ) as batFile:
+	with open( o.img + o.area.id + o.sufix + '/' + name + '.bat', 'w' ) as batFile:
 		batFile.write( content )
 
 
@@ -166,8 +178,8 @@ def _makeZip(o):
 	say('Make zip file', o)
 
 	os.chdir( o.img )
-	zip = zipfile.ZipFile( './' + o.area.id + '_VasaM.zip', 'w' )
-	for dirname, subdirs, files in os.walk( './' + o.area.id + '_VasaM/' ):
+	zip = zipfile.ZipFile( './' + o.area.id + o.sufix + '.zip', 'w' )
+	for dirname, subdirs, files in os.walk( './' + o.area.id + o.sufix ):
 		zip.write( dirname )
 		for filename in files:
 			zip.write( os.path.join( dirname, filename ) )
@@ -180,14 +192,15 @@ def _makeInfo(o):
 	say('Make info file', o)
 
 	infoData = {
-		'version': str(o.VERSION),
-		'timestamp':     str(o.area.timestamp),
-		'hashImg':       _sha1( o.img + o.area.id + '_VasaM.img' ),
-		'hashZip':       _sha1( o.img + o.area.id + '_VasaM.zip' ),
-		'codePage':      o.code
+		'version':   str(o.VERSION),
+		'datetime':  str(o.area.timestamp),
+		'timestamp': str(o.area.timestamp.timestamp()),
+		'hashImg':   _sha1( o.img + o.area.id + o.sufix + '.img' ),
+		'hashZip':   _sha1( o.img + o.area.id + o.sufix + '.zip' ),
+		'codePage':  o.code
 	}
 
-	with open( o.img + o.area.id + '_VasaM.info', 'w' ) as info:
+	with open( o.img + o.area.id + o.sufix + '.info', 'w' ) as info:
 		info.write(json.dumps(infoData))
 
 
@@ -196,8 +209,8 @@ def garmin(o):
 
 
 	# Vytvorim cilovou podslozku
-	if not os.path.exists(o.img + o.area.id + '_VasaM'):
-		os.makedirs(o.img + o.area.id + '_VasaM')
+	if not os.path.exists(o.img + o.area.id + o.sufix):
+		os.makedirs(o.img + o.area.id + o.sufix)
 
 
 	input_file, input_srtm_file = _splitFiles(o)
@@ -207,52 +220,25 @@ def garmin(o):
 
 	say('Generating map', o)
 	# FIXME najit chybu
-	"""
-	mkgmap = [
-		'java', o.JAVAMEM,
-		'-jar', './mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar',
-		'-c', './garmin-style/mkgmap-settings.conf',
-		'--bounds=' + o.bounds,
-		'--precomp-sea=' + o.sea +'sea/',
-		'--dem=' + o.hgt +'VIEW3/',
-		'--max-jobs=' + str( o.MAX_JOBS ),
-		'--mapname="' + str( o.area.number ) + '0001\"',
-		'--overview-mapnumber="' + str( o.area.number ) + '0000\"',
-		'--family-id="' + str( o.area.number ) + '"',
-		'--description="' + o.area.name + '_VasaM"',
-		'--family-name="' + o.area.name + '_VasaM"',
-		'--series-name="' + o.area.name + '_VasaM"',
-		'--area-name="' + o.area.name + '_VasaM"',
-		'--country-name="' + o.area.name + '_VasaM"',
-		'--country-abbr="' + o.area.id + '"',
-		'--region-name="' + o.area.name + '_VasaM"',
-		'--region-abbr="' + o.area.id + '"',
-		'--product-version=' + str( o.VERSION ),
-		'--output-dir=' + o.img + o.area.id + '_VasaM',
-		'--dem-poly=' + o.polygons + o.area.id + '.poly',
-		'--license-file=license.txt',
-		'--code-page=' + o.code,
-	] + input_file + input_srtm_file + o.area.pois + ['./garmin-style/style.txt']
-	"""
-	mkgmap = 'java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
+	_run('java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
 		-c ./garmin-style/mkgmap-settings.conf \
 		--bounds=' + o.bounds + ' \
 		--precomp-sea=' + o.sea + 'sea/ \
 		--dem=' + o.hgt +'VIEW3/ \
 		--max-jobs=' + str( o.MAX_JOBS ) + ' \
-		--mapname="' + str( o.area.number ) + '0001\" \
-		--overview-mapnumber="' + str( o.area.number ) + '0000\" \
-		--family-id="' + str( o.area.number ) + '" \
-		--description="' + o.area.name + '_VasaM" \
-		--family-name="' + o.area.name + '_VasaM" \
-		--series-name="' + o.area.name + '_VasaM" \
-		--area-name="' + o.area.name + '_VasaM" \
-		--country-name="' + o.area.name + '_VasaM" \
+		--mapname="' + str(o.area.number).zfill(4) + '0001\" \
+		--overview-mapnumber="' + str(o.area.number).zfill(4) + '0000\" \
+		--family-id="' + str(o.area.number).zfill(4) + '" \
+		--description="' + o.area.nameCs + o.sufix + '" \
+		--family-name="' + o.area.nameCs + o.sufix + '" \
+		--series-name="' + o.area.nameCs + o.sufix + '" \
+		--area-name="' + o.area.nameCs + o.sufix + '" \
+		--country-name="' + o.area.nameCs + o.sufix + '" \
 		--country-abbr="' + o.area.id + '" \
-		--region-name="' + o.area.name + '_VasaM" \
+		--region-name="' + o.area.nameCs + o.sufix + '" \
 		--region-abbr="' + o.area.id + '" \
 		--product-version=' + str( o.VERSION ) + ' \
-		--output-dir=' + o.img + o.area.id + '_VasaM \
+		--output-dir=' + o.img + o.area.id + o.sufix + ' \
 		--dem-poly=' + o.polygons + o.area.id + '.poly \
 		--license-file=' + o.temp + 'license.txt \
 		--code-page=' + o.code + ' \
@@ -260,16 +246,44 @@ def garmin(o):
 		' + ' '.join(input_srtm_file) + ' \
 		' + ' '.join(o.area.pois) + ' \
 		./garmin-style/style.txt'
+	, o)
+
+	# mkgmap = 'java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
+	# 	-c ./garmin-style/mkgmap-settings.conf \
+	# 	--bounds=' + o.bounds + ' \
+	# 	--precomp-sea=' + o.sea + 'sea/ \
+	# 	--dem=' + o.hgt +'VIEW3/ \
+	# 	--max-jobs=' + str( o.MAX_JOBS ) + ' \
+	# 	--mapname="' + str(o.area.number).zfill(4) + '0001\" \
+	# 	--overview-mapnumber="' + str(o.area.number).zfill(4) + '0000\" \
+	# 	--family-id="' + str(o.area.number).zfill(4) + '" \
+	# 	--description="' + o.area.nameCs + o.sufix + '" \
+	# 	--family-name="' + o.area.nameCs + o.sufix + '" \
+	# 	--series-name="' + o.area.nameCs + o.sufix + '" \
+	# 	--area-name="' + o.area.nameCs + o.sufix + '" \
+	# 	--country-name="' + o.area.nameCs + o.sufix + '" \
+	# 	--country-abbr="' + o.area.id + '" \
+	# 	--region-name="' + o.area.nameCs + o.sufix + '" \
+	# 	--region-abbr="' + o.area.id + '" \
+	# 	--product-version=' + str( o.VERSION ) + ' \
+	# 	--output-dir=' + o.img + o.area.id + o.sufix + ' \
+	# 	--dem-poly=' + o.polygons + o.area.id + '.poly \
+	# 	--license-file=' + o.temp + 'license.txt \
+	# 	--code-page=' + o.code + ' \
+	# 	' + ' '.join(input_file) + ' \
+	# 	' + ' '.join(input_srtm_file) + ' \
+	# 	' + ' '.join(o.area.pois) + ' \
+	# 	./garmin-style/style.txt'
 
 	# _run(o, mkgmap)
 
 	# FIXME
-	err = subprocess.run(mkgmap, shell=True, capture_output=True)
-	log(err.stdout.decode(), o)
+	# err = subprocess.run(mkgmap, shell=True, capture_output=False)
+	# log(err.stdout.decode(), o)
 
-	if err.returncode != 0:
-		error(err.stderr.decode(), o)
-		raise ValueError(program + ' return ' + str(err.returncode) + ' (0 expected)')
+	# if err.returncode != 0:
+	# 	error(err.stderr.decode(), o)
+	# 	raise ValueError(program + ' return ' + str(err.returncode) + ' (0 expected)')
 
 
 	_makeBat('install', o)
@@ -278,10 +292,10 @@ def garmin(o):
 
 	# Prejmenuji vystupni soubor
 	say('Rename files', o)
-	if os.path.isfile( o.img + o.area.id + '_VasaM.img' ):
-		os.remove( o.img + o.area.id + '_VasaM.img' )
+	if os.path.isfile( o.img + o.area.id + o.sufix + '.img' ):
+		os.remove( o.img + o.area.id + o.sufix + '.img' )
 
-	os.rename( o.img + o.area.id + '_VasaM/gmapsupp.img', o.img + o.area.id + '_VasaM.img' )
+	os.rename( o.img + o.area.id + o.sufix + '/gmapsupp.img', o.img + o.area.id + o.sufix + '.img' )
 
 
 	_makeZip(o)
