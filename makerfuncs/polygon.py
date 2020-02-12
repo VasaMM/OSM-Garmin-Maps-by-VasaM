@@ -104,5 +104,6 @@ def load(o):
 
 	if o.extend is not None:
 		_extend(o)
+		o.crop = True
 
 	_savePoly(o.temp + 'polygon.poly', o.polygon)

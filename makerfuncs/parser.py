@@ -2,7 +2,7 @@ import os, osmium
 from makerfuncs.prints import say, error
 from datetime import datetime, timezone
 
-from makerfuncs.State import State
+from makerfuncs.Area import Area
 from makerfuncs.states import STATES
 from user.myAreas import USER_AREAS
 
@@ -48,9 +48,76 @@ def downloadType(data):
 		return 'auto'
 
 
+def _findState(id):
+	for area in STATES:
+		if id in STATES[area]:
+			return STATES[area][id], area
+	return None
+
+
+def _makeAreaObject(id, obj, options, continent = None):
+	# Doplnim id a dataId
+	obj.id = id
+
+	if hasattr(obj, 'parent') and obj.parent is not None:
+		say('Oblast je zavisla na datech oblasti ' + obj.parent, options)
+		
+		state = _findState(obj.parent)
+		if state is not None:
+			obj.url = "http://download.geofabrik.de/%s/%s-latest.osm.pbf" % (state[1], state[0].url)
+
+		elif obj.parent in USER_AREAS:
+			obj.url = USER_AREAS[obj.parent].url
+		
+		else:
+			raise ValueError('Ivalid parent ID \'' + obj.parent + '\' in \'' + id + '\'')
+
+		obj.mapDataName = options.pbf + obj.parent + '.osm.pbf'
+
+	else:
+		obj.url = "http://download.geofabrik.de/%s/%s-latest.osm.pbf" % (continent, obj.url)
+		obj.mapDataName = options.pbf + id + '.osm.pbf'
+
+	if continent is not None:
+		obj.continent = continent
+
+	return obj
+
+
+
+
 
 def area(o):
+	if o.area is None:
+		raise ValueError('Nezadana oblast')
+
 	say('Dekoduji oblast ' + o.area, o)
+
+	if o.area in USER_AREAS:
+		say('Oblast nalezena v uzivatelskych oblastech', o)
+		o.area = _makeAreaObject(id = o.area, obj = USER_AREAS[o.area], options = o)
+
+
+	else:
+		state = _findState(o.area)
+		if state is not None:
+			o.area = _makeAreaObject(id = o.area, obj = state[0], options = o, continent = state[1])
+
+		else:
+			raise ValueError('Neplana oblast ' + o.area)
+
+	if o.mapNumber is not None:
+		o.area.number = o.mapNumber
+
+	if o.variant is not None:
+		o.area.number += int(o.variant)
+
+	print(o.area)
+	say('Area id: ' + o.area.id, o)
+
+
+
+
 	# while True:
 	# 	if o.state in STATES:
 	# 		# doplnim id
@@ -73,41 +140,4 @@ def area(o):
 	# 			print('  * [' + o.state + '] - ' + STATES[ o.state ].name)
 
 	# 		o.state = input('Vybrana mapa: ')
-
-
-	def updateState(id, obj):
-		# Doplnim id a dataId
-		obj.id = id
-
-		if obj.parent is not None:
-			say('Oblast je zavisla na datech oblasti ' + obj.parent, o)
-			if obj.parent in STATES:
-				obj.dataUrl = STATES[obj.parent].dataUrl
-			elif obj.parent in USER_AREAS:
-				obj.dataUrl = USER_AREAS[obj.parent].dataUrl
-			else:
-				raise ValueError('Ivalid parent ID \'' + obj.parent + '\' in \'' + id + '\'')
-
-			obj.mapDataName = o.pbf + obj.parent + '.osm.pbf'
-		else:
-			obj.mapDataName = o.pbf + id + '.osm.pbf'
-
-	if o.area in STATES:
-		say('Oblast nalezena v preddefinovanych statech', o)
-		updateState(o.area, STATES[o.area])
-		o.area = STATES[o.area]
-
-		say('Area id: ' + o.area.id, o)
-		return
-
-	elif o.area in USER_AREAS:
-		say('Oblast nalezena v uzivatelskych oblastech', o)
-		updateState(o.area, USER_AREAS[o.area])
-		o.area = USER_AREAS[o.area]
-
-		say('Area id: ' + o.area.id, o)
-		return
-	
-	else:
-		raise ValueError('Invalid area ID: \'' + o.area + '\'')
 
