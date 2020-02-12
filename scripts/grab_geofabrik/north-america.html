@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="UTF-8">
+<title>Geofabrik Download Server</title>
+    <script type="text/javascript" src="//static.geofabrik.de/ol212/OpenLayers.js"></script>
+    <script type="text/javascript">
+        var map, layer, countryLayer;
+        function init()
+        {
+            map = new OpenLayers.Map('map');
+            layer = new OpenLayers.Layer.OSM("",
+                                             ["https://a.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+                                              "https://b.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+                                              "https://c.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+					     ],
+                                             { attribution: "", tileOptions : {crossOriginKeyword: null} }
+                                            ); // attribution in page footer
+            map.addLayer(layer);
+            layer = new OpenLayers.Layer.Vector("KML", {
+            strategies: [new OpenLayers.Strategy.Fixed()],
+            protocol: new OpenLayers.Protocol.HTTP({
+                url: "north-america.kml",
+                format: new OpenLayers.Format.KML({
+                    maxDepth: 2
+                })
+            }),
+            styleMap: new OpenLayers.StyleMap({
+            "default": new OpenLayers.Style({
+                graphicName: "cross",
+                pointRadius: 6,
+                fillOpacity: 0.50,
+                fillColor: "#ffcc66",
+                strokeColor: "#ff9933",
+                strokeWidth: 2
+            })
+            })
+            });
+            layer.events.register("loadend", this, function() { map.zoomToExtent(layer.getDataExtent()); });
+            map.addLayer(layer);
+        }
+        function loadkml(kmlname)
+        {
+            if (countryLayer) map.removeLayer(countryLayer);
+            countryLayer = 
+                new OpenLayers.Layer.Vector("KML", {
+                strategies: [new OpenLayers.Strategy.Fixed()],
+                protocol: new OpenLayers.Protocol.HTTP({
+                    url: kmlname,
+                    format: new OpenLayers.Format.KML({
+                        extractStyles: true,
+                        extractAttributes: true,
+                        maxDepth: 2
+                    })
+                })
+                });
+            map.addLayer(countryLayer);
+        }
+    </script>
+<link rel="stylesheet" type="text/css" href="/download.css">
+</head><body onload='init();'><div id="download-top">
+   <div id="download-top-right">
+      <img alt="header image" src="/img/geofabrik-downloads.png" height="20">
+   </div>
+</div>
+<div id="download-titlebar">
+<h1>Download OpenStreetMap data for this region:</h1>
+</div>
+<div class="download-main">
+<div class="leftColumn"><h2>North America</h2>
+<p><a href="../index.html">[one level up]</a></p>    <p class="isPublicInfo">
+        The OpenStreetMap data files provided on this server do <b>not</b> contain the user names, user
+        IDs and changeset IDs of the OSM objects because these fields are assumed to contain personal
+        information about the OpenStreetMap contributors and are therefore subject to data protection regulations
+        in the European Union. 
+        <br>
+        <a href="https://osm-internal.download.geofabrik.de/north-america.html">Extracts with full metadata</a> are available to OpenStreetMap
+        contributors only.
+    </p>
+<h3>Commonly Used Formats</h3>
+<ul><li><a href="north-america-latest.osm.pbf">north-america-latest.osm.pbf,</a> suitable for
+           Osmium, Osmosis, imposm, osm2pgsql, mkgmap, and others. This file was last 
+           modified 12 hours ago and contains all OSM data up to 2020-02-03T21:59:02Z. File size: 8.9&nbsp;GB; MD5 sum: <a href="north-america-latest.osm.pbf.md5">1ca222bf885ae7d993b8e6be37cd8b6b</a>. </li>
+<li><s>north-america-latest-free.shp.zip</s> is not available for this region; try one of the sub-regions.</li></ul><h3>Other Formats and Auxiliary Files</h3>
+<ul><li><a href="north-america-latest.osm.bz2">north-america-latest.osm.bz2,</a> yields
+                OSM XML when decompressed; use for programs that cannot process the .pbf format.
+                This file was last modified 36 days ago. File size: 14.5&nbsp;GB; MD5 sum: <a href="north-america-latest.osm.bz2.md5">df03ff0ebde16a4f60d161e9d089cbf8</a>. </li>
+<li><s>north-america-internal.osh.pbf</s> The history file
+                contains personal data and is available on the
+                <a href="https://osm-internal.download.geofabrik.de/north-america.html">internal server</a>
+                only. See notice above for further information.
+                </li><li><a href="north-america.poly">.poly file</a> that describes the extent
+               of this region.</li><li><a href="north-america-updates">.osc.gz files</a>
+                that contain all changes in this region, suitable e.g. for
+                Osmosis updates</li><li><a href="#" onclick="OpenLayers.Util.getElement('details').style.display='inline';">raw directory index</a> allowing you to
+            see and download older files</li></ul><div id="details" style="display:none"><table id="subregions"><tr><th class="subregion">file</th><th>date</th><th>size</th></tr><tr><td class="subregion"><a href="north-america-140101.osm.pbf">north-america-140101.osm.pbf</a></td><td class="subright">2018-05-07 09:43</td><td class="subright">5793366681</td></tr>
+<tr><td class="subregion"><a href="north-america-140101.osm.pbf.md5">north-america-140101.osm.pbf.md5</a></td><td class="subright">2018-05-07 09:43</td><td class="subright">62</td></tr>
+<tr><td class="subregion"><a href="north-america-150101.osm.pbf">north-america-150101.osm.pbf</a></td><td class="subright">2018-05-07 14:28</td><td class="subright">6404656544</td></tr>
+<tr><td class="subregion"><a href="north-america-150101.osm.pbf.md5">north-america-150101.osm.pbf.md5</a></td><td class="subright">2018-05-07 14:28</td><td class="subright">62</td></tr>
+<tr><td class="subregion"><a href="north-america-160101.osm.pbf">north-america-160101.osm.pbf</a></td><td class="subright">2018-05-07 13:52</td><td class="subright">6983598523</td></tr>
+<tr><td class="subregion"><a href="north-america-160101.osm.pbf.md5">north-america-160101.osm.pbf.md5</a></td><td class="subright">2018-05-07 13:53</td><td class="subright">62</td></tr>
+<tr><td class="subregion"><a href="north-america-170101.osm.pbf">north-america-170101.osm.pbf</a></td><td class="subright">2018-05-07 14:24</td><td class="subright">7511555637</td></tr>
+<tr><td class="subregion"><a href="north-america-170101.osm.pbf.md5">north-america-170101.osm.pbf.md5</a></td><td class="subright">2018-05-07 14:24</td><td class="subright">62</td></tr>
+<tr><td class="subregion"><a href="north-america-180101.osm.pbf">north-america-180101.osm.pbf</a></td><td class="subright">2018-05-07 09:40</td><td class="subright">8029855517</td></tr>
+<tr><td class="subregion"><a href="north-america-180101.osm.pbf.md5">north-america-180101.osm.pbf.md5</a></td><td class="subright">2018-05-07 09:40</td><td class="subright">62</td></tr>
+<tr><td class="subregion"><a href="north-america-190101.osm.pbf">north-america-190101.osm.pbf</a></td><td class="subright">2019-01-01 22:26</td><td class="subright">8674098711</td></tr>
+<tr><td class="subregion"><a href="north-america-190101.osm.pbf.md5">north-america-190101.osm.pbf.md5</a></td><td class="subright">2019-01-01 22:33</td><td class="subright">63</td></tr>
+<tr><td class="subregion"><a href="north-america-191101.osm.pbf">north-america-191101.osm.pbf</a></td><td class="subright">2019-11-01 22:46</td><td class="subright">9343650657</td></tr>
+<tr><td class="subregion"><a href="north-america-191101.osm.pbf.md5">north-america-191101.osm.pbf.md5</a></td><td class="subright">2019-11-01 22:57</td><td class="subright">63</td></tr>
+<tr><td class="subregion"><a href="north-america-191201.osm.pbf">north-america-191201.osm.pbf</a></td><td class="subright">2019-12-01 22:43</td><td class="subright">9426386600</td></tr>
+<tr><td class="subregion"><a href="north-america-191201.osm.pbf.md5">north-america-191201.osm.pbf.md5</a></td><td class="subright">2019-12-01 22:55</td><td class="subright">63</td></tr>
+<tr><td class="subregion"><a href="north-america-200129.osm.bz2">north-america-200129.osm.bz2</a></td><td class="subright">2020-02-02 15:05</td><td class="subright">15717622045</td></tr>
+<tr><td class="subregion"><a href="north-america-200129.osm.bz2.md5">north-america-200129.osm.bz2.md5</a></td><td class="subright">2020-02-02 15:05</td><td class="subright">63</td></tr>
+<tr><td class="subregion"><a href="north-america-200130.osm.bz2">north-america-200130.osm.bz2</a></td><td class="subright">2020-02-01 17:55</td><td class="subright">15723674602</td></tr>
+<tr><td class="subregion"><a href="north-america-200130.osm.bz2.md5">north-america-200130.osm.bz2.md5</a></td><td class="subright">2020-02-01 17:55</td><td class="subright">63</td></tr>
+<tr><td class="subregion"><a href="north-america-200130.osm.pbf">north-america-200130.osm.pbf</a></td><td class="subright">2020-01-30 23:11</td><td class="subright">9582639824</td></tr>
+<tr><td class="subregion"><a href="north-america-200130.osm.pbf.md5">north-america-200130.osm.pbf.md5</a></td><td class="subright">2020-01-30 23:40</td><td class="subright">63</td></tr>
+<tr><td class="subregion"><a href="north-america-200131.osm.pbf">north-america-200131.osm.pbf</a></td><td class="subright">2020-01-31 23:11</td><td class="subright">9585717409</td></tr>
+<tr><td class="subregion"><a href="north-america-200131.osm.pbf.md5">north-america-200131.osm.pbf.md5</a></td><td class="subright">2020-02-01 00:13</td><td class="subright">63</td></tr>
+<tr><td class="subregion"><a href="north-america-200201.osm.pbf">north-america-200201.osm.pbf</a></td><td class="subright">2020-02-01 23:12</td><td class="subright">9587256706</td></tr>
+<tr><td class="subregion"><a href="north-america-200201.osm.pbf.md5">north-america-200201.osm.pbf.md5</a></td><td class="subright">2020-02-01 23:44</td><td class="subright">63</td></tr>
+<tr><td class="subregion"><a href="north-america-200202.osm.pbf">north-america-200202.osm.pbf</a></td><td class="subright">2020-02-02 23:11</td><td class="subright">9588861964</td></tr>
+<tr><td class="subregion"><a href="north-america-200202.osm.pbf.md5">north-america-200202.osm.pbf.md5</a></td><td class="subright">2020-02-02 23:22</td><td class="subright">63</td></tr>
+<tr><td class="subregion"><a href="north-america-200203.osm.pbf">north-america-200203.osm.pbf</a></td><td class="subright">2020-02-03 23:09</td><td class="subright">9591941943</td></tr>
+<tr><td class="subregion"><a href="north-america-200203.osm.pbf.md5">north-america-200203.osm.pbf.md5</a></td><td class="subright">2020-02-03 23:29</td><td class="subright">63</td></tr>
+<tr><td class="subregion"><a href="north-america-latest.osm.bz2">north-america-latest.osm.bz2</a></td><td class="subright">2019-12-30 02:50</td><td class="subright">15564455088</td></tr>
+<tr><td class="subregion"><a href="north-america-latest.osm.bz2.md5">north-america-latest.osm.bz2.md5</a></td><td class="subright">2019-12-30 02:50</td><td class="subright">63</td></tr>
+<tr><td class="subregion"><a href="north-america-latest.osm.pbf">north-america-latest.osm.pbf</a></td><td class="subright">2020-02-03 23:09</td><td class="subright">9591941943</td></tr>
+<tr><td class="subregion"><a href="north-america-latest.osm.pbf.md5">north-america-latest.osm.pbf.md5</a></td><td class="subright">2020-02-03 23:29</td><td class="subright">63</td></tr>
+<tr><td class="subregion"><a href="north-america-updates">north-america-updates</a></td><td class="subright">2020-02-03 23:31</td><td class="subright">4096</td></tr>
+<tr><td class="subregion"><a href="north-america.kml">north-america.kml</a></td><td class="subright">2020-02-03 23:11</td><td class="subright">9372</td></tr>
+<tr><td class="subregion"><a href="north-america.poly">north-america.poly</a></td><td class="subright">2020-02-03 23:00</td><td class="subright">12536</td></tr>
+</table></div><h3>Sub Regions</h3><p>Click on the region name to see the overview page for that region, or select one of the
+file extension links for quick access.</p>
+<table id="subregions">
+<tr>
+   <th class="subregion">Sub Region</th>
+   <th colspan="4">Quick Links</th>
+</tr>
+<tr>
+   <th>&nbsp;</th>
+   <th colspan="2">.osm.pbf</th>
+   <th>.shp.zip</th>
+   <th>.osm.bz2</th>
+</tr>
+<tr onMouseOver="loadkml('north-america/canada.kml')"><td class="subregion"><a href="north-america/canada.html">Canada</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/canada-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(2.4&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="north-america/canada-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/greenland.kml')"><td class="subregion"><a href="north-america/greenland.html">Greenland</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/greenland-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(18.8&nbsp;MB)</td><td> <a href="north-america/greenland-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/greenland-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/mexico.kml')"><td class="subregion"><a href="north-america/mexico.html">Mexico</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/mexico-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(260&nbsp;MB)</td><td> <a href="north-america/mexico-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/mexico-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/alabama.kml')"><td class="subregion"><a href="north-america/us/alabama.html">Alabama</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/alabama-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(72&nbsp;MB)</td><td> <a href="north-america/us/alabama-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/alabama-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/alaska.kml')"><td class="subregion"><a href="north-america/us/alaska.html">Alaska</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/alaska-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(47.6&nbsp;MB)</td><td> <a href="north-america/us/alaska-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/alaska-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/arizona.kml')"><td class="subregion"><a href="north-america/us/arizona.html">Arizona</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/arizona-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(127&nbsp;MB)</td><td> <a href="north-america/us/arizona-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/arizona-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/arkansas.kml')"><td class="subregion"><a href="north-america/us/arkansas.html">Arkansas</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/arkansas-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(49.8&nbsp;MB)</td><td> <a href="north-america/us/arkansas-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/arkansas-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/california.kml')"><td class="subregion"><a href="north-america/us/california.html">California</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/california-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(832&nbsp;MB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="north-america/us/california-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/colorado.kml')"><td class="subregion"><a href="north-america/us/colorado.html">Colorado</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/colorado-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(186&nbsp;MB)</td><td> <a href="north-america/us/colorado-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/colorado-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/connecticut.kml')"><td class="subregion"><a href="north-america/us/connecticut.html">Connecticut</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/connecticut-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(30.2&nbsp;MB)</td><td> <a href="north-america/us/connecticut-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/connecticut-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/delaware.kml')"><td class="subregion"><a href="north-america/us/delaware.html">Delaware</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/delaware-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(11.6&nbsp;MB)</td><td> <a href="north-america/us/delaware-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/delaware-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/district-of-columbia.kml')"><td class="subregion"><a href="north-america/us/district-of-columbia.html">District of Columbia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/district-of-columbia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(15.9&nbsp;MB)</td><td> <a href="north-america/us/district-of-columbia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/district-of-columbia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/florida.kml')"><td class="subregion"><a href="north-america/us/florida.html">Florida</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/florida-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(236&nbsp;MB)</td><td> <a href="north-america/us/florida-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/florida-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/georgia.kml')"><td class="subregion"><a href="north-america/us/georgia.html">Georgia (US State)</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/georgia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(181&nbsp;MB)</td><td> <a href="north-america/us/georgia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/georgia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/hawaii.kml')"><td class="subregion"><a href="north-america/us/hawaii.html">Hawaii</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/hawaii-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(12.2&nbsp;MB)</td><td> <a href="north-america/us/hawaii-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/hawaii-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/idaho.kml')"><td class="subregion"><a href="north-america/us/idaho.html">Idaho</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/idaho-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(68&nbsp;MB)</td><td> <a href="north-america/us/idaho-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/idaho-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/illinois.kml')"><td class="subregion"><a href="north-america/us/illinois.html">Illinois</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/illinois-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(174&nbsp;MB)</td><td> <a href="north-america/us/illinois-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/illinois-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/indiana.kml')"><td class="subregion"><a href="north-america/us/indiana.html">Indiana</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/indiana-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(75&nbsp;MB)</td><td> <a href="north-america/us/indiana-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/indiana-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/iowa.kml')"><td class="subregion"><a href="north-america/us/iowa.html">Iowa</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/iowa-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(86&nbsp;MB)</td><td> <a href="north-america/us/iowa-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/iowa-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/kansas.kml')"><td class="subregion"><a href="north-america/us/kansas.html">Kansas</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/kansas-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(59&nbsp;MB)</td><td> <a href="north-america/us/kansas-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/kansas-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/kentucky.kml')"><td class="subregion"><a href="north-america/us/kentucky.html">Kentucky</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/kentucky-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(108&nbsp;MB)</td><td> <a href="north-america/us/kentucky-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/kentucky-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/louisiana.kml')"><td class="subregion"><a href="north-america/us/louisiana.html">Louisiana</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/louisiana-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(101&nbsp;MB)</td><td> <a href="north-america/us/louisiana-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/louisiana-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/maine.kml')"><td class="subregion"><a href="north-america/us/maine.html">Maine</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/maine-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(47.8&nbsp;MB)</td><td> <a href="north-america/us/maine-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/maine-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/maryland.kml')"><td class="subregion"><a href="north-america/us/maryland.html">Maryland</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/maryland-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(139&nbsp;MB)</td><td> <a href="north-america/us/maryland-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/maryland-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/massachusetts.kml')"><td class="subregion"><a href="north-america/us/massachusetts.html">Massachusetts</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/massachusetts-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(239&nbsp;MB)</td><td> <a href="north-america/us/massachusetts-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/massachusetts-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/michigan.kml')"><td class="subregion"><a href="north-america/us/michigan.html">Michigan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/michigan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(140&nbsp;MB)</td><td> <a href="north-america/us/michigan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/michigan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/minnesota.kml')"><td class="subregion"><a href="north-america/us/minnesota.html">Minnesota</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/minnesota-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(175&nbsp;MB)</td><td> <a href="north-america/us/minnesota-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/minnesota-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/mississippi.kml')"><td class="subregion"><a href="north-america/us/mississippi.html">Mississippi</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/mississippi-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(70&nbsp;MB)</td><td> <a href="north-america/us/mississippi-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/mississippi-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/missouri.kml')"><td class="subregion"><a href="north-america/us/missouri.html">Missouri</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/missouri-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(106&nbsp;MB)</td><td> <a href="north-america/us/missouri-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/missouri-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/montana.kml')"><td class="subregion"><a href="north-america/us/montana.html">Montana</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/montana-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(61&nbsp;MB)</td><td> <a href="north-america/us/montana-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/montana-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/nebraska.kml')"><td class="subregion"><a href="north-america/us/nebraska.html">Nebraska</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/nebraska-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(57&nbsp;MB)</td><td> <a href="north-america/us/nebraska-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/nebraska-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/nevada.kml')"><td class="subregion"><a href="north-america/us/nevada.html">Nevada</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/nevada-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(46.6&nbsp;MB)</td><td> <a href="north-america/us/nevada-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/nevada-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/new-hampshire.kml')"><td class="subregion"><a href="north-america/us/new-hampshire.html">New Hampshire</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/new-hampshire-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(36.3&nbsp;MB)</td><td> <a href="north-america/us/new-hampshire-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/new-hampshire-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/new-jersey.kml')"><td class="subregion"><a href="north-america/us/new-jersey.html">New Jersey</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/new-jersey-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(82&nbsp;MB)</td><td> <a href="north-america/us/new-jersey-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/new-jersey-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/new-mexico.kml')"><td class="subregion"><a href="north-america/us/new-mexico.html">New Mexico</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/new-mexico-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(81&nbsp;MB)</td><td> <a href="north-america/us/new-mexico-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/new-mexico-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/new-york.kml')"><td class="subregion"><a href="north-america/us/new-york.html">New York</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/new-york-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(200&nbsp;MB)</td><td> <a href="north-america/us/new-york-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/new-york-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/north-carolina.kml')"><td class="subregion"><a href="north-america/us/north-carolina.html">North Carolina</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/north-carolina-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(241&nbsp;MB)</td><td> <a href="north-america/us/north-carolina-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/north-carolina-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/north-dakota.kml')"><td class="subregion"><a href="north-america/us/north-dakota.html">North Dakota</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/north-dakota-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(103&nbsp;MB)</td><td> <a href="north-america/us/north-dakota-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/north-dakota-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/ohio.kml')"><td class="subregion"><a href="north-america/us/ohio.html">Ohio</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/ohio-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(136&nbsp;MB)</td><td> <a href="north-america/us/ohio-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/ohio-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/oklahoma.kml')"><td class="subregion"><a href="north-america/us/oklahoma.html">Oklahoma</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/oklahoma-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(120&nbsp;MB)</td><td> <a href="north-america/us/oklahoma-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/oklahoma-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/oregon.kml')"><td class="subregion"><a href="north-america/us/oregon.html">Oregon</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/oregon-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(147&nbsp;MB)</td><td> <a href="north-america/us/oregon-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/oregon-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/pennsylvania.kml')"><td class="subregion"><a href="north-america/us/pennsylvania.html">Pennsylvania</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/pennsylvania-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(163&nbsp;MB)</td><td> <a href="north-america/us/pennsylvania-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/pennsylvania-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/puerto-rico.kml')"><td class="subregion"><a href="north-america/us/puerto-rico.html">Puerto Rico</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/puerto-rico-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(64&nbsp;MB)</td><td> <a href="north-america/us/puerto-rico-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/puerto-rico-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/rhode-island.kml')"><td class="subregion"><a href="north-america/us/rhode-island.html">Rhode Island</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/rhode-island-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(11.0&nbsp;MB)</td><td> <a href="north-america/us/rhode-island-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/rhode-island-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/south-carolina.kml')"><td class="subregion"><a href="north-america/us/south-carolina.html">South Carolina</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/south-carolina-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(101&nbsp;MB)</td><td> <a href="north-america/us/south-carolina-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/south-carolina-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/south-dakota.kml')"><td class="subregion"><a href="north-america/us/south-dakota.html">South Dakota</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/south-dakota-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(26.1&nbsp;MB)</td><td> <a href="north-america/us/south-dakota-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/south-dakota-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/tennessee.kml')"><td class="subregion"><a href="north-america/us/tennessee.html">Tennessee</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/tennessee-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(92&nbsp;MB)</td><td> <a href="north-america/us/tennessee-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/tennessee-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/texas.kml')"><td class="subregion"><a href="north-america/us/texas.html">Texas</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/texas-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(402&nbsp;MB)</td><td> <a href="north-america/us/texas-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/texas-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/utah.kml')"><td class="subregion"><a href="north-america/us/utah.html">Utah</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/utah-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(61&nbsp;MB)</td><td> <a href="north-america/us/utah-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/utah-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/vermont.kml')"><td class="subregion"><a href="north-america/us/vermont.html">Vermont</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/vermont-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(18.8&nbsp;MB)</td><td> <a href="north-america/us/vermont-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/vermont-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/virginia.kml')"><td class="subregion"><a href="north-america/us/virginia.html">Virginia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/virginia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(272&nbsp;MB)</td><td> <a href="north-america/us/virginia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/virginia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/washington.kml')"><td class="subregion"><a href="north-america/us/washington.html">Washington</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/washington-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(143&nbsp;MB)</td><td> <a href="north-america/us/washington-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/washington-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/west-virginia.kml')"><td class="subregion"><a href="north-america/us/west-virginia.html">West Virginia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/west-virginia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(32.5&nbsp;MB)</td><td> <a href="north-america/us/west-virginia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/west-virginia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/wisconsin.kml')"><td class="subregion"><a href="north-america/us/wisconsin.html">Wisconsin</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/wisconsin-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(184&nbsp;MB)</td><td> <a href="north-america/us/wisconsin-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/wisconsin-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us/wyoming.kml')"><td class="subregion"><a href="north-america/us/wyoming.html">Wyoming</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us/wyoming-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(37.8&nbsp;MB)</td><td> <a href="north-america/us/wyoming-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="north-america/us/wyoming-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+</table>
+<h3>Special Sub Regions</h3>
+<p>
+These regions are "special" because they are outside of the usual administrative
+hierarchies and may duplicate data already contained in the other sub regions.
+</p>
+<table id="specialsubregions">
+<tr>
+   <th class="subregion">Sub Region</th>
+   <th colspan="4">Quick Links</th>
+</tr>
+<tr>
+   <th>&nbsp;</th>
+   <th colspan="2">.osm.pbf</th>
+   <th>.shp.zip</th>
+   <th>.osm.bz2</th>
+</tr>
+<tr onMouseOver="loadkml('north-america/us-midwest.kml')"><td class="subregion"><a href="north-america/us-midwest.html">US Midwest</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us-midwest-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(1.3&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="north-america/us-midwest-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us-northeast.kml')"><td class="subregion"><a href="north-america/us-northeast.html">US Northeast</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us-northeast-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(829&nbsp;MB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="north-america/us-northeast-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us-pacific.kml')"><td class="subregion"><a href="north-america/us-pacific.html">US Pacific</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us-pacific-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(59&nbsp;MB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="north-america/us-pacific-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us-south.kml')"><td class="subregion"><a href="north-america/us-south.html">US South</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us-south-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(2.2&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="north-america/us-south-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('north-america/us-west.kml')"><td class="subregion"><a href="north-america/us-west.html">US West</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="north-america/us-west-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(1.8&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="north-america/us-west-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+</table>
+</div>
+<div id="download-right">
+   <div id="noscroll">
+   <div id="map"></div>
+
+   <div class="customized_shapes">
+<p>
+      <img alt="small flag of UK" src="/img/en.png">
+Not what you were looking for?
+Geofabrik is a consulting and software development firm based in Karlsruhe, Germany
+specializing in OpenStreetMap services. We're happy to help you with data
+preparation, processing, server setup and the like. <a href="http://www.geofabrik.de/data/shapefiles.html">Check out our web site</a>
+and contact us if we can be of service.
+
+      </p>
+   </div>
+   
+   <div class="customized_shapes">
+      <p>
+      <img alt="small flag of Germany" src="/img/de.png">
+      Nicht das Richtige dabei? 
+Die Geofabrik ist ein auf OpenStreetMap spezialisiertes Beratungs- und Softwareentwicklungsunternehmen in Karlsruhe.
+Gern helfen wir Ihnen bei der Datenaufbereitung, Datenkonvertierung, Serverinstallation und &auml;hnlichen Aufgaben.
+<a href="http://www.geofabrik.de/data/shapefiles.html">Besuchen Sie unsere Webseite</a> und sprechen Sie mit uns, wenn wir Ihnen 
+helfen k&ouml;nnen.
+      </p>
+   </div>
+   </div>
+</div>
+</div>
+<div id="download-copyright">
+Data/Maps Copyright 2018
+<a href="http://www.geofabrik.de/">Geofabrik GmbH</a>
+and
+<a href="http://www.openstreetmap.org/">OpenStreetMap Contributors</a>
+|
+<a href="http://creativecommons.org/licenses/by-sa/2.0/" rel="license">Map tiles: Creative Commons BY-SA 2.0</a>
+<a href="http://opendatacommons.org/licenses/odbl/">Data: ODbL 1.0</a>
+|
+<a href="http://www.geofabrik.de/geofabrik/contact.html">Contact</a>
+|
+<a href="http://www.geofabrik.de/geofabrik/imprint.html">Legal Notice/Privacy Policy</a>
