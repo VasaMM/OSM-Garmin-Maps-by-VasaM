@@ -42,7 +42,7 @@ Web: https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM''')
 	)
 	argParser.add_argument(
 		'--code-page', '-c',
-		choices=['unicode', 'ascii', '1250', '1252'],
+		choices=['unicode', 'ascii', '1250', '1252', 'latin2'],
 		default='1250',
 		help='Kódová stránka ve vygenerované mapě\nCode page in the generated map'
 	)
@@ -69,9 +69,24 @@ auto - Mapová data se stáhnou pouze pokud jsou starší než --maximum-date-ag
 Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], where h is hour, d is day (24 hours) and m is month (30 days) <default value is 1d>'
 	)
 	argParser.add_argument(
+		'--map-number',
+		type=int,
+		help='Vynuti konkretni map ID'
+	)
+	argParser.add_argument(
+		'--variant',
+		choices=['0', '1', '2', '3', '4'],
+		help='Vynuti konkretni cislo varianty (jinak automaticky)'
+	)
+	argParser.add_argument(
 		'--extend', '-e',
 		type=float,
 		help='Zvětší polygon o zadaný počet kilometrů\nExtend the polygon by the specified number of kilometers'
+	)
+	argParser.add_argument(
+		'--sufix',
+		type=str,
+		help='Pripona za jmenem mapy'
 	)
 	argParser.add_argument(
 		'--crop', '-r',
@@ -108,3 +123,7 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 	o.logFile        = args.logging
 	o.code           = args.code_page
 	o.crop           = args.crop
+	o.mapNumber      = args.map_number
+	o.variant        = args.variant
+	o.sufix          = '_VasaM' if args.sufix is None else '_' + args.sufix + '_VasaM'
+
