@@ -1,4 +1,4 @@
-import os, sys, re
+import os, sys
 from datetime import datetime, timezone, timedelta
 from math import floor
 import urllib.request
@@ -101,7 +101,7 @@ def mapData(o):
 	o.downloaded = False
 	
 	# Zjistim, zda mam stahovat data
-	if o.area.dataUrl is None:
+	if o.area.url is None:
 		say('I don\'t have data url - skip downloading', o)
 		if o.area.fileHeader is None:
 			raise ValueError('Map file does NOT exist!')
@@ -128,7 +128,7 @@ def mapData(o):
 	if o.downloadMap is 'force' or o.downloaded is True:
 		try:
 			say('Downloading map data', o)
-			download(o.area.dataUrl, o.area.mapDataName)
+			download(o.area.url, o.area.mapDataName)
 			parser.fileHeader(o)
 
 		except:
@@ -138,20 +138,6 @@ def mapData(o):
 
 # Stahnu polygon
 def polygon(o):
-	try:
-		if o.area.polyUrl is not None:
-			if re.match(r'^.+\.poly$', o.area.polyUrl):
-				if not os.path.isfile(o.polygons + o.area.id + '.poly'):
-					say('Downloading *.poly polygon', o)
-					download(o.area.polyUrl, o.polygons + o.area.id + '.poly')
-			
-			elif re.match(r'^.+\.geojson$', o.area.polyUrl):
-				if not os.path.isfile(o.polygons + o.area.id + '.geojson'):
-					say('Downloading *.geojson polygon', o)
-					download(o.area.polyUrl, o.polygons + o.area.id + '.geojson')
-		else:
-			say('I don\'t have polygon url - skip downloading', o)
-
-	
-	except:
-		raise ValueError("Cann't download polygon!")
+	if hasattr(o, 'continent') and not os.path.isfile(o.polygons + o.area.id + '.poly'):
+			say('Downloading polygon', o)
+			download(o.area.url[0:-15] + '.poly', o.polygons + o.area.id + '.poly')
