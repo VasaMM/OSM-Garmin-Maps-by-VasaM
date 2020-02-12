@@ -19,7 +19,6 @@ class Options:
 
 
 def main():
-	
 
 	try:
 		# TODO vytvorit TMP slozku
@@ -32,7 +31,7 @@ def main():
 
 		# Nactu a zpracuji arumenty
 		args.parse(o)
-	
+
 		# Zaznamenam cas spusteni
 		o.timeStart = datetime.now()
 		say('Start at ' + str(o.timeStart), o)

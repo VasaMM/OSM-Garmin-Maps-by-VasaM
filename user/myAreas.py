@@ -1,12 +1,14 @@
-from makerfuncs.State import State
+from makerfuncs.Area import Area
 from makerfuncs.states import STATES
 
 USER_AREAS = {
-	'OL': State(
+	'OL': Area(
 		parent = 'CZ',
-		name   = 'Olomouc',
+		nameCs = 'Olomouc',
 		number = 8800,
 		pois   = ['./pois/chs.osm.xml',],
 		crop   = True
 	),
 }
+
+
