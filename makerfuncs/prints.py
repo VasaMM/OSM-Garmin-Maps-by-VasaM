@@ -4,9 +4,9 @@ from datetime import datetime
 LOG_FILE_NAME = 'gmapmaker.log'
 
 
-def say( msg, o ):
+def say( msg, o, prefix = '[INFO] ', end = "\n"):
 	if hasattr(o, 'quiet') and not o.quiet:
-		print( '[INFO]', msg )
+		print(prefix, msg, sep='', end = end)
 
 	if hasattr(o, 'logFile'):
 		if o.logFile is True:
@@ -16,7 +16,7 @@ def say( msg, o ):
 				error("Cann't open file " + LOG_FILE_NAME, o)
 		
 		if o.logFile:
-			o.logFile.write( '[INFO] ' + msg + '\n' )
+			o.logFile.write(prefix + msg + end)
 			o.logFile.flush()
 
 
@@ -69,7 +69,7 @@ def end(o):
 		runtime = timeEnd - o.timeStart
 	
 	say('Konec v ' + str(timeEnd) + ', beh ' + str(runtime), o)
-	print('\007')
+	# print('\007')
 
 	if hasattr(o, 'logFile') and o.logFile and o.logFile.close:
 		o.logFile.close()
