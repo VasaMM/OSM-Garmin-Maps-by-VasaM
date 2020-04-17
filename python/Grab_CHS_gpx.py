@@ -60,7 +60,7 @@ with open('skaly.gpx', 'w') as output:
         ban_box = soup.find('span', attrs={'class': 'zakaz tt'})
         ban = ban_box is not None
 
-        # Ziskam median narocnosti
+        # Ziskam pocet cest jednotlivych narocnosti a jejich median
         difficulty_box = soup.find('div', attrs={'class': 'sgraph tt big'})
         difficulty_string = difficulty_box.attrs['title']
         difficulty = [0 for j in range(12)]
@@ -113,7 +113,11 @@ with open('skaly.gpx', 'w') as output:
             output.write('CLIMBING FORBIDDEN!\n')
         if rating != 0:
             output.write('Rating: {}\n'.format('*' * rating))
-        output.write('Difficulty median (UIAA): {}\n'.format(median))
+        output.write('Difficulty (UIAA):\n')
+        for k in range(12):
+            output.write(('  {}:' if k < 9 else ' {}:').format(k + 1))
+            output.write('#' * difficulty[k])
+            output.write('\n')
         output.write('\n{}]]></desc>\n'.format(page_url))
         if ban:
             output.write('<sym>trngl_rd_hscc</sym>\n')
