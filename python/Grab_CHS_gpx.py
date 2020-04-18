@@ -60,6 +60,10 @@ with open('skaly.gpx', 'w') as output:
         ban_box = soup.find('span', attrs={'class': 'zakaz tt'})
         ban = ban_box is not None
 
+        # Ziskam hnizdeni
+        nesting_box = soup.find('span', attrs={'class': 'sokol-mix tt'})
+        nesting = nesting_box is not None
+
         # Ziskam pocet cest jednotlivych narocnosti a jejich median
         difficulty_box = soup.find('div', attrs={'class': 'sgraph tt big'})
         difficulty_string = difficulty_box.attrs['title']
@@ -112,6 +116,9 @@ with open('skaly.gpx', 'w') as output:
         if ban:
             output.write('<p style="color: red">')
             output.write('<b>CLIMBING FORBIDDEN!</b></p>\n')
+        elif nesting:
+            output.write('<p style="color: orange">')
+            output.write('<b>CLIMBING RESTRICTED!</b></p>\n')
         if rating != 0:
             output.write('<p><b>Rating: </b>{}</p>\n'.format('*' * rating))
         output.write('<table width="100%">\n')
