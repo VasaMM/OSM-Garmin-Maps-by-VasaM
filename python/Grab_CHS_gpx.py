@@ -110,15 +110,23 @@ with open('skaly.gpx', 'w') as output:
             output.write('<name>{}</name>\n'.format(name))
         output.write('<desc><![CDATA[')
         if ban:
-            output.write('CLIMBING FORBIDDEN!\n')
+            output.write('<p style="color: red">')
+            output.write('<b>CLIMBING FORBIDDEN!</b></p>\n')
         if rating != 0:
-            output.write('Rating: {}\n'.format('*' * rating))
-        output.write('Difficulty (UIAA):\n')
+            output.write('<p><b>Rating: </b>{}</p>\n'.format('*' * rating))
+        output.write('<table width="100%">\n')
+        output.write('<caption style="text-align: left">')
+        output.write('<b>Difficulty (UIAA):</b></caption>\n')
         for k in range(12):
-            output.write(('  {}:' if k < 9 else ' {}:').format(k + 1))
+            output.write('<tr>')
+            output.write('<td width="8%" align="right">{}:</td><td>'.
+                         format(k + 1))
             output.write('#' * difficulty[k])
-            output.write('\n')
-        output.write('\n{}]]></desc>\n'.format(page_url))
+            output.write('</td></tr>\n')
+        output.write('</table>\n')
+        output.write(']]></desc>\n')
+        output.write('<link href="{}">\n'.format(page_url))
+        output.write('</link>\n')
         if ban:
             output.write('<sym>trngl_rd_hscc</sym>\n')
             output.write('<extensions>\n')
