@@ -11,7 +11,7 @@ from osmwriter import OSMWriter
 xml = OSMWriter( "chs.osm.xml" )
 
 # Pocet sklanich oblasti
-rockCount = 17220
+rockCount = 18000
 
 for i in range( 1, rockCount + 1 ):
 

@@ -75,14 +75,17 @@ def crop(o):
 	# FIXME
 	if o.crop or o.area.crop:
 		say('Vytvarim vyrez oblasti', o)
-		# os.chdir( 'osmconvert' )
-		# _run(o, 'osmconvert64-0.8.8p.exe', [
-		# 	'../' + o.area.mapDataName,
-		# 	'-B=../' + o.temp + 'polygon.poly',
-		# 	'--out-pbf',
-		# 	'-o=../' + o.temp + o.area.id + '.osm.pbf'
-		# ])
-		# os.chdir( '..' )
+
+		os.chdir( 'osmconvert' )
+		_run('osmconvert64-0.8.8p.exe \
+			../' + o.area.mapDataName + 
+			' -B=../' + o.temp + 'polygon.poly \
+			--complete-ways --complete-multipolygons --complete-boundaries \
+			--out-pbf \
+			-o=../' + o.temp + o.area.id + '.osm.pbf'
+		, o)
+		os.chdir( '..' )
+
 		o.area.mapDataName = o.temp + o.area.id + '.osm.pbf'
 
 	# mapsplit europe.osm.pbf /tmp/output -p=country.poly

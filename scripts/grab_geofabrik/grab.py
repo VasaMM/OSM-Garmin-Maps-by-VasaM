@@ -109,3 +109,69 @@ with open('states.py', 'w') as out:
 
 	out.write("}\n")
 
+
+
+with open('states.php', 'w') as out:
+	out.write("<?php\n")
+	out.write("\t$states = array(\n")
+
+	for area in states:
+		out.write("\t\t'%s' => array(\n" % (area))
+
+		# number = numbers[area]
+		for code in states[area]:
+			# number += 5
+			out.write("\t\t\t'%s' => '%s',\n" % (code, (states[area][code]['cs'])))
+			# out.write("\t\t\t'%s' => array('cs' => '%s', 'en' => '%s' ),\n" % (code, (states[area][code]['cs']), (states[area][code]['en'])))
+			
+
+		out.write("\t\t),\n")
+
+	out.write("\t);\n")
+	out.write("?>\n")
+
+
+
+# <?php
+# 	$area = array(
+# 		'cr' => array(
+# 			'CZ' => 'Česká republika',
+# 			'CZu' => 'Česká republika unicode',
+# 			'SK' => 'Slovenská republika',
+# 			'PL' => 'Polsko',
+# 			'DE' => 'Německo',
+# 			'AT' => 'Rakousko',
+# 		),
+# 		'europe' => array(
+# 			'DK' => 'Dánsko',
+# 			'HR' => 'Chorvatsko',
+# 			'IT' => 'Itálie',
+# 			'HU' => 'Maďarsko',
+# 			'NL' => 'Nizozemsko',
+# 			'NO' => 'Norsko',
+# 			'RO' => 'Rumunsko',
+# 			'GR' => 'Řecko',
+# 			'SI' => 'Slovinsko',
+# 			'ES' => 'Španělsko',
+# 			'UA' => 'Ukrajina',
+# 			'BG' => 'Bulharsko',
+# 			'CH' => 'Svycarsko',
+# 			'GB' => 'Velka Britanie',
+# 		),
+# 		'asia' => array(
+# 			'IR' => 'Írán',
+# 			'KZ' => 'Kazachstán',
+# 			'KG' => 'Kyrgyzstán',
+# 			'LK' => 'Srí Lanka',
+# 			'NP' => 'Nepál',
+# 			'TJ' => 'Tádžikistán',
+# 			'VN' => 'Vietnam',
+# 		),
+# 		'other' => array(
+# 			'OL' => 'Olomouc',
+# 			'MA' => 'Maroko',
+# 			'NY' => 'New York',
+# 			'Canary_islands' => 'Kanarské ostrovy',
+# 		),
+# 	);
+# ?>
