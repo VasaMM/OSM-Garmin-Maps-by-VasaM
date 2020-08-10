@@ -14,7 +14,7 @@ class Options:
 		self.JAVAMEM  = '-Xmx4g'   # Maximalni velikost RAM, kterou lze pouzit, viz https://stackoverflow.com/questions/14763079/what-are-the-xms-and-xmx-parameters-when-starting-jvm
 		self.MAX_JOBS = 4          # Maximalni pocet vlaken
 
-		self.VERSION = 50		   # Verze generovane mapy
+		self.VERSION = 100		   # Verze generovane mapy
 
 
 
