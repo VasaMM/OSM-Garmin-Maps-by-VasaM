@@ -89,7 +89,28 @@ def _makeAreaObject(id, obj, options, continent = None):
 
 def area(o):
 	if o.area is None:
-		raise ValueError('Nezadana oblast')
+		while True:
+			print('\nVyberte svetadil')
+			for continent in STATES:
+				print(continent)
+
+			continent = input('Vybrano: ')
+			if continent not in STATES:
+				continue
+			else:
+				break
+
+		while True:
+			print('\nVyberte stat')
+			for state in STATES[continent]:
+				print(state, ' (', STATES[continent][state].nameCs, ')', sep='')
+
+			state = input('Vybrano: ')
+			if state not in STATES[continent]:
+				continue
+			else:
+				o.area = state
+				break
 
 	say('Dekoduji oblast ' + o.area, o)
 
@@ -114,30 +135,3 @@ def area(o):
 
 	print(o.area)
 	say('Area id: ' + o.area.id, o)
-
-
-
-
-	# while True:
-	# 	if o.state in STATES:
-	# 		# doplnim id
-	# 		STATES[ o.state ].id = o.state
-
-	# 		# popr. i dataId
-	# 		if STATES[ o.state ].dataId is None:
-	# 			STATES[ o.state ].dataId = o.state
-			
-	# 		# Vratim hodnotu
-	# 		o.state = STATES[ o.state ]
-
-	# 		say('Area id: ' + o.state.id, o)
-	# 		say('Data id: ' + o.state.dataId, o)
-	# 		return
-		
-	# 	else:
-	# 		print('Zadejte zkratku statu, pro ktery chcete vytvorit mapu.')
-	# 		for o.state in STATES:
-	# 			print('  * [' + o.state + '] - ' + STATES[ o.state ].name)
-
-	# 		o.state = input('Vybrana mapa: ')
-
