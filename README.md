@@ -13,7 +13,7 @@ Toto dílo podléhá licenci [Creative Commons Uveďte původ 4.0 Mezinárodní 
 ## Instalace
 <!--[*Jak zjistit, zda počítač používá 32bitovou nebo 64bitovou verzi operačního systému Windows*](https://support.microsoft.com/cs-cz/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64) -->
 
-1) Nainstalujte python 3 (testováno na verzi 3.6.8)
+1) Nainstalujte python 3
     1) [Odsud](https://www.python.org/downloads/) stáhněte instalátor (tlačítko pod nápisem *Download the latest version for Windows*) a spusťte ho. <!-- Doporučuji [Windows x86-64 web-based installer](https://www.python.org/ftp/python/3.6.8/python-3.6.8-amd64-webinstall.exe) pro 64bitový systém nebo [Windows x86 web-based installer](https://www.python.org/ftp/python/3.6.8/python-3.6.8-webinstall.exe) pro 32bitový systém. Přečtěte si další kroky a instalátor spusťte. -->
     2) Zatrhněte **Add Python to PATH** a tařítkem *Install Now*, spusťte instalaci.
     3) Na linuxu použijte `sudo apt install python3 python3-pip -y`

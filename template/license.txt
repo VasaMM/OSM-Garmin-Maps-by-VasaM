@@ -1,5 +1,5 @@
 Autor: VasaM  
-Web: http://www.osm.vasam.cz
+Web: http://www.garmin.vasam.cz
 
 
 Mapovy generator vyuziva Open Street Maps (OSM) sirene pod licenci Creative Commons - uvedte autora-Zachovejte licenci 2.0 (CC-BY-SA). Vice viz (c) Prispevatele OpenStreetMap (https://www.openstreetmap.org/copyright).
@@ -11,5 +11,5 @@ K vytvoreni map jsou pouzity program mkgmap a splitter, ktere pochazi ze stranek
 
 Vrstevnice generuje program phyghtmap (http://katze.tfiu.de/projects/phyghtmap), autorem je Panarchos.
 
-Tento skript i jim vytvorene mapy jsou mym dilem sirene pod licenci Creative Commons, tedy veskere soubory muzete dale sirit a upravovat bez meho svolni pod podminkou, ze vysledek bude siren pod stejnou licenci s odkazem zpet na tyto stranky a autora. POZOR! Toto se netyka programu mkgmap a splitter!
+Tento skript i jim vytvorene mapy jsou mym dilem sirene pod licenci Creative Commons, tedy veskere soubory muzete dale sirit a upravovat bez meho svolni pod podminkou, ze vysledek bude obsahovat odkaz zpet na tyto stranky a autora.
 --------------------------------------------------
