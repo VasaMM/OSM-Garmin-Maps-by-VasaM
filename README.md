@@ -20,21 +20,21 @@ Toto dílo podléhá licenci [Creative Commons Uveďte původ 4.0 Mezinárodní 
 
 2) Nainstalujte javu verze 8
 	1) [Zde](https://www.java.com/en/download/manual.jsp) stáhnete instalátor pro windows. Pokud máte 64bitový systém, doporučuji *Windows Offline (64-bit)*. Můžete použít výchozí nastavení instalace.
-	2) Pro linux použijte `apt install default-jre -y`
+	2) Pro linux použijte `sudo apt install default-jre -y`
 
 <!-- 3) Spusťtě konzoli (na windows `Win + R`, napsat `cmd`, *OK*). Nainstalujte python moduly `pip install --user matplotlib==2.2.4 cycler==0.10.0 kiwisolver==1.1.0 numpy==1.16.3 pyparsing==2.4.0 python-dateutil==2.8.0 pytz==2019.1 six==1.12.0 beautifulsoup4==4.7.1 bs4==0.0.1 soupsieve==1.9.1 lxml` -->
 
 3) Nainstalujte phyghtmap
 	1) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*. Doporučuji nejnovější verzi *source distribution*. Např. v květnu 2019 to je -*phyghtmap_2.21.orig.tar.gz*. **Pozor**, verze 2.21 obsahuje ve windows chybu, vytvořil jsem opravenou [kopii](http://www.garmin.vasam.cz/downloads/phyghtmap-2.21_fixed.zip).
 	2) Archiv rozbalte a ve složce se souborem *setup.py* spusťte konzoli (na windows např. pomocí zapsání příkazu `cmd` do adresního řádku průzkumníku).
-	3) Příkazem `pip3 install matplotlib==2.2.4 bs4` nainstalujte potřebné knihovny (na linuxu může být vyžadován přepínač `--user` nebo `sudo`). Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
+	3) Příkazem `pip3 install matplotlib==2.2.4 bs4 lxml` nainstalujte potřebné knihovny (na linuxu může být vyžadován přepínač `--user` nebo `sudo`). Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
 	4) Příkazem `python setup.py install` nainstalujte *phyghtmap* (na linuxu může být vyžadován přepínač `--user` nebo `sudo`).
 	5) Ověřte si úspěšnost instalace příkazem `phyghtmap --version`. Mělo by se vám zobrazit `phyghtmap 2.21`. Pokud vše funguje, můžete rozbalený archiv smazat.
 
 4) Nainstalujte tento skript *gmapmaker*
 	1) Uložte si obsah celého repozitáže (vpravo nahoře: *Code* - *Download ZIP*).
 	2) Archiv rozbalte v místě, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte. Na Windows 10 může být problém s antivirem, viz [zde](https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM/issues/2#issuecomment-532711693).
-	3) Příkazem `pip3 install osmium pyclipper geojson` nainstalujte potřebné knihovny (na linuxu může být vyžadován přepínač `--user` nebo `sudo`).
+	3) Příkazem `pip3 install osmium==2.15.4 pyclipper geojson` nainstalujte potřebné knihovny (na linuxu může být vyžadován přepínač `--user` nebo `sudo`).
 	4) Ověřte si funkčnost skriptu příkazem `python gmapmaker --version`.
 
 5) Proveďte inicializaci skriptu pomocí `python prepare.py`. Přeskočením odpovědi (klávesa *enter*) se použije výchozí nastavení. Tento skript automaticky stáhne potřebné soubory a programy (cca 1,5 GB). Případná aktualizace je možná pomocí `python update.py`.
