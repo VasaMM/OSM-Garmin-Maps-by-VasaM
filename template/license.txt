@@ -1,5 +1,6 @@
 Autor: VasaM  
 Web: http://www.garmin.vasam.cz
+Licence: Creative Commons Uveďte původ 4.0 Mezinárodní License (http://creativecommons.org/licenses/by/4.0/)
 
 
 Mapovy generator vyuziva Open Street Maps (OSM) sirene pod licenci Creative Commons - uvedte autora-Zachovejte licenci 2.0 (CC-BY-SA). Vice viz (c) Prispevatele OpenStreetMap (https://www.openstreetmap.org/copyright).
