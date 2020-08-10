@@ -25,12 +25,13 @@ def parse(o):
 	argParser = argparse.ArgumentParser(
 		prog = 'gmapmaker',
 		formatter_class = argparse.RawTextHelpFormatter,
-		description = textwrap.dedent('''\
+		description = textwrap.dedent('''
 CZ: Skript pro generovani OSM map pro navigace Garmin
 EN: Script for generating OSM maps for Garmin navigations
 
 Author: VasaM
 License: CC BY 4.0
+Version: ''' + "{:.2f}".format(o.VERSION / 100) + '''
 Date: 10. 08. 2020
 Web: https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM''')
 		)
@@ -108,7 +109,13 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 		action='store_true',
 		help='Vytvori logovaci soubor makeMap.log'
 	)
-	
+	argParser.add_argument(
+		'--version', '-v',
+		action='version',
+		version='%(prog)s ' + "{:.2f}".format(o.VERSION / 100),
+		help='Vytvori logovaci soubor makeMap.log'
+	)
+
 
 	args = argParser.parse_args()
 
