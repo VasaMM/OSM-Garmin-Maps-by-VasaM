@@ -138,6 +138,6 @@ def mapData(o):
 
 # Stahnu polygon
 def polygon(o):
-	if hasattr(o, 'continent') and not os.path.isfile(o.polygons + o.area.id + '.poly'):
-			say('Downloading polygon', o)
-			download(o.area.url[0:-15] + '.poly', o.polygons + o.area.id + '.poly')
+	if hasattr(o.area, 'continent') and not os.path.isfile(o.polygons + o.area.id + '.poly'):
+		say('Downloading polygon', o)
+		download(o.area.url[0:-15] + '.poly', o.polygons + o.area.id + '.poly')
