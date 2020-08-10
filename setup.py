@@ -16,7 +16,7 @@ try:
 				'gmapmaker = gmapmaker:main',
 			],
 		},
-		install_requires=['osmium', 'matplotlib==2.2.4'],   #'click>=6'
+		install_requires=['osmium', 'matplotlib==2.2.4', 'pyclipper', 'geojson'],   #'click>=6'
 	)
 finally:
 	print('Setup done')

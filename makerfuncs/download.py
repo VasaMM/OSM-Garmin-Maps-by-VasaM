@@ -107,12 +107,12 @@ def mapData(o):
 			raise ValueError('Map file does NOT exist!')
 		return
 
-	if o.downloadMap is 'skip':
+	if o.downloadMap == 'skip':
 		say('User set "--download skip" - skip downloading', o)
 		return
 
 
-	if o.downloadMap is 'auto':
+	if o.downloadMap == 'auto':
 		if o.area.timestamp is None:
 			o.downloaded = True
 		else:
@@ -125,7 +125,7 @@ def mapData(o):
 	
 
 
-	if o.downloadMap is 'force' or o.downloaded is True:
+	if o.downloadMap == 'force' or o.downloaded is True:
 		try:
 			say('Downloading map data', o)
 			download(o.area.url, o.area.mapDataName)
