@@ -25,19 +25,25 @@ Toto dílo podléhá licenci [Creative Commons Uveďte původ 4.0 Mezinárodní 
 <!-- 3) Spusťtě konzoli (na windows `Win + R`, napsat `cmd`, *OK*). Nainstalujte python moduly `pip install --user matplotlib==2.2.4 cycler==0.10.0 kiwisolver==1.1.0 numpy==1.16.3 pyparsing==2.4.0 python-dateutil==2.8.0 pytz==2019.1 six==1.12.0 beautifulsoup4==4.7.1 bs4==0.0.1 soupsieve==1.9.1 lxml` -->
 
 3) Nainstalujte phyghtmap
-	1) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*. Doporučuji nejnovější verzi *source distribution*. Např. v květnu 2019 to je [phyghtmap_2.21.orig.tar.gz](phyghtmap_2.21.orig.tar.gz). **Pozor**, verze 2.21 obsahuje ve windows chybu, vytvořil jsem opravenou [kopii](http://www.garmin.vasam.cz/downloads/phyghtmap-2.21_fixed.zip).
+	1) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*. Doporučuji nejnovější verzi *source distribution*. Např. v květnu 2019 to je -*phyghtmap_2.21.orig.tar.gz*. **Pozor**, verze 2.21 obsahuje ve windows chybu, vytvořil jsem opravenou [kopii](http://www.garmin.vasam.cz/downloads/phyghtmap-2.21_fixed.zip).
 	2) Archiv rozbalte a ve složce se souborem *setup.py* spusťte konzoli (na windows např. pomocí zapsání příkazu `cmd` do adresního řádku průzkumníku).
-	3) Příkazem `python setup.py install` nainstalujte *phyghtmap*. Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
-	4) Ověřte si úspěšnost instalace příkazem `phyghtmap --version`. Mělo by se vám zobrazit `phyghtmap 2.21`. Pokud vše funguje, můžete rozbalený archiv smazat.
+	3) Příkazem `pip3 install matplotlib==2.2.4 bs4` nainstalujte potřebné knihovny (na linuxu může být vyžadován přepínač `--user` nebo `sudo`). Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
+	4) Příkazem `python setup.py install` nainstalujte *phyghtmap* (na linuxu může být vyžadován přepínač `--user` nebo `sudo`).
+	5) Ověřte si úspěšnost instalace příkazem `phyghtmap --version`. Mělo by se vám zobrazit `phyghtmap 2.21`. Pokud vše funguje, můžete rozbalený archiv smazat.
 
-6) Uložte si obsah celého repozitáže (vpravo nahoře: *Code* - *Download ZIP*).
-7) Rozbalte ho do míst, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte. Na Windows 10 může být problém s antivirem, viz [zde](https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM/issues/2#issuecomment-532711693)
-8) Ze stránek [http://www.mkgmap.org.uk](http://www.mkgmap.org.uk/download/mkgmap.html) stáhněte soubory *bounds.zip* a *sea.zip*. Tyto soubory rozbalte do složek *bounds* a *sea*, bez dalších podsložek!
-10) V souboru *makeMap.py* na prvních řádcích lze definovat maximální rozsah paměti RAM, povolený počet vláken procesoru a verzi mapy.
+4) Nainstalujte tento skript *gmapmaker*
+	1) Uložte si obsah celého repozitáže (vpravo nahoře: *Code* - *Download ZIP*).
+	2) Archiv rozbalte v místě, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte. Na Windows 10 může být problém s antivirem, viz [zde](https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM/issues/2#issuecomment-532711693).
+	3) Příkazem `pip3 install osmium pyclipper geojson` nainstalujte potřebné knihovny (na linuxu může být vyžadován přepínač `--user` nebo `sudo`).
+	4) Ověřte si funkčnost skriptu příkazem `python gmapmaker --version`.
+
+5) Proveďte inicializaci skriptu pomocí `python prepare.py`. Přeskočením odpovědi (klávesa *enter*) se použije výchozí nastavení. Tento skript automaticky stáhne potřebné soubory a programy (cca 1,5 GB). Případná aktualizace je možná pomocí `python update.py`.
+
+6) V souboru *makeMap.py* na prvních řádcích lze definovat maximální rozsah paměti RAM, povolený počet vláken procesoru a verzi mapy. (**FIXME** v budoucnu bude přesunuto do skriptu *prepare*).
 
 
 ## Použití
-Je-li skript spuštěn bez parametrů `python ./makeMap.py` bude se postupně uživatele dotazovat na jednotlivé vlastnosti generované mapy a informovat ho o průběhu. Pro bezobslužnou instalaci lze vše předem definovat pomocí následujících parametrů:
+Je-li skript spuštěn bez parametrů `python ./makeMap.py` vyžádá si od uživatele jméno generované oblasti. Pro bezobslužnou instalaci ho lze (a i další vlastnosti) předem definovat pomocí následujících parametrů:
 * `-a <area>`, `--area <area>` definuje stát (oblast), pro který je mapa generována. Viz [seznam států](https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM/blob/dev/makerfuncs/states.py).
 * `-c <codePage>`, `--code-page <codePage>` kódování mapy (*unicode*, *ascii*, *1250*, *1252*, *latin2*).
 * `-d <opt>`, `--download <opt>` princip stahování mapových dat:
@@ -54,6 +60,7 @@ Je-li skript spuštěn bez parametrů `python ./makeMap.py` bude se postupně u�
 * `-q`, `--quiet` žádné výpisy na stdout.
 * `-l`, `--logging` vytvoří logovací soubor *makeMap.log*.
 * `-h`, `--help` zobrazí nápovědu.
+
 
 ## Seznam států
 Státy jsou definovány ve skriptu *python/areas.py*. **Dodělat návod na přidání vlastního státu!**
