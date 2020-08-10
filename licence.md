@@ -1,6 +1,8 @@
 # Licence
 **Autor:** VasaM  
-**Web:** [http://www.garmin.vasam.cz](http://www.garmin.vasam.cz)  
+**Web:** [http://www.garmin.vasam.cz](http://www.garmin.vasam.cz)
+[![Licence Creative Commons](https://i.creativecommons.org/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)  
+Toto dílo podléhá licenci [Creative Commons Uveďte původ 4.0 Mezinárodní License](http://creativecommons.org/licenses/by/4.0/).
 
 
 Mapový generátor využívá *Open Street Maps (OSM)* šířené pod licencí Creative Commons - uveďte autora-Zachovejte licenci 2.0 (CC-BY-SA). Více viz [© Přispěvatelé OpenStreetMap](https://www.openstreetmap.org/copyright).
