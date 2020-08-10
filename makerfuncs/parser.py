@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 
 from makerfuncs.Area import Area
 from makerfuncs.states import STATES
-from user.myAreas import USER_AREAS
+from userAreas.myAreas import USER_AREAS
 
 
 

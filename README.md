@@ -63,7 +63,7 @@ Je-li skript spuštěn bez parametrů `python ./makeMap.py` vyžádá si od uži
 
 
 ## Seznam států
-Státy jsou definovány ve skriptu *python/areas.py*. **Dodělat návod na přidání vlastního státu!**
+Státy jsou definovány ve skriptu *python/areas.py*. Vlastní oblasti lze definovat v souboru *userAreas/myAreas.py*. **TODO** dopsat podrobnosti.
 
 
 ### Hotové mapy

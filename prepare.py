@@ -60,18 +60,18 @@ def prepare():
 		print("Directory userAreas already exists")
 
 	with open('userAreas/myAreas.py', 'w') as file:
-		file.write('from makerfuncs.Area import Area')
-		file.write('from makerfuncs.states import STATES')
-		file.write('')
-		file.write('USER_AREAS = {')
-		file.write('	\'OL\': Area(')
-		file.write('		parent = \'CZ\',')
-		file.write('		nameCs = \'Olomouc\',')
-		file.write('		number = 8800,')
-		file.write('		pois   = [\'./pois/chs.osm.xml\',],')
-		file.write('		crop   = True')
-		file.write('	),')
-		file.write('}')
+		file.write('from makerfuncs.Area import Area\n')
+		file.write('from makerfuncs.states import STATES\n')
+		file.write('\n')
+		file.write('USER_AREAS = {\n')
+		file.write('	\'OL\': Area(\n')
+		file.write('		parent = \'CZ\',\n')
+		file.write('		nameCs = \'Olomouc\',\n')
+		file.write('		number = 8800,\n')
+		file.write('		pois   = [\'./pois/chs.osm.xml\',],\n')
+		file.write('		crop   = True\n')
+		file.write('	),\n')
+		file.write('}\n')
 
 
 if __name__ == '__main__':
