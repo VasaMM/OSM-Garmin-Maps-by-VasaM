@@ -9,7 +9,7 @@ def update():
 	splitter = config.get('splitter')
 	if versions['splitter'] > splitter:
 		print('Download splitter version', versions['splitter'])
-		d.download('http://www.mkgmap.org.uk/download/splitter-r' + str(versions['splitter']) + '.zip', './splitter.zip')
+		d.download('https://www.mkgmap.org.uk/download/splitter-r' + str(versions['splitter']) + '.zip', './splitter.zip')
 
 		print('Unzip')
 		with zipfile.ZipFile('./splitter.zip', 'r') as zipRef:
@@ -23,7 +23,7 @@ def update():
 	mkgmap = config.get('mkgmap')
 	if versions['mkgmap'] > mkgmap:
 		print('Download mkgmap version', versions['mkgmap'])
-		d.download('http://www.mkgmap.org.uk/download/mkgmap-r' + str(versions['mkgmap']) + '.zip', './mkgmap.zip')
+		d.download('https://www.mkgmap.org.uk/download/mkgmap-r' + str(versions['mkgmap']) + '.zip', './mkgmap.zip')
 
 		print('Unzip')
 		with zipfile.ZipFile('./mkgmap.zip', 'r') as zipRef:
