@@ -59,10 +59,10 @@ Je-li skript spuštěn bez parametrů `python ./makeMap.py` vyžádá si od uži
 * `--maximum-data-age <age>` určuje maximální stáří mapovyýh dat při automatickém stahování. Hodnota ve tvaru [0-9]+[hdm], kde *h* značí hodinu, *d* značí den (24 hodin) a m značí měsíc (30 dní) (**výchozí hodnota 1d**).
 * `--map-number <number>` vynutí konkretní map ID.
 * `--variant <variant>` vynutí konkretní variantu mapy (hodnota 1 - 5). Varianta mapy ovlivňuje její ID. Jinka je generována automaticky.
-* `-e <km>`, `--extend <km>` zvětší polygon o zadaný počet kilometrů (**POZOR, zatím nefunguje korektně**).
+* `-e <km>`, `--extend <km>` zvětší polygon o zadaný počet kilometrů (**POZOR, zatím nefunguje**).
 * `--sufix <sufix>` přípona za jménem mapy.
 * `--no-split` zakáže dělení mapy na podsoubory - vhodné jen pro velmi malé oblasti.
-* `-r`, `--crop` ořízne mapový soubor podle polygonu.
+* `-r`, `--crop` ořízne mapový soubor podle polygonu (**POZOR, zatím nefunguje**).
 * `-q`, `--quiet` žádné výpisy na stdout.
 * `-l`, `--logging` vytvoří logovací soubor *makeMap.log*.
 * `-h`, `--help` zobrazí nápovědu.
@@ -75,7 +75,7 @@ Státy jsou definovány ve skriptu *python/areas.py*. Vlastní oblasti lze defin
 * `number` garmin ID mapy. Čtyřmístné číslo, mělo by být unikátní.
 * `pois` pole se jmény souborů obsahující dodatečné POI, které budou vloženy do mapy. Tyto soubory se musí nacházet ve složce *pois*.
 * `parent` rodičovská mapa, vhodné pro vytváření podoblastí z různých států (budou automaticky stažena/použita mapová data rodiče)
-* `crop` výchozí `False`, `True` vynutí oříznutí dat podle polygonu.
+* `crop` výchozí `False`, `True` vynutí oříznutí dat podle polygonu (**POZOR, zatím nefunguje**).
 
 Dále je nutné připravit polygon a to buď ve formátu *.poly* nebo *.geojson* a umístit ho pod stejným názvem do složky s polygony. Mapová data je pak nutné buď také stáhnout a nachystat do patřičné složky nebo definovat rodiče (viz výše). 
 
