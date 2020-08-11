@@ -17,8 +17,8 @@ test.py
 
 *__pycache__*
 
-mkgmap-r4432/*
-splitter-r595/*
+mkgmap-r*/*
+splitter-r*/*
 userAreas/*
 
 *.secret
