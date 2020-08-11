@@ -5,7 +5,7 @@ class State:
 		self.nameEn = nameEn         # Full name of map
 		self.number = number       # Map number id
 		self.pois   = pois         # List of files with pois
-		self.crop   = False
+		self.crop   = crop
 
 	def __str__(self):
 		id = 'None'
@@ -44,13 +44,13 @@ class State:
 
 
 class Area(State):
-	def __init__(self, nameCs, number, nameEn = None, url = None, pois = [], parent = None, crop = False):
+	def __init__(self, nameCs, number, nameEn = None, pois = [], parent = None, crop = False):
 		self.parent = parent
 
 		if nameEn is None:
 			nameEn = nameCs
 
-		super().__init__(nameCs, nameEn, number, url, pois, crop)
+		super().__init__(nameCs, nameEn, number, None, pois, crop)
 
 
 

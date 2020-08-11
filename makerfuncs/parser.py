@@ -133,5 +133,4 @@ def area(o):
 	if o.variant is not None:
 		o.area.number += int(o.variant)
 
-	print(o.area)
 	say('Area id: ' + o.area.id, o)

@@ -113,7 +113,7 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 		'--version', '-v',
 		action='version',
 		version='%(prog)s ' + "{:.2f}".format(o.VERSION / 100),
-		help='Vytvori logovaci soubor makeMap.log'
+		help='Zobrazí aktuální verzi'
 	)
 
 
