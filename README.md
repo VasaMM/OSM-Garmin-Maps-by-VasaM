@@ -11,10 +11,10 @@ Toto dílo podléhá licenci [Creative Commons Uveďte původ 4.0 Mezinárodní 
 <!-- * Program [osmium](https://osmcode.org/osmium-tool/) -->
 
 ## Instalace
-<!--[*Jak zjistit, zda počítač používá 32bitovou nebo 64bitovou verzi operačního systému Windows*](https://support.microsoft.com/cs-cz/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64) -->
+Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou nějké probémy, podívejte se do [FAQ pro instalaci](#todo)
 
 1) Nainstalujte python 3
-    1) [Odsud](https://www.python.org/downloads/) stáhněte instalátor (tlačítko pod nápisem *Download the latest version for Windows*) a spusťte ho. <!-- Doporučuji [Windows x86-64 web-based installer](https://www.python.org/ftp/python/3.6.8/python-3.6.8-amd64-webinstall.exe) pro 64bitový systém nebo [Windows x86 web-based installer](https://www.python.org/ftp/python/3.6.8/python-3.6.8-webinstall.exe) pro 32bitový systém. Přečtěte si další kroky a instalátor spusťte. -->
+    1) [Odsud](https://www.python.org/downloads/) stáhněte instalátor (tlačítko pod nápisem *Download the latest version for Windows*) a spusťte ho.
     2) Zatrhněte **Add Python to PATH** a tařítkem *Install Now*, spusťte instalaci.
     3) Na linuxu použijte `sudo apt install python3 python3-pip -y`
 
@@ -22,24 +22,30 @@ Toto dílo podléhá licenci [Creative Commons Uveďte původ 4.0 Mezinárodní 
 	1) [Zde](https://www.java.com/en/download/manual.jsp) stáhnete instalátor pro windows. Pokud máte 64bitový systém, doporučuji *Windows Offline (64-bit)*. Můžete použít výchozí nastavení instalace.
 	2) Pro linux použijte `sudo apt install default-jre -y`
 
-<!-- 3) Spusťtě konzoli (na windows `Win + R`, napsat `cmd`, *OK*). Nainstalujte python moduly `pip install --user matplotlib==2.2.4 cycler==0.10.0 kiwisolver==1.1.0 numpy==1.16.3 pyparsing==2.4.0 python-dateutil==2.8.0 pytz==2019.1 six==1.12.0 beautifulsoup4==4.7.1 bs4==0.0.1 soupsieve==1.9.1 lxml` -->
-
 3) Nainstalujte phyghtmap
 	1) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*. Doporučuji nejnovější verzi *source distribution*. Např. v květnu 2019 to je -*phyghtmap_2.21.orig.tar.gz*. **Pozor**, verze 2.21 obsahuje ve windows chybu, vytvořil jsem opravenou [kopii](http://www.garmin.vasam.cz/downloads/phyghtmap-2.21_fixed.zip).
-	2) Archiv rozbalte a ve složce se souborem *setup.py* spusťte konzoli (na windows např. pomocí zapsání příkazu `cmd` do adresního řádku průzkumníku).
-	3) Příkazem `pip3 install matplotlib==2.2.4 bs4 lxml` nainstalujte potřebné knihovny (na linuxu může být vyžadován přepínač `--user` nebo `sudo`). Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
-	4) Příkazem `python setup.py install` nainstalujte *phyghtmap* (na linuxu může být vyžadován přepínač `--user` nebo `sudo`).
+	2) Archiv rozbalte a ve složce se souborem *setup.py* spusťte konzoli.
+	3) Příkazem `pip3 install matplotlib==2.2.5 bs4 lxml` nainstalujte potřebné knihovny.
+	4) Příkazem `python setup.py install` nainstalujte *phyghtmap*.
 	5) Ověřte si úspěšnost instalace příkazem `phyghtmap --version`. Mělo by se vám zobrazit `phyghtmap 2.21`. Pokud vše funguje, můžete rozbalený archiv smazat.
 
 4) Nainstalujte tento skript *gmapmaker*
 	1) Uložte si obsah celého repozitáže (vpravo nahoře: *Code* - *Download ZIP*).
-	2) Archiv rozbalte v místě, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte. Na Windows 10 může být problém s antivirem, viz [zde](https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM/issues/2#issuecomment-532711693).
-	3) Příkazem `pip3 install osmium==2.15.4 pyclipper geojson` nainstalujte potřebné knihovny (na linuxu může být vyžadován přepínač `--user` nebo `sudo`).
+	2) Archiv rozbalte v místě, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte.
+	3) Příkazem `pip3 install osmium==2.15.4 pyclipper geojson` nainstalujte potřebné knihovny.
 	4) Ověřte si funkčnost skriptu příkazem `python gmapmaker --version`.
 
 5) Proveďte inicializaci skriptu pomocí `python prepare.py`. Přeskočením odpovědi (klávesa *enter*) se použije výchozí nastavení. Tento skript automaticky stáhne potřebné soubory a programy (cca 1,5 GB). Případná aktualizace je možná pomocí `python update.py`.
 
 6) V souboru *makeMap.py* na prvních řádcích lze definovat maximální rozsah paměti RAM, povolený počet vláken procesoru a verzi mapy. (**FIXME** v budoucnu bude přesunuto do skriptu *prepare*).
+
+### FAQ pro instalaci
+* [*Jak zjistit, zda počítač používá 32bitovou nebo 64bitovou verzi operačního systému Windows*](https://support.microsoft.com/cs-cz/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64)
+* Konzoli na windows spustíte následovně: `Win + R`, napsat `cmd`, *OK*. Druhou možností je napsat `cmd` přímo do adresního řádku průzkuníku.
+* Na linuxu může být pro nástroj pip3 (popř. i pro python setup.py) vyžadován přepínač `--user` (`pip3 install --user name1 name2`) nebo `sudo` (`sudo pip3 install name1 name2`).
+* Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
+* Instalace knihovny *matplotlib* může způsobovat problémy. V tom případě si stáhněte upravený instalátor ze [těchto stránek](https://www.lfd.uci.edu/~gohlke/pythonlibs/#matplotlib). Verzi vyberte podle vašeho systému (32bit vs 64bit) a verze pythou (pro python 3.8.5 je to cp38). Nezapomeňte, že potřebujete starší verzi matplotlib a to 2.2.5. Ve složce se staženým soubor spusťe následující příkaz `pip3 install <jméno souboru>`.
+* Na Windows 10 může být problém s antivirem, viz [zde](https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM/issues/2#issuecomment-532711693).
 
 
 ## Použití
@@ -63,7 +69,15 @@ Je-li skript spuštěn bez parametrů `python ./makeMap.py` vyžádá si od uži
 
 
 ## Seznam států
-Státy jsou definovány ve skriptu *python/areas.py*. Vlastní oblasti lze definovat v souboru *userAreas/myAreas.py*. **TODO** dopsat podrobnosti.
+Státy jsou definovány ve skriptu *python/areas.py*. Vlastní oblasti lze definovat v souboru *userAreas/myAreas.py* (ten je vytvořen až skriptem *prepare*, tudíž by měl být imunní vůči přepsání při aktualizaci i opětovnému spuštění zmíněného skriptu). Doporučuji vycházet z předpřipravené oblasti *OL* definující okres Olomouc. Pro každou novou oblast je nutné zadefinovat nový objekt třídy *Area* (definována v *makerfuncs/Area.py*). K mapě lze definovat následující vlastnosti:
+* `nameCs` jméno mapy česky
+* `nameEn` jméno mapy anglicky (je-li prázdné, použije se `nameCs`)
+* `number` garmin ID mapy. Čtyřmístné číslo, mělo by být unikátní.
+* `pois` pole se jmény souborů obsahující dodatečné POI, které budou vloženy do mapy. Tyto soubory se musí nacházet ve složce *pois*.
+* `parent` rodičovská mapa, vhodné pro vytváření podoblastí z různých států (budou automaticky stažena/použita mapová data rodiče)
+* `crop` výchozí `False`, `True` vynutí oříznutí dat podle polygonu.
+
+Dále je nutné připravit polygon a to buď ve formátu *.poly* nebo *.geojson* a umístit ho pod stejným názvem do složky s polygony. Mapová data je pak nutné buď také stáhnout a nachystat do patřičné složky nebo definovat rodiče (viz výše). 
 
 
 ### Hotové mapy
