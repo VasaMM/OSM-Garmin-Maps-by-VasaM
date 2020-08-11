@@ -1,10 +1,10 @@
 # Places
 place=city | population >= 300000 [0x0100 level 5]
 place=town | population >= 3000 [0x0600 level 3]
-place=suburb [0x0c00 level 2]
-place=village | population >= 200 [0x0b00 level 2]
-place=hamlet | (population < 200 & population >= 100) [0x0b02 level 2]
-place=isolated_dwelling | population < 100 [0x0b03 level 1]
+place=village [0x0900 level 2]
+place=suburb  [0x0a00 level 2]
+place=hamlet  [0x0b00 level 2]
+place=isolated_dwelling [0x0c00 level 1]
 #place=* [0x0d00 level 4]
 
 

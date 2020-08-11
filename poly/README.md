@@ -1,1 +1,0 @@
-Složky s jednotlivými polygony. Polygony zemí jsou automaticky staženy z [http://download.geofabrik.de](http://download.geofabrik.de). Lze vytvořit i vlastní polygn, v tom případě je nutné patřičně upravit skript a manuálně stáhnout i mapová data a uložit je do složky *pbf*.

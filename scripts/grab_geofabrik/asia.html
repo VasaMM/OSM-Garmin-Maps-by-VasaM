@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="UTF-8">
+<title>Geofabrik Download Server</title>
+    <script type="text/javascript" src="//static.geofabrik.de/ol212/OpenLayers.js"></script>
+    <script type="text/javascript">
+        var map, layer, countryLayer;
+        function init()
+        {
+            map = new OpenLayers.Map('map');
+            layer = new OpenLayers.Layer.OSM("",
+                                             ["https://a.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+                                              "https://b.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+                                              "https://c.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+					     ],
+                                             { attribution: "", tileOptions : {crossOriginKeyword: null} }
+                                            ); // attribution in page footer
+            map.addLayer(layer);
+            layer = new OpenLayers.Layer.Vector("KML", {
+            strategies: [new OpenLayers.Strategy.Fixed()],
+            protocol: new OpenLayers.Protocol.HTTP({
+                url: "asia.kml",
+                format: new OpenLayers.Format.KML({
+                    maxDepth: 2
+                })
+            }),
+            styleMap: new OpenLayers.StyleMap({
+            "default": new OpenLayers.Style({
+                graphicName: "cross",
+                pointRadius: 6,
+                fillOpacity: 0.50,
+                fillColor: "#ffcc66",
+                strokeColor: "#ff9933",
+                strokeWidth: 2
+            })
+            })
+            });
+            layer.events.register("loadend", this, function() { map.zoomToExtent(layer.getDataExtent()); });
+            map.addLayer(layer);
+        }
+        function loadkml(kmlname)
+        {
+            if (countryLayer) map.removeLayer(countryLayer);
+            countryLayer = 
+                new OpenLayers.Layer.Vector("KML", {
+                strategies: [new OpenLayers.Strategy.Fixed()],
+                protocol: new OpenLayers.Protocol.HTTP({
+                    url: kmlname,
+                    format: new OpenLayers.Format.KML({
+                        extractStyles: true,
+                        extractAttributes: true,
+                        maxDepth: 2
+                    })
+                })
+                });
+            map.addLayer(countryLayer);
+        }
+    </script>
+<link rel="stylesheet" type="text/css" href="/download.css">
+</head><body onload='init();'><div id="download-top">
+   <div id="download-top-right">
+      <img alt="header image" src="/img/geofabrik-downloads.png" height="20">
+   </div>
+</div>
+<div id="download-titlebar">
+<h1>Download OpenStreetMap data for this region:</h1>
+</div>
+<div class="download-main">
+<div class="leftColumn"><h2>Asia</h2>
+<p><a href="../index.html">[one level up]</a></p>    <p class="isPublicInfo">
+        The OpenStreetMap data files provided on this server do <b>not</b> contain the user names, user
+        IDs and changeset IDs of the OSM objects because these fields are assumed to contain personal
+        information about the OpenStreetMap contributors and are therefore subject to data protection regulations
+        in the European Union. 
+        <br>
+        <a href="https://osm-internal.download.geofabrik.de/asia.html">Extracts with full metadata</a> are available to OpenStreetMap
+        contributors only.
+    </p>
+<h3>Commonly Used Formats</h3>
+<ul><li><a href="asia-latest.osm.pbf">asia-latest.osm.pbf,</a> suitable for
+           Osmium, Osmosis, imposm, osm2pgsql, mkgmap, and others. This file was last 
+           modified 11 hours ago and contains all OSM data up to 2020-02-03T21:59:02Z. File size: 7.7&nbsp;GB; MD5 sum: <a href="asia-latest.osm.pbf.md5">5eecf6185d2ec3a734574d0976f3149e</a>. </li>
+<li><s>asia-latest-free.shp.zip</s> is not available for this region; try one of the sub-regions.</li></ul><h3>Other Formats and Auxiliary Files</h3>
+<ul><li><a href="asia-latest.osm.bz2">asia-latest.osm.bz2,</a> yields
+                OSM XML when decompressed; use for programs that cannot process the .pbf format.
+                This file was last modified 41 days ago. File size: 14.1&nbsp;GB; MD5 sum: <a href="asia-latest.osm.bz2.md5">6dec8d7f4bd23cdb74e403b0b616d146</a>. </li>
+<li><s>asia-internal.osh.pbf</s> The history file
+                contains personal data and is available on the
+                <a href="https://osm-internal.download.geofabrik.de/asia.html">internal server</a>
+                only. See notice above for further information.
+                </li><li><a href="asia.poly">.poly file</a> that describes the extent
+               of this region.</li><li><a href="asia-updates">.osc.gz files</a>
+                that contain all changes in this region, suitable e.g. for
+                Osmosis updates</li><li><a href="#" onclick="OpenLayers.Util.getElement('details').style.display='inline';">raw directory index</a> allowing you to
+            see and download older files</li></ul><div id="details" style="display:none"><table id="subregions"><tr><th class="subregion">file</th><th>date</th><th>size</th></tr><tr><td class="subregion"><a href="asia-140101.osm.pbf">asia-140101.osm.pbf</a></td><td class="subright">2018-05-07 12:13</td><td class="subright">2495297718</td></tr>
+<tr><td class="subregion"><a href="asia-140101.osm.pbf.md5">asia-140101.osm.pbf.md5</a></td><td class="subright">2018-05-07 12:13</td><td class="subright">53</td></tr>
+<tr><td class="subregion"><a href="asia-150101.osm.pbf">asia-150101.osm.pbf</a></td><td class="subright">2018-05-07 12:37</td><td class="subright">3028056761</td></tr>
+<tr><td class="subregion"><a href="asia-150101.osm.pbf.md5">asia-150101.osm.pbf.md5</a></td><td class="subright">2018-05-07 12:37</td><td class="subright">53</td></tr>
+<tr><td class="subregion"><a href="asia-160101.osm.pbf">asia-160101.osm.pbf</a></td><td class="subright">2018-05-07 09:26</td><td class="subright">3797036119</td></tr>
+<tr><td class="subregion"><a href="asia-160101.osm.pbf.md5">asia-160101.osm.pbf.md5</a></td><td class="subright">2018-05-07 09:26</td><td class="subright">53</td></tr>
+<tr><td class="subregion"><a href="asia-170101.osm.pbf">asia-170101.osm.pbf</a></td><td class="subright">2018-05-07 13:55</td><td class="subright">4521897790</td></tr>
+<tr><td class="subregion"><a href="asia-170101.osm.pbf.md5">asia-170101.osm.pbf.md5</a></td><td class="subright">2018-05-07 13:55</td><td class="subright">53</td></tr>
+<tr><td class="subregion"><a href="asia-180101.osm.pbf">asia-180101.osm.pbf</a></td><td class="subright">2018-05-07 13:18</td><td class="subright">5589323538</td></tr>
+<tr><td class="subregion"><a href="asia-180101.osm.pbf.md5">asia-180101.osm.pbf.md5</a></td><td class="subright">2018-05-07 13:19</td><td class="subright">53</td></tr>
+<tr><td class="subregion"><a href="asia-190101.osm.pbf">asia-190101.osm.pbf</a></td><td class="subright">2019-01-01 23:03</td><td class="subright">7014816966</td></tr>
+<tr><td class="subregion"><a href="asia-190101.osm.pbf.md5">asia-190101.osm.pbf.md5</a></td><td class="subright">2019-01-01 23:28</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-191101.osm.pbf">asia-191101.osm.pbf</a></td><td class="subright">2019-11-01 23:27</td><td class="subright">7928034093</td></tr>
+<tr><td class="subregion"><a href="asia-191101.osm.pbf.md5">asia-191101.osm.pbf.md5</a></td><td class="subright">2019-11-01 23:43</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-191201.osm.pbf">asia-191201.osm.pbf</a></td><td class="subright">2019-12-01 23:27</td><td class="subright">8040179448</td></tr>
+<tr><td class="subregion"><a href="asia-191201.osm.pbf.md5">asia-191201.osm.pbf.md5</a></td><td class="subright">2019-12-02 00:29</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-200129.osm.bz2">asia-200129.osm.bz2</a></td><td class="subright">2020-02-02 06:43</td><td class="subright">15335350950</td></tr>
+<tr><td class="subregion"><a href="asia-200129.osm.bz2.md5">asia-200129.osm.bz2.md5</a></td><td class="subright">2020-02-02 06:43</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-200130.osm.bz2">asia-200130.osm.bz2</a></td><td class="subright">2020-02-01 09:54</td><td class="subright">15343926424</td></tr>
+<tr><td class="subregion"><a href="asia-200130.osm.bz2.md5">asia-200130.osm.bz2.md5</a></td><td class="subright">2020-02-01 09:54</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-200130.osm.pbf">asia-200130.osm.pbf</a></td><td class="subright">2020-01-30 23:45</td><td class="subright">8223521853</td></tr>
+<tr><td class="subregion"><a href="asia-200130.osm.pbf.md5">asia-200130.osm.pbf.md5</a></td><td class="subright">2020-01-31 00:34</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-200131.osm.pbf">asia-200131.osm.pbf</a></td><td class="subright">2020-01-31 23:45</td><td class="subright">8227291050</td></tr>
+<tr><td class="subregion"><a href="asia-200131.osm.pbf.md5">asia-200131.osm.pbf.md5</a></td><td class="subright">2020-02-01 00:41</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-200201.osm.pbf">asia-200201.osm.pbf</a></td><td class="subright">2020-02-01 23:47</td><td class="subright">8229807685</td></tr>
+<tr><td class="subregion"><a href="asia-200201.osm.pbf.md5">asia-200201.osm.pbf.md5</a></td><td class="subright">2020-02-02 00:35</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-200202.osm.bz2">asia-200202.osm.bz2</a></td><td class="subright">2020-02-04 03:34</td><td class="subright">15360568941</td></tr>
+<tr><td class="subregion"><a href="asia-200202.osm.bz2.md5">asia-200202.osm.bz2.md5</a></td><td class="subright">2020-02-04 03:34</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-200202.osm.pbf">asia-200202.osm.pbf</a></td><td class="subright">2020-02-02 23:44</td><td class="subright">8232164510</td></tr>
+<tr><td class="subregion"><a href="asia-200202.osm.pbf.md5">asia-200202.osm.pbf.md5</a></td><td class="subright">2020-02-03 00:46</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-200203.osm.pbf">asia-200203.osm.pbf</a></td><td class="subright">2020-02-03 23:42</td><td class="subright">8235686091</td></tr>
+<tr><td class="subregion"><a href="asia-200203.osm.pbf.md5">asia-200203.osm.pbf.md5</a></td><td class="subright">2020-02-04 00:21</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-latest.osm.bz2">asia-latest.osm.bz2</a></td><td class="subright">2019-12-25 03:40</td><td class="subright">15119654987</td></tr>
+<tr><td class="subregion"><a href="asia-latest.osm.bz2.md5">asia-latest.osm.bz2.md5</a></td><td class="subright">2019-12-25 03:40</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-latest.osm.pbf">asia-latest.osm.pbf</a></td><td class="subright">2020-02-03 23:42</td><td class="subright">8235686091</td></tr>
+<tr><td class="subregion"><a href="asia-latest.osm.pbf.md5">asia-latest.osm.pbf.md5</a></td><td class="subright">2020-02-04 00:21</td><td class="subright">54</td></tr>
+<tr><td class="subregion"><a href="asia-updates">asia-updates</a></td><td class="subright">2020-02-04 00:48</td><td class="subright">4096</td></tr>
+<tr><td class="subregion"><a href="asia.kml">asia.kml</a></td><td class="subright">2020-02-03 23:50</td><td class="subright">1285</td></tr>
+<tr><td class="subregion"><a href="asia.poly">asia.poly</a></td><td class="subright">2020-02-03 23:00</td><td class="subright">917</td></tr>
+</table></div><h3>Sub Regions</h3><p>Click on the region name to see the overview page for that region, or select one of the
+file extension links for quick access.</p>
+<table id="subregions">
+<tr>
+   <th class="subregion">Sub Region</th>
+   <th colspan="4">Quick Links</th>
+</tr>
+<tr>
+   <th>&nbsp;</th>
+   <th colspan="2">.osm.pbf</th>
+   <th>.shp.zip</th>
+   <th>.osm.bz2</th>
+</tr>
+<tr onMouseOver="loadkml('asia/afghanistan.kml')"><td class="subregion"><a href="asia/afghanistan.html">Afghanistan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/afghanistan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(33.8&nbsp;MB)</td><td> <a href="asia/afghanistan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/afghanistan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/armenia.kml')"><td class="subregion"><a href="asia/armenia.html">Armenia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/armenia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(23.9&nbsp;MB)</td><td> <a href="asia/armenia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/armenia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/azerbaijan.kml')"><td class="subregion"><a href="asia/azerbaijan.html">Azerbaijan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/azerbaijan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(19.3&nbsp;MB)</td><td> <a href="asia/azerbaijan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/azerbaijan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/bangladesh.kml')"><td class="subregion"><a href="asia/bangladesh.html">Bangladesh</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/bangladesh-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(222&nbsp;MB)</td><td> <a href="asia/bangladesh-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/bangladesh-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/bhutan.kml')"><td class="subregion"><a href="asia/bhutan.html">Bhutan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/bhutan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(7.0&nbsp;MB)</td><td> <a href="asia/bhutan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/bhutan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/cambodia.kml')"><td class="subregion"><a href="asia/cambodia.html">Cambodia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/cambodia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(23.5&nbsp;MB)</td><td> <a href="asia/cambodia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/cambodia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/china.kml')"><td class="subregion"><a href="asia/china.html">China</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/china-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(534&nbsp;MB)</td><td> <a href="asia/china-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/china-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/gcc-states.kml')"><td class="subregion"><a href="asia/gcc-states.html">Gulf Cooperation Council</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/gcc-states-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(96&nbsp;MB)</td><td> <a href="asia/gcc-states-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/gcc-states-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/india.kml')"><td class="subregion"><a href="asia/india.html">India</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/india-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(656&nbsp;MB)</td><td> <a href="asia/india-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/india-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/indonesia.kml')"><td class="subregion"><a href="asia/indonesia.html">Indonesia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/indonesia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(987&nbsp;MB)</td><td> <a href="asia/indonesia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/indonesia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/iran.kml')"><td class="subregion"><a href="asia/iran.html">Iran</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/iran-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(134&nbsp;MB)</td><td> <a href="asia/iran-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/iran-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/iraq.kml')"><td class="subregion"><a href="asia/iraq.html">Iraq</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/iraq-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(40.1&nbsp;MB)</td><td> <a href="asia/iraq-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/iraq-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/israel-and-palestine.kml')"><td class="subregion"><a href="asia/israel-and-palestine.html">Israel and Palestine</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/israel-and-palestine-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(76&nbsp;MB)</td><td> <a href="asia/israel-and-palestine-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/israel-and-palestine-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/japan.kml')"><td class="subregion"><a href="asia/japan.html">Japan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/japan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(1.4&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="asia/japan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/jordan.kml')"><td class="subregion"><a href="asia/jordan.html">Jordan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/jordan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(25.5&nbsp;MB)</td><td> <a href="asia/jordan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/jordan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/kazakhstan.kml')"><td class="subregion"><a href="asia/kazakhstan.html">Kazakhstan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/kazakhstan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(101&nbsp;MB)</td><td> <a href="asia/kazakhstan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/kazakhstan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/kyrgyzstan.kml')"><td class="subregion"><a href="asia/kyrgyzstan.html">Kyrgyzstan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/kyrgyzstan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(25.9&nbsp;MB)</td><td> <a href="asia/kyrgyzstan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/kyrgyzstan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/laos.kml')"><td class="subregion"><a href="asia/laos.html">Laos</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/laos-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(30.9&nbsp;MB)</td><td> <a href="asia/laos-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/laos-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/lebanon.kml')"><td class="subregion"><a href="asia/lebanon.html">Lebanon</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/lebanon-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(21.9&nbsp;MB)</td><td> <a href="asia/lebanon-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/lebanon-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/malaysia-singapore-brunei.kml')"><td class="subregion"><a href="asia/malaysia-singapore-brunei.html">Malaysia, Singapore and Brunei</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/malaysia-singapore-brunei-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(120&nbsp;MB)</td><td> <a href="asia/malaysia-singapore-brunei-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/malaysia-singapore-brunei-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/maldives.kml')"><td class="subregion"><a href="asia/maldives.html">Maldives</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/maldives-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(3.0&nbsp;MB)</td><td> <a href="asia/maldives-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/maldives-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/mongolia.kml')"><td class="subregion"><a href="asia/mongolia.html">Mongolia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/mongolia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(22.7&nbsp;MB)</td><td> <a href="asia/mongolia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/mongolia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/myanmar.kml')"><td class="subregion"><a href="asia/myanmar.html">Myanmar (a.k.a. Burma)</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/myanmar-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(112&nbsp;MB)</td><td> <a href="asia/myanmar-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/myanmar-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/nepal.kml')"><td class="subregion"><a href="asia/nepal.html">Nepal</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/nepal-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(232&nbsp;MB)</td><td> <a href="asia/nepal-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/nepal-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/north-korea.kml')"><td class="subregion"><a href="asia/north-korea.html">North Korea</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/north-korea-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(28.6&nbsp;MB)</td><td> <a href="asia/north-korea-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/north-korea-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/pakistan.kml')"><td class="subregion"><a href="asia/pakistan.html">Pakistan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/pakistan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(47.5&nbsp;MB)</td><td> <a href="asia/pakistan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/pakistan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/philippines.kml')"><td class="subregion"><a href="asia/philippines.html">Philippines</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/philippines-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(288&nbsp;MB)</td><td> <a href="asia/philippines-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/philippines-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('russia.kml')"><td class="subregion"><a href="russia.html">Russian Federation</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="russia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(2.5&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="russia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/south-korea.kml')"><td class="subregion"><a href="asia/south-korea.html">South Korea</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/south-korea-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(107&nbsp;MB)</td><td> <a href="asia/south-korea-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/south-korea-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/sri-lanka.kml')"><td class="subregion"><a href="asia/sri-lanka.html">Sri Lanka</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/sri-lanka-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(91&nbsp;MB)</td><td> <a href="asia/sri-lanka-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/sri-lanka-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/syria.kml')"><td class="subregion"><a href="asia/syria.html">Syria</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/syria-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(26.9&nbsp;MB)</td><td> <a href="asia/syria-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/syria-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/taiwan.kml')"><td class="subregion"><a href="asia/taiwan.html">Taiwan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/taiwan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(71&nbsp;MB)</td><td> <a href="asia/taiwan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/taiwan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/tajikistan.kml')"><td class="subregion"><a href="asia/tajikistan.html">Tajikistan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/tajikistan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(22.4&nbsp;MB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="asia/tajikistan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/thailand.kml')"><td class="subregion"><a href="asia/thailand.html">Thailand</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/thailand-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(177&nbsp;MB)</td><td> <a href="asia/thailand-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/thailand-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/turkmenistan.kml')"><td class="subregion"><a href="asia/turkmenistan.html">Turkmenistan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/turkmenistan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(10.4&nbsp;MB)</td><td> <a href="asia/turkmenistan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/turkmenistan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/uzbekistan.kml')"><td class="subregion"><a href="asia/uzbekistan.html">Uzbekistan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/uzbekistan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(39.4&nbsp;MB)</td><td> <a href="asia/uzbekistan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/uzbekistan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/vietnam.kml')"><td class="subregion"><a href="asia/vietnam.html">Vietnam</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/vietnam-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(74&nbsp;MB)</td><td> <a href="asia/vietnam-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/vietnam-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('asia/yemen.kml')"><td class="subregion"><a href="asia/yemen.html">Yemen</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="asia/yemen-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(20.7&nbsp;MB)</td><td> <a href="asia/yemen-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="asia/yemen-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+</table>
+</div>
+<div id="download-right">
+   <div id="noscroll">
+   <div id="map"></div>
+
+   <div class="customized_shapes">
+<p>
+      <img alt="small flag of UK" src="/img/en.png">
+Not what you were looking for?
+Geofabrik is a consulting and software development firm based in Karlsruhe, Germany
+specializing in OpenStreetMap services. We're happy to help you with data
+preparation, processing, server setup and the like. <a href="http://www.geofabrik.de/data/shapefiles.html">Check out our web site</a>
+and contact us if we can be of service.
+
+      </p>
+   </div>
+   
+   <div class="customized_shapes">
+      <p>
+      <img alt="small flag of Germany" src="/img/de.png">
+      Nicht das Richtige dabei? 
+Die Geofabrik ist ein auf OpenStreetMap spezialisiertes Beratungs- und Softwareentwicklungsunternehmen in Karlsruhe.
+Gern helfen wir Ihnen bei der Datenaufbereitung, Datenkonvertierung, Serverinstallation und &auml;hnlichen Aufgaben.
+<a href="http://www.geofabrik.de/data/shapefiles.html">Besuchen Sie unsere Webseite</a> und sprechen Sie mit uns, wenn wir Ihnen 
+helfen k&ouml;nnen.
+      </p>
+   </div>
+   </div>
+</div>
+</div>
+<div id="download-copyright">
+Data/Maps Copyright 2018
+<a href="http://www.geofabrik.de/">Geofabrik GmbH</a>
+and
+<a href="http://www.openstreetmap.org/">OpenStreetMap Contributors</a>
+|
+<a href="http://creativecommons.org/licenses/by-sa/2.0/" rel="license">Map tiles: Creative Commons BY-SA 2.0</a>
+<a href="http://opendatacommons.org/licenses/odbl/">Data: ODbL 1.0</a>
+|
+<a href="http://www.geofabrik.de/geofabrik/contact.html">Contact</a>
+|
+<a href="http://www.geofabrik.de/geofabrik/imprint.html">Legal Notice/Privacy Policy</a>

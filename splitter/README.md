@@ -1,1 +1,0 @@
-Tato složka obsahuje prgram pro rozdělení velkých mapových souborů. Program pochází ze stránek [http://www.mkgmap.org.uk](http://www.mkgmap.org.uk/download/mkgmap.html).

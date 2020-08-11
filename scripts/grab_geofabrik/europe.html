@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="UTF-8">
+<title>Geofabrik Download Server</title>
+    <script type="text/javascript" src="//static.geofabrik.de/ol212/OpenLayers.js"></script>
+    <script type="text/javascript">
+        var map, layer, countryLayer;
+        function init()
+        {
+            map = new OpenLayers.Map('map');
+            layer = new OpenLayers.Layer.OSM("",
+                                             ["https://a.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+                                              "https://b.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+                                              "https://c.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+					     ],
+                                             { attribution: "", tileOptions : {crossOriginKeyword: null} }
+                                            ); // attribution in page footer
+            map.addLayer(layer);
+            layer = new OpenLayers.Layer.Vector("KML", {
+            strategies: [new OpenLayers.Strategy.Fixed()],
+            protocol: new OpenLayers.Protocol.HTTP({
+                url: "europe.kml",
+                format: new OpenLayers.Format.KML({
+                    maxDepth: 2
+                })
+            }),
+            styleMap: new OpenLayers.StyleMap({
+            "default": new OpenLayers.Style({
+                graphicName: "cross",
+                pointRadius: 6,
+                fillOpacity: 0.50,
+                fillColor: "#ffcc66",
+                strokeColor: "#ff9933",
+                strokeWidth: 2
+            })
+            })
+            });
+            layer.events.register("loadend", this, function() { map.zoomToExtent(layer.getDataExtent()); });
+            map.addLayer(layer);
+        }
+        function loadkml(kmlname)
+        {
+            if (countryLayer) map.removeLayer(countryLayer);
+            countryLayer = 
+                new OpenLayers.Layer.Vector("KML", {
+                strategies: [new OpenLayers.Strategy.Fixed()],
+                protocol: new OpenLayers.Protocol.HTTP({
+                    url: kmlname,
+                    format: new OpenLayers.Format.KML({
+                        extractStyles: true,
+                        extractAttributes: true,
+                        maxDepth: 2
+                    })
+                })
+                });
+            map.addLayer(countryLayer);
+        }
+    </script>
+<link rel="stylesheet" type="text/css" href="/download.css">
+</head><body onload='init();'><div id="download-top">
+   <div id="download-top-right">
+      <img alt="header image" src="/img/geofabrik-downloads.png" height="20">
+   </div>
+</div>
+<div id="download-titlebar">
+<h1>Download OpenStreetMap data for this region:</h1>
+</div>
+<div class="download-main">
+<div class="leftColumn"><h2>Europe</h2>
+<p><a href="../index.html">[one level up]</a></p>    <p class="isPublicInfo">
+        The OpenStreetMap data files provided on this server do <b>not</b> contain the user names, user
+        IDs and changeset IDs of the OSM objects because these fields are assumed to contain personal
+        information about the OpenStreetMap contributors and are therefore subject to data protection regulations
+        in the European Union. 
+        <br>
+        <a href="https://osm-internal.download.geofabrik.de/europe.html">Extracts with full metadata</a> are available to OpenStreetMap
+        contributors only.
+    </p>
+<h3>Commonly Used Formats</h3>
+<ul><li><a href="europe-latest.osm.pbf">europe-latest.osm.pbf,</a> suitable for
+           Osmium, Osmosis, imposm, osm2pgsql, mkgmap, and others. This file was last 
+           modified 11 hours ago and contains all OSM data up to 2020-02-03T21:59:02Z. File size: 20.9&nbsp;GB; MD5 sum: <a href="europe-latest.osm.pbf.md5">8a9419dd6e5e1e0adac441cd84292b37</a>. </li>
+<li><s>europe-latest-free.shp.zip</s> is not available for this region; try one of the sub-regions.</li></ul><h3>Other Formats and Auxiliary Files</h3>
+<ul><li><a href="europe-latest.osm.bz2">europe-latest.osm.bz2,</a> yields
+                OSM XML when decompressed; use for programs that cannot process the .pbf format.
+                This file was last modified 37 days ago. File size: 33.3&nbsp;GB; MD5 sum: <a href="europe-latest.osm.bz2.md5">a506aa4822475770cb6763f00a8c409d</a>. </li>
+<li><s>europe-internal.osh.pbf</s> The history file
+                contains personal data and is available on the
+                <a href="https://osm-internal.download.geofabrik.de/europe.html">internal server</a>
+                only. See notice above for further information.
+                </li><li><a href="europe.poly">.poly file</a> that describes the extent
+               of this region.</li><li><a href="europe-updates">.osc.gz files</a>
+                that contain all changes in this region, suitable e.g. for
+                Osmosis updates</li><li><a href="#" onclick="OpenLayers.Util.getElement('details').style.display='inline';">raw directory index</a> allowing you to
+            see and download older files</li></ul><div id="details" style="display:none"><table id="subregions"><tr><th class="subregion">file</th><th>date</th><th>size</th></tr><tr><td class="subregion"><a href="europe-140101.osm.pbf">europe-140101.osm.pbf</a></td><td class="subright">2014-01-01 23:13</td><td class="subright">10869125033</td></tr>
+<tr><td class="subregion"><a href="europe-140101.osm.pbf.md5">europe-140101.osm.pbf.md5</a></td><td class="subright">2018-05-07 13:48</td><td class="subright">55</td></tr>
+<tr><td class="subregion"><a href="europe-150101.osm.pbf">europe-150101.osm.pbf</a></td><td class="subright">2015-01-02 00:25</td><td class="subright">13359296494</td></tr>
+<tr><td class="subregion"><a href="europe-150101.osm.pbf.md5">europe-150101.osm.pbf.md5</a></td><td class="subright">2018-05-07 12:43</td><td class="subright">1</td></tr>
+<tr><td class="subregion"><a href="europe-160101.osm.pbf">europe-160101.osm.pbf</a></td><td class="subright">2016-01-02 00:06</td><td class="subright">15315413612</td></tr>
+<tr><td class="subregion"><a href="europe-160101.osm.pbf.md5">europe-160101.osm.pbf.md5</a></td><td class="subright">2018-05-07 13:11</td><td class="subright">1</td></tr>
+<tr><td class="subregion"><a href="europe-170101.osm.pbf">europe-170101.osm.pbf</a></td><td class="subright">2017-01-02 00:34</td><td class="subright">17048883213</td></tr>
+<tr><td class="subregion"><a href="europe-170101.osm.pbf.md5">europe-170101.osm.pbf.md5</a></td><td class="subright">2018-05-07 12:21</td><td class="subright">1</td></tr>
+<tr><td class="subregion"><a href="europe-180101.osm.pbf">europe-180101.osm.pbf</a></td><td class="subright">2018-01-01 23:24</td><td class="subright">18636546450</td></tr>
+<tr><td class="subregion"><a href="europe-180101.osm.pbf.md5">europe-180101.osm.pbf.md5</a></td><td class="subright">2018-05-07 09:34</td><td class="subright">1</td></tr>
+<tr><td class="subregion"><a href="europe-190101.osm.pbf">europe-190101.osm.pbf</a></td><td class="subright">2019-01-01 23:03</td><td class="subright">20399814524</td></tr>
+<tr><td class="subregion"><a href="europe-190101.osm.pbf.md5">europe-190101.osm.pbf.md5</a></td><td class="subright">2019-01-01 23:21</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-191101.osm.pbf">europe-191101.osm.pbf</a></td><td class="subright">2019-11-01 23:27</td><td class="subright">21982424653</td></tr>
+<tr><td class="subregion"><a href="europe-191101.osm.pbf.md5">europe-191101.osm.pbf.md5</a></td><td class="subright">2019-11-02 00:11</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-191201.osm.pbf">europe-191201.osm.pbf</a></td><td class="subright">2019-12-01 23:27</td><td class="subright">22119895136</td></tr>
+<tr><td class="subregion"><a href="europe-191201.osm.pbf.md5">europe-191201.osm.pbf.md5</a></td><td class="subright">2019-12-01 23:50</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-200129.osm.bz2">europe-200129.osm.bz2</a></td><td class="subright">2020-02-02 11:00</td><td class="subright">36076655470</td></tr>
+<tr><td class="subregion"><a href="europe-200129.osm.bz2.md5">europe-200129.osm.bz2.md5</a></td><td class="subright">2020-02-02 11:00</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-200130.osm.bz2">europe-200130.osm.bz2</a></td><td class="subright">2020-02-01 13:43</td><td class="subright">36084611082</td></tr>
+<tr><td class="subregion"><a href="europe-200130.osm.bz2.md5">europe-200130.osm.bz2.md5</a></td><td class="subright">2020-02-01 13:43</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-200130.osm.pbf">europe-200130.osm.pbf</a></td><td class="subright">2020-01-30 23:45</td><td class="subright">22431039301</td></tr>
+<tr><td class="subregion"><a href="europe-200130.osm.pbf.md5">europe-200130.osm.pbf.md5</a></td><td class="subright">2020-01-31 00:54</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-200131.osm.pbf">europe-200131.osm.pbf</a></td><td class="subright">2020-01-31 23:45</td><td class="subright">22435560002</td></tr>
+<tr><td class="subregion"><a href="europe-200131.osm.pbf.md5">europe-200131.osm.pbf.md5</a></td><td class="subright">2020-02-01 00:34</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-200201.osm.pbf">europe-200201.osm.pbf</a></td><td class="subright">2020-02-01 23:47</td><td class="subright">22439307052</td></tr>
+<tr><td class="subregion"><a href="europe-200201.osm.pbf.md5">europe-200201.osm.pbf.md5</a></td><td class="subright">2020-02-02 00:54</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-200202.osm.bz2">europe-200202.osm.bz2</a></td><td class="subright">2020-02-04 07:22</td><td class="subright">36107221725</td></tr>
+<tr><td class="subregion"><a href="europe-200202.osm.bz2.md5">europe-200202.osm.bz2.md5</a></td><td class="subright">2020-02-04 07:22</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-200202.osm.pbf">europe-200202.osm.pbf</a></td><td class="subright">2020-02-02 23:44</td><td class="subright">22443560240</td></tr>
+<tr><td class="subregion"><a href="europe-200202.osm.pbf.md5">europe-200202.osm.pbf.md5</a></td><td class="subright">2020-02-03 00:39</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-200203.osm.pbf">europe-200203.osm.pbf</a></td><td class="subright">2020-02-03 23:42</td><td class="subright">22448212398</td></tr>
+<tr><td class="subregion"><a href="europe-200203.osm.pbf.md5">europe-200203.osm.pbf.md5</a></td><td class="subright">2020-02-04 00:41</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-latest.osm.bz2">europe-latest.osm.bz2</a></td><td class="subright">2019-12-29 06:37</td><td class="subright">35765700005</td></tr>
+<tr><td class="subregion"><a href="europe-latest.osm.bz2.md5">europe-latest.osm.bz2.md5</a></td><td class="subright">2019-12-29 06:37</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-latest.osm.pbf">europe-latest.osm.pbf</a></td><td class="subright">2020-02-03 23:42</td><td class="subright">22448212398</td></tr>
+<tr><td class="subregion"><a href="europe-latest.osm.pbf.md5">europe-latest.osm.pbf.md5</a></td><td class="subright">2020-02-04 00:41</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="europe-updates">europe-updates</a></td><td class="subright">2020-02-04 00:48</td><td class="subright">4096</td></tr>
+<tr><td class="subregion"><a href="europe.kml">europe.kml</a></td><td class="subright">2020-02-03 23:47</td><td class="subright">2910</td></tr>
+<tr><td class="subregion"><a href="europe.poly">europe.poly</a></td><td class="subright">2020-02-03 23:00</td><td class="subright">2894</td></tr>
+</table></div><h3>Sub Regions</h3><p>Click on the region name to see the overview page for that region, or select one of the
+file extension links for quick access.</p>
+<table id="subregions">
+<tr>
+   <th class="subregion">Sub Region</th>
+   <th colspan="4">Quick Links</th>
+</tr>
+<tr>
+   <th>&nbsp;</th>
+   <th colspan="2">.osm.pbf</th>
+   <th>.shp.zip</th>
+   <th>.osm.bz2</th>
+</tr>
+<tr onMouseOver="loadkml('europe/albania.kml')"><td class="subregion"><a href="europe/albania.html">Albania</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/albania-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(39.4&nbsp;MB)</td><td> <a href="europe/albania-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/albania-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/andorra.kml')"><td class="subregion"><a href="europe/andorra.html">Andorra</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/andorra-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(1.6&nbsp;MB)</td><td> <a href="europe/andorra-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/andorra-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/austria.kml')"><td class="subregion"><a href="europe/austria.html">Austria</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/austria-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(569&nbsp;MB)</td><td> <a href="europe/austria-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/austria-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/azores.kml')"><td class="subregion"><a href="europe/azores.html">Azores</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/azores-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(9.5&nbsp;MB)</td><td> <a href="europe/azores-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/azores-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/belarus.kml')"><td class="subregion"><a href="europe/belarus.html">Belarus</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/belarus-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(200&nbsp;MB)</td><td> <a href="europe/belarus-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/belarus-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/belgium.kml')"><td class="subregion"><a href="europe/belgium.html">Belgium</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/belgium-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(348&nbsp;MB)</td><td> <a href="europe/belgium-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/belgium-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/bosnia-herzegovina.kml')"><td class="subregion"><a href="europe/bosnia-herzegovina.html">Bosnia and Herzegovina</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/bosnia-herzegovina-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(79&nbsp;MB)</td><td> <a href="europe/bosnia-herzegovina-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/bosnia-herzegovina-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/bulgaria.kml')"><td class="subregion"><a href="europe/bulgaria.html">Bulgaria</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/bulgaria-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(97&nbsp;MB)</td><td> <a href="europe/bulgaria-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/bulgaria-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/croatia.kml')"><td class="subregion"><a href="europe/croatia.html">Croatia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/croatia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(116&nbsp;MB)</td><td> <a href="europe/croatia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/croatia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/cyprus.kml')"><td class="subregion"><a href="europe/cyprus.html">Cyprus</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/cyprus-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(14.1&nbsp;MB)</td><td> <a href="europe/cyprus-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/cyprus-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/czech-republic.kml')"><td class="subregion"><a href="europe/czech-republic.html">Czech Republic</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/czech-republic-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(708&nbsp;MB)</td><td> <a href="europe/czech-republic-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/czech-republic-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/denmark.kml')"><td class="subregion"><a href="europe/denmark.html">Denmark</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/denmark-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(331&nbsp;MB)</td><td> <a href="europe/denmark-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/denmark-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/estonia.kml')"><td class="subregion"><a href="europe/estonia.html">Estonia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/estonia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(78&nbsp;MB)</td><td> <a href="europe/estonia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/estonia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/faroe-islands.kml')"><td class="subregion"><a href="europe/faroe-islands.html">Faroe Islands</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/faroe-islands-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(2.8&nbsp;MB)</td><td> <a href="europe/faroe-islands-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/faroe-islands-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/finland.kml')"><td class="subregion"><a href="europe/finland.html">Finland</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/finland-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(511&nbsp;MB)</td><td> <a href="europe/finland-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/finland-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/france.kml')"><td class="subregion"><a href="europe/france.html">France</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/france-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(3.5&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="europe/france-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/georgia.kml')"><td class="subregion"><a href="europe/georgia.html">Georgia (Eastern Europe)</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/georgia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(45.9&nbsp;MB)</td><td> <a href="europe/georgia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/georgia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/germany.kml')"><td class="subregion"><a href="europe/germany.html">Germany</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/germany-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(3.1&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="europe/germany-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/great-britain.kml')"><td class="subregion"><a href="europe/great-britain.html">Great Britain</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/great-britain-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(1.0&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="europe/great-britain-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/greece.kml')"><td class="subregion"><a href="europe/greece.html">Greece</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/greece-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(182&nbsp;MB)</td><td> <a href="europe/greece-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/greece-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/hungary.kml')"><td class="subregion"><a href="europe/hungary.html">Hungary</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/hungary-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(162&nbsp;MB)</td><td> <a href="europe/hungary-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/hungary-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/iceland.kml')"><td class="subregion"><a href="europe/iceland.html">Iceland</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/iceland-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(39.6&nbsp;MB)</td><td> <a href="europe/iceland-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/iceland-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/ireland-and-northern-ireland.kml')"><td class="subregion"><a href="europe/ireland-and-northern-ireland.html">Ireland</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/ireland-and-northern-ireland-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(165&nbsp;MB)</td><td> <a href="europe/ireland-and-northern-ireland-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/ireland-and-northern-ireland-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/isle-of-man.kml')"><td class="subregion"><a href="europe/isle-of-man.html">Isle of Man</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/isle-of-man-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(2.3&nbsp;MB)</td><td> <a href="europe/isle-of-man-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/isle-of-man-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/italy.kml')"><td class="subregion"><a href="europe/italy.html">Italy</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/italy-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(1.4&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="europe/italy-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/kosovo.kml')"><td class="subregion"><a href="europe/kosovo.html">Kosovo</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/kosovo-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(16.6&nbsp;MB)</td><td> <a href="europe/kosovo-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/kosovo-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/latvia.kml')"><td class="subregion"><a href="europe/latvia.html">Latvia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/latvia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(62&nbsp;MB)</td><td> <a href="europe/latvia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/latvia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/liechtenstein.kml')"><td class="subregion"><a href="europe/liechtenstein.html">Liechtenstein</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/liechtenstein-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(2.2&nbsp;MB)</td><td> <a href="europe/liechtenstein-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/liechtenstein-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/lithuania.kml')"><td class="subregion"><a href="europe/lithuania.html">Lithuania</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/lithuania-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(119&nbsp;MB)</td><td> <a href="europe/lithuania-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/lithuania-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/luxembourg.kml')"><td class="subregion"><a href="europe/luxembourg.html">Luxembourg</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/luxembourg-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(23.6&nbsp;MB)</td><td> <a href="europe/luxembourg-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/luxembourg-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/macedonia.kml')"><td class="subregion"><a href="europe/macedonia.html">North Macedonia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/macedonia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(19.8&nbsp;MB)</td><td> <a href="europe/macedonia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/macedonia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/malta.kml')"><td class="subregion"><a href="europe/malta.html">Malta</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/malta-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(4.3&nbsp;MB)</td><td> <a href="europe/malta-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/malta-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/moldova.kml')"><td class="subregion"><a href="europe/moldova.html">Moldova</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/moldova-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(39.6&nbsp;MB)</td><td> <a href="europe/moldova-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/moldova-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/monaco.kml')"><td class="subregion"><a href="europe/monaco.html">Monaco</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/monaco-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(552&nbsp;KB)</td><td> <a href="europe/monaco-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/monaco-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/montenegro.kml')"><td class="subregion"><a href="europe/montenegro.html">Montenegro</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/montenegro-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(22.7&nbsp;MB)</td><td> <a href="europe/montenegro-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/montenegro-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/netherlands.kml')"><td class="subregion"><a href="europe/netherlands.html">Netherlands</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/netherlands-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(1.0&nbsp;GB)</td><td> <a href="europe/netherlands-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/netherlands-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/norway.kml')"><td class="subregion"><a href="europe/norway.html">Norway</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/norway-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(730&nbsp;MB)</td><td> <a href="europe/norway-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/norway-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/poland.kml')"><td class="subregion"><a href="europe/poland.html">Poland</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/poland-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(1.1&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="europe/poland-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/portugal.kml')"><td class="subregion"><a href="europe/portugal.html">Portugal</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/portugal-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(199&nbsp;MB)</td><td> <a href="europe/portugal-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/portugal-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/romania.kml')"><td class="subregion"><a href="europe/romania.html">Romania</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/romania-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(199&nbsp;MB)</td><td> <a href="europe/romania-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/romania-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('russia.kml')"><td class="subregion"><a href="russia.html">Russian Federation</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="russia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(2.5&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="russia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/serbia.kml')"><td class="subregion"><a href="europe/serbia.html">Serbia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/serbia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(79&nbsp;MB)</td><td> <a href="europe/serbia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/serbia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/slovakia.kml')"><td class="subregion"><a href="europe/slovakia.html">Slovakia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/slovakia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(187&nbsp;MB)</td><td> <a href="europe/slovakia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/slovakia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/slovenia.kml')"><td class="subregion"><a href="europe/slovenia.html">Slovenia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/slovenia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(228&nbsp;MB)</td><td> <a href="europe/slovenia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/slovenia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/spain.kml')"><td class="subregion"><a href="europe/spain.html">Spain</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/spain-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(796&nbsp;MB)</td><td> <a href="europe/spain-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/spain-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/sweden.kml')"><td class="subregion"><a href="europe/sweden.html">Sweden</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/sweden-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(463&nbsp;MB)</td><td> <a href="europe/sweden-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/sweden-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/switzerland.kml')"><td class="subregion"><a href="europe/switzerland.html">Switzerland</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/switzerland-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(313&nbsp;MB)</td><td> <a href="europe/switzerland-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/switzerland-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/turkey.kml')"><td class="subregion"><a href="europe/turkey.html">Turkey</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/turkey-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(288&nbsp;MB)</td><td> <a href="europe/turkey-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/turkey-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/ukraine.kml')"><td class="subregion"><a href="europe/ukraine.html">Ukraine (with Crimea)</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/ukraine-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(507&nbsp;MB)</td><td> <a href="europe/ukraine-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="europe/ukraine-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+</table>
+<h3>Special Sub Regions</h3>
+<p>
+These regions are "special" because they are outside of the usual administrative
+hierarchies and may duplicate data already contained in the other sub regions.
+</p>
+<table id="specialsubregions">
+<tr>
+   <th class="subregion">Sub Region</th>
+   <th colspan="4">Quick Links</th>
+</tr>
+<tr>
+   <th>&nbsp;</th>
+   <th colspan="2">.osm.pbf</th>
+   <th>.shp.zip</th>
+   <th>.osm.bz2</th>
+</tr>
+<tr onMouseOver="loadkml('europe/alps.kml')"><td class="subregion"><a href="europe/alps.html">Alps</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/alps-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(2.3&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="europe/alps-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/britain-and-ireland.kml')"><td class="subregion"><a href="europe/britain-and-ireland.html">Britain and Ireland</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/britain-and-ireland-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(1.2&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="europe/britain-and-ireland-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('europe/dach.kml')"><td class="subregion"><a href="europe/dach.html">Germany, Austria, Switzerland</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="europe/dach-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(3.9&nbsp;GB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="europe/dach-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+</table>
+</div>
+<div id="download-right">
+   <div id="noscroll">
+   <div id="map"></div>
+
+   <div class="customized_shapes">
+<p>
+      <img alt="small flag of UK" src="/img/en.png">
+Not what you were looking for?
+Geofabrik is a consulting and software development firm based in Karlsruhe, Germany
+specializing in OpenStreetMap services. We're happy to help you with data
+preparation, processing, server setup and the like. <a href="http://www.geofabrik.de/data/shapefiles.html">Check out our web site</a>
+and contact us if we can be of service.
+
+      </p>
+   </div>
+   
+   <div class="customized_shapes">
+      <p>
+      <img alt="small flag of Germany" src="/img/de.png">
+      Nicht das Richtige dabei? 
+Die Geofabrik ist ein auf OpenStreetMap spezialisiertes Beratungs- und Softwareentwicklungsunternehmen in Karlsruhe.
+Gern helfen wir Ihnen bei der Datenaufbereitung, Datenkonvertierung, Serverinstallation und &auml;hnlichen Aufgaben.
+<a href="http://www.geofabrik.de/data/shapefiles.html">Besuchen Sie unsere Webseite</a> und sprechen Sie mit uns, wenn wir Ihnen 
+helfen k&ouml;nnen.
+      </p>
+   </div>
+   </div>
+</div>
+</div>
+<div id="download-copyright">
+Data/Maps Copyright 2018
+<a href="http://www.geofabrik.de/">Geofabrik GmbH</a>
+and
+<a href="http://www.openstreetmap.org/">OpenStreetMap Contributors</a>
+|
+<a href="http://creativecommons.org/licenses/by-sa/2.0/" rel="license">Map tiles: Creative Commons BY-SA 2.0</a>
+<a href="http://opendatacommons.org/licenses/odbl/">Data: ODbL 1.0</a>
+|
+<a href="http://www.geofabrik.de/geofabrik/contact.html">Contact</a>
+|
+<a href="http://www.geofabrik.de/geofabrik/imprint.html">Legal Notice/Privacy Policy</a>

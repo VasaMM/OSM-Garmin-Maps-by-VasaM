@@ -17,43 +17,43 @@ CodePage=1250
 [_drawOrder]
 Type=0x001,1
 Type=0x002,1
-Type=0x10102,1
 Type=0x032,1
+Type=0x10102,1
 Type=0x007,2
 Type=0x008,2
 Type=0x00c,2
+Type=0x050,2
 Type=0x10f04,2
 Type=0x10f0b,2
 Type=0x10f18,2
 Type=0x10f19,2
 Type=0x10f1a,2
-Type=0x050,2
+Type=0x017,3
 Type=0x10f01,3
 Type=0x10f02,3
 Type=0x10f0f,3
 Type=0x10f16,3
-Type=0x017,3
+Type=0x018,4
+Type=0x019,4
+Type=0x04e,4
+Type=0x04f,4
 Type=0x10f00,4
 Type=0x10f03,4
 Type=0x10f07,4
 Type=0x10f11,4
 Type=0x10f17,4
-Type=0x018,4
-Type=0x019,4
-Type=0x04e,4
-Type=0x04f,4
+Type=0x01a,5
+Type=0x04d,5
 Type=0x10f05,5
 Type=0x10f06,5
 Type=0x10f10,5
-Type=0x01a,5
-Type=0x04d,5
 Type=0x03c,6
 Type=0x03f,6
 Type=0x040,6
 Type=0x046,6
 Type=0x009,7
-Type=0x10902,7
 Type=0x00e,7
+Type=0x10902,7
 Type=0x013,8
 Type=0x051,8
 Type=0x10f08,9
@@ -3148,38 +3148,38 @@ DayXpm="1 1 2 1"   Colormode=16
 
 
 [_point]
+Type=0x00900
+;GRMN_TYPE: Political Entities/CITY_20K/City with the range of (20, 50] thousand inhabitants/Non NT
+ExtendedLabels=Y
+FontStyle=LargeFont
+CustomColor=Day
+DaycustomColor:#BD308B
+DayXpm="1 1 2 1"   Colormode=16
+"!	c #FFFFFF"
+"  	c none"
+" "
+;1
+[end]
+
+
+[_point]
+Type=0x00a00
+;GRMN_TYPE: Political Entities/CITY_10K/City with the range of (10, 20] thousand inhabitants/Non NT
+ExtendedLabels=Y
+FontStyle=LargeFont
+CustomColor=Day
+DaycustomColor:#BD308B
+DayXpm="1 1 2 1"   Colormode=16
+"!	c #FFFFFF"
+"  	c none"
+" "
+;1
+[end]
+
+
+[_point]
 Type=0x00b00
 ;GRMN_TYPE: Political Entities/CITY_5K/City with the range of (5, 10] thousand inhabitants/Non NT
-ExtendedLabels=Y
-FontStyle=LargeFont
-CustomColor=Day
-DaycustomColor:#BD308B
-DayXpm="1 1 2 1"   Colormode=16
-"!	c #FFFFFF"
-"  	c none"
-" "
-;1
-[end]
-
-
-[_point]
-Type=0x00b02
-;GRMN_TYPE: //
-ExtendedLabels=Y
-FontStyle=LargeFont
-CustomColor=Day
-DaycustomColor:#BD308B
-DayXpm="1 1 2 1"   Colormode=16
-"!	c #FFFFFF"
-"  	c none"
-" "
-;1
-[end]
-
-
-[_point]
-Type=0x00b03
-;GRMN_TYPE: //
 ExtendedLabels=Y
 FontStyle=LargeFont
 CustomColor=Day
@@ -5264,7 +5264,7 @@ DayXpm="10 14 5 1"   Colormode=16
 
 [_point]
 Type=0x03005
-;GRMN_TYPE: /COMMUNITY_CENTER/Community center/Non NT
+;GRMN_TYPE: Business - Emergency and Government/COMMUNITY_CENTER/Community center/Non NT
 String1=0x12,Horska sluzba
 ExtendedLabels=N
 DayXpm="12 12 3 1"   Colormode=16

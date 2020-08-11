@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="UTF-8">
+<title>Geofabrik Download Server</title>
+    <script type="text/javascript" src="//static.geofabrik.de/ol212/OpenLayers.js"></script>
+    <script type="text/javascript">
+        var map, layer, countryLayer;
+        function init()
+        {
+            map = new OpenLayers.Map('map');
+            layer = new OpenLayers.Layer.OSM("",
+                                             ["https://a.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+                                              "https://b.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+                                              "https://c.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+					     ],
+                                             { attribution: "", tileOptions : {crossOriginKeyword: null} }
+                                            ); // attribution in page footer
+            map.addLayer(layer);
+            layer = new OpenLayers.Layer.Vector("KML", {
+            strategies: [new OpenLayers.Strategy.Fixed()],
+            protocol: new OpenLayers.Protocol.HTTP({
+                url: "australia-oceania.kml",
+                format: new OpenLayers.Format.KML({
+                    maxDepth: 2
+                })
+            }),
+            styleMap: new OpenLayers.StyleMap({
+            "default": new OpenLayers.Style({
+                graphicName: "cross",
+                pointRadius: 6,
+                fillOpacity: 0.50,
+                fillColor: "#ffcc66",
+                strokeColor: "#ff9933",
+                strokeWidth: 2
+            })
+            })
+            });
+            layer.events.register("loadend", this, function() { map.zoomToExtent(layer.getDataExtent()); });
+            map.addLayer(layer);
+        }
+        function loadkml(kmlname)
+        {
+            if (countryLayer) map.removeLayer(countryLayer);
+            countryLayer = 
+                new OpenLayers.Layer.Vector("KML", {
+                strategies: [new OpenLayers.Strategy.Fixed()],
+                protocol: new OpenLayers.Protocol.HTTP({
+                    url: kmlname,
+                    format: new OpenLayers.Format.KML({
+                        extractStyles: true,
+                        extractAttributes: true,
+                        maxDepth: 2
+                    })
+                })
+                });
+            map.addLayer(countryLayer);
+        }
+    </script>
+<link rel="stylesheet" type="text/css" href="/download.css">
+</head><body onload='init();'><div id="download-top">
+   <div id="download-top-right">
+      <img alt="header image" src="/img/geofabrik-downloads.png" height="20">
+   </div>
+</div>
+<div id="download-titlebar">
+<h1>Download OpenStreetMap data for this region:</h1>
+</div>
+<div class="download-main">
+<div class="leftColumn"><h2>Australia and Oceania</h2>
+<p><a href="../index.html">[one level up]</a></p>    <p class="isPublicInfo">
+        The OpenStreetMap data files provided on this server do <b>not</b> contain the user names, user
+        IDs and changeset IDs of the OSM objects because these fields are assumed to contain personal
+        information about the OpenStreetMap contributors and are therefore subject to data protection regulations
+        in the European Union. 
+        <br>
+        <a href="https://osm-internal.download.geofabrik.de/australia-oceania.html">Extracts with full metadata</a> are available to OpenStreetMap
+        contributors only.
+    </p>
+<h3>Commonly Used Formats</h3>
+<ul><li><a href="australia-oceania-latest.osm.pbf">australia-oceania-latest.osm.pbf,</a> suitable for
+           Osmium, Osmosis, imposm, osm2pgsql, mkgmap, and others. This file was last 
+           modified 11 hours ago and contains all OSM data up to 2020-02-03T21:59:02Z. File size: 732&nbsp;MB; MD5 sum: <a href="australia-oceania-latest.osm.pbf.md5">4c2f0c968ae676ea05baf5a742d15e8b</a>. </li>
+<li><s>australia-oceania-latest-free.shp.zip</s> is not available for this region; try one of the sub-regions.</li></ul><h3>Other Formats and Auxiliary Files</h3>
+<ul><li><a href="australia-oceania-latest.osm.bz2">australia-oceania-latest.osm.bz2,</a> yields
+                OSM XML when decompressed; use for programs that cannot process the .pbf format.
+                This file was last modified 37 days ago. File size: 1.3&nbsp;GB; MD5 sum: <a href="australia-oceania-latest.osm.bz2.md5">422f880c868f4abcc1fafed5c1a8f910</a>. </li>
+<li><s>australia-oceania-internal.osh.pbf</s> The history file
+                contains personal data and is available on the
+                <a href="https://osm-internal.download.geofabrik.de/australia-oceania.html">internal server</a>
+                only. See notice above for further information.
+                </li><li><a href="australia-oceania.poly">.poly file</a> that describes the extent
+               of this region.</li><li><a href="australia-oceania-updates">.osc.gz files</a>
+                that contain all changes in this region, suitable e.g. for
+                Osmosis updates</li><li><a href="#" onclick="OpenLayers.Util.getElement('details').style.display='inline';">raw directory index</a> allowing you to
+            see and download older files</li></ul><div id="details" style="display:none"><table id="subregions"><tr><th class="subregion">file</th><th>date</th><th>size</th></tr><tr><td class="subregion"><a href="australia-oceania-140101.osm.pbf">australia-oceania-140101.osm.pbf</a></td><td class="subright">2018-05-07 14:16</td><td class="subright">276685928</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-140101.osm.pbf.md5">australia-oceania-140101.osm.pbf.md5</a></td><td class="subright">2018-05-07 14:16</td><td class="subright">66</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-150101.osm.pbf">australia-oceania-150101.osm.pbf</a></td><td class="subright">2018-05-07 12:47</td><td class="subright">350491559</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-150101.osm.pbf.md5">australia-oceania-150101.osm.pbf.md5</a></td><td class="subright">2018-05-07 12:48</td><td class="subright">66</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-160101.osm.pbf">australia-oceania-160101.osm.pbf</a></td><td class="subright">2018-05-07 09:47</td><td class="subright">420271748</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-160101.osm.pbf.md5">australia-oceania-160101.osm.pbf.md5</a></td><td class="subright">2018-05-07 09:47</td><td class="subright">66</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-170101.osm.pbf">australia-oceania-170101.osm.pbf</a></td><td class="subright">2018-05-07 12:35</td><td class="subright">486576994</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-170101.osm.pbf.md5">australia-oceania-170101.osm.pbf.md5</a></td><td class="subright">2018-05-07 12:35</td><td class="subright">66</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-180101.osm.pbf">australia-oceania-180101.osm.pbf</a></td><td class="subright">2018-05-07 14:33</td><td class="subright">529467285</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-180101.osm.pbf.md5">australia-oceania-180101.osm.pbf.md5</a></td><td class="subright">2018-05-07 14:33</td><td class="subright">66</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-190101.osm.pbf">australia-oceania-190101.osm.pbf</a></td><td class="subright">2019-01-01 23:03</td><td class="subright">646724382</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-190101.osm.pbf.md5">australia-oceania-190101.osm.pbf.md5</a></td><td class="subright">2019-01-01 23:31</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-191101.osm.pbf">australia-oceania-191101.osm.pbf</a></td><td class="subright">2019-11-01 23:27</td><td class="subright">737739793</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-191101.osm.pbf.md5">australia-oceania-191101.osm.pbf.md5</a></td><td class="subright">2019-11-02 00:11</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-191201.osm.pbf">australia-oceania-191201.osm.pbf</a></td><td class="subright">2019-12-01 23:27</td><td class="subright">747271641</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-191201.osm.pbf.md5">australia-oceania-191201.osm.pbf.md5</a></td><td class="subright">2019-12-01 23:51</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200129.osm.bz2">australia-oceania-200129.osm.bz2</a></td><td class="subright">2020-02-02 07:21</td><td class="subright">1433196277</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200129.osm.bz2.md5">australia-oceania-200129.osm.bz2.md5</a></td><td class="subright">2020-02-02 07:21</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200130.osm.bz2">australia-oceania-200130.osm.bz2</a></td><td class="subright">2020-02-01 10:02</td><td class="subright">1433646872</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200130.osm.bz2.md5">australia-oceania-200130.osm.bz2.md5</a></td><td class="subright">2020-02-01 10:02</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200130.osm.pbf">australia-oceania-200130.osm.pbf</a></td><td class="subright">2020-01-30 23:45</td><td class="subright">766961325</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200130.osm.pbf.md5">australia-oceania-200130.osm.pbf.md5</a></td><td class="subright">2020-01-31 00:35</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200131.osm.pbf">australia-oceania-200131.osm.pbf</a></td><td class="subright">2020-01-31 23:45</td><td class="subright">767281001</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200131.osm.pbf.md5">australia-oceania-200131.osm.pbf.md5</a></td><td class="subright">2020-02-01 00:14</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200201.osm.pbf">australia-oceania-200201.osm.pbf</a></td><td class="subright">2020-02-01 23:47</td><td class="subright">767477537</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200201.osm.pbf.md5">australia-oceania-200201.osm.pbf.md5</a></td><td class="subright">2020-02-02 00:36</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200202.osm.bz2">australia-oceania-200202.osm.bz2</a></td><td class="subright">2020-02-04 03:43</td><td class="subright">1435199322</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200202.osm.bz2.md5">australia-oceania-200202.osm.bz2.md5</a></td><td class="subright">2020-02-04 03:43</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200202.osm.pbf">australia-oceania-200202.osm.pbf</a></td><td class="subright">2020-02-02 23:44</td><td class="subright">767672471</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200202.osm.pbf.md5">australia-oceania-200202.osm.pbf.md5</a></td><td class="subright">2020-02-03 00:39</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200203.osm.pbf">australia-oceania-200203.osm.pbf</a></td><td class="subright">2020-02-03 23:42</td><td class="subright">767876797</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-200203.osm.pbf.md5">australia-oceania-200203.osm.pbf.md5</a></td><td class="subright">2020-02-04 00:22</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-latest.osm.bz2">australia-oceania-latest.osm.bz2</a></td><td class="subright">2019-12-29 03:01</td><td class="subright">1408669459</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-latest.osm.bz2.md5">australia-oceania-latest.osm.bz2.md5</a></td><td class="subright">2019-12-29 03:01</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-latest.osm.pbf">australia-oceania-latest.osm.pbf</a></td><td class="subright">2020-02-03 23:42</td><td class="subright">767876797</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-latest.osm.pbf.md5">australia-oceania-latest.osm.pbf.md5</a></td><td class="subright">2020-02-04 00:22</td><td class="subright">67</td></tr>
+<tr><td class="subregion"><a href="australia-oceania-updates">australia-oceania-updates</a></td><td class="subright">2020-02-04 00:45</td><td class="subright">4096</td></tr>
+<tr><td class="subregion"><a href="australia-oceania.kml">australia-oceania.kml</a></td><td class="subright">2020-02-03 23:48</td><td class="subright">919</td></tr>
+<tr><td class="subregion"><a href="australia-oceania.poly">australia-oceania.poly</a></td><td class="subright">2020-02-03 23:00</td><td class="subright">612</td></tr>
+</table></div><h3>Sub Regions</h3><p>Click on the region name to see the overview page for that region, or select one of the
+file extension links for quick access.</p>
+<table id="subregions">
+<tr>
+   <th class="subregion">Sub Region</th>
+   <th colspan="4">Quick Links</th>
+</tr>
+<tr>
+   <th>&nbsp;</th>
+   <th colspan="2">.osm.pbf</th>
+   <th>.shp.zip</th>
+   <th>.osm.bz2</th>
+</tr>
+<tr onMouseOver="loadkml('australia-oceania/australia.kml')"><td class="subregion"><a href="australia-oceania/australia.html">Australia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="australia-oceania/australia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(438&nbsp;MB)</td><td> <a href="australia-oceania/australia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="australia-oceania/australia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('australia-oceania/fiji.kml')"><td class="subregion"><a href="australia-oceania/fiji.html">Fiji</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="australia-oceania/fiji-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(8.3&nbsp;MB)</td><td> <a href="australia-oceania/fiji-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="australia-oceania/fiji-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('australia-oceania/new-caledonia.kml')"><td class="subregion"><a href="australia-oceania/new-caledonia.html">New Caledonia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="australia-oceania/new-caledonia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(10.1&nbsp;MB)</td><td> <a href="australia-oceania/new-caledonia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="australia-oceania/new-caledonia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('australia-oceania/new-zealand.kml')"><td class="subregion"><a href="australia-oceania/new-zealand.html">New Zealand</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="australia-oceania/new-zealand-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(211&nbsp;MB)</td><td> <a href="australia-oceania/new-zealand-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="australia-oceania/new-zealand-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('australia-oceania/papua-new-guinea.kml')"><td class="subregion"><a href="australia-oceania/papua-new-guinea.html">Papua New Guinea</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="australia-oceania/papua-new-guinea-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(15.1&nbsp;MB)</td><td> <a href="australia-oceania/papua-new-guinea-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="australia-oceania/papua-new-guinea-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+</table>
+</div>
+<div id="download-right">
+   <div id="noscroll">
+   <div id="map"></div>
+
+   <div class="customized_shapes">
+<p>
+      <img alt="small flag of UK" src="/img/en.png">
+Not what you were looking for?
+Geofabrik is a consulting and software development firm based in Karlsruhe, Germany
+specializing in OpenStreetMap services. We're happy to help you with data
+preparation, processing, server setup and the like. <a href="http://www.geofabrik.de/data/shapefiles.html">Check out our web site</a>
+and contact us if we can be of service.
+
+      </p>
+   </div>
+   
+   <div class="customized_shapes">
+      <p>
+      <img alt="small flag of Germany" src="/img/de.png">
+      Nicht das Richtige dabei? 
+Die Geofabrik ist ein auf OpenStreetMap spezialisiertes Beratungs- und Softwareentwicklungsunternehmen in Karlsruhe.
+Gern helfen wir Ihnen bei der Datenaufbereitung, Datenkonvertierung, Serverinstallation und &auml;hnlichen Aufgaben.
+<a href="http://www.geofabrik.de/data/shapefiles.html">Besuchen Sie unsere Webseite</a> und sprechen Sie mit uns, wenn wir Ihnen 
+helfen k&ouml;nnen.
+      </p>
+   </div>
+   </div>
+</div>
+</div>
+<div id="download-copyright">
+Data/Maps Copyright 2018
+<a href="http://www.geofabrik.de/">Geofabrik GmbH</a>
+and
+<a href="http://www.openstreetmap.org/">OpenStreetMap Contributors</a>
+|
+<a href="http://creativecommons.org/licenses/by-sa/2.0/" rel="license">Map tiles: Creative Commons BY-SA 2.0</a>
+<a href="http://opendatacommons.org/licenses/odbl/">Data: ODbL 1.0</a>
+|
+<a href="http://www.geofabrik.de/geofabrik/contact.html">Contact</a>
+|
+<a href="http://www.geofabrik.de/geofabrik/imprint.html">Legal Notice/Privacy Policy</a>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta charset="UTF-8">
+<title>Geofabrik Download Server</title>
+    <script type="text/javascript" src="//static.geofabrik.de/ol212/OpenLayers.js"></script>
+    <script type="text/javascript">
+        var map, layer, countryLayer;
+        function init()
+        {
+            map = new OpenLayers.Map('map');
+            layer = new OpenLayers.Layer.OSM("",
+                                             ["https://a.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+                                              "https://b.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+                                              "https://c.tile.geofabrik.de/549e80f319af070f8ea8d0f149a149c2/${z}/${x}/${y}.png",
+					     ],
+                                             { attribution: "", tileOptions : {crossOriginKeyword: null} }
+                                            ); // attribution in page footer
+            map.addLayer(layer);
+            layer = new OpenLayers.Layer.Vector("KML", {
+            strategies: [new OpenLayers.Strategy.Fixed()],
+            protocol: new OpenLayers.Protocol.HTTP({
+                url: "africa.kml",
+                format: new OpenLayers.Format.KML({
+                    maxDepth: 2
+                })
+            }),
+            styleMap: new OpenLayers.StyleMap({
+            "default": new OpenLayers.Style({
+                graphicName: "cross",
+                pointRadius: 6,
+                fillOpacity: 0.50,
+                fillColor: "#ffcc66",
+                strokeColor: "#ff9933",
+                strokeWidth: 2
+            })
+            })
+            });
+            layer.events.register("loadend", this, function() { map.zoomToExtent(layer.getDataExtent()); });
+            map.addLayer(layer);
+        }
+        function loadkml(kmlname)
+        {
+            if (countryLayer) map.removeLayer(countryLayer);
+            countryLayer = 
+                new OpenLayers.Layer.Vector("KML", {
+                strategies: [new OpenLayers.Strategy.Fixed()],
+                protocol: new OpenLayers.Protocol.HTTP({
+                    url: kmlname,
+                    format: new OpenLayers.Format.KML({
+                        extractStyles: true,
+                        extractAttributes: true,
+                        maxDepth: 2
+                    })
+                })
+                });
+            map.addLayer(countryLayer);
+        }
+    </script>
+<link rel="stylesheet" type="text/css" href="/download.css">
+</head><body onload='init();'><div id="download-top">
+   <div id="download-top-right">
+      <img alt="header image" src="/img/geofabrik-downloads.png" height="20">
+   </div>
+</div>
+<div id="download-titlebar">
+<h1>Download OpenStreetMap data for this region:</h1>
+</div>
+<div class="download-main">
+<div class="leftColumn"><h2>Africa</h2>
+<p><a href="../index.html">[one level up]</a></p>    <p class="isPublicInfo">
+        The OpenStreetMap data files provided on this server do <b>not</b> contain the user names, user
+        IDs and changeset IDs of the OSM objects. These metadata fields contain personal
+        information about the OpenStreetMap contributors and are subject to data protection regulations
+        in the European Union. Please note that these regulations apply even to processing that happens
+        outside the European Union because some OpenStreetMap contributors live in the European Union.
+        <br>
+        <a href="https://osm-internal.download.geofabrik.de/africa.html">Extracts with full metadata</a> are available to OpenStreetMap
+        contributors only.
+    </p>
+<h3>Commonly Used Formats</h3>
+<ul><li><a href="africa-latest.osm.pbf">africa-latest.osm.pbf,</a> suitable for
+           Osmium, Osmosis, imposm, osm2pgsql, mkgmap, and others. This file was last 
+           modified 10 hours ago and contains all OSM data up to 2019-06-02T20:15:02Z. File size: 3.0&nbsp;GB; MD5 sum: <a href="africa-latest.osm.pbf.md5">49a7529265f0f529e0647492b93af07b</a>. </li>
+<li><s>africa-latest-free.shp.zip</s> is not available for this region; try one of the sub-regions.</li></ul><h3>Other Formats and Auxiliary Files</h3>
+<ul><li><a href="africa-latest.osm.bz2">africa-latest.osm.bz2,</a> yields
+                OSM XML when decompressed; use for programs that cannot process the .pbf format.
+                This file was last modified 5 hours ago. File size: 6.2&nbsp;GB; MD5 sum: <a href="africa-latest.osm.bz2.md5">3d9bd687bb7a6b8869c258089620a2d5</a>. </li>
+<li><s>africa-internal.osh.pbf</s> The history file
+                contains personal data and is available on the
+                <a href="https://osm-internal.download.geofabrik.de/africa.html">internal server</a>
+                only. See notice above for further information.
+                </li><li><a href="africa.poly">.poly file</a> that describes the extent
+               of this region.</li><li><a href="africa-updates">.osc.gz files</a>
+                that contain all changes in this region, suitable e.g. for
+                Osmosis updates</li><li><a href="#" onclick="OpenLayers.Util.getElement('details').style.display='inline';">raw directory index</a> allowing you to
+            see and download older files</li></ul><div id="details" style="display:none"><table id="subregions"><tr><th class="subregion">file</th><th>date</th><th>size</th></tr><tr><td class="subregion"><a href="africa-140101.osm.pbf">africa-140101.osm.pbf</a></td><td class="subright">2018-05-07 09:24</td><td class="subright">440231560</td></tr>
+<tr><td class="subregion"><a href="africa-140101.osm.pbf.md5">africa-140101.osm.pbf.md5</a></td><td class="subright">2018-05-07 09:24</td><td class="subright">55</td></tr>
+<tr><td class="subregion"><a href="africa-150101.osm.pbf">africa-150101.osm.pbf</a></td><td class="subright">2018-05-07 13:53</td><td class="subright">721488116</td></tr>
+<tr><td class="subregion"><a href="africa-150101.osm.pbf.md5">africa-150101.osm.pbf.md5</a></td><td class="subright">2018-05-07 13:53</td><td class="subright">55</td></tr>
+<tr><td class="subregion"><a href="africa-160101.osm.pbf">africa-160101.osm.pbf</a></td><td class="subright">2018-05-07 12:35</td><td class="subright">1025733878</td></tr>
+<tr><td class="subregion"><a href="africa-160101.osm.pbf.md5">africa-160101.osm.pbf.md5</a></td><td class="subright">2018-05-07 12:35</td><td class="subright">55</td></tr>
+<tr><td class="subregion"><a href="africa-170101.osm.pbf">africa-170101.osm.pbf</a></td><td class="subright">2018-05-07 13:12</td><td class="subright">1532853658</td></tr>
+<tr><td class="subregion"><a href="africa-170101.osm.pbf.md5">africa-170101.osm.pbf.md5</a></td><td class="subright">2018-05-07 13:12</td><td class="subright">55</td></tr>
+<tr><td class="subregion"><a href="africa-180101.osm.pbf">africa-180101.osm.pbf</a></td><td class="subright">2018-05-07 12:23</td><td class="subright">2120876640</td></tr>
+<tr><td class="subregion"><a href="africa-180101.osm.pbf.md5">africa-180101.osm.pbf.md5</a></td><td class="subright">2018-05-07 12:23</td><td class="subright">55</td></tr>
+<tr><td class="subregion"><a href="africa-190101.osm.pbf">africa-190101.osm.pbf</a></td><td class="subright">2019-01-01 23:03</td><td class="subright">2827961557</td></tr>
+<tr><td class="subregion"><a href="africa-190101.osm.pbf.md5">africa-190101.osm.pbf.md5</a></td><td class="subright">2019-01-01 23:29</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-190301.osm.pbf">africa-190301.osm.pbf</a></td><td class="subright">2019-03-01 23:04</td><td class="subright">2947330644</td></tr>
+<tr><td class="subregion"><a href="africa-190301.osm.pbf.md5">africa-190301.osm.pbf.md5</a></td><td class="subright">2019-03-01 23:17</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-190401.osm.pbf">africa-190401.osm.pbf</a></td><td class="subright">2019-04-01 22:07</td><td class="subright">3020986609</td></tr>
+<tr><td class="subregion"><a href="africa-190401.osm.pbf.md5">africa-190401.osm.pbf.md5</a></td><td class="subright">2019-04-01 22:37</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-190501.osm.pbf">africa-190501.osm.pbf</a></td><td class="subright">2019-05-01 22:10</td><td class="subright">3120018973</td></tr>
+<tr><td class="subregion"><a href="africa-190501.osm.pbf.md5">africa-190501.osm.pbf.md5</a></td><td class="subright">2019-05-01 22:31</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-190530.osm.bz2">africa-190530.osm.bz2</a></td><td class="subright">2019-05-31 02:31</td><td class="subright">6666345819</td></tr>
+<tr><td class="subregion"><a href="africa-190530.osm.bz2.md5">africa-190530.osm.bz2.md5</a></td><td class="subright">2019-05-31 02:31</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-190530.osm.pbf">africa-190530.osm.pbf</a></td><td class="subright">2019-05-30 22:13</td><td class="subright">3214407282</td></tr>
+<tr><td class="subregion"><a href="africa-190530.osm.pbf.md5">africa-190530.osm.pbf.md5</a></td><td class="subright">2019-05-30 22:25</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-190531.osm.bz2">africa-190531.osm.bz2</a></td><td class="subright">2019-06-01 02:09</td><td class="subright">6672986350</td></tr>
+<tr><td class="subregion"><a href="africa-190531.osm.bz2.md5">africa-190531.osm.bz2.md5</a></td><td class="subright">2019-06-01 02:09</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-190531.osm.pbf">africa-190531.osm.pbf</a></td><td class="subright">2019-05-31 22:13</td><td class="subright">3217524415</td></tr>
+<tr><td class="subregion"><a href="africa-190531.osm.pbf.md5">africa-190531.osm.pbf.md5</a></td><td class="subright">2019-05-31 22:26</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-190601.osm.pbf">africa-190601.osm.pbf</a></td><td class="subright">2019-06-01 22:11</td><td class="subright">3218565796</td></tr>
+<tr><td class="subregion"><a href="africa-190601.osm.pbf.md5">africa-190601.osm.pbf.md5</a></td><td class="subright">2019-06-01 22:26</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-190602.osm.bz2">africa-190602.osm.bz2</a></td><td class="subright">2019-06-03 03:45</td><td class="subright">6677602340</td></tr>
+<tr><td class="subregion"><a href="africa-190602.osm.bz2.md5">africa-190602.osm.bz2.md5</a></td><td class="subright">2019-06-03 03:45</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-190602.osm.pbf">africa-190602.osm.pbf</a></td><td class="subright">2019-06-02 22:15</td><td class="subright">3219484788</td></tr>
+<tr><td class="subregion"><a href="africa-190602.osm.pbf.md5">africa-190602.osm.pbf.md5</a></td><td class="subright">2019-06-02 22:33</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-latest.osm.bz2">africa-latest.osm.bz2</a></td><td class="subright">2019-06-03 03:45</td><td class="subright">6677602340</td></tr>
+<tr><td class="subregion"><a href="africa-latest.osm.bz2.md5">africa-latest.osm.bz2.md5</a></td><td class="subright">2019-06-03 03:45</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-latest.osm.pbf">africa-latest.osm.pbf</a></td><td class="subright">2019-06-02 22:15</td><td class="subright">3219484788</td></tr>
+<tr><td class="subregion"><a href="africa-latest.osm.pbf.md5">africa-latest.osm.pbf.md5</a></td><td class="subright">2019-06-02 22:33</td><td class="subright">56</td></tr>
+<tr><td class="subregion"><a href="africa-updates">africa-updates</a></td><td class="subright">2019-06-02 23:08</td><td class="subright">4096</td></tr>
+<tr><td class="subregion"><a href="africa.kml">africa.kml</a></td><td class="subright">2019-06-02 22:26</td><td class="subright">1043</td></tr>
+<tr><td class="subregion"><a href="africa.poly">africa.poly</a></td><td class="subright">2019-06-02 21:25</td><td class="subright">772</td></tr>
+</table></div><h3>Sub Regions</h3><p>Click on the region name to see the overview page for that region, or select one of the
+file extension links for quick access.</p>
+<table id="subregions">
+<tr>
+   <th class="subregion">Sub Region</th>
+   <th colspan="4">Quick Links</th>
+</tr>
+<tr>
+   <th>&nbsp;</th>
+   <th colspan="2">.osm.pbf</th>
+   <th>.shp.zip</th>
+   <th>.osm.bz2</th>
+</tr>
+<tr onMouseOver="loadkml('africa/algeria.kml')"><td class="subregion"><a href="africa/algeria.html">Algeria</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/algeria-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(75&nbsp;MB)</td><td> <a href="africa/algeria-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/algeria-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/angola.kml')"><td class="subregion"><a href="africa/angola.html">Angola</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/angola-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(36.9&nbsp;MB)</td><td> <a href="africa/angola-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/angola-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/benin.kml')"><td class="subregion"><a href="africa/benin.html">Benin</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/benin-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(28.5&nbsp;MB)</td><td> <a href="africa/benin-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/benin-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/botswana.kml')"><td class="subregion"><a href="africa/botswana.html">Botswana</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/botswana-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(46.5&nbsp;MB)</td><td> <a href="africa/botswana-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/botswana-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/burkina-faso.kml')"><td class="subregion"><a href="africa/burkina-faso.html">Burkina Faso</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/burkina-faso-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(44.6&nbsp;MB)</td><td> <a href="africa/burkina-faso-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/burkina-faso-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/burundi.kml')"><td class="subregion"><a href="africa/burundi.html">Burundi</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/burundi-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(17.1&nbsp;MB)</td><td> <a href="africa/burundi-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/burundi-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/cameroon.kml')"><td class="subregion"><a href="africa/cameroon.html">Cameroon</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/cameroon-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(131&nbsp;MB)</td><td> <a href="africa/cameroon-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/cameroon-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/canary-islands.kml')"><td class="subregion"><a href="africa/canary-islands.html">Canary Islands</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/canary-islands-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(36.9&nbsp;MB)</td><td> <a href="africa/canary-islands-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/canary-islands-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/cape-verde.kml')"><td class="subregion"><a href="africa/cape-verde.html">Cape Verde</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/cape-verde-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(6.3&nbsp;MB)</td><td> <a href="africa/cape-verde-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/cape-verde-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/central-african-republic.kml')"><td class="subregion"><a href="africa/central-african-republic.html">Central African Republic</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/central-african-republic-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(25.5&nbsp;MB)</td><td> <a href="africa/central-african-republic-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/central-african-republic-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/chad.kml')"><td class="subregion"><a href="africa/chad.html">Chad</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/chad-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(48.7&nbsp;MB)</td><td> <a href="africa/chad-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/chad-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/comores.kml')"><td class="subregion"><a href="africa/comores.html">Comoros</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/comores-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(3.8&nbsp;MB)</td><td> <a href="africa/comores-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/comores-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/congo-brazzaville.kml')"><td class="subregion"><a href="africa/congo-brazzaville.html">Congo (Republic/Brazzaville)</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/congo-brazzaville-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(15.7&nbsp;MB)</td><td> <a href="africa/congo-brazzaville-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/congo-brazzaville-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/congo-democratic-republic.kml')"><td class="subregion"><a href="africa/congo-democratic-republic.html">Congo (Democratic Republic/Kinshasa)</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/congo-democratic-republic-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(157&nbsp;MB)</td><td> <a href="africa/congo-democratic-republic-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/congo-democratic-republic-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/djibouti.kml')"><td class="subregion"><a href="africa/djibouti.html">Djibouti</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/djibouti-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(3.5&nbsp;MB)</td><td> <a href="africa/djibouti-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/djibouti-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/egypt.kml')"><td class="subregion"><a href="africa/egypt.html">Egypt</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/egypt-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(53&nbsp;MB)</td><td> <a href="africa/egypt-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/egypt-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/equatorial-guinea.kml')"><td class="subregion"><a href="africa/equatorial-guinea.html">Equatorial Guinea</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/equatorial-guinea-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(1.8&nbsp;MB)</td><td> <a href="africa/equatorial-guinea-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/equatorial-guinea-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/eritrea.kml')"><td class="subregion"><a href="africa/eritrea.html">Eritrea</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/eritrea-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(6.4&nbsp;MB)</td><td> <a href="africa/eritrea-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/eritrea-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/ethiopia.kml')"><td class="subregion"><a href="africa/ethiopia.html">Ethiopia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/ethiopia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(46.0&nbsp;MB)</td><td> <a href="africa/ethiopia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/ethiopia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/gabon.kml')"><td class="subregion"><a href="africa/gabon.html">Gabon</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/gabon-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(7.0&nbsp;MB)</td><td> <a href="africa/gabon-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/gabon-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/ghana.kml')"><td class="subregion"><a href="africa/ghana.html">Ghana</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/ghana-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(40.2&nbsp;MB)</td><td> <a href="africa/ghana-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/ghana-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/guinea.kml')"><td class="subregion"><a href="africa/guinea.html">Guinea</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/guinea-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(73&nbsp;MB)</td><td> <a href="africa/guinea-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/guinea-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/guinea-bissau.kml')"><td class="subregion"><a href="africa/guinea-bissau.html">Guinea-Bissau</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/guinea-bissau-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(6.9&nbsp;MB)</td><td> <a href="africa/guinea-bissau-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/guinea-bissau-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/ivory-coast.kml')"><td class="subregion"><a href="africa/ivory-coast.html">Ivory Coast</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/ivory-coast-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(30.5&nbsp;MB)</td><td> <a href="africa/ivory-coast-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/ivory-coast-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/kenya.kml')"><td class="subregion"><a href="africa/kenya.html">Kenya</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/kenya-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(81&nbsp;MB)</td><td> <a href="africa/kenya-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/kenya-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/lesotho.kml')"><td class="subregion"><a href="africa/lesotho.html">Lesotho</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/lesotho-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(103&nbsp;MB)</td><td> <a href="africa/lesotho-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/lesotho-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/liberia.kml')"><td class="subregion"><a href="africa/liberia.html">Liberia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/liberia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(25.8&nbsp;MB)</td><td> <a href="africa/liberia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/liberia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/libya.kml')"><td class="subregion"><a href="africa/libya.html">Libya</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/libya-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(24.8&nbsp;MB)</td><td> <a href="africa/libya-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/libya-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/madagascar.kml')"><td class="subregion"><a href="africa/madagascar.html">Madagascar</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/madagascar-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(72&nbsp;MB)</td><td> <a href="africa/madagascar-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/madagascar-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/malawi.kml')"><td class="subregion"><a href="africa/malawi.html">Malawi</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/malawi-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(89&nbsp;MB)</td><td> <a href="africa/malawi-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/malawi-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/mali.kml')"><td class="subregion"><a href="africa/mali.html">Mali</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/mali-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(75&nbsp;MB)</td><td> <a href="africa/mali-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/mali-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/mauritania.kml')"><td class="subregion"><a href="africa/mauritania.html">Mauritania</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/mauritania-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(13.4&nbsp;MB)</td><td> <a href="africa/mauritania-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/mauritania-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/mauritius.kml')"><td class="subregion"><a href="africa/mauritius.html">Mauritius</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/mauritius-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(5.0&nbsp;MB)</td><td> <a href="africa/mauritius-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/mauritius-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/morocco.kml')"><td class="subregion"><a href="africa/morocco.html">Morocco</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/morocco-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(100&nbsp;MB)</td><td> <a href="africa/morocco-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/morocco-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/mozambique.kml')"><td class="subregion"><a href="africa/mozambique.html">Mozambique</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/mozambique-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(142&nbsp;MB)</td><td> <a href="africa/mozambique-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/mozambique-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/namibia.kml')"><td class="subregion"><a href="africa/namibia.html">Namibia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/namibia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(25.1&nbsp;MB)</td><td> <a href="africa/namibia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/namibia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/niger.kml')"><td class="subregion"><a href="africa/niger.html">Niger</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/niger-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(32.0&nbsp;MB)</td><td> <a href="africa/niger-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/niger-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/nigeria.kml')"><td class="subregion"><a href="africa/nigeria.html">Nigeria</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/nigeria-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(172&nbsp;MB)</td><td> <a href="africa/nigeria-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/nigeria-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/rwanda.kml')"><td class="subregion"><a href="africa/rwanda.html">Rwanda</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/rwanda-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(21.2&nbsp;MB)</td><td> <a href="africa/rwanda-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/rwanda-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/saint-helena-ascension-and-tristan-da-cunha.kml')"><td class="subregion"><a href="africa/saint-helena-ascension-and-tristan-da-cunha.html">Saint Helena, Ascension and Tristan da Cunha</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/saint-helena-ascension-and-tristan-da-cunha-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(341&nbsp;KB)</td><td> <a href="africa/saint-helena-ascension-and-tristan-da-cunha-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/saint-helena-ascension-and-tristan-da-cunha-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/sao-tome-and-principe.kml')"><td class="subregion"><a href="africa/sao-tome-and-principe.html">Sao Tome and Principe</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/sao-tome-and-principe-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(681&nbsp;KB)</td><td> <a href="africa/sao-tome-and-principe-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/sao-tome-and-principe-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/senegal-and-gambia.kml')"><td class="subregion"><a href="africa/senegal-and-gambia.html">Senegal and Gambia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/senegal-and-gambia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(44.1&nbsp;MB)</td><td> <a href="africa/senegal-and-gambia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/senegal-and-gambia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/seychelles.kml')"><td class="subregion"><a href="africa/seychelles.html">Seychelles</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/seychelles-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(2.1&nbsp;MB)</td><td> <a href="africa/seychelles-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/seychelles-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/sierra-leone.kml')"><td class="subregion"><a href="africa/sierra-leone.html">Sierra Leone</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/sierra-leone-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(32.0&nbsp;MB)</td><td> <a href="africa/sierra-leone-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/sierra-leone-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/somalia.kml')"><td class="subregion"><a href="africa/somalia.html">Somalia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/somalia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(32.4&nbsp;MB)</td><td> <a href="africa/somalia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/somalia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/south-africa.kml')"><td class="subregion"><a href="africa/south-africa.html">South Africa</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/south-africa-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(122&nbsp;MB)</td><td> <a href="africa/south-africa-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/south-africa-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/south-sudan.kml')"><td class="subregion"><a href="africa/south-sudan.html">South Sudan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/south-sudan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(62&nbsp;MB)</td><td> <a href="africa/south-sudan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/south-sudan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/sudan.kml')"><td class="subregion"><a href="africa/sudan.html">Sudan</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/sudan-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(32.6&nbsp;MB)</td><td> <a href="africa/sudan-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/sudan-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/swaziland.kml')"><td class="subregion"><a href="africa/swaziland.html">Eswatini</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/swaziland-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(21.2&nbsp;MB)</td><td> <a href="africa/swaziland-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/swaziland-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/tanzania.kml')"><td class="subregion"><a href="africa/tanzania.html">Tanzania</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/tanzania-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(349&nbsp;MB)</td><td> <a href="africa/tanzania-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/tanzania-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/togo.kml')"><td class="subregion"><a href="africa/togo.html">Togo</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/togo-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(29.6&nbsp;MB)</td><td> <a href="africa/togo-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/togo-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/tunisia.kml')"><td class="subregion"><a href="africa/tunisia.html">Tunisia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/tunisia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(28.7&nbsp;MB)</td><td> <a href="africa/tunisia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/tunisia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/uganda.kml')"><td class="subregion"><a href="africa/uganda.html">Uganda</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/uganda-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(156&nbsp;MB)</td><td> <a href="africa/uganda-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/uganda-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/zambia.kml')"><td class="subregion"><a href="africa/zambia.html">Zambia</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/zambia-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(120&nbsp;MB)</td><td> <a href="africa/zambia-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/zambia-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+<tr onMouseOver="loadkml('africa/zimbabwe.kml')"><td class="subregion"><a href="africa/zimbabwe.html">Zimbabwe</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/zimbabwe-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(146&nbsp;MB)</td><td> <a href="africa/zimbabwe-latest-free.shp.zip">[.shp.zip]</a></td><td> <a href="africa/zimbabwe-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+</table>
+<h3>Special Sub Regions</h3>
+<p>
+These regions are "special" because they are outside of the usual administrative
+hierarchies and may duplicate data already contained in the other sub regions.
+</p>
+<table id="specialsubregions">
+<tr>
+   <th class="subregion">Sub Region</th>
+   <th colspan="4">Quick Links</th>
+</tr>
+<tr>
+   <th>&nbsp;</th>
+   <th colspan="2">.osm.pbf</th>
+   <th>.shp.zip</th>
+   <th>.osm.bz2</th>
+</tr>
+<tr onMouseOver="loadkml('africa/south-africa-and-lesotho.kml')"><td class="subregion"><a href="africa/south-africa-and-lesotho.html">South Africa (includes Lesotho)</a></td>
+<td style="border-right: 0px; margin-right: 0px; padding-right: 0px;"><a href="africa/south-africa-and-lesotho-latest.osm.pbf">[.osm.pbf]</a></td><td style="border-left: 0px; margin-left: 0px; padding-left: 0px;">(223&nbsp;MB)</td><td> <img alt="not available" src="/img/cross.png"></td><td> <a href="africa/south-africa-and-lesotho-latest.osm.bz2">[.osm.bz2]</a></td></tr>
+</table>
+</div>
+<div id="download-right">
+   <div id="noscroll">
+   <div id="map"></div>
+
+   <div class="customized_shapes">
+<p>
+      <img alt="small flag of UK" src="/img/en.png">
+Not what you were looking for?
+Geofabrik is a consulting and software development firm based in Karlsruhe, Germany
+specializing in OpenStreetMap services. We're happy to help you with data
+preparation, processing, server setup and the like. <a href="http://www.geofabrik.de/data/shapefiles.html">Check out our web site</a>
+and contact us if we can be of service.
+
+      </p>
+   </div>
+   
+   <div class="customized_shapes">
+      <p>
+      <img alt="small flag of Germany" src="/img/de.png">
+      Nicht das Richtige dabei? 
+Die Geofabrik ist ein auf OpenStreetMap spezialisiertes Beratungs- und Softwareentwicklungsunternehmen in Karlsruhe.
+Gern helfen wir Ihnen bei der Datenaufbereitung, Datenkonvertierung, Serverinstallation und &auml;hnlichen Aufgaben.
+<a href="http://www.geofabrik.de/data/shapefiles.html">Besuchen Sie unsere Webseite</a> und sprechen Sie mit uns, wenn wir Ihnen 
+helfen k&ouml;nnen.
+      </p>
+   </div>
+   </div>
+</div>
+</div>
+<div id="download-copyright">
+Data/Maps Copyright 2018
+<a href="http://www.geofabrik.de/">Geofabrik GmbH</a>
+and
+<a href="http://www.openstreetmap.org/">OpenStreetMap Contributors</a>
+|
+<a href="http://creativecommons.org/licenses/by-sa/2.0/" rel="license">Map tiles: Creative Commons BY-SA 2.0</a>
+<a href="http://opendatacommons.org/licenses/odbl/">Data: ODbL 1.0</a>
+|
+<a href="http://www.geofabrik.de/geofabrik/contact.html">Contact</a>
+|
+<a href="http://www.geofabrik.de/geofabrik/imprint.html">Legal Notice/Privacy Policy</a>
