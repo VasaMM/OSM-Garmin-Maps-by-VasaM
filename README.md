@@ -32,7 +32,7 @@ Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou nějk
 4) Nainstalujte tento skript *gmapmaker*
 	1) Uložte si obsah celého repozitáže (vpravo nahoře: *Code* - *Download ZIP*).
 	2) Archiv rozbalte v místě, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte.
-	3) Příkazem `pip3 install osmium==2.15.4 pyclipper geojson` nainstalujte potřebné knihovny.
+	3) Příkazem `pip3 install osmium pyclipper geojson` nainstalujte potřebné knihovny.
 	4) Ověřte si funkčnost skriptu příkazem `python gmapmaker --version`.
 
 5) Proveďte inicializaci skriptu pomocí `python prepare.py`. Přeskočením odpovědi (klávesa *enter*) se použije výchozí nastavení. Tento skript automaticky stáhne potřebné soubory a programy (cca 1,5 GB). Případná aktualizace je možná pomocí `python update.py`.
