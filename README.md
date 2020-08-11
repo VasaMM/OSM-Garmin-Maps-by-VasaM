@@ -11,7 +11,7 @@ Toto dílo podléhá licenci [Creative Commons Uveďte původ 4.0 Mezinárodní 
 <!-- * Program [osmium](https://osmcode.org/osmium-tool/) -->
 
 ## Instalace
-Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou nějké probémy, podívejte se do [FAQ pro instalaci](#todo)
+Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou nějké probémy, podívejte se do [FAQ pro instalaci](#faq-pro-instalaci)
 
 1) Nainstalujte python 3
     1) [Odsud](https://www.python.org/downloads/) stáhněte instalátor (tlačítko pod nápisem *Download the latest version for Windows*) a spusťte ho.
