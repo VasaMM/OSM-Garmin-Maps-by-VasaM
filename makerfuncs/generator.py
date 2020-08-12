@@ -90,6 +90,7 @@ def crop(o):
 
 
 
+
 def _prepareLicence(o):
 	# Vytvorim licencni soubor
 	say('Prepare license file', o)
@@ -123,9 +124,10 @@ def _splitFiles(o):
 			, o)
 
 		# Aktualizuji seznam vstupnich souboru
-		input_file = []
-		for file in glob.glob( o.pbf + o.area.id + '-SPLITTED/*.osm.pbf' ):
-			input_file.append(file)
+		input_file = o.pbf + o.area.id + '-SPLITTED/*.osm.pbf'
+		# input_file = []
+		# for file in glob.glob( o.pbf + o.area.id + '-SPLITTED/*.osm.pbf' ):
+		# 	input_file.append(file)
 
 		# Rozdelim soubor s vrstevnicemi
 		if not os.path.isdir( o.pbf + o.area.id + '-SPLITTED-SRTM' ):
@@ -141,9 +143,10 @@ def _splitFiles(o):
 
 
 		# Aktualizuji seznam vstupnich souboru
-		input_srtm_file = []
-		for file in glob.glob( o.pbf + o.area.id + '-SPLITTED-SRTM/*.osm.pbf' ):
-			input_srtm_file.append(file)
+		input_srtm_file = o.pbf + o.area.id + '-SPLITTED-SRTM/*.osm.pbf'
+		# input_srtm_file = []
+		# for file in glob.glob( o.pbf + o.area.id + '-SPLITTED-SRTM/*.osm.pbf' ):
+		# 	input_srtm_file.append(file)
 
 	return input_file, input_srtm_file
 
@@ -216,7 +219,13 @@ def garmin(o):
 
 
 	say('Generating map', o)
+<<<<<<< HEAD
 	run('java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
+=======
+	# FIXME najit chybu
+		# -c ' + o.temp + 'mkgmap-settings.conf \
+	_run('java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
+>>>>>>> origin/master
 		-c ./garmin-style/mkgmap-settings.conf \
 		--bounds=' + o.bounds + ' \
 		--precomp-sea=' + o.sea + 'sea/ \
@@ -238,8 +247,8 @@ def garmin(o):
 		--dem-poly=' + o.polygons + o.area.id + '.poly \
 		--license-file=' + o.temp + 'license.txt \
 		--code-page=' + o.code + ' \
-		' + ' '.join(input_file) + ' \
-		' + ' '.join(input_srtm_file) + ' \
+		' + input_file + ' \
+		' + input_srtm_file + ' \
 		' + ' '.join(o.area.pois) + ' \
 		./garmin-style/style.txt'
 	, o)
