@@ -35,7 +35,10 @@ Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou nějk
 	3) Příkazem `pip3 install osmium pyclipper geojson` nainstalujte potřebné knihovny.
 	4) Ověřte si funkčnost skriptu příkazem `python gmapmaker --version`.
 
-5) Proveďte inicializaci skriptu pomocí `python prepare.py`. Přeskočením odpovědi (klávesa *enter*) se použije výchozí nastavení. Tento skript automaticky stáhne potřebné soubory a programy (cca 1,5 GB). Případná aktualizace je možná pomocí `python update.py`.
+5) Proveďte inicializaci skriptu pomocí `python prepare.py`.
+	* Přeskočením odpovědi (klávesa *enter*) se použije výchozí nastavení.
+	* Tento skript automaticky stáhne potřebné soubory ([sea](https://www.mkgmap.org.uk/download/mkgmap.html) a [bounds](https://www.mkgmap.org.uk/download/mkgmap.html)) a programy([mkgmap](https://www.mkgmap.org.uk/download/mkgmap.html), [splitter](https://www.mkgmap.org.uk/download/splitter.html) a [Osmconvert](https://wiki.openstreetmap.org/wiki/Osmconvert#Binaries)) - celkem cca 1,5 GB. Případná aktualizace je možná pomocí `python update.py`.
+	* Vhodná verze programu *Osmconvert* (Windows/Linux a 32bit/64bit) je detekována automaticky. Pokud ke skriptu *gmapmaker* přistupujete z různých systémů, je nutné spustit `python update.py` v každém z nich. Omezení systému Windows zároveň neumožňuje programu *Osmconvert* zpracovat soubory větší než 2GB. Tento program slouží k vytvoření výřezu (přepínače `--crop` a `--extend`), proto je nutné pro větší oblasti (většina států) použít buď systém Linux nebo si stáhnout speciální verzi [inary for Windows 64 bit](https://wiki.openstreetmap.org/wiki/Osmconvert#Windows) a tou nahradit automaticky stažená soubor *osmconvert64.exe*. **POZOR** toto funguje jen pro 64 bitový systém Windows, pro 32 bitový systém Windows řešení není. Linuxu se tento problém netýká.
 
 6) V souboru *makeMap.py* na prvních řádcích lze definovat maximální rozsah paměti RAM, povolený počet vláken procesoru a verzi mapy. (**FIXME** v budoucnu bude přesunuto do skriptu *prepare*).
 
@@ -62,7 +65,7 @@ Je-li skript spuštěn bez parametrů `python ./makeMap.py` vyžádá si od uži
 * `-e <km>`, `--extend <km>` zvětší polygon o zadaný počet kilometrů (**POZOR, zatím nefunguje**).
 * `--sufix <sufix>` přípona za jménem mapy.
 * `--no-split` zakáže dělení mapy na podsoubory - vhodné jen pro velmi malé oblasti.
-* `-r`, `--crop` ořízne mapový soubor podle polygonu (**POZOR, zatím nefunguje**).
+* `-r`, `--crop` ořízne mapový soubor podle polygonu.
 * `-q`, `--quiet` žádné výpisy na stdout.
 * `-l`, `--logging` vytvoří logovací soubor *makeMap.log*.
 * `-h`, `--help` zobrazí nápovědu.
