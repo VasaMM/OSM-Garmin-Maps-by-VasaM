@@ -219,13 +219,7 @@ def garmin(o):
 
 
 	say('Generating map', o)
-<<<<<<< HEAD
 	run('java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
-=======
-	# FIXME najit chybu
-		# -c ' + o.temp + 'mkgmap-settings.conf \
-	_run('java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
->>>>>>> origin/master
 		-c ./garmin-style/mkgmap-settings.conf \
 		--bounds=' + o.bounds + ' \
 		--precomp-sea=' + o.sea + 'sea/ \
