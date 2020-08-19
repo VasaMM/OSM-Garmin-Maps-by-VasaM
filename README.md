@@ -33,11 +33,15 @@ Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou nějk
 	1) Uložte si obsah celého repozitáže (vpravo nahoře: *Code* - *Download ZIP*).
 	2) Archiv rozbalte v místě, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty, proto s tím počítejte.
 	3) Příkazem `pip3 install osmium pyclipper geojson` nainstalujte potřebné knihovny.
-	4) Ověřte si funkčnost skriptu příkazem `python gmapmaker --version`.
 
-5) Proveďte inicializaci skriptu pomocí `python prepare.py`. Přeskočením odpovědi (klávesa *enter*) se použije výchozí nastavení. Tento skript automaticky stáhne potřebné soubory a programy (cca 1,5 GB). Případná aktualizace je možná pomocí `python update.py`.
+5) Proveďte inicializaci skriptu pomocí `python prepare.py`.
+	* Přeskočením odpovědi (klávesa *enter*) se použije výchozí nastavení.
+	* Tento skript automaticky stáhne potřebné soubory ([sea](https://www.mkgmap.org.uk/download/mkgmap.html) a [bounds](https://www.mkgmap.org.uk/download/mkgmap.html)) a programy([mkgmap](https://www.mkgmap.org.uk/download/mkgmap.html), [splitter](https://www.mkgmap.org.uk/download/splitter.html) a [Osmconvert](https://wiki.openstreetmap.org/wiki/Osmconvert#Binaries)) - celkem cca 1,5 GB. Případná aktualizace je možná pomocí `python update.py`.
+	* Vhodná verze programu *Osmconvert* (Windows/Linux a 32bit/64bit) je detekována automaticky. Pokud ke skriptu *gmapmaker* přistupujete z různých systémů, je nutné spustit `python update.py` v každém z nich. Omezení systému Windows zároveň neumožňuje programu *Osmconvert* zpracovat soubory větší než 2GB. Tento program slouží k vytvoření výřezu (přepínače `--crop` a `--extend`), proto je nutné pro větší oblasti (většina států) použít buď systém Linux nebo si stáhnout speciální verzi [inary for Windows 64 bit](https://wiki.openstreetmap.org/wiki/Osmconvert#Windows) a tou nahradit automaticky stažená soubor *osmconvert64.exe*. **POZOR** toto funguje jen pro 64 bitový systém Windows, pro 32 bitový systém Windows řešení není. Linuxu se tento problém netýká.
+	
+6) Ověřte si funkčnost skriptu příkazem `python gmapmaker.py --version`.
 
-6) V souboru *makeMap.py* na prvních řádcích lze definovat maximální rozsah paměti RAM, povolený počet vláken procesoru a verzi mapy. (**FIXME** v budoucnu bude přesunuto do skriptu *prepare*).
+7) V souboru *gmapmaker.py* na prvních řádcích lze definovat maximální rozsah paměti RAM, povolený počet vláken procesoru a verzi mapy. (**FIXME** v budoucnu bude přesunuto do skriptu *prepare*).
 
 ### FAQ pro instalaci
 * [*Jak zjistit, zda počítač používá 32bitovou nebo 64bitovou verzi operačního systému Windows*](https://support.microsoft.com/cs-cz/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64)
@@ -49,7 +53,7 @@ Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou nějk
 
 
 ## Použití
-Je-li skript spuštěn bez parametrů `python ./makeMap.py` vyžádá si od uživatele jméno generované oblasti. Pro bezobslužnou instalaci ho lze (a i další vlastnosti) předem definovat pomocí následujících parametrů:
+Je-li skript spuštěn bez parametrů `python ./gmapmaker.py` vyžádá si od uživatele jméno generované oblasti. Pro bezobslužnou instalaci ho lze (a i další vlastnosti) předem definovat pomocí následujících parametrů:
 * `-a <area>`, `--area <area>` definuje stát (oblast), pro který je mapa generována. Viz [seznam států](https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM/blob/dev/makerfuncs/states.py).
 * `-c <codePage>`, `--code-page <codePage>` kódování mapy (*unicode*, *ascii*, *1250*, *1252*, *latin2*).
 * `-d <opt>`, `--download <opt>` princip stahování mapových dat:
@@ -59,12 +63,12 @@ Je-li skript spuštěn bez parametrů `python ./makeMap.py` vyžádá si od uži
 * `--maximum-data-age <age>` určuje maximální stáří mapovyýh dat při automatickém stahování. Hodnota ve tvaru [0-9]+[hdm], kde *h* značí hodinu, *d* značí den (24 hodin) a m značí měsíc (30 dní) (**výchozí hodnota 1d**).
 * `--map-number <number>` vynutí konkretní map ID.
 * `--variant <variant>` vynutí konkretní variantu mapy (hodnota 1 - 5). Varianta mapy ovlivňuje její ID. Jinka je generována automaticky.
-* `-e <km>`, `--extend <km>` zvětší polygon o zadaný počet kilometrů (**POZOR, zatím nefunguje korektně**).
+* `-e <km>`, `--extend <km>` zvětší polygon o zadaný počet kilometrů (**POZOR, zatím nefunguje**).
 * `--sufix <sufix>` přípona za jménem mapy.
 * `--no-split` zakáže dělení mapy na podsoubory - vhodné jen pro velmi malé oblasti.
 * `-r`, `--crop` ořízne mapový soubor podle polygonu.
 * `-q`, `--quiet` žádné výpisy na stdout.
-* `-l`, `--logging` vytvoří logovací soubor *makeMap.log*.
+* `-l`, `--logging` vytvoří logovací soubor *gmapmaker.log*.
 * `-h`, `--help` zobrazí nápovědu.
 
 
@@ -75,7 +79,7 @@ Státy jsou definovány ve skriptu *python/areas.py*. Vlastní oblasti lze defin
 * `number` garmin ID mapy. Čtyřmístné číslo, mělo by být unikátní.
 * `pois` pole se jmény souborů obsahující dodatečné POI, které budou vloženy do mapy. Tyto soubory se musí nacházet ve složce *pois*.
 * `parent` rodičovská mapa, vhodné pro vytváření podoblastí z různých států (budou automaticky stažena/použita mapová data rodiče)
-* `crop` výchozí `False`, `True` vynutí oříznutí dat podle polygonu.
+* `crop` výchozí `False`, `True` vynutí oříznutí dat podle polygonu (**POZOR, zatím nefunguje**).
 
 Dále je nutné připravit polygon a to buď ve formátu *.poly* nebo *.geojson* a umístit ho pod stejným názvem do složky s polygony. Mapová data je pak nutné buď také stáhnout a nachystat do patřičné složky nebo definovat rodiče (viz výše). 
 

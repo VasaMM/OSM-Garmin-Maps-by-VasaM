@@ -1,4 +1,4 @@
-import os, sys, glob, zipfile, hashlib, json
+import os, sys, glob, zipfile, hashlib, json, platform
 import subprocess
 
 from datetime import datetime
@@ -19,7 +19,8 @@ def _sha1(filename):
 	return hash_func.hexdigest()
 
 
-def _run(program, o):
+
+def run(program, o):
 	program = ' '.join(program.split())
 	say(program, o, '[RUN] ')
 	process = subprocess.Popen(program, universal_newlines = True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -38,13 +39,13 @@ def _run(program, o):
 		raise ValueError(program + ' return ' + str(process.poll()) + ' (0 expected)')
 
 
+
 def contours(o):
 	say('Generuji vrstevnice', o)
-	# try:
 	# Zjistim, zda mam hotove vrstevnice
 	if not os.path.isfile(o.pbf + o.area.id + '-SRTM.osm.pbf'):
 		say('Generate contour line', o)
-		_run('phyghtmap \
+		run('phyghtmap \
 			--polygon=' + o.temp + 'polygon.poly \
 			-o ' + o.pbf + o.area.id + '-SRTM \
 			--pbf \
@@ -63,21 +64,20 @@ def contours(o):
 
 	else:
 		say('Use previously generated contour lines', o)
-	# except:
-	# 	if os.path.isfile(glob.glob(o.pbf + o.area.id + '-SRTM*.osm.pbf')[0]):
-	# 		os.remove(glob.glob(o.pbf + o.area.id + '-SRTM*.osm.pbf')[0])
-
-	# 	error("Cann't generate contour lines!", o)
-	# 	raise
 
 
+# TODO detekce velkych souboru
 def crop(o):
-	# FIXME
 	if o.crop or o.area.crop:
+		if platform.system() == 'Windows' and platform.architecture()[0] == '32bit' and os.path.getsize(o.area.mapDataName) > 2000000000:
+			raise ValueError('File for crop is too big (' + "{:.2f}".format(os.path.getsize(o.area.mapDataName) / 1000000000) + ' GB), maximum is 2 GB. See GitHub for details.')
+
 		say('Vytvarim vyrez oblasti', o)
 
+		osmconvert = './osmconvert' + platform.architecture()[0][0:2] + ('.exe' if platform.system() == 'Windows' else '')
+	
 		os.chdir( 'osmconvert' )
-		_run('osmconvert64-0.8.8p.exe \
+		run(osmconvert + ' \
 			../' + o.area.mapDataName + 
 			' -B=../' + o.temp + 'polygon.poly \
 			--complete-ways --complete-multipolygons --complete-boundaries \
@@ -88,12 +88,7 @@ def crop(o):
 
 		o.area.mapDataName = o.temp + o.area.id + '.osm.pbf'
 
-	# mapsplit europe.osm.pbf /tmp/output -p=country.poly
-	# osmconvert europe.osm.pbf -B=country.poly -o=switzerland.o5m
 
-	# https://bretth.dev.openstreetmap.org/osmosis-build/osmosis-latest.zip
-	# osmosis --read-xml file="planet-latest.osm" --bounding-polygon file="country.poly" --write-xml file="australia.osm"
-	# osmosis --read-pbf file="planet-latest.osm" --bounding-polygon file="country.poly" --write-pbf file="australia.osm"
 
 
 def _prepareLicence(o):
@@ -120,7 +115,7 @@ def _splitFiles(o):
 				os.remove(file)
 
 			# Spustim splitter
-			_run('java ' + o.JAVAMEM + ' -jar \
+			run('java ' + o.JAVAMEM + ' -jar \
 				./splitter-r' + str(o.splitter) + '/splitter.jar ' + 
 				input_file +
 				' --max-areas=4096 \
@@ -129,13 +124,14 @@ def _splitFiles(o):
 			, o)
 
 		# Aktualizuji seznam vstupnich souboru
-		input_file = []
-		for file in glob.glob( o.pbf + o.area.id + '-SPLITTED/*.osm.pbf' ):
-			input_file.append(file)
+		input_file = o.pbf + o.area.id + '-SPLITTED/*.osm.pbf'
+		# input_file = []
+		# for file in glob.glob( o.pbf + o.area.id + '-SPLITTED/*.osm.pbf' ):
+		# 	input_file.append(file)
 
 		# Rozdelim soubor s vrstevnicemi
 		if not os.path.isdir( o.pbf + o.area.id + '-SPLITTED-SRTM' ):
-			_run('java ' + o.JAVAMEM + ' -jar \
+			run('java ' + o.JAVAMEM + ' -jar \
 				./splitter-r' + str(o.splitter) + '/splitter.jar ' + 
 				input_srtm_file +
 				' --max-areas=4096 \
@@ -147,9 +143,10 @@ def _splitFiles(o):
 
 
 		# Aktualizuji seznam vstupnich souboru
-		input_srtm_file = []
-		for file in glob.glob( o.pbf + o.area.id + '-SPLITTED-SRTM/*.osm.pbf' ):
-			input_srtm_file.append(file)
+		input_srtm_file = o.pbf + o.area.id + '-SPLITTED-SRTM/*.osm.pbf'
+		# input_srtm_file = []
+		# for file in glob.glob( o.pbf + o.area.id + '-SPLITTED-SRTM/*.osm.pbf' ):
+		# 	input_srtm_file.append(file)
 
 	return input_file, input_srtm_file
 
@@ -222,8 +219,7 @@ def garmin(o):
 
 
 	say('Generating map', o)
-	# FIXME najit chybu
-	_run('java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
+	run('java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
 		-c ./garmin-style/mkgmap-settings.conf \
 		--bounds=' + o.bounds + ' \
 		--precomp-sea=' + o.sea + 'sea/ \
@@ -245,8 +241,8 @@ def garmin(o):
 		--dem-poly=' + o.polygons + o.area.id + '.poly \
 		--license-file=' + o.temp + 'license.txt \
 		--code-page=' + o.code + ' \
-		' + ' '.join(input_file) + ' \
-		' + ' '.join(input_srtm_file) + ' \
+		' + input_file + ' \
+		' + input_srtm_file + ' \
 		' + ' '.join(o.area.pois) + ' \
 		./garmin-style/style.txt'
 	, o)
@@ -278,7 +274,7 @@ def garmin(o):
 	# 	' + ' '.join(o.area.pois) + ' \
 	# 	./garmin-style/style.txt'
 
-	# _run(o, mkgmap)
+	# run(o, mkgmap)
 
 	# FIXME
 	# err = subprocess.run(mkgmap, shell=True, capture_output=False)

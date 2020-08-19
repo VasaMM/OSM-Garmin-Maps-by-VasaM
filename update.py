@@ -1,4 +1,4 @@
-import zipfile, os, shutil
+import zipfile, os, shutil, platform
 from makerfuncs import download as d, config
 
 def update():
@@ -32,6 +32,27 @@ def update():
 		if os.path.isdir('./mkgmap-r' + str(mkgmap)):
 			shutil.rmtree('./mkgmap-r' + str(mkgmap))
 		os.remove('./mkgmap.zip')
+
+
+	# osmconvert
+	sysVersion = platform.system()
+	sysBits = platform.architecture()[0]
+
+	print('Detected system' , sysVersion, sysBits)
+	if sysVersion in ['Windows', 'Linux'] and sysBits in ['32bit', '64bit']:
+		print('Download osmconvert for this system')
+		if sysVersion == 'Linux':
+			d.download('http://m.m.i24.cc/osmconvert' + sysBits[0:2], './osmconvert/osmconvert' + sysBits[0:2])
+		elif sysVersion == 'Windows':
+			d.download('http://m.m.i24.cc/osmconvert' + ('64' if sysBits == '64bit' else '') + '.exe', './osmconvert/osmconvert' + sysBits[0:2] + '.exe')
+
+	else:
+		print('')
+		print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+		print('[ERROR] Unsupported system, see GitHub for instructions.')
+		print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+		print('')
+
 
 
 if __name__ == '__main__':
