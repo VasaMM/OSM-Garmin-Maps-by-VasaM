@@ -74,7 +74,7 @@ def crop(o):
 
 		say('Vytvarim vyrez oblasti', o)
 
-		osmconvert = './osmconvert' + platform.architecture()[0][0:2] + ('.exe' if platform.system() == 'Windows' else '')
+		osmconvert = ('' if platform.system() == 'Windows' else './') + 'osmconvert' + platform.architecture()[0][0:2] + ('.exe' if platform.system() == 'Windows' else '')
 	
 		os.chdir( 'osmconvert' )
 		run(osmconvert + ' \
