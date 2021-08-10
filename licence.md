@@ -15,4 +15,4 @@ K vytvoreni map jsou použity programy *mkgmap* a *splitter*, které pochazí ze
 
 Vrstevnice generuje program [phyghtmap](http://katze.tfiu.de/projects/phyghtmap), autorem je Panarchos.
 
-Tento skript i jím vytvořené mapy (dostupné [zde](http://www.garmin.vasam.cz)) jsou mým dílem šířené pod licencí Creative Commons, tedy veškeré soubory můžete dále šířít a upravovat bez mého svolní pod podmínkou, že výsledek bude obsahovat odkaz zpět na tyto stránky a autora.
+Tento skript i jím vytvořené mapy (dostupné [zde](http://www.garmin.vasam.cz)) jsou mým dílem šířené pod licencí Creative Commons, tedy veškeré soubory můžete dále šířít a upravovat bez mého svolní pod podmínkou, že výsledek bude obsahovat odkaz zpět na tyto stránky a jméno autora - VasaM.
