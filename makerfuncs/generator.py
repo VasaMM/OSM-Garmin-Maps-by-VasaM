@@ -3,7 +3,7 @@ import subprocess
 
 from datetime import datetime
 from makerfuncs.prints import say, error, log
-import osmium
+# import osmium
 
 
 def _sha1(filename):

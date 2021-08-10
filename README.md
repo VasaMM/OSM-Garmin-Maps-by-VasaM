@@ -90,4 +90,4 @@ Hotové mapy najdete na stránce [http://www.garmin.vasam.cz](http://www.garmin.
 
 **Pozor, tento skript používáte na vlastní riziko a já, jakožto autor nenesu žádnou odpovědnost za škody jim způsobené!**
 
-Chyby, připomínky, návrhy hlašte v diskuzi na adrese [http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/](http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/), emailem [mailto:osm@vasam.cz] nebo zde na GitHubu.
+Chyby, připomínky, návrhy hlašte v diskuzi na adrese [http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/](http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/), emailem [osm@vasam.cz](mailto:osm@vasam.cz) nebo zde na GitHubu.
