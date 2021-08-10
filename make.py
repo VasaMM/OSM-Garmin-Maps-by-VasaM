@@ -1,5 +1,8 @@
  #!/usr/bin/env python3
 
+#  Skript pro dávkové generování map
+# Jako parametry jsou předány kódy jednotlivých států, ty jsou postupně vygenerovány a nahrány na web
+
 import sys, os
 from upload import upload
 
