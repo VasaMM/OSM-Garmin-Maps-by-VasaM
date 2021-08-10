@@ -21,6 +21,8 @@ def update():
 			if os.path.isdir('./splitter-r' + str(splitter)):
 				shutil.rmtree('./splitter-r' + str(splitter))
 			os.remove('./splitter.zip')
+			print('Done')
+
 
 
 	mkgmap = config.get('mkgmap')
@@ -38,6 +40,7 @@ def update():
 			if os.path.isdir('./mkgmap-r' + str(mkgmap)):
 				shutil.rmtree('./mkgmap-r' + str(mkgmap))
 			os.remove('./mkgmap.zip')
+			print('Done')
 
 
 	# osmconvert
@@ -52,6 +55,7 @@ def update():
 				d.download('http://m.m.i24.cc/osmconvert' + sysBits[0:2], './osmconvert/osmconvert' + sysBits[0:2])
 			elif sysVersion == 'Windows':
 				d.download('http://m.m.i24.cc/osmconvert' + ('64' if sysBits == '64bit' else '') + '.exe', './osmconvert/osmconvert' + sysBits[0:2] + '.exe')
+			print('Done')
 
 		else:
 			print('')
@@ -62,7 +66,27 @@ def update():
 
 
 
+	# Data sea
+	if (not os.path.isdir(data['sea'])):
+		d.download('http://osm.thkukuk.de/data/sea-latest.zip', './sea.zip')
+		with zipfile.ZipFile('./sea.zip', 'r') as zipRef:
+			zipRef.extractall(data['sea'])
+		os.remove('./sea.zip')
+		print('Done')
+	else:
+		print("Directoty " + data['sea'] + "already exists - skipping...")
+
+	# Data bounds
+	if (not os.path.isdir(data['bounds'])):
+		d.download('http://osm.thkukuk.de/data/bounds-latest.zip', './bounds.zip')
+		with zipfile.ZipFile('./bounds.zip', 'r') as zipRef:
+			zipRef.extractall(data['bounds'])
+		os.remove('./bounds.zip')
+		print('Done')
+	else:
+		print("Directoty " + data['bounds'] + "already exists - skipping...")
+
+
+
 if __name__ == '__main__':
 	update()
-
-	594
