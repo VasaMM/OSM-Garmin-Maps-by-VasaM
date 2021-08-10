@@ -64,23 +64,6 @@ def prepare():
 			pass
 
 
-	if (not os.path.isdir(data['sea'])):
-		d.download('http://osm.thkukuk.de/data/sea-latest.zip', './sea.zip')
-		with zipfile.ZipFile('./sea.zip', 'r') as zipRef:
-			zipRef.extractall(data['sea'])
-		os.remove('./sea.zip')
-	else:
-		print("Directoty " + data['sea'] + "already exists - skipping...")
-
-	if (not os.path.isdir(data['bounds'])):
-		d.download('http://osm.thkukuk.de/data/bounds-latest.zip', './bounds.zip')
-		with zipfile.ZipFile('./bounds.zip', 'r') as zipRef:
-			zipRef.extractall(data['bounds'])
-		os.remove('./bounds.zip')
-	else:
-		print("Directoty " + data['bounds'] + "already exists - skipping...")
-
-
 	data['splitter'] = 0
 	data['mkgmap'] = 0
 
