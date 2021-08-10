@@ -191,7 +191,10 @@ def _makeZip(o):
 def _makeInfo(o):
 	say('Make info file', o)
 
+	print(o)
+
 	infoData = {
+		'ID':        o.area.id,
 		'version':   str(o.VERSION),
 		'datetime':  str(o.area.timestamp),
 		'timestamp': str(o.area.timestamp.timestamp()),

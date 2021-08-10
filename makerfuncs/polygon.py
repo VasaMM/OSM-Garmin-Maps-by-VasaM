@@ -20,8 +20,8 @@ def _loadPoly(fileName):
 
 
 def _loadGeojson(fileName):
-	with open(fileName) as geojsonFIle:
-		data = geojson.load(geojsonFIle)
+	with open(fileName) as geojsonFile:
+		data = geojson.load(geojsonFile)
 
 		# Nactu prvni polygon
 		for feature in data['features']:
