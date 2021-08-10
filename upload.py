@@ -1,5 +1,8 @@
  #!/usr/bin/env python3
 
+# Nahraje hotová data na FTP server
+# Ocekava soubor ftp.secret, kde na prvnim radku je adresa ftp serveru, na druhem uzivatelske jmeno a na tretim heslo
+
 import sys
 from ftplib import FTP
 from makerfuncs import config
