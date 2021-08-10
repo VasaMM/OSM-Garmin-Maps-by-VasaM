@@ -23,16 +23,16 @@ Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou něja
 	2) Pro linux použijte `sudo apt install default-jre -y`
 
 3) Nainstalujte phyghtmap
-	3) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*, označení *source distribution*. Doporučuji nejnovější verzi. Např. v květnu 2019 to je *phyghtmap_2.21.orig.tar.gz*. **Pozor**, verze 2.21 (a zřejmě i starší) obsahuje ve Windows chybu, vytvořil jsem opravenou [kopii](http://www.garmin.vasam.cz/downloads/phyghtmap-2.21_fixed.zip).
-	4) Archiv rozbalte a ve složce se souborem *setup.py* spusťte konzoli.
-	5) Příkazem `pip3 install matplotlib==2.2.5 bs4 lxml` nainstalujte potřebné knihovny.
-	6) Příkazem `python setup.py install` nainstalujte *phyghtmap*.
-	7) Ověřte si úspěšnost instalace příkazem `phyghtmap --version`. Mělo by se vám zobrazit `phyghtmap 2.21`. Pokud vše funguje, můžete rozbalený archiv smazat.
+	1) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*, označení *source distribution*. Doporučuji nejnovější verzi. Např. v srpnu 2021 to je *phyghtmap_2.23.orig.tar.gz*. **Pozor**, verze 2.21 (a zřejmě i starší) obsahuje ve Windows chybu, vytvořil jsem opravenou [kopii](http://www.garmin.vasam.cz/downloads/phyghtmap-2.21_fixed.zip).
+	2) Archiv rozbalte a ve složce se souborem *setup.py* spusťte konzoli.
+	3) Příkazem `pip3 install matplotlib bs4 lxml` nainstalujte potřebné knihovny.
+	4) Příkazem `python setup.py install` nainstalujte *phyghtmap*.
+	5) Ověřte si úspěšnost instalace příkazem `phyghtmap --version`. Mělo by se vám zobrazit `phyghtmap 2.23`. Pokud vše funguje, můžete rozbalený archiv smazat.
 
 4) Nainstalujte tento skript *gmapmaker*
-	8) Uložte si obsah celého repozitáře (vpravo nahoře: *Code* - *Download ZIP*).
-	9) Archiv rozbalte v místě, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty.
-	10) Příkazem `pip3 install osmium pyclipper geojson` nainstalujte potřebné knihovny.
+	1) Uložte si obsah celého repozitáře (vpravo nahoře: *Code* - *Download ZIP*).
+	2) Archiv rozbalte v místě, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty.
+	3) Příkazem `pip3 install osmium pyclipper geojson` nainstalujte potřebné knihovny.
 
 5) Proveďte inicializaci skriptu pomocí `python prepare.py`.
 	* Přeskočením odpovědi (klávesa *enter*) se použije výchozí nastavení.
@@ -43,13 +43,14 @@ Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou něja
 
 7) V souboru *gmapmaker.py* na prvních řádcích lze definovat maximální rozsah paměti RAM, povolený počet vláken procesoru a verzi mapy. (**FIXME** v budoucnu bude přesunuto do skriptu *prepare*).
 
-### FAQ pro instalaci
+### FAQ pro instalaci a možné chyby
 * [*Jak zjistit, zda počítač používá 32bitovou nebo 64bitovou verzi operačního systému Windows*](https://support.microsoft.com/cs-cz/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64)
 * Konzoli na windows spustíte následovně: `Win + R`, napsat `cmd`, *OK*. Druhou možností je napsat `cmd` přímo do adresního řádku průzkumníku.
 * Na linuxu může být pro nástroj pip3 (popř. i pro python setup.py) vyžadován přepínač `--user` (`pip3 install --user name1 name2`) nebo `sudo` (`sudo pip3 install name1 name2`).
 * Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
-* Instalace knihovny *matplotlib* může způsobovat problémy. V tom případě si stáhněte upravený instalátor z [těchto stránek](https://www.lfd.uci.edu/~gohlke/pythonlibs/#matplotlib). Verzi vyberte podle vašeho systému (32bit vs 64bit) a verze pythou (pro python 3.8.5 je to cp38). Nezapomeňte, že potřebujete starší verzi matplotlib a to 2.2.5. Ve složce se staženým soubor spusťe následující příkaz `pip3 install <jméno souboru>`.
+* Instalace knihovny *osmium* může způsobovat problémy. Může pomoct použít starší verzi Pythonu, např. verzi 3.8.10.
 * Na Windows 10 může být problém s antivirem, viz [zde](https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM/issues/2#issuecomment-532711693).
+* Hlasí-li skript problémy s daty *sea*, smažte odpovídající složku a spusťte `python update.py`.
 
 
 ## Použití
@@ -60,7 +61,7 @@ Je-li skript spuštěn bez parametrů `python ./gmapmaker.py` vyžádá si od u�
 	* *force* - Mapová data se při každém spuštění znovu stáhnou.
 	* *skip* - Mapová data se nebudou stahovat.
 	* *auto* - Mapová data se stáhnou pouze pokud jsou starší než --maximum-date-age (**výchozí**).
-* `--maximum-data-age <age>` určuje maximální stáří mapovyýh dat při automatickém stahování. Hodnota ve tvaru [0-9]+[hdm], kde *h* značí hodinu, *d* značí den (24 hodin) a m značí měsíc (30 dní) (**výchozí hodnota 1d**).
+* `--maximum-data-age <age>` určuje maximální stáří mapových dat při automatickém stahování. Hodnota ve tvaru [0-9]+[hdm], kde *h* značí hodinu, *d* značí den (24 hodin) a m značí měsíc (30 dní) (**výchozí hodnota 1d**).
 * `--map-number <number>` vynutí konkretní map ID.
 * `--variant <variant>` vynutí konkretní variantu mapy (hodnota 1 - 5). Varianta mapy ovlivňuje její ID. Jinka je generována automaticky.
 * `-e <km>`, `--extend <km>` zvětší polygon o zadaný počet kilometrů (**POZOR, zatím nefunguje**).
