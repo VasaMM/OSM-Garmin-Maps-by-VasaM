@@ -22,6 +22,9 @@ def update():
 				shutil.rmtree('./splitter-r' + str(splitter))
 			os.remove('./splitter.zip')
 			print('Done')
+	else:
+		print('Program splitter is up to date')
+
 
 
 
@@ -41,6 +44,8 @@ def update():
 				shutil.rmtree('./mkgmap-r' + str(mkgmap))
 			os.remove('./mkgmap.zip')
 			print('Done')
+	else:
+		print('Program mkgmap is up to date')
 
 
 	# osmconvert
@@ -63,28 +68,30 @@ def update():
 			print('[ERROR] Unsupported system, see GitHub for instructions.')
 			print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 			print('')
+	else:
+		print('Program osmconvert is up to date')
 
 
 
 	# Data sea
-	if (not os.path.isdir(data['sea'])):
+	if (not os.path.isdir(config.get('sea'))):
 		d.download('http://osm.thkukuk.de/data/sea-latest.zip', './sea.zip')
 		with zipfile.ZipFile('./sea.zip', 'r') as zipRef:
-			zipRef.extractall(data['sea'])
+			zipRef.extractall(config.get('sea'))
 		os.remove('./sea.zip')
 		print('Done')
 	else:
-		print("Directoty " + data['sea'] + "already exists - skipping...")
+		print("Directoty '" + config.get('sea') + "' already exists - skipping...")
 
 	# Data bounds
-	if (not os.path.isdir(data['bounds'])):
+	if (not os.path.isdir(config.get('bounds'))):
 		d.download('http://osm.thkukuk.de/data/bounds-latest.zip', './bounds.zip')
 		with zipfile.ZipFile('./bounds.zip', 'r') as zipRef:
-			zipRef.extractall(data['bounds'])
+			zipRef.extractall(config.get('bounds'))
 		os.remove('./bounds.zip')
 		print('Done')
 	else:
-		print("Directoty " + data['bounds'] + "already exists - skipping...")
+		print("Directoty '" + config.get('bounds') + "' already exists - skipping...")
 
 
 
