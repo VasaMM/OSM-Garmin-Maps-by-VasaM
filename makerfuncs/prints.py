@@ -1,5 +1,7 @@
 import sys
 from datetime import datetime
+from makerfuncs.Lang import _
+
 
 LOG_FILE_NAME = 'gmapmaker.log'
 
@@ -13,7 +15,7 @@ def say( msg, o, prefix = '[INFO] ', end = "\n"):
 			try:
 				o.logFile = open(LOG_FILE_NAME, "w+")
 			except:
-				error("Cann't open file " + LOG_FILE_NAME, o)
+				error(_("Nelze otevrit soubor ") + LOG_FILE_NAME, o)
 		
 		if o.logFile:
 			o.logFile.write(prefix + msg + end)
@@ -26,7 +28,7 @@ def log( msg, o ):
 			try:
 				o.logFile = open(LOG_FILE_NAME, "w+")
 			except:
-				error("Cann't open file " + LOG_FILE_NAME, o)
+				error(_("Nelze otevrit soubor ") + LOG_FILE_NAME, o)
 		
 		if o.logFile:
 			o.logFile.write(msg)
@@ -41,10 +43,10 @@ def error( msg, o = None ):
 		try:
 			o.logFile = open(LOG_FILE_NAME, "w+")
 		except:
-			error("Cann't open file " + LOG_FILE_NAME, o)
+			error(_("Nelze otevrit soubor ") + LOG_FILE_NAME, o)
 	
 	if o and o.logFile:
-		o.logFile.write( '[ERROR] ' + msg + '\n' )
+		o.logFile.write('[ERROR] ' + msg + '\n' )
 		o.logFile.flush()
 
 
@@ -68,7 +70,7 @@ def end(o):
 	if hasattr(o, 'timeStart'):
 		runtime = timeEnd - o.timeStart
 	
-	say('Konec v ' + str(timeEnd) + ', beh ' + str(runtime), o)
+	say(_('Ukonceno v ') + str(timeEnd) + ', ' + _('doba behu') + ' ' + str(runtime), o)
 	# print('\007')
 
 	if hasattr(o, 'logFile') and o.logFile and o.logFile.close:

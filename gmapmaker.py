@@ -1,10 +1,10 @@
  #!/usr/bin/env python3
 
-import os
 from datetime import datetime
 
 from makerfuncs import *
 from makerfuncs.prints import say, error, end
+from makerfuncs.Lang import Lang, _
 
 
 
@@ -32,9 +32,13 @@ def main():
 		# Nactu a zpracuji arumenty
 		args.parse(o)
 
+		# Nastavim jazyk
+		if o.en:
+			Lang.bindLanguage('en')
+
 		# Zaznamenam cas spusteni
 		o.timeStart = datetime.now()
-		say('Start at ' + str(o.timeStart), o)
+		say(_('Spusteno v ') + str(o.timeStart), o)
 
 		# Ziskam informace o statu
 		parser.area(o)
@@ -64,7 +68,7 @@ def main():
 
 
 	except KeyboardInterrupt:
-		error("\nUkonceno uzivatelem")
+		error("\n" + _('Ukonceno uzivatelem'))
 		
 
 	except Exception as e:

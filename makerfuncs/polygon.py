@@ -2,6 +2,7 @@
 import pyclipper, re, os, geojson, functools
 from geojson import Polygon, Feature, FeatureCollection
 from makerfuncs.prints import say
+from makerfuncs.Lang import _
 
 
 def _loadPoly(fileName):
@@ -56,7 +57,7 @@ def _saveGeojson(fileName, polygon):
 
 
 def _extend(o):
-	say('Extending polygon', o)
+	say(_('Rozsiruji polygon'), o)
 	# [[17.25743, 49.58712], [17.24355, 49.58712], [17.24355, 49.5964], [17.25743, 49.5964], [17.25743, 49.58712]]
 
 	extender = pyclipper.PyclipperOffset()
