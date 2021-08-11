@@ -67,10 +67,11 @@ Je-li skript spuštěn bez parametrů `python ./gmapmaker.py` vyžádá si od u�
 * `-e <km>`, `--extend <km>` zvětší polygon o zadaný počet kilometrů (**POZOR, zatím nefunguje**).
 * `--sufix <sufix>` přípona za jménem mapy.
 * `--no-split` zakáže dělení mapy na podsoubory - vhodné jen pro velmi malé oblasti.
-* `-r`, `--crop` ořízne mapový soubor podle polygonu (**POZOR, zatím nefunguje**).
+* `-r`, `--crop` ořízne mapový soubor podle polygonu.
 * `-q`, `--quiet` žádné výpisy na stdout.
 * `-l`, `--logging` vytvoří logovací soubor *gmapmaker.log*.
 * `-h`, `--help` zobrazí nápovědu.
+* `--en` přepne skript do anličtiny
 
 
 ## Seznam států

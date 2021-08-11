@@ -2,6 +2,8 @@ import textwrap, argparse, re
 from argparse import RawTextHelpFormatter
 from makerfuncs import parser
 from makerfuncs.prints import say
+from makerfuncs.Lang import _
+
 
 def _downloadType(data):
 	if str(data).lower() in ('force', 'f'):
@@ -32,7 +34,7 @@ EN: Script for generating OSM maps for Garmin navigations
 Author: VasaM
 License: CC BY 4.0
 Version: ''' + "{:.2f}".format(o.VERSION / 100) + '''
-Date: 10. 08. 2020
+Date: 11. 08. 2021
 Web: https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM''')
 		)
 
@@ -82,7 +84,7 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 	argParser.add_argument(
 		'--extend', '-e',
 		type=float,
-		help='Zvetsi polygon o zadany pocet kilometrů\nExtend the polygon by the specified number of kilometers'
+		help='Zvetsi polygon o zadany pocet kilometrů (zatim nefunguje)\nExtend the polygon by the specified number of kilometers (not working yet)'
 	)
 	argParser.add_argument(
 		'--sufix',
@@ -115,6 +117,11 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 		version='%(prog)s ' + "{:.2f}".format(o.VERSION / 100),
 		help='Zobrazí aktuální verzi'
 	)
+	argParser.add_argument(
+		'--en',
+		action='store_true',
+		help='Prepne skript do anglictiny\nChange language of a script to English'
+	)
 
 
 	args = argParser.parse_args()
@@ -132,5 +139,6 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 	o.crop           = args.crop
 	o.mapNumber      = args.map_number
 	o.variant        = args.variant
+	o.en             = args.en
 	o.sufix          = '_VasaM' if args.sufix is None else '_' + args.sufix + '_VasaM'
 

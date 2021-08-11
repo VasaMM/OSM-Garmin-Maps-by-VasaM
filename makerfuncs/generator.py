@@ -1,9 +1,8 @@
-import os, sys, glob, zipfile, hashlib, json, platform
+import os, glob, zipfile, hashlib, json, platform
 import subprocess
 
-from datetime import datetime
 from makerfuncs.prints import say, error, log
-# import osmium
+from makerfuncs.Lang import _
 
 
 def _sha1(filename):
@@ -36,15 +35,14 @@ def run(program, o):
 
 	if process.poll() != 0:
 		error('stderr: ' + process.stderr.read(), o)
-		raise ValueError(program + ' return ' + str(process.poll()) + ' (0 expected)')
+		raise ValueError(program + ' ' + _('vratil') + ' ' + str(process.poll()) + ' (ocekavana 0)')
 
 
 
 def contours(o):
-	say('Generuji vrstevnice', o)
+	say(_('Generuji vrstevnice'), o)
 	# Zjistim, zda mam hotove vrstevnice
 	if not os.path.isfile(o.pbf + o.area.id + '-SRTM.osm.pbf'):
-		say('Generate contour line', o)
 		run('phyghtmap \
 			--polygon=' + o.temp + 'polygon.poly \
 			-o ' + o.pbf + o.area.id + '-SRTM \
@@ -63,16 +61,15 @@ def contours(o):
 		os.rename(glob.glob(o.pbf + o.area.id + '-SRTM*.osm.pbf')[0], o.pbf + o.area.id + '-SRTM.osm.pbf')
 
 	else:
-		say('Use previously generated contour lines', o)
+		say(_('Pouzivam drive vytvorene vrstevcnice'), o)
 
 
-# TODO detekce velkych souboru
 def crop(o):
 	if o.crop or o.area.crop:
 		if platform.system() == 'Windows' and platform.architecture()[0] == '32bit' and os.path.getsize(o.area.mapDataName) > 2000000000:
-			raise ValueError('File for crop is too big (' + "{:.2f}".format(os.path.getsize(o.area.mapDataName) / 1000000000) + ' GB), maximum is 2 GB. See GitHub for details.')
+			raise ValueError(_('Soubor pro orez je prilis velky') + ' (' + "{:.2f}".format(os.path.getsize(o.area.mapDataName) / 1000000000) + ' GB), ' + _('maximum jsou 2 GB. Detaily viz GitHub.'))
 
-		say('Vytvarim vyrez oblasti', o)
+		say(_('Vytvarim vyrez oblasti'), o)
 
 		osmconvert = ('' if platform.system() == 'Windows' else './') + 'osmconvert' + platform.architecture()[0][0:2] + ('.exe' if platform.system() == 'Windows' else '')
 	
@@ -93,7 +90,7 @@ def crop(o):
 
 def _prepareLicence(o):
 	# Vytvorim licencni soubor
-	say('Prepare license file', o)
+	say(_('Pripravuji licencni soubor'), o)
 	with open( './template/license.txt', 'r' ) as license:
 		content = license.read()
 
@@ -107,7 +104,7 @@ def _splitFiles(o):
 	input_srtm_file = o.pbf + o.area.id + '-SRTM.osm.pbf'
 
 	if o.split:
-		say('Split files start',o)
+		say(_('Spoustim rozdeleni souboru'), o)
 		# Data neexistuji nebo jsem stahl nova
 		if not os.path.exists( o.pbf + o.area.id + '-SPLITTED' ) or o.downloaded:
 			# Smazu puvodni soubory
@@ -139,7 +136,7 @@ def _splitFiles(o):
 				--output-dir=' + o.pbf + o.area.id + '-SPLITTED-SRTM'
 			, o)
 
-		say('Split files DONE',o)
+		say(_('Rozdeleni souboru - HOTOVO'), o)
 
 
 		# Aktualizuji seznam vstupnich souboru
@@ -175,7 +172,7 @@ def _makeBat(name, o):
 
 
 def _makeZip(o):
-	say('Make zip file', o)
+	say(_('Vytvarim zip soubor'), o)
 
 	os.chdir( o.img )
 	zip = zipfile.ZipFile( './' + o.area.id + o.sufix + '.zip', 'w' )
@@ -189,7 +186,7 @@ def _makeZip(o):
 
 
 def _makeInfo(o):
-	say('Make info file', o)
+	say(_('Vytvarim info soubor'), o)
 
 	print(o)
 
@@ -208,7 +205,7 @@ def _makeInfo(o):
 
 
 def garmin(o):
-	say( 'Making map for garmin...', o )
+	say(_('Vytvarim mapu pro Garmin...'), o )
 
 
 	# Vytvorim cilovou podslozku
@@ -221,7 +218,7 @@ def garmin(o):
 	_prepareLicence(o)
 
 
-	say('Generating map', o)
+	say(_('Generuji mapu'), o)
 	run('java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
 		-c ./garmin-style/mkgmap-settings.conf \
 		--bounds=' + o.bounds + ' \
@@ -250,50 +247,12 @@ def garmin(o):
 		./garmin-style/style.txt'
 	, o)
 
-	# mkgmap = 'java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
-	# 	-c ./garmin-style/mkgmap-settings.conf \
-	# 	--bounds=' + o.bounds + ' \
-	# 	--precomp-sea=' + o.sea + 'sea/ \
-	# 	--dem=' + o.hgt +'VIEW3/ \
-	# 	--max-jobs=' + str( o.MAX_JOBS ) + ' \
-	# 	--mapname="' + str(o.area.number).zfill(4) + '0001\" \
-	# 	--overview-mapnumber="' + str(o.area.number).zfill(4) + '0000\" \
-	# 	--family-id="' + str(o.area.number).zfill(4) + '" \
-	# 	--description="' + o.area.nameCs + o.sufix + '" \
-	# 	--family-name="' + o.area.nameCs + o.sufix + '" \
-	# 	--series-name="' + o.area.nameCs + o.sufix + '" \
-	# 	--area-name="' + o.area.nameCs + o.sufix + '" \
-	# 	--country-name="' + o.area.nameCs + o.sufix + '" \
-	# 	--country-abbr="' + o.area.id + '" \
-	# 	--region-name="' + o.area.nameCs + o.sufix + '" \
-	# 	--region-abbr="' + o.area.id + '" \
-	# 	--product-version=' + str( o.VERSION ) + ' \
-	# 	--output-dir=' + o.img + o.area.id + o.sufix + ' \
-	# 	--dem-poly=' + o.polygons + o.area.id + '.poly \
-	# 	--license-file=' + o.temp + 'license.txt \
-	# 	--code-page=' + o.code + ' \
-	# 	' + ' '.join(input_file) + ' \
-	# 	' + ' '.join(input_srtm_file) + ' \
-	# 	' + ' '.join(o.area.pois) + ' \
-	# 	./garmin-style/style.txt'
-
-	# run(o, mkgmap)
-
-	# FIXME
-	# err = subprocess.run(mkgmap, shell=True, capture_output=False)
-	# log(err.stdout.decode(), o)
-
-	# if err.returncode != 0:
-	# 	error(err.stderr.decode(), o)
-	# 	raise ValueError(program + ' return ' + str(err.returncode) + ' (0 expected)')
-
-
 	_makeBat('install', o)
 	_makeBat('uninstall', o)
 
 
 	# Prejmenuji vystupni soubor
-	say('Rename files', o)
+	say(_('Prejmenuji soubory'), o)
 	if os.path.isfile( o.img + o.area.id + o.sufix + '.img' ):
 		os.remove( o.img + o.area.id + o.sufix + '.img' )
 
