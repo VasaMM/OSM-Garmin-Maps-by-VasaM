@@ -47,7 +47,7 @@ Web: https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM''')
 		'--code-page', '-c',
 		choices=['unicode', 'ascii', '1250', '1252', 'latin2'],
 		default='1250',
-		help='Kódova stranka ve vygenerovane mape\nCode page in the generated map'
+		help='Kodova stranka ve vygenerovane mape\nCode page in the generated map'
 	)
 	# argParser.add_argument(
 	# 	'--map-language', '-g',
