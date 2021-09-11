@@ -242,12 +242,6 @@ STATES = {
 			nameEn = 'Romania',
 			number = 7200,
 		),
-		'RU': State(
-			url    = 'a',
-			nameCs = 'Rusko',
-			nameEn = 'Russian Federation',
-			number = 7205,
-		),
 		'RS': State(
 			url    = 'serbia',
 			nameCs = 'Srbsko',
