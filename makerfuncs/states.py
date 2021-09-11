@@ -455,12 +455,6 @@ STATES = {
 			nameEn = 'Philippines',
 			number = 7435,
 		),
-		'RU': State(
-			url    = 'a',
-			nameCs = 'Rusko',
-			nameEn = 'Russian Federation',
-			number = 7440,
-		),
 		'KR': State(
 			url    = 'south-korea',
 			nameCs = 'Jirni Korea',
