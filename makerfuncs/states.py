@@ -1330,4 +1330,71 @@ STATES = {
 		),
 	},
 
+	'russia': {
+		'RU-CFO': State(
+			url    = 'central-fed-district',
+			nameCs = 'Centrální federální okruh',
+			nameEn = 'Central Federal District',
+			number = 8330,
+		),
+		'RU-KFO': State(
+			url    = 'crimean-fed-district',
+			nameCs = 'Krymský federální okruh',
+			nameEn = 'Crimean Federal District',
+			number = 8335,
+		),
+		'RU-DFO': State(
+			url    = 'far-eastern-fed-district',
+			nameCs = 'Dálněvýchodní federální okruh',
+			nameEn = 'Far Eastern Federal District',
+			number = 8340,
+		),
+		'RU-SKFO': State(
+			url    = 'north-caucasus-fed-district',
+			nameCs = 'Severokavkazský federální okruh',
+			nameEn = 'North Caucasus Federal District',
+			number = 8345,
+		),
+		'RU-SZFO': State(
+			url    = 'northwestern-fed-district',
+			nameCs = 'Severozápadní federální okruh',
+			nameEn = 'Northwestern Federal District',
+			number = 8350,
+		),
+		'RU-SFO': State(
+			url    = 'siberian-fed-district',
+			nameCs = 'Sibiřský federální okruh',
+			nameEn = 'Siberian Federal District',
+			number = 8355,
+		),
+		'RU-UFO': State(
+			url    = 'south-fed-district',
+			nameCs = 'Jižní federální okruh',
+			nameEn = 'South Federal District',
+			number = 8360,
+		),
+		'RU-URALFO': State(
+			url    = 'ural-fed-district',
+			nameCs = 'Uralský federální okruh',
+			nameEn = 'Ural Federal District',
+			number = 8365,
+		),
+		'RU-PFO': State(
+			url    = 'volga-fed-district',
+			nameCs = 'Povolžský federální okruh',
+			nameEn = 'Volga Federal District',
+			number = 8370,
+		),
+		'RU-KLGD': State(
+			url    = 'kaliningrad',
+			nameCs = 'Kaliningrad',
+			nameEn = 'Kaliningrad',
+			number = 8375,
+		),
+	},
 }
+
+
+
+
+

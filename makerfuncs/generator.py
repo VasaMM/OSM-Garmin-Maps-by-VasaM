@@ -188,8 +188,6 @@ def _makeZip(o):
 def _makeInfo(o):
 	say(_('Vytvarim info soubor'), o)
 
-	print(o)
-
 	infoData = {
 		'ID':        o.area.id,
 		'version':   str(o.VERSION),
