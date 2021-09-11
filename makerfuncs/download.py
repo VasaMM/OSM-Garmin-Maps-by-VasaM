@@ -81,7 +81,7 @@ def download(url, output, quiet = False):
 			time_diff = (datetime.now() - tmp_time).total_seconds()
 
 			if not data:
-				_printProgres(0, 0, length, 0, 0, unit, unitSize)
+				_printProgres(100, length, length, 0, 0, unit, unitSize)
 				break
 
 			output.write(data)
