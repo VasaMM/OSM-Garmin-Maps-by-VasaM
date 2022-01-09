@@ -1,7 +1,14 @@
 # Not possible to add osmc:symbol directly because of overlapping.
 
+type=route & (route=hiking | route=foot) {
+	apply {
+		set mkgmap:other=yes;
+		add othername='${name}';
+	}
+}
 type=route & (route=hiking | route=foot) & osmc:symbol ~ 'red.*' {
 	apply {
+		set mkgmap:other=no;
 		set mkgmap:red=yes;
 		add redname='${name}';
 	}
@@ -9,6 +16,7 @@ type=route & (route=hiking | route=foot) & osmc:symbol ~ 'red.*' {
 
 type=route & (route=hiking | route=foot) & osmc:symbol ~ 'blue.*' {
 	apply {	
+		set mkgmap:other=no;
 		set mkgmap:blue=yes;
 		add bluename='${name}';
 	}
@@ -16,6 +24,7 @@ type=route & (route=hiking | route=foot) & osmc:symbol ~ 'blue.*' {
 
 type=route & (route=hiking | route=foot) & osmc:symbol ~ 'green.*' & osmc:symbol!=green:white:green_backslash {
 	apply {
+		set mkgmap:other=no;
 		set mkgmap:green=yes;
 		add greenname='${name}';
 	}
@@ -23,6 +32,7 @@ type=route & (route=hiking | route=foot) & osmc:symbol ~ 'green.*' & osmc:symbol
 
 type=route & (route=hiking | route=foot) & osmc:symbol=green:white:green_backslash {
 	apply {
+		set mkgmap:other=no;
 		set mkgmap:ns=yes;
 		add nsname='${name}';
 	}
@@ -30,6 +40,7 @@ type=route & (route=hiking | route=foot) & osmc:symbol=green:white:green_backsla
 
 type=route & (route=hiking | route=foot) & osmc:symbol ~ 'yellow.*' {
 	apply {
+		set mkgmap:other=no;
 		set mkgmap:yellow=yes;
 		add yellowname='${name}';
 	}
@@ -37,6 +48,7 @@ type=route & (route=hiking | route=foot) & osmc:symbol ~ 'yellow.*' {
 
 type=route & (route=hiking | route=foot) & osmc:symbol ~ 'black.*' {
 	apply {
+		set mkgmap:other=no;
 		set mkgmap:black=yes;
 		add blackname='${name}';
 	}
