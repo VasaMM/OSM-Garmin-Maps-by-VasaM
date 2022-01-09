@@ -1,8 +1,8 @@
 # Skript pro generování OSM map pro Garmin
 
 ## Licence
-[![Licence Creative Commons](https://i.creativecommons.org/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)  
-Toto dílo podléhá licenci [Creative Commons Uveďte původ 4.0 Mezinárodní License](http://creativecommons.org/licenses/by/4.0/).
+[![Licence Creative Commons](https://i.creativecommons.org/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)  
+Toto dílo podléhá licenci [Creative Commons Uveďte původ 4.0 Mezinárodní License](https://creativecommons.org/licenses/by/4.0/).
 
 ## Požadavky
 * Java verze 8
@@ -23,7 +23,7 @@ Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou něja
 	2) Pro linux použijte `sudo apt install default-jre -y`
 
 3) Nainstalujte phyghtmap
-	1) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*, označení *source distribution*. Doporučuji nejnovější verzi. Např. v srpnu 2021 to je *phyghtmap_2.23.orig.tar.gz*. **Pozor**, verze 2.21 (a zřejmě i starší) obsahuje ve Windows chybu, vytvořil jsem opravenou [kopii](http://www.garmin.vasam.cz/downloads/phyghtmap-2.21_fixed.zip).
+	1) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*, označení *source distribution*. Doporučuji nejnovější verzi. Např. v srpnu 2021 to je *phyghtmap_2.23.orig.tar.gz*. **Pozor**, verze 2.21 (a zřejmě i starší) obsahuje ve Windows chybu, vytvořil jsem opravenou [kopii](https://www.garmin.vasam.cz/downloads/phyghtmap-2.21_fixed.zip).
 	2) Archiv rozbalte a ve složce se souborem *setup.py* spusťte konzoli.
 	3) Příkazem `pip3 install matplotlib bs4 lxml` nainstalujte potřebné knihovny.
 	4) Příkazem `python setup.py install` nainstalujte *phyghtmap*.
@@ -87,7 +87,7 @@ Dále je nutné připravit polygon a to buď ve formátu *.poly* nebo *.geojson*
 
 
 ### Hotové mapy
-Hotové mapy najdete na stránce [http://www.garmin.vasam.cz](http://www.garmin.vasam.cz)
+Hotové mapy najdete na stránce [https://www.garmin.vasam.cz](https://www.garmin.vasam.cz)
 
 
 **Pozor, tento skript používáte na vlastní riziko a já, jakožto autor nenesu žádnou odpovědnost za škody jim způsobené!**
