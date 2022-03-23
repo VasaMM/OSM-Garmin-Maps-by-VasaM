@@ -1,11 +1,12 @@
 # https://wiki.openstreetmap.org/wiki/Osmosis/Polygon_Filter_File_Python_Parsing
 import pyclipper, re, os, geojson, functools
 from geojson import Polygon, Feature, FeatureCollection
+from makerfuncs.Options import Options
 from makerfuncs.prints import say
 from makerfuncs.Lang import _
 
 
-def _loadPoly(fileName):
+def _loadPoly(fileName: str) -> list[tuple[float, float]]:
 	# https://github.com/ustroetz/polygon2osm/blob/master/polygon2geojson.py
 	coordinates = None
 	with open(fileName) as polyFile:
@@ -19,19 +20,18 @@ def _loadPoly(fileName):
 	return coordinates[0]
 
 
-
-def _loadGeojson(fileName):
+def _loadGeojson(fileName: str) -> list[tuple[float, float]]:
 	with open(fileName) as geojsonFile:
 		data = geojson.load(geojsonFile)
 
-		# Nactu prvni polygon
+		# Load first polygon
 		for feature in data['features']:
 			for key,value in feature.items():
 				if key == 'geometry' and value['type'] == 'Polygon':
 					return value['coordinates'][0]
 
 
-def _savePoly(fileName, polygon):
+def _savePoly(fileName: str, polygon: list[tuple[float, float]]) -> None:
 	if not os.path.exists(os.path.dirname(fileName)):
 		os.makedirs(os.path.dirname(fileName))
 
@@ -44,7 +44,7 @@ def _savePoly(fileName, polygon):
 		polyFile.write('END' + "\n")
 
 
-def _saveGeojson(fileName, polygon):
+def _saveGeojson(fileName: str, polygon: list[tuple[float, float]]) -> None:
 	if not os.path.exists(os.path.dirname(fileName)):
 		os.makedirs(os.path.dirname(fileName))
 
@@ -56,8 +56,8 @@ def _saveGeojson(fileName, polygon):
 
 
 
-def _extend(o):
-	say(_('Rozsiruji polygon'), o)
+def _extend(o: Options) -> None:
+	say(_('Extending polygon'), o)
 	# [[17.25743, 49.58712], [17.24355, 49.58712], [17.24355, 49.5964], [17.25743, 49.5964], [17.25743, 49.58712]]
 
 	extender = pyclipper.PyclipperOffset()
@@ -70,7 +70,7 @@ def _extend(o):
 
 	# http://www.angusj.com/delphi/clipper/documentation/Docs/Units/ClipperLib/Classes/ClipperOffset/Methods/AddPath.htm
 	extender.AddPath(path, pyclipper.JT_MITER, pyclipper.ET_CLOSEDPOLYGON)
-	solution = extender.Execute(1600 * o.extend)[0]   # FIXME hodnota 1600 experimentálně funguje pro CR
+	solution = extender.Execute(1600 * o.extend)[0]   # FIXME Value 1600 experimentally works for CZ
 
 	for i in range(len(solution)):
 		point = solution[i]
@@ -81,30 +81,30 @@ def _extend(o):
 	o.polygon = solution
 
 
-def load(o):
-	# Neexistuje *.poly soubor, vytvorim ho z *.geojson
-	if not os.path.isfile(o.polygons + o.area.id + '.poly'):
-		# Neexistuje ani *.geojson -> chyba
-		if not os.path.isfile(o.polygons + o.area.id + '.geojson'):
-			raise ValueError(o.area.id + '.poly or ' + o.area.id + '.geojson missing!')
+def load(o: Options):
+	polyPath = os.path.join(o.polygons, o.area.id + '.poly')
+	jsonPath = os.path.join(o.polygons, o.area.id + '.geojson')
 
+	# Doesn't exist *.poly file, create it from *.geojson
+	if not os.path.isfile(polyPath):
+		# Doesn't either *.geojson -> error
+		if not os.path.isfile(jsonPath):
+			raise ValueError(o.area.id + '.poly ' + _('or') + ' ' + o.area.id + '.geojson ' + _('missing') + '!')
 
-		o.polygon = _loadGeojson(o.polygons + o.area.id + '.geojson')
-		_savePoly(o.polygons + o.area.id + '.poly', o.polygon)
-		
+		o.polygon = _loadGeojson(jsonPath)
+		_savePoly(polyPath, o.polygon)
 
-	# Existuje *.poly soubor, vytvorim *.geojson, pokud jeste neexistuje
-	elif not os.path.isfile(o.polygons + o.area.id + '.geojson'):
-		o.polygon = _loadPoly(o.polygons + o.area.id + '.poly')
-		_saveGeojson(o.polygons + o.area.id + '.geojson', o.polygon)
+	# Exist *.poly file, create *.geojson, if it doesn't exist yet
+	elif not os.path.isfile(jsonPath):
+		o.polygon = _loadPoly(polyPath)
+		_saveGeojson(jsonPath, o.polygon)
 
-
-	# Existuje *.poly i *.geojson, nactu geojson
+	# Exist *.poly and *.geojson, load geojson
 	else:
-		o.polygon = _loadGeojson(o.polygons + o.area.id + '.geojson')
+		o.polygon = _loadGeojson(jsonPath)
 
 	if o.extend is not None:
 		_extend(o)
 		o.crop = True
 
-	_savePoly(o.temp + 'polygon.poly', o.polygon)
+	_savePoly(os.path.join(o.temp, 'polygon.poly'), o.polygon)

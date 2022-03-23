@@ -5,6 +5,8 @@ sea/*
 pbf/*
 maps/*
 polygons/*
+.vscode/*
+!.vscode/launch.json
 
 _pic/*
 _pbf(smazat)/*

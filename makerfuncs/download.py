@@ -1,14 +1,14 @@
 import os, sys, errno
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 from math import floor
 import urllib.request
-from makerfuncs.prints import say, error
+from makerfuncs.Options import Options
+from makerfuncs.prints import say
 from makerfuncs import parser
 from makerfuncs.Lang import _
-import queue
 
 
-def _makeBar(length, percent, done = '=', pointer = '>', fill = ' ', start = '[', end = ']'):
+def _makeBar(length: int, percent: int, done: str = '=', pointer: str = '>', fill: str = ' ', start: str = '[', end: str = ']') -> str:
 	part_size = 100 / length
 
 	output = start
@@ -26,7 +26,7 @@ def _makeBar(length, percent, done = '=', pointer = '>', fill = ' ', start = '['
 
 
 
-def _printProgress(percent, size, length, speed, eta, unit, unitSize):
+def _printProgress(percent: int, size: int, length: int, speed: int, eta: str, unit: str, unitSize: int) -> None:
 	bar = _makeBar(30, percent)
 
 	sys.stdout.write("\r") # Clear to the end of line
@@ -34,7 +34,7 @@ def _printProgress(percent, size, length, speed, eta, unit, unitSize):
 
 
 
-def download(url, output, quiet = False):
+def download(url: str, output: str, quiet: bool = False) -> None:
 	# url = 'https://speed.hetzner.de/100MB.bin'
 	# url = 'https://speed.hetzner.de/1GB.bin'
 
@@ -67,7 +67,7 @@ def download(url, output, quiet = False):
 
 
 		if not quiet:
-			print(_("Stahuji") + " '" + url + "'  ", length // unitSize, unit)  # Prevedu na megabyte
+			print(_("Download") + " '" + url + "'  ", length // unitSize, unit)  # Convert to MB
 			_printProgress(0, 0, length, 0, 0, unit, unitSize)
 
 		speedHistory = [0] * 10
@@ -111,31 +111,29 @@ def download(url, output, quiet = False):
 			print()
 
 	except urllib.error.HTTPError as e:
-		print('Error code: ', e.code)
+		print(_('Error code: '), e.code)
 		raise
 
 	except urllib.error.URLError as e:
-		print('Reason: ', e.reason)
+		print(_('Reason: '), e.reason)
 		raise
 
 
 
-
-def mapData(o):
-	say(_('Spoustim stahovani mapovych dat'), o)
+def mapData(o: Options):
+	say(_('Start map data download'), o)
 	o.downloaded = False
 
-	# Zjistim, zda mam stahovat data
+	# Check, if download is necessary
 	if o.area.url is None:
-		say(_('Neznam URL adresu - preskakuji'), o)
-		if o.area.fileHeader is None:
-			raise ValueError(_('Mapový soubor NEEXISTUJE!'))
+		say(_('I don\'t have data url - skip downloading'), o)
+		if not o.area.file:
+			raise ValueError(_('Map file does NOT exist!'))
 		return
 
 	if o.downloadMap == 'skip':
-		say(_('Uzivatel nastavil "--download skip" - nestahuji'), o)
+		say(_('User set "--download skip" - skip downloading'), o)
 		return
-
 
 	if o.downloadMap == 'auto':
 		if o.area.timestamp is None:
@@ -146,23 +144,22 @@ def mapData(o):
 			if diff.total_seconds() > o.maximumDataAge:
 				o.downloaded = True
 			else:
-				say(_('Mapova data jsou prilis mlada - nestahuji'), o)
-
+				say(_('Map data is to young - skip downloading'), o)
 
 
 	if o.downloadMap == 'force' or o.downloaded is True:
 		try:
-			say(_('Stahuji mapova data'), o)
+			say(_('Downloading map data'), o)
 			download(o.area.url, o.area.mapDataName)
 			parser.fileHeader(o)
 
 		except:
-			raise ValueError(_('Nelze stahnout mapova data!'))
+			raise ValueError(_('Can\'t download map data!'))
 
 
 
-# Stahnu polygon
-def polygon(o):
-	if hasattr(o.area, 'continent') and not os.path.isfile(o.polygons + o.area.id + '.poly'):
-		say(_('Stahuji polygon'), o)
-		download(o.area.url[0:-15] + '.poly', o.polygons + o.area.id + '.poly')
+# Download polygon
+def polygon(o: Options):
+	if hasattr(o.area, 'continent') and not os.path.isfile(os.path.join(o.polygons, o.area.id + '.poly')):
+		say(_('Download polygon'), o)
+		download(o.area.url[0:-15] + '.poly', os.path.join(o.polygons, o.area.id + '.poly'))

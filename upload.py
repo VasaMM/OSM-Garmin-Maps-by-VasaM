@@ -3,19 +3,20 @@
 # Nahraje hotová data na FTP server
 # Ocekava soubor ftp.secret, kde na prvnim radku je adresa ftp serveru, na druhem uzivatelske jmeno a na tretim heslo
 
-import sys
+import sys, os
 from ftplib import FTP
-from makerfuncs import config
+from makerfuncs.config import Configuration
+from makerfuncs.Options import Options
 
-
-
-class Options:
-	pass
 
 def upload(states):
 	if len(states) > 0:
 		o = Options()
-		config.load(o)
+
+		config = Configuration()
+		config.load()
+		for key, item in config:
+			setattr(o, key, item.getValue())
 
 		print('Nacitam prihlasovaci udaje')
 		with open( './ftp.secret', 'r' ) as secret:
@@ -31,7 +32,7 @@ def upload(states):
 					file = state + '_VasaM' + suffix
 
 					print('Nahrávám', file)
-					ftp.storbinary('STOR ' + file + '.uploading', open(o.img + file, 'rb'))
+					ftp.storbinary('STOR ' + file + '.uploading', open(os.path.join(o.img, file), 'rb'))
 
 					print('Nahrávání dokončeno')
 					ftp.rename(file + '.uploading', file)

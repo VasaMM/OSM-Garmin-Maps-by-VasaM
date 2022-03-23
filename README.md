@@ -1,14 +1,13 @@
 # Skript pro generování OSM map pro Garmin
 
 ## Licence
-[![Licence Creative Commons](https://i.creativecommons.org/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)  
+[![Licence Creative Commons](https://i.creativecommons.org/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
 Toto dílo podléhá licenci [Creative Commons Uveďte původ 4.0 Mezinárodní License](https://creativecommons.org/licenses/by/4.0/).
 
 ## Požadavky
 * Java verze 8
-* Python verze 3 (testováno na 3.8.5)
+* Python verze 3.10 (testováno na 3.10.3)
 * Program [phyghtmap](http://katze.tfiu.de/projects/phyghtmap/), viz [instalace](#Instalace)
-<!-- * Program [osmium](https://osmcode.org/osmium-tool/) -->
 
 ## Instalace
 Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou nějaké problémy, podívejte se do [FAQ pro instalaci](#faq-pro-instalaci)
@@ -22,8 +21,8 @@ Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou něja
 	1) [Zde](https://www.java.com/en/download/manual.jsp) stáhnete instalátor pro Windows. Pokud máte 64bitový systém, doporučuji *Windows Offline (64-bit)*. Můžete použít výchozí nastavení instalace.
 	2) Pro linux použijte `sudo apt install default-jre -y`
 
-3) Nainstalujte phyghtmap
-	1) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*, označení *source distribution*. Doporučuji nejnovější verzi. Např. v srpnu 2021 to je *phyghtmap_2.23.orig.tar.gz*. **Pozor**, verze 2.21 (a zřejmě i starší) obsahuje ve Windows chybu, vytvořil jsem opravenou [kopii](https://www.garmin.vasam.cz/downloads/phyghtmap-2.21_fixed.zip).
+3) Nainstalujte *phyghtmap*
+	1) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*, označení *source distribution*. Doporučuji nejnovější verzi. Např. v srpnu 2021 to je *phyghtmap_2.23.orig.tar.gz*. **Pozor**, verze 2.23 (a zřejmě i starší) v kombinaci s nejnovějšími verzemi ostatních knihoven nefunguje. Vytvořil jsem opravenou [kopii](http://www.garmin.vasam.cz/downloads/phyghtmap-2.23_fixed.zip).
 	2) Archiv rozbalte a ve složce se souborem *setup.py* spusťte konzoli.
 	3) Příkazem `pip3 install matplotlib bs4 lxml` nainstalujte potřebné knihovny.
 	4) Příkazem `python setup.py install` nainstalujte *phyghtmap*.
@@ -32,13 +31,13 @@ Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou něja
 4) Nainstalujte tento skript *gmapmaker*
 	1) Uložte si obsah celého repozitáře (vpravo nahoře: *Code* - *Download ZIP*).
 	2) Archiv rozbalte v místě, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty.
-	3) Příkazem `pip3 install osmium pyclipper geojson` nainstalujte potřebné knihovny.
+	3) Příkazem `pip3 install pyclipper geojson` nainstalujte zbývající potřebné knihovny.
 
 5) Proveďte inicializaci skriptu pomocí `python prepare.py`.
-	* Přeskočením odpovědi (klávesa *enter*) se použije výchozí nastavení.
+	* Přeskočením odpovědi (klávesa *enter*) se použije výchozí, popř. poslední nastavení.
 	* Tento skript automaticky stáhne potřebné soubory ([sea](https://www.mkgmap.org.uk/download/mkgmap.html) a [bounds](https://www.mkgmap.org.uk/download/mkgmap.html)) a programy ([mkgmap](https://www.mkgmap.org.uk/download/mkgmap.html), [splitter](https://www.mkgmap.org.uk/download/splitter.html) a [Osmconvert](https://wiki.openstreetmap.org/wiki/Osmconvert#Binaries)) - celkem cca 1,5 GB. Případná aktualizace je možná pomocí `python update.py`.
 	* Vhodná verze programu *Osmconvert* (Windows/Linux a 32bit/64bit) je detekována automaticky. Pokud ke skriptu *gmapmaker* přistupujete z různých systémů, je nutné spustit `python update.py` v každém z nich. Omezení systému Windows zároveň neumožňuje programu *Osmconvert* zpracovat soubory větší než 2 GB. Tento program slouží k vytvoření výřezu (přepínače `--crop` a `--extend`), proto je nutné pro větší oblasti (většina států) použít buď systém Linux nebo si stáhnout speciální verzi [binary for Windows 64 bit](https://wiki.openstreetmap.org/wiki/Osmconvert#Windows) a tou nahradit automaticky stažený soubor *osmconvert64.exe*. **POZOR** toto funguje jen pro 64bitový systém Windows, pro 32bitový systém Windows řešení není. Linuxu se tento problém netýká.
-	
+
 6) Ověřte si funkčnost skriptu příkazem `python gmapmaker.py --version`.
 
 7) V souboru *gmapmaker.py* na prvních řádcích lze definovat maximální rozsah paměti RAM, povolený počet vláken procesoru a verzi mapy. (**FIXME** v budoucnu bude přesunuto do skriptu *prepare*).
@@ -47,10 +46,9 @@ Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou něja
 * [*Jak zjistit, zda počítač používá 32bitovou nebo 64bitovou verzi operačního systému Windows*](https://support.microsoft.com/cs-cz/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64)
 * Konzoli na windows spustíte následovně: `Win + R`, napsat `cmd`, *OK*. Druhou možností je napsat `cmd` přímo do adresního řádku průzkumníku.
 * Na linuxu může být pro nástroj pip3 (popř. i pro python setup.py) vyžadován přepínač `--user` (`pip3 install --user name1 name2`) nebo `sudo` (`sudo pip3 install name1 name2`).
-* Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
-* Instalace knihovny *osmium* může způsobovat problémy. Může pomoct použít starší verzi Pythonu, např. verzi 3.8.10.
+* Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průzkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
 * Na Windows 10 může být problém s antivirem, viz [zde](https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM/issues/2#issuecomment-532711693).
-* Hlasí-li skript problémy s daty *sea*, smažte odpovídající složku a spusťte `python update.py`.
+* Hlásí-li skript problémy s daty *sea*, smažte odpovídající složku a spusťte `python update.py`.
 
 
 ## Použití
@@ -63,7 +61,7 @@ Je-li skript spuštěn bez parametrů `python ./gmapmaker.py` vyžádá si od u�
 	* *auto* - Mapová data se stáhnou pouze pokud jsou starší než --maximum-date-age (**výchozí**).
 * `--maximum-data-age <age>` určuje maximální stáří mapových dat při automatickém stahování. Hodnota ve tvaru [0-9]+[hdm], kde *h* značí hodinu, *d* značí den (24 hodin) a m značí měsíc (30 dní) (**výchozí hodnota 1d**).
 * `--map-number <number>` vynutí konkretní map ID.
-* `--variant <variant>` vynutí konkretní variantu mapy (hodnota 1 - 5). Varianta mapy ovlivňuje její ID. Jinka je generována automaticky.
+* `--variant <variant>` vynutí konkretní variantu mapy (hodnota 1 - 5). Varianta mapy ovlivňuje její ID. Jinak je generována automaticky.
 * `-e <km>`, `--extend <km>` zvětší polygon o zadaný počet kilometrů (**POZOR, zatím nefunguje**).
 * `--sufix <sufix>` přípona za jménem mapy.
 * `--no-split` zakáže dělení mapy na podsoubory - vhodné jen pro velmi malé oblasti.
@@ -71,7 +69,7 @@ Je-li skript spuštěn bez parametrů `python ./gmapmaker.py` vyžádá si od u�
 * `-q`, `--quiet` žádné výpisy na stdout.
 * `-l`, `--logging` vytvoří logovací soubor *gmapmaker.log*.
 * `-h`, `--help` zobrazí nápovědu.
-* `--en` přepne skript do anličtiny
+* `--en` přepne skript do angličtiny
 
 
 ## Seznam států
@@ -83,7 +81,7 @@ Státy jsou definovány ve skriptu *python/areas.py*. Vlastní oblasti lze defin
 * `parent` rodičovská mapa, vhodné pro vytváření podoblastí z různých států (budou automaticky stažena/použita mapová data rodiče)
 * `crop` výchozí `False`, `True` vynutí oříznutí dat podle polygonu (**POZOR, zatím nefunguje**).
 
-Dále je nutné připravit polygon a to buď ve formátu *.poly* nebo *.geojson* a umístit ho pod stejným názvem do složky s polygony. Mapová data je pak nutné buď také stáhnout a nachystat do patřičné složky nebo definovat rodiče (viz výše). 
+Dále je nutné připravit polygon a to buď ve formátu *.poly* nebo *.geojson* a umístit ho pod stejným názvem do složky s polygony. Mapová data je pak nutné buď také stáhnout a nachystat do patřičné složky nebo definovat rodiče (viz výše).
 
 
 ### Hotové mapy
@@ -92,4 +90,4 @@ Hotové mapy najdete na stránce [https://www.garmin.vasam.cz](https://www.garmi
 
 **Pozor, tento skript používáte na vlastní riziko a já, jakožto autor nenesu žádnou odpovědnost za škody jim způsobené!**
 
-Chyby, připomínky, návrhy hlašte v diskuzi na adrese [http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/](http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/), emailem [osm@vasam.cz](mailto:osm@vasam.cz) nebo zde na GitHubu.
+Chyby, připomínky, návrhy hlaste v diskuzi na adrese [http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/](http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/), emailem [osm@vasam.cz](mailto:osm@vasam.cz) nebo zde na GitHubu.

@@ -428,7 +428,7 @@ STATES = {
 		'MM': State(
 			url    = 'myanmar',
 			nameCs = 'Myanmar',
-			nameEn = 'Myanmar (a.k.a. Burma)',
+			nameEn = 'Myanmar',
 			number = 7415,
 		),
 		'NP': State(
@@ -457,7 +457,7 @@ STATES = {
 		),
 		'KR': State(
 			url    = 'south-korea',
-			nameCs = 'Jirni Korea',
+			nameCs = 'Jizni Korea',
 			nameEn = 'South Korea',
 			number = 7445,
 		),
@@ -755,7 +755,7 @@ STATES = {
 		'SH': State(
 			url    = 'saint-helena-ascension-and-tristan-da-cunha',
 			nameCs = 'Svata Helena',
-			nameEn = 'Saint Helena, Ascension and Tristan da Cunha',
+			nameEn = 'Saint Helena',
 			number = 7700,
 		),
 		'ST': State(
@@ -1393,8 +1393,3 @@ STATES = {
 		),
 	},
 }
-
-
-
-
-

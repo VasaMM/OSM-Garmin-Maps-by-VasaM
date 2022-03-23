@@ -1,46 +1,110 @@
 import json, os
 
-def save(data):
-	with open('gmapmaker.config', 'w') as outfile:
-		json.dump(data, outfile)
+class Item:
+	setted = False
 
+	def set(self, value):
+		if type(value) != self.valueType:
+			raise RuntimeError('Ivalid type of value! ' + value + ': ' + self.valueType + ' expected but ' + type(value) + ' getted.')
+		self.value = value
+		self.setted = True
 
-def load(o):
-	with open('gmapmaker.config') as configFile:
-		data = json.load(configFile)
+	def unset(self):
+		self.setted = False
 
-		o.img      = data['img']
-		o.pbf      = data['pbf']
-		o.polygons = data['polygons']
-		o.hgt      = data['hgt']
-		o.temp     = data['temp']
-		o.sea      = data['sea']
-		o.bounds   = data['bounds']
-		o.splitter = data['splitter']
-		o.mkgmap   = data['mkgmap']
+	def getType(self):
+		return self.valueType
 
-
-def add(key, value):
-	with open('gmapmaker.config', 'r+') as configFile:
-		data = json.load(configFile)
-
-		data[key] = value
-		configFile.seek(0)
-		configFile.truncate()
-		json.dump(data, configFile)
-
-
-def get(key):
-	with open('gmapmaker.config', 'r') as configFile:
-		data = json.load(configFile)
-
-		if key in data:
-			return data[key]
+	def getValue(self):
+		if self.setted:
+			return self.value
 		else:
-			return None
+			raise RuntimeError('Item is unset!')
+
+	def getValueOrDefault(self):
+		if self.setted:
+			return self.getValue()
+		else:
+			return self.getDefault()
+
+	def getDefault(self):
+		return self.default
+
+	def __init__(self, valueType, defaultValue):
+		self.value = None
+		self.valueType = valueType
+		if type(defaultValue) != valueType:
+			raise RuntimeError('Ivalid type of value! ' + str(defaultValue) + ': ' + str(valueType) + ' expected but ' + str(type(defaultValue)) + ' getted.')
+		self.default = defaultValue
+
+	def __str__(self):
+		return str(self.value) + ': ' + str(self.valueType) + ' [' + str(self.default) + ']'
 
 
-def getVersions():
-	# TODO download
-	with open('versions.info', 'r') as configFile:
-		return json.load(configFile)
+
+class Configuration:
+	items = {
+		'img':      Item(str, os.path.abspath('maps')),
+		'pbf':      Item(str, os.path.abspath('pbf')),
+		'polygons': Item(str, os.path.abspath('polygons')),
+		'hgt':      Item(str, os.path.abspath('hgt')),
+		'temp':     Item(str, os.path.abspath('temp')),
+		'sea':      Item(str, os.path.abspath('sea')),
+		'bounds':   Item(str, os.path.abspath('bounds')),
+		'splitter': Item(int, 0),
+		'mkgmap':   Item(int, 0),
+	}
+
+	def __str__(self):
+		output = ''
+		for key, item in self:
+			output += key + '\t => ' + str(item) + '\n'
+		return output
+
+	def __len__(self):
+		return len(self.items)
+
+	def __getitem__(self, key):
+		return self.items[key]
+
+	def __contains__(self, key):
+		return key in self.items
+
+	def __iter__(self):
+		self.iterIndex = 0
+		return self
+
+	def __next__(self):
+		if self.iterIndex == len(self):
+			raise StopIteration
+
+		for i, key in enumerate(self.items.keys()):
+			if i == self.iterIndex:
+				break
+
+		self.iterIndex += 1
+		return key, self.items[key]
+
+
+	def save(self) -> None:
+		with open('gmapmaker.config', 'w') as outfile:
+			data = {}
+
+			for key, item in self:
+				data[key] = item.getValueOrDefault()
+			json.dump(data, outfile)
+
+
+	def load(self) -> bool:
+		try:
+			with open('gmapmaker.config', 'r') as configFile:
+				data = json.load(configFile)
+
+				for key in data:
+					if key in self:
+						self[key].set(data[key])
+
+				return True
+
+		except IOError:
+			return False

@@ -1,54 +1,72 @@
 import zipfile, os, shutil, platform
-from makerfuncs import download as d, config
+from makerfuncs import download as d
+from makerfuncs.config import Configuration
+from bs4 import BeautifulSoup
+from os import path
 
-def update():
-	# TODO download
-	versions = config.getVersions()
+
+def _mkgmapGetToolsVersion(toolName: str, c: Configuration) -> int:
+	tmpFilePath = path.join(c['temp'].getValue(), toolName + '.html')
+	version: int
+
+	try:
+		d.download('https://www.mkgmap.org.uk/download/' + toolName + '.html', tmpFilePath)
+	except:
+		print('Downloading ' + toolName + ' html webpage was unsuccessful.')
+	else:
+		with open(tmpFilePath, 'r') as html:
+			parsedHtml = BeautifulSoup(html, 'html.parser')
+			versionTag = parsedHtml.body.find('p', attrs={'class':'download-headline'}).find('span', attrs={'data-bind':'text: current().version'})
+			if versionTag:
+				version = int(versionTag.get_text())
+			else:
+				print('Parsing ' + toolName + ' version was unsuccessful.')
+
+	if path.isfile(tmpFilePath):
+		os.remove(tmpFilePath)
+
+	return version
 
 
-	splitter = config.get('splitter')
-	if versions['splitter'] > splitter:
-		print('Download splitter version', versions['splitter'])
+
+def _updateMkgmapTools(toolName: str, c: Configuration) -> None:
+	actualVersion = c[toolName].getValue()
+	version = _mkgmapGetToolsVersion(toolName, c)
+	if version > actualVersion:
+		tmpFilePath = path.join(c['temp'].getValue(), toolName + '.zip')
+		print('Download ' + toolName + ' version', version)
 		try:
-			d.download('https://www.mkgmap.org.uk/download/splitter-r' + str(versions['splitter']) + '.zip', './splitter.zip')
+			d.download('https://www.mkgmap.org.uk/download/' + toolName + '-r' + str(version) + '.zip', tmpFilePath)
 		except:
 			print('Download was unsuccessful! Maybe bad version?')
 		else:
 			print('Unzip')
-			with zipfile.ZipFile('./splitter.zip', 'r') as zipRef:
+			with zipfile.ZipFile(tmpFilePath, 'r') as zipRef:
 				zipRef.extractall('./')
-				config.add('splitter', versions['splitter'])
-			if os.path.isdir('./splitter-r' + str(splitter)):
-				shutil.rmtree('./splitter-r' + str(splitter))
-			os.remove('./splitter.zip')
+				c[toolName].set(version)
+			if os.path.isdir(toolName + '-r' + str(actualVersion)):
+				shutil.rmtree(toolName + '-r' + str(actualVersion))
+			os.remove(tmpFilePath)
 			print('Done')
 	else:
-		print('Program splitter is up to date')
+		print('Program ' + toolName + ' is up to date')
 
 
 
-
-	mkgmap = config.get('mkgmap')
-	if versions['mkgmap'] > mkgmap:
-		print('Download mkgmap version', versions['mkgmap'])
-		try:
-			d.download('https://www.mkgmap.org.uk/download/mkgmap-r' + str(versions['mkgmap']) + '.zip', './mkgmap.zip')
-		except:
-			print('Download was unsuccessful! Maybe bad version?')
-		else:
-			print('Unzip')
-			with zipfile.ZipFile('./mkgmap.zip', 'r') as zipRef:
-				zipRef.extractall('./')
-				config.add('mkgmap', versions['mkgmap'])
-			if os.path.isdir('./mkgmap-r' + str(mkgmap)):
-				shutil.rmtree('./mkgmap-r' + str(mkgmap))
-			os.remove('./mkgmap.zip')
-			print('Done')
+def _downloadMkgmapHelperFiles(fileName: str, c: Configuration) -> None:
+	if (not os.path.isdir(c[fileName].getValue())):
+		tmpFilePath = path.join(c['temp'].getValue(), fileName + '.zip')
+		d.download('http://osm.thkukuk.de/data/' + fileName + '-latest.zip', tmpFilePath)
+		with zipfile.ZipFile(tmpFilePath, 'r') as zipRef:
+			zipRef.extractall(c[fileName].getValue())
+		os.remove(tmpFilePath)
+		print('Done')
 	else:
-		print('Program mkgmap is up to date')
+		print("Directory '" + c[fileName].getValue() + "' already exists - skipping...")
 
 
-	# osmconvert
+
+def _downloadOsmconvert() -> None:
 	if (not os.path.isdir('osmconvert')):
 		sysVersion = platform.system()
 		sysBits = platform.architecture()[0]
@@ -73,26 +91,17 @@ def update():
 
 
 
-	# Data sea
-	if (not os.path.isdir(config.get('sea'))):
-		d.download('http://osm.thkukuk.de/data/sea-latest.zip', './sea.zip')
-		with zipfile.ZipFile('./sea.zip', 'r') as zipRef:
-			zipRef.extractall(config.get('sea'))
-		os.remove('./sea.zip')
-		print('Done')
-	else:
-		print("Directory '" + config.get('sea') + "' already exists - skipping...")
+def update() -> None:
+	c = Configuration()
+	c.load()
 
-	# Data bounds
-	if (not os.path.isdir(config.get('bounds'))):
-		d.download('http://osm.thkukuk.de/data/bounds-latest.zip', './bounds.zip')
-		with zipfile.ZipFile('./bounds.zip', 'r') as zipRef:
-			zipRef.extractall(config.get('bounds'))
-		os.remove('./bounds.zip')
-		print('Done')
-	else:
-		print("Directory '" + config.get('bounds') + "' already exists - skipping...")
+	_updateMkgmapTools('splitter', c)
+	_updateMkgmapTools('mkgmap', c)
+	_downloadOsmconvert()
+	_downloadMkgmapHelperFiles('sea', c)
+	_downloadMkgmapHelperFiles('bounds', c)
 
+	c.save()
 
 
 if __name__ == '__main__':

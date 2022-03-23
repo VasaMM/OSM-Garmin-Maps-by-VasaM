@@ -1,8 +1,9 @@
-import zipfile, os
+import os, update as u
+from makerfuncs.config import Configuration
 
 
-def prepareUserAreas():
-	# Pripravim slozku pro uzivatelske oblasti
+def _prepareUserAreas() -> None:
+	# Prepare folder for user defined areas
 	try:
 		os.mkdir('userAreas')
 	except FileExistsError:
@@ -21,57 +22,55 @@ def prepareUserAreas():
 		file.write('		crop   = True\n')
 		file.write('	),\n')
 		file.write('}\n')
+	# TODO OL.poly
 
 
-def prepare():
-	prepareUserAreas()
-	
-	from makerfuncs import config, download as d
-	import update as u
+def prepare() -> None:
+	_prepareUserAreas()
 
-	default = {
-		'img':      'maps',
-		'pbf':      'pbf',
-		'polygons': 'polygons',
-		'hgt':      'hgt',
-		'temp':     'temp',
-		'sea':      'sea',
-		'bounds':   'bounds',
+	c = Configuration()
+	c.load()
+
+	QUESTIONS = {
+		'img': 'The name of the output folder with garmin maps',
+		'pbf': 'The name of the folder for map data download',
+		'polygons': 'The name of the folder for polygons',
+		'hgt': 'The name of the folder for height data',
+		'temp': 'The name of the folder for temporary data',
+		'sea': 'The name of the folder for sea data',
+		'bounds': 'The name of the folder for bounds data',
 	}
 
-	data = {}
+	for key in QUESTIONS:
+		question = QUESTIONS[key]
+		if c[key].setted:
+			question += ' (actual ' + c[key].getValue() + '): '
+		else:
+			question += ' (default ' + c[key].getDefault() + '): '
+
+		value = input(question)
+		if value == '':
+			c[key].set(c[key].getDefault())
+		else:
+			c[key].set(value)
 
 
-	#TODO kontroly validity vstupu
-	data['img'] = input('The name of the output folder with garmin maps (default maps): ')
-	data['pbf'] = input('The name of the folder for map data download (default pbf): ')
-	data['polygons'] = input('The name of the folder for polygons (default polygons): ')
-	data['hgt'] = input('The name of the folder for height data (default hgt): ')
-	data['temp'] = input('The name of the folder for temporary data (default temp): ')
-	data['sea'] = input('The name of the folder for sea data (default sea): ')
-	data['bounds'] = input('The name of the folder for bounds data (default bounds): ')
+	PATHS = ['img', 'pbf', 'polygons', 'hgt', 'temp', 'sea', 'bounds']
 
-	for item in data:
-		if data[item] == '':
-			data[item] = default[item]
-		if data[item][-1] != '/':
-			data[item] = data[item] + '/'
-		
+	for key in PATHS:
+		path = os.path.abspath(c[key].getValue())
+
 		try:
-			os.mkdir(data[item])
+			os.mkdir(path)
+		except FileExistsError:
+			print('Directory ' + path + ' already exists')
 		except:
-			print("Directory " + data[item] + " already exists")
-			pass
+			raise RuntimeError('Directory ' + path + ' is invalid')
+		else:
+			c[key].set(path)
 
-
-	data['splitter'] = 0
-	data['mkgmap'] = 0
-
-	config.save(data)
-
+	c.save()
 	u.update()
-
-
 
 
 if __name__ == '__main__':
