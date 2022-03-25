@@ -1,4 +1,4 @@
-import os, update as u
+import os
 from makerfuncs.config import Configuration
 
 
@@ -70,8 +70,10 @@ def prepare() -> None:
 			c[key].set(path)
 
 	c.save()
-	u.update()
 
 
 if __name__ == '__main__':
 	prepare()
+
+	import update as u
+	u.update()
