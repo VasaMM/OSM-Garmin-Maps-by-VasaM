@@ -24,7 +24,7 @@ def main():
 
 			# FIXME elegantneji
 			print(python + ' gmapmaker.py --logging --area ' + state)
-			ret = os.system(python + ' gmapmaker.py --logging --area ' + state)
+			ret = os.system(python + ' gmapmaker.py --logging ' + state + ' --area ' + state)
 
 			# TODO Spustit jako druhe vlakno
 			if ret == 0:

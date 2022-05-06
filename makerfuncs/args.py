@@ -21,6 +21,19 @@ def _ageType(data: Any) -> Any:
 		return data
 
 
+def _logFileType(filename: None | str) -> bool | str:
+	if filename is False:
+		return False
+
+	if filename is None:
+		return 'gmapmaker.log'
+
+	if str(filename).endswith('.log'):
+		return filename
+	else:
+		return str(filename) + '.log'
+
+
 # Load and parse arguments
 def parse(o: Options):
 	argParser = argparse.ArgumentParser(
@@ -107,8 +120,11 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 	)
 	argParser.add_argument(
 		'--logging', '-l',
-		action='store_true',
-		help='Vytvori logovaci soubor makeMap.log'
+		nargs='?',
+		default=False,
+		action='store',
+		metavar='FILENAME',
+		help='Vytvori logovaci soubor FILENAME.log. Není-li FILENAME zadáno, použije se gmapmaker.log.'
 	)
 	argParser.add_argument(
 		'--version', '-v',
@@ -130,7 +146,7 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 	o.maximumDataAge = parser.age(args.maximum_data_age)
 	o.extend         = args.extend
 	o.quiet          = args.quiet
-	o.logFile        = args.logging
+	o.logFile        = _logFileType(args.logging)
 	o.code           = args.code_page
 	o.crop           = args.crop
 	o.mapNumber      = args.map_number
