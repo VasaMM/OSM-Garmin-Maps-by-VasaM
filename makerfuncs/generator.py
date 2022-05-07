@@ -186,7 +186,7 @@ def _makeInfo(o: Options) -> None:
 		'ID':        o.area.id,
 		'version':   str(o.VERSION),
 		'datetime':  str(o.area.timestamp),
-		'timestamp': str(o.area.timestamp.timestamp()),
+		'timestamp': str(int(o.area.timestamp.timestamp())),
 		'hashImg':   _sha1(os.path.join(o.img, o.area.id + o.sufix + '.img')),
 		'hashZip':   _sha1(os.path.join(o.img, o.area.id + o.sufix + '.zip')),
 		'codePage':  o.code

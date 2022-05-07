@@ -14,7 +14,8 @@ from userAreas.myAreas import USER_AREAS
 def fileHeader(o: Options) -> None:
 	say(_('Parsing file header'), o)
 	timestamp: datetime
-	o.area.timestamp = None
+	o.area.timestamp = datetime.fromtimestamp(0).replace(tzinfo=timezone.utc)
+
 	o.area.file = False
 	if os.path.isfile(o.area.mapDataName):
 
@@ -29,6 +30,7 @@ def fileHeader(o: Options) -> None:
 			if match:
 				timestamp = match.group(1)
 		except:
+			say(_('Unknown file age.'), o)
 			return
 
 		o.area.file = True
@@ -39,9 +41,8 @@ def fileHeader(o: Options) -> None:
 
 		except ValueError:
 			error(_('Date in OSM file header is not in ISO8601 format (e.g. 2015-12-24T08:08Z). Ignored'), o)
-			o.area.timestamp = None
 
-		say(_("File from ") + str(o.area.timestamp), o)
+		say(_('File from ') + str(o.area.timestamp), o)
 
 
 

@@ -65,6 +65,7 @@ class LangClass:
 		'Start map data download': 'Spoustim stahovani mapovych dat',
 		'Terminated by user': 'Ukonceno uzivatelem',
 		'The area depends on the data of area ': 'Oblast je zavisla na datech oblasti ',
+		'Unknown file age.': 'Nezname stari souboru.',
 		'Use previously generated contours': 'Pouzivam drive vytvorene vrstevnice',
 		'User set "--download skip" - skip downloading': 'Uzivatel nastavil "--download skip" - nestahuji',
 	}
