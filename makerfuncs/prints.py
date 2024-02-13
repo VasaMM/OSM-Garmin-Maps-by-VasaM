@@ -16,7 +16,7 @@ def say( msg, o, prefix = '[INFO] ', end = "\n"):
 				o.logFile = open(LOG_FILE_NAME, "w+")
 			except:
 				error(_("Nelze otevrit soubor ") + LOG_FILE_NAME, o)
-		
+
 		if o.logFile:
 			o.logFile.write(prefix + msg + end)
 			o.logFile.flush()
@@ -29,7 +29,7 @@ def log( msg, o ):
 				o.logFile = open(LOG_FILE_NAME, "w+")
 			except:
 				error(_("Nelze otevrit soubor ") + LOG_FILE_NAME, o)
-		
+
 		if o.logFile:
 			o.logFile.write(msg)
 			o.logFile.flush()
@@ -44,7 +44,7 @@ def error( msg, o = None ):
 			o.logFile = open(LOG_FILE_NAME, "w+")
 		except:
 			error(_("Nelze otevrit soubor ") + LOG_FILE_NAME, o)
-	
+
 	if o and o.logFile:
 		o.logFile.write('[ERROR] ' + msg + '\n' )
 		o.logFile.flush()
@@ -69,7 +69,7 @@ def end(o):
 	timeEnd = datetime.now()
 	if hasattr(o, 'timeStart'):
 		runtime = timeEnd - o.timeStart
-	
+
 	say(_('Ukonceno v ') + str(timeEnd) + ', ' + _('doba behu') + ' ' + str(runtime), o)
 	# print('\007')
 

@@ -56,7 +56,7 @@ mapProperties = [
 		sg.OptionMenu(['Ne', 'Ano'], default_value='Ne', key='crop', disabled=True)
 	],
 	[
-		sg.Text("Nedělit mapove soiubory na menší"),
+		sg.Text("Nedělit mapove soubory na menší"),
 		sg.OptionMenu(['Ne', 'Ano'], default_value='Ne', key='split', disabled=True)
 	],
 ]
@@ -72,7 +72,8 @@ layout = [
 		sg.Frame("3", [[sg.Button('Generovat', key='generate', disabled=True)]]),
 	],
 	[
-		sg.Frame("4", [[sg.Multiline(write_only=True, size=(None, 20), reroute_stdout=False, key='output')]]),
+		sg.Frame("4", [[sg.Output(size=(88, 20), font='Courier 10')]]),
+		# sg.Frame("4", [[sg.Multiline(write_only=True, size=(None, 20), reroute_stdout=False, key='output')]]),
 		# sg.Frame("4", [[sg.Multiline(write_only=True, size=(None, 20), reroute_stdout=True, key='output')]]), // FIXME
 	],
 ]
@@ -93,9 +94,7 @@ def main():
 		# přečtení události
 		event, values = window.read()
 
-		import sys
-		print("Event: ", event, "    Values: ", values, file=sys.stderr)
-	    # progressBar.UpdateBar(i+1)
+		print("Event: ", event, "    Values: ", values)
 
 		if event == 'chooseArea':
 			areaId = values['chooseArea'][0]
@@ -175,7 +174,7 @@ def main():
 			o.code           = parseCodePage(values['codePage'])
 			o.crop           = values['crop'] == 'Ano'
 			o.mapNumber      = int(values['mapNumber'])
-			o.variant        = 0
+			o.variant        = None
 			o.en             = False
 			o.sufix          = values['suffix']
 

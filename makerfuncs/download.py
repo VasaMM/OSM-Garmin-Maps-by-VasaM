@@ -26,7 +26,7 @@ def _makeBar(length, percent, done = '=', pointer = '>', fill = ' ', start = '['
 
 
 
-def _printProgres(percent, size, length, speed, eta, unit, unitSize):
+def _printProgress(percent, size, length, speed, eta, unit, unitSize):
 	bar = _makeBar(30, percent)
 
 	sys.stdout.write("\r") # Clear to the end of line
@@ -65,28 +65,28 @@ def download(url, output, quiet = False):
 			length = 0
 			blocksize = 1000000 # just made something up
 
-		
+
 		if not quiet:
 			print(_("Stahuji") + " '" + url + "'  ", length // unitSize, unit)  # Prevedu na megabyte
-			_printProgres(0, 0, length, 0, 0, unit, unitSize)
+			_printProgress(0, 0, length, 0, 0, unit, unitSize)
 
 		speedHistory = [0] * 10
 		speedHistoryPointer = 0
 		size = 0
 		while True:
 			tmp_time = datetime.now()
-			
+
 			data = response.read(blocksize)
-			
+
 			time_diff = (datetime.now() - tmp_time).total_seconds()
 
 			if not data:
-				_printProgres(100, length, length, 0, 0, unit, unitSize)
+				_printProgress(100, length, length, 0, 0, unit, unitSize)
 				break
 
 			output.write(data)
 
-			
+
 			if length:
 				size += len(data)
 				percent = round(size / length * 100)
@@ -105,7 +105,7 @@ def download(url, output, quiet = False):
 						eta = str(eta) + ' s'
 
 				if not quiet:
-					_printProgres(percent, size, length, speed, eta, unit, unitSize)
+					_printProgress(percent, size, length, speed, eta, unit, unitSize)
 
 		if not quiet:
 			print()
@@ -113,18 +113,18 @@ def download(url, output, quiet = False):
 	except urllib.error.HTTPError as e:
 		print('Error code: ', e.code)
 		raise
-	
+
 	except urllib.error.URLError as e:
 		print('Reason: ', e.reason)
 		raise
 
-	
+
 
 
 def mapData(o):
 	say(_('Spoustim stahovani mapovych dat'), o)
 	o.downloaded = False
-	
+
 	# Zjistim, zda mam stahovat data
 	if o.area.url is None:
 		say(_('Neznam URL adresu - preskakuji'), o)
@@ -147,7 +147,7 @@ def mapData(o):
 				o.downloaded = True
 			else:
 				say(_('Mapova data jsou prilis mlada - nestahuji'), o)
-	
+
 
 
 	if o.downloadMap == 'force' or o.downloaded is True:
