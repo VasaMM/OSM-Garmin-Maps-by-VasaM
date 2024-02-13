@@ -3,9 +3,10 @@
 # Nahraje hotová data na FTP server
 # Ocekava soubor ftp.secret, kde na prvnim radku je adresa ftp serveru, na druhem uzivatelske jmeno a na tretim heslo
 
-import sys
+import sys, os
 from ftplib import FTP
 from makerfuncs import config
+from makerfuncs.download import _makeBar, _printProgres
 
 
 
@@ -28,10 +29,30 @@ def upload(states):
 
 			for state in states:
 				for suffix in ['.zip', '.img', '.info']:
-					file = state + '_VasaM' + suffix
+					bytesInMB = 1048576
 
-					print('Nahrávám', file)
-					ftp.storbinary('STOR ' + file + '.uploading', open(o.img + file, 'rb'))
+					file = state + '_VasaM' + suffix
+					fileSize = os.stat(o.img + file).st_size
+					blockSize = 8192
+
+					class ProgressBar:
+						uploaded = 0
+
+						def update(self, _):
+							self.uploaded += blockSize
+							# TODO Calculate speed and ETA
+							_printProgres(round(self.uploaded / fileSize * 100), self.uploaded, fileSize, 0, 0, 'MB', 1048576)
+
+						def finish(self):
+							_printProgres(100, fileSize, fileSize, 0, 0, 'MB', 1048576)
+							print()
+
+					progressBar = ProgressBar()
+
+					print(f'Nahrávám {file} ({fileSize // bytesInMB} MB)')
+					ftp.storbinary('STOR ' + file + '.uploading', open(o.img + file, 'rb'), blockSize, progressBar.update)
+
+					progressBar.finish()
 
 					print('Nahrávání dokončeno')
 					ftp.rename(file + '.uploading', file)

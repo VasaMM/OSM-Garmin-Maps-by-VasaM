@@ -42,7 +42,7 @@ class LangClass:
 		'Neznam URL adresu - preskakuji': 'I don\'t have data url - skip downloading',
 		'Oblast je zavisla na datech oblasti ': 'The area depends on the data of area ',
 		'Oblast nalezena v uzivatelskych oblastech': 'Area found in user areas',
-		'Pouzivam drive vytvorene vrstevcnice': 'Use previously generated contours',
+		'Pouzivam drive vytvorene vrstevnice': 'Use previously generated contours',
 		'Prejmenuji soubory': 'Rename files',
 		'Pripravuji licencni soubor': 'Prepare license file',
 		'Rozdeleni souboru - HOTOVO': 'Split files - DONE',

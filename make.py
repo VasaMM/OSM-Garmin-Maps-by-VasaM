@@ -8,10 +8,10 @@ from upload import upload
 
 
 def getPython():
-	if os.system('python3.8 --version') == 0:
-		return 'python3.8'
-	elif os.system('python --version') == 0:
+	if os.system('python --version') == 0:
 		return 'python'
+	elif os.system('python3.8 --version') == 0:
+		return 'python3.8'
 	else:
 		print('Nenalezen python')
 		exit()

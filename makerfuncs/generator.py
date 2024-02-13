@@ -22,13 +22,13 @@ def _sha1(filename):
 def run(program, o):
 	program = ' '.join(program.split())
 	say(program, o, '[RUN] ')
-	process = subprocess.Popen(program, universal_newlines = True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	process = subprocess.Popen(program, universal_newlines = True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 	while True:
 		output = process.stdout.readline()
 
 		if output == '' and process.poll() is not None:
-			break;
+			break
 		if output:
 			say(output, o, '', '')
 			log(output, o)
@@ -61,7 +61,7 @@ def contours(o):
 		os.rename(glob.glob(o.pbf + o.area.id + '-SRTM*.osm.pbf')[0], o.pbf + o.area.id + '-SRTM.osm.pbf')
 
 	else:
-		say(_('Pouzivam drive vytvorene vrstevcnice'), o)
+		say(_('Pouzivam drive vytvorene vrstevnice'), o)
 
 
 def crop(o):
