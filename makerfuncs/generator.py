@@ -1,4 +1,4 @@
-import os, glob, zipfile, hashlib, json, platform
+import os, sys, glob, zipfile, hashlib, json, platform
 import subprocess
 from makerfuncs.Options import Options
 
@@ -41,7 +41,7 @@ def contours(o: Options) -> None:
 	# Check if SRTM file exists
 	if not os.path.isfile(os.path.join(o.pbf, o.area.id + '-SRTM.osm.pbf')):
 		run([
-			'phyghtmap',
+			'phyghtmap', # FIXME
 			'--polygon=' + os.path.join(o.temp, 'polygon.poly'),
 			'-o', os.path.join(o.pbf, o.area.id + '-SRTM'),
 			'--pbf',
@@ -75,7 +75,7 @@ def crop(o: Options) -> None:
 		say(_('Creating crop of an area'), o)
 
 		os.chdir('osmconvert')
-		run([getActualOsmconvert(),
+		run([getActualOsmconvert(), # FIXME
 			'../' + o.area.mapDataName,
 			'-B=' + os.path.join(o.temp, 'polygon.poly'),
 			'--complete-ways', '--complete-multipolygons', '--complete-boundaries',
@@ -106,6 +106,11 @@ def _splitFiles(o: Options) -> tuple[str, str]:
 
 	if o.split:
 		say(_('Split files start'), o)
+		try:
+			splitter = os.path.join(sys._MEIPASS, 'splitter.jar')
+		except Exception:
+			splitter = './splitter-r' + str(o.splitter) + '/splitter.jar'
+
 		# Data isn't exist or new one is downloaded
 		if not os.path.exists(os.path.join(o.pbf, o.area.id + '-SPLITTED')) or o.downloaded:
 			# Delete origin files
@@ -113,7 +118,7 @@ def _splitFiles(o: Options) -> tuple[str, str]:
 				os.remove(file)
 
 			run(['java', o.JAVAMEM, '-jar',
-				'./splitter-r' + str(o.splitter) + '/splitter.jar',
+				splitter,
 				input_file,
 				'--max-areas=4096',
 				'--max-nodes=1600000',
@@ -126,7 +131,7 @@ def _splitFiles(o: Options) -> tuple[str, str]:
 		# Split contour file
 		if not os.path.isdir(os.path.join(o.pbf, o.area.id + '-SPLITTED-SRTM')):
 			run(['java', o.JAVAMEM, '-jar',
-				'./splitter-r' + str(o.splitter) + '/splitter.jar',
+				splitter,
 				input_srtm_file,
 				'--max-areas=4096',
 				'--max-nodes=1600000',
@@ -207,8 +212,8 @@ def garmin(o: Options) -> None:
 
 	_prepareLicence(o)
 
-
-	mkgmapOptions = ['java', o.JAVAMEM, '-jar', './mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar',
+	mkgmap = if './mkgmap.jar' o.gui else ('./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar')
+	mkgmapOptions = ['java', o.JAVAMEM, '-jar', mkgmap,
 		'-c', './garmin-style/mkgmap-settings.conf',
 		'--bounds=' + o.bounds,
 		'--precomp-sea=' + os.path.join(o.sea, 'sea'),

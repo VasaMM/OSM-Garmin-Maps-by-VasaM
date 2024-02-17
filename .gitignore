@@ -5,6 +5,7 @@ sea/*
 pbf/*
 maps/*
 polygons/*
+/build/*
 .vscode/*
 !.vscode/launch.json
 

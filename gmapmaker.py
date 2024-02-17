@@ -23,9 +23,10 @@ def generate(o: Options = None) -> None:
 
 		# Load config file and copy values to options
 		config = Configuration()
-		config.load()
-		for key, item in config:
-			setattr(o, key, item.getValue())
+		if o.gui is False:
+			config.load()
+			for key, item in config:
+				setattr(o, key, item.getValue())
 
 		# Load arguments
 		if o.gui is False:

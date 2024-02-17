@@ -1,0 +1,2 @@
+pyinstaller --onedir --windowed --hidden-import phyghtmap --add-data "mkgmap-r*/mkgmap.jar;mkgmap" --add-data "mkgmap-r*/lib/*;mkgmap/lib" --add-data "splitter-r*/splitter.jar;splitter" --add-data "splitter-r*/lib/*;splitter/lib" gmapmaker-gui.py
+@REM pyinstaller --onefile --windowed --hidden-import phyghtmap --add-data "mkgmap-r*/mkgmap.jar;mkgmap" --add-data "mkgmap-r*/lib/*;mkgmap/lib" --add-data "splitter-r*/splitter.jar;splitter" --add-data "splitter-r*/lib/*;splitter/lib" gmapmaker-gui.py

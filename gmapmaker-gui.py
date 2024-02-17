@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+# import os, sys
+# for file in os.listdir(sys._MEIPASS):
+#    print(file)
+# print(sys._MEIPASS)
+# while True:
+# 	pass
+
 import re, PySimpleGUI as sg
 
 from threading import Thread, Event
@@ -208,6 +215,8 @@ def main():
 
 
 	w.close()
+	print('ends')
+	# exit(0)
 
 
 if __name__ == "__main__":
