@@ -8,7 +8,7 @@ from makerfuncs.Lang import Lang, _
 
 
 
-# Nastevni a globalni promenne
+# Nastaveni a globalni promenne
 class Options:
 	def __init__(self):
 		self.JAVAMEM  = '-Xmx4g'   # Maximalni velikost RAM, kterou lze pouzit, viz https://stackoverflow.com/questions/14763079/what-are-the-xms-and-xmx-parameters-when-starting-jvm
