@@ -2,8 +2,7 @@
 
 import re, PySimpleGUI as sg
 
-from queue import Queue
-from threading import Thread
+from threading import Thread, Event
 
 from makerfuncs.parser import codePage, downloadType, maximumDataAge
 from makerfuncs.states import STATES, continentNames
@@ -48,34 +47,34 @@ class Window:
 
 		# Definice GUI
 		areaFrame = [
-			[sg.Text("Vyberte oblast")],
+			[sg.Text(_("Vyberte stát"))],
 			[sg.Tree(data=treeData, select_mode=sg.TABLE_SELECT_MODE_BROWSE, num_rows=11, expand_x=True, enable_events=True, key='chooseArea')]
 		]
 
 		mapProperties = [
 			[
-				sg.Text("Kódová stránka", size=(29, None), justification="r"),
+				sg.Text(_("Kódová stránka"), size=(29, None), justification="r"),
 				sg.OptionMenu(['Windows-1250', 'Windows-1252', 'Latin-2', 'Unicode', 'ASCII'], default_value='Windows-1250', key='codePage', disabled=True)
 			],
 			[
-				sg.Text("Stáhnout nová data", size=(29, None), justification="r"),
-				sg.OptionMenu(['Jsou-li starší než 1 den', 'Jsou-li starší než 3 dny', 'Jsou-li starší než týden', 'Vždy', 'Nikdy'], default_value='Jsou-li starší než 1 den', key='download', disabled=True)
+				sg.Text(_("Stáhnout nová data"), size=(29, None), justification="r"),
+				sg.OptionMenu([_('Jsou-li starší než 1 den'), _('Jsou-li starší než 3 dny'), _('Jsou-li starší než týden'), _('Vždy'), _('Nikdy')], default_value=_('Jsou-li starší než 1 den'), key='download', disabled=True)
 			],
 			[
-				sg.Text("ID mapy", size=(29, None), justification="r"),
+				sg.Text(_("ID mapy"), size=(29, None), justification="r"),
 				sg.InputText(key='mapNumber', size=(5, 0), disabled=True, enable_events=True)
 			],
 			[
-				sg.Text("Přípona za jménem", size=(29, None), justification="r"),
+				sg.Text(_("Přípona za jménem"), size=(29, None), justification="r"),
 				sg.InputText(key='suffix', default_text='_VasaM', size=(20, 0), disabled=True, enable_events=True)
 			],
 			[
-				sg.Text("Oříznout mapový soubor podle polygonu", size=(29, None), justification="r"),
-				sg.OptionMenu(['Ne', 'Ano'], default_value='Ne', key='crop', disabled=True)
+				sg.Text(_("Oříznout mapový soubor podle polygonu"), size=(29, None), justification="r"),
+				sg.OptionMenu([_('Ne'), _('Ano')], default_value=_('Ne'), key='crop', disabled=True)
 			],
 			[
-				sg.Text("Nedělit mapove soubory na menší", size=(29, None), justification="r"),
-				sg.OptionMenu(['Ne', 'Ano'], default_value='Ne', key='split', disabled=True)
+				sg.Text(_("Nedělit mapove soubory na menší"), size=(29, None), justification="r"),
+				sg.OptionMenu([_('Ne'), _('Ano')], default_value=_('Ne'), key='split', disabled=True)
 			],
 		]
 
@@ -85,7 +84,7 @@ class Window:
 				[sg.Frame("2", mapProperties)],
 			]),
 			sg.Column([
-				[sg.Frame("3", [[sg.Button('Generovat', key='generate', disabled=True, size=(80, 0))]])],
+				[sg.Frame("3", [[sg.Button(_('Generovat'), key='generate', disabled=True, size=(80, 0))]])],
 				[sg.Frame("4", [[sg.Output(expand_x=True, expand_y=True, font='Courier 10', autoscroll_only_at_bottom=True, echo_stdout_stderr=True)]], expand_x=True, expand_y=True)]
 			], expand_x=True, expand_y=True)
 		]]
@@ -108,8 +107,8 @@ class Window:
 		self.locked = True
 
 	def unlock(self):
-		self.setDisabled(False)
 		self.locked = False
+		self.setDisabled(False)
 
 	def isLocked(self):
 		return self.locked
@@ -128,24 +127,31 @@ class Window:
 def main():
 	o = Options()
 	w = Window()
-	q = Queue()
+
+	jobIsPrepared = Event()
+	jobIsDone = Event()
 
 
-	def generateMapJob(o, queue):
+	def generateMapJob():
 		try:
-			generateMap(o)
+			while True:
+				jobIsPrepared.wait()
+				jobIsPrepared.clear()
+				generateMap(o)
+				jobIsDone.set()
 		except Exception as e:
 			error(str(e))
 		finally:
-			queue.put(True)
-	generatorThread = Thread(target=generateMapJob, args=(o, q))
+			jobIsDone.set()
+	generatorThread = Thread(target=generateMapJob)
+	generatorThread.start()
 
-
-	def windowJob(queue, window: Window):
+	def windowJob():
 		while True:
-			queue.get()
-			window.unlock()
-	windowThread = Thread(target=windowJob, args=(q, w))
+			jobIsDone.wait()
+			jobIsDone.clear()
+			w.unlock()
+	windowThread = Thread(target=windowJob)
 	windowThread.start()
 
 
@@ -177,7 +183,6 @@ def main():
 				w['suffix'].update(value=previousSuffixValue)
 
 		elif event == 'generate':
-			# FIXME multiple start
 			# TODO download progressbar
 			w.lock()
 
@@ -198,7 +203,8 @@ def main():
 
 			o.gui = True
 
-			generatorThread.start()
+			jobIsPrepared.set()
+
 
 	w.close()
 

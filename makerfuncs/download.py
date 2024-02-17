@@ -1,11 +1,10 @@
 import os, sys, errno
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 from math import floor
 import urllib.request
-from makerfuncs.prints import say, error
+from makerfuncs.prints import say
 from makerfuncs import parser
 from makerfuncs.Lang import _
-import queue
 
 
 def _makeBar(length, percent, done = '=', pointer = '>', fill = ' ', start = '[', end = ']'):

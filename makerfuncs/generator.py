@@ -1,7 +1,6 @@
-import os, glob, zipfile, hashlib, json, platform
-import subprocess, threading
+import os, glob, zipfile, hashlib, json, platform, subprocess
 
-from makerfuncs.prints import say, error, log
+from makerfuncs.prints import say, log
 from makerfuncs.Lang import _
 
 
@@ -53,7 +52,7 @@ def contours(o):
 		os.rename(glob.glob(o.pbf + o.area.id + '-SRTM*.osm.pbf')[0], o.pbf + o.area.id + '-SRTM.osm.pbf')
 
 	else:
-		say(_('Pouzivam drive vytvorene vrstevcnice'), o)
+		say(_('Pouzivam drive vytvorene vrstevnice'), o)
 
 
 def crop(o):

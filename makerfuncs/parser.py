@@ -2,10 +2,9 @@ import os, osmium
 from makerfuncs.prints import say, error
 from datetime import datetime, timezone
 
-from makerfuncs.Area import Area
 from makerfuncs.states import STATES
 from userAreas.myAreas import USER_AREAS
-from makerfuncs.Lang import Lang, _
+from makerfuncs.Lang import _
 
 
 
@@ -112,44 +111,17 @@ def _makeAreaObject(id, obj, options, continent = None):
 
 def area(o):
 	if o.area is None:
-		while True:
-			print('\n' + _('Vyberte svetadil'))
-			for continent in STATES:
-				print(continent)
-
-			continent = input(_('Vybrano: '))
-			if continent not in STATES:
-				continue
-			else:
-				break
-
-		while True:
-			print('\n' + _('Vyberte stat'))
-			for state in STATES[continent]:
-				if Lang.getLanguage() == 'cs':
-					print(state, ' (', STATES[continent][state].nameCs, ')', sep='')
-				else:
-					print(state, ' (', STATES[continent][state].nameEn, ')', sep='')
-
-			state = input(_('Vybrano: '))
-			if state not in STATES[continent]:
-				continue
-			else:
-				o.area = state
-				break
+		raise ValueError(_('Oblast nebyla zadana!'))
 
 	say(_('Dekoduji oblast ') + o.area, o)
 
 	if o.area in USER_AREAS:
 		say(_('Oblast nalezena v uzivatelskych oblastech'), o)
 		o.area = _makeAreaObject(id = o.area, obj = USER_AREAS[o.area], options = o)
-
-
 	else:
 		state = _findState(o.area)
 		if state is not None:
 			o.area = _makeAreaObject(id = o.area, obj = state[0], options = o, continent = state[1])
-
 		else:
 			raise ValueError(_('Neplatna oblast ') + o.area)
 
