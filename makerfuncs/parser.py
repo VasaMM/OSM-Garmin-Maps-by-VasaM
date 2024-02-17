@@ -89,7 +89,7 @@ def _makeAreaObject(id: str, obj: object, options: Options, continent: str = Non
 			obj.url = USER_AREAS[obj.parent].url
 
 		else:
-			raise ValueError(_('Ivalid parent ID') + ' \'' + obj.parent + '\' ' + _('in') + ' \'' + id + '\'')
+			raise ValueError(_('Invalid parent ID') + ' \'' + obj.parent + '\' ' + _('in') + ' \'' + id + '\'')
 
 		obj.mapDataName = os.path.join(options.pbf, obj.parent + '.osm.pbf')
 
