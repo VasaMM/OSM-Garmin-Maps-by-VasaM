@@ -28,6 +28,15 @@ def fileHeader(o):
 
 
 
+def maximumDataAge(age):
+	if age == 'Jsou-li starší než týden':
+		return 7 * 24 * 3600
+	elif age == 'Jsou-li starší než 3 dny':
+		return 3 * 24 * 3600
+	else:
+		return 1 * 24 * 3600
+
+
 # Vraci stari v hodinach
 def age(age):
 	unit = age[-1]
@@ -41,12 +50,25 @@ def age(age):
 
 
 def downloadType(data):
-	if data == '[f]orce':
+	if data in ['[f]orce', 'Vždy']:
 		return 'force'
-	elif data == '[s]kip':
+	elif data in ['[s]kip', 'Nikdy']:
 		return 'skip'
-	elif data == '[a]uto':
+	elif data in ['[a]uto', 'Jsou-li starší než 1 den', 'Jsou-li starší než 3 dny', 'Jsou-li starší než týden']:
 		return 'auto'
+
+
+def codePage(codePage):
+	if codePage == 'Windows-1250':
+		return '1250'
+	elif codePage == 'Windows-1252':
+		return '1252'
+	elif codePage == 'Latin-2':
+		return 'latin2'
+	elif codePage == 'Unicode':
+		return 'unicode'
+	else:
+		return 'ascii'
 
 
 def _findState(id):
@@ -62,14 +84,14 @@ def _makeAreaObject(id, obj, options, continent = None):
 
 	if hasattr(obj, 'parent') and obj.parent is not None:
 		say(_('Oblast je zavisla na datech oblasti ') + obj.parent, options)
-		
+
 		state = _findState(obj.parent)
 		if state is not None:
 			obj.url = "http://download.geofabrik.de/%s/%s-latest.osm.pbf" % (state[1], state[0].url)
 
 		elif obj.parent in USER_AREAS:
 			obj.url = USER_AREAS[obj.parent].url
-		
+
 		else:
 			raise ValueError(_('Neplatne ID rodice') + ' \'' + obj.parent + '\' ' + _('v') + ' \'' + id + '\'')
 

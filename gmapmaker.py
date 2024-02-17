@@ -17,42 +17,7 @@ class Options:
 		self.VERSION = 101		   # Verze generovane mapy
 
 
-def generate(o):
-	# Nastavim jazyk
-	if o.en:
-		Lang.bindLanguage('en')
-
-	# Zaznamenam cas spusteni
-	o.timeStart = datetime.now()
-	say(_('Spusteno v ') + str(o.timeStart), o)
-
-	# Ziskam informace o statu
-	parser.area(o)
-
-	# Nactu informace z hlavicky
-	parser.fileHeader(o)
-
-	# Stahnu mapova data
-	download.mapData(o)
-
-	# Stahnu polygon
-	download.polygon(o)
-
-	# Zpracuji polygon
-	polygon.load(o)
-
-	# Vytvorim vrstevnice
-	generator.contours(o)
-
-	# Oriznu mapovy soubor
-	generator.crop(o)
-
-	# Generuji Garmin mapu
-	generator.garmin(o)
-
-
 def main(parseArgs = False, o = None):
-
 	try:
 		# TODO vytvorit TMP slozku
 

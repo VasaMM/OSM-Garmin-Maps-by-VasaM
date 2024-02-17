@@ -35,7 +35,7 @@ def update():
 			d.download('https://www.mkgmap.org.uk/download/mkgmap-r' + str(versions['mkgmap']) + '.zip', './mkgmap.zip')
 		except:
 			print('Download was unsuccessful! Maybe bad version?')
-		else:	
+		else:
 			print('Unzip')
 			with zipfile.ZipFile('./mkgmap.zip', 'r') as zipRef:
 				zipRef.extractall('./')
@@ -81,7 +81,7 @@ def update():
 		os.remove('./sea.zip')
 		print('Done')
 	else:
-		print("Directoty '" + config.get('sea') + "' already exists - skipping...")
+		print("Directory '" + config.get('sea') + "' already exists - skipping...")
 
 	# Data bounds
 	if (not os.path.isdir(config.get('bounds'))):
@@ -91,7 +91,7 @@ def update():
 		os.remove('./bounds.zip')
 		print('Done')
 	else:
-		print("Directoty '" + config.get('bounds') + "' already exists - skipping...")
+		print("Directory '" + config.get('bounds') + "' already exists - skipping...")
 
 
 

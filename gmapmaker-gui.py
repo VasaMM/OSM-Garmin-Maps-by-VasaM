@@ -1,108 +1,165 @@
 #!/usr/bin/env python3
 
 import re, PySimpleGUI as sg
-from makerfuncs.states import STATES
+
+from queue import Queue
+from threading import Thread
+
+from makerfuncs.parser import codePage, downloadType, maximumDataAge
+from makerfuncs.states import STATES, continentNames
+from makerfuncs.prints import say, error, end
+from makerfuncs.Lang import Lang, _
 from userAreas.myAreas import USER_AREAS
 from gmapmaker import Options, main as generateMap
 
 
-
-# Vytvorim data pro tree se staty
-treeData = sg.TreeData()
-rootTreeItems = ['userAreas']
-
-treeData.Insert(parent='', key='userAreas', text='Uživatelské oblasti', values=[])
-for area in USER_AREAS:
-	treeData.Insert(parent='userAreas', key=area, text=USER_AREAS[area].nameCs, values=[])
-
-for id in STATES:
-	treeData.Insert(parent='', key=id, text=id, values=[])
-	rootTreeItems.append(id)
-	for state in STATES[id]:
-		treeData.Insert(parent=id, key=state, text=STATES[id][state].nameCs, values=[])
+# Lang.bindLanguage('en')
 
 
+class Window:
+	# Vytvorim data pro tree se staty
+	treeData = sg.TreeData()
+	rootTreeItems = ['userAreas']
 
-# Definice GUI
-areaFrame = [
-	[
-		sg.Text("Vyberte oblast"),
-	],
-	[
-		# sg.InputText(key="area", size=(20, 0))
-		sg.Tree(data=treeData, select_mode=sg.TABLE_SELECT_MODE_BROWSE, num_rows=15, col0_width=40, enable_events=True, key='chooseArea')
+	treeData.Insert(parent='', key='userAreas', text=_('Uživatelské oblasti'), values=[])
+	for area in USER_AREAS:
+		treeData.Insert(parent='userAreas', key=area, text=USER_AREAS[area].nameCs, values=[])
+
+	for continentId in STATES:
+		treeData.Insert(parent='', key=continentId, text=_(continentNames[continentId]), values=[])
+		rootTreeItems.append(continentId)
+
+		for stateId, state in sorted( STATES[continentId].items(), key=lambda item: item[1].nameCs if Lang.getLanguage() == 'cs' else item[1].nameEn):
+			name = state.nameCs if Lang.getLanguage() == 'cs' else state.nameEn
+			treeData.Insert(parent=continentId, key=stateId, text=name, values=[])
+
+
+
+	# Definice GUI
+	areaFrame = [
+		[sg.Text("Vyberte oblast")],
+		[sg.Tree(data=treeData, select_mode=sg.TABLE_SELECT_MODE_BROWSE, num_rows=11, expand_x=True, enable_events=True, key='chooseArea')]
 	]
-]
 
-mapProperties = [
-	[
-		sg.Text("Kódová stránka"),
-		sg.OptionMenu(['Windows-1250', 'Windows-1252', 'Latin-2', 'Unicode', 'ASCII'], default_value='Windows-1250', key='codePage', disabled=True)
-	],
-	[
-		sg.Text("Stáhnout nová data"),
-		sg.OptionMenu(['Jsou-li starší než 1 den', 'Jsou-li starší než 3 dny', 'Jsou-li starší než týden', 'Vždy', 'Nikdy'], default_value='Jsou-li starší než 1 den', key='download', disabled=True)
-	],
-	[
-		sg.Text("ID mapy"),
-		sg.InputText(key='mapNumber', disabled=True, enable_events=True)
-	],
-	[
-		sg.Text("Přípona za jménem"),
-		sg.InputText(key='suffix', default_text='_VasaM', disabled=True, enable_events=True)
-	],
-	[
-		sg.Text("Oříznout mapový soubor podle polygonu"),
-		sg.OptionMenu(['Ne', 'Ano'], default_value='Ne', key='crop', disabled=True)
-	],
-	[
-		sg.Text("Nedělit mapove soubory na menší"),
-		sg.OptionMenu(['Ne', 'Ano'], default_value='Ne', key='split', disabled=True)
-	],
-]
+	mapProperties = [
+		[
+			sg.Text("Kódová stránka", size=(29, None), justification="r"),
+			sg.OptionMenu(['Windows-1250', 'Windows-1252', 'Latin-2', 'Unicode', 'ASCII'], default_value='Windows-1250', key='codePage', disabled=True)
+		],
+		[
+			sg.Text("Stáhnout nová data", size=(29, None), justification="r"),
+			sg.OptionMenu(['Jsou-li starší než 1 den', 'Jsou-li starší než 3 dny', 'Jsou-li starší než týden', 'Vždy', 'Nikdy'], default_value='Jsou-li starší než 1 den', key='download', disabled=True)
+		],
+		[
+			sg.Text("ID mapy", size=(29, None), justification="r"),
+			sg.InputText(key='mapNumber', size=(5, 0), disabled=True, enable_events=True)
+		],
+		[
+			sg.Text("Přípona za jménem", size=(29, None), justification="r"),
+			sg.InputText(key='suffix', default_text='_VasaM', size=(20, 0), disabled=True, enable_events=True)
+		],
+		[
+			sg.Text("Oříznout mapový soubor podle polygonu", size=(29, None), justification="r"),
+			sg.OptionMenu(['Ne', 'Ano'], default_value='Ne', key='crop', disabled=True)
+		],
+		[
+			sg.Text("Nedělit mapove soubory na menší", size=(29, None), justification="r"),
+			sg.OptionMenu(['Ne', 'Ano'], default_value='Ne', key='split', disabled=True)
+		],
+	]
 
-layout = [
-	[
-		sg.Frame("1", areaFrame),
-	],
-	[
-		sg.Frame("2", mapProperties),
-	],
-	[
-		sg.Frame("3", [[sg.Button('Generovat', key='generate', disabled=True)]]),
-	],
-	[
-		sg.Frame("4", [[sg.Output(size=(88, 20), font='Courier 10')]]),
-		# sg.Frame("4", [[sg.Multiline(write_only=True, size=(None, 20), reroute_stdout=False, key='output')]]),
-		# sg.Frame("4", [[sg.Multiline(write_only=True, size=(None, 20), reroute_stdout=True, key='output')]]), // FIXME
-	],
-]
+	layout = [[
+		sg.Column([
+			[sg.Frame("1", areaFrame, expand_x=True)],
+			[sg.Frame("2", mapProperties)],
+		]),
+		sg.Column([
+			[sg.Frame("3", [[sg.Button('Generovat', key='generate', disabled=True, size=(80, 0))]])],
+			[sg.Frame("4", [[sg.Output(expand_x=True, expand_y=True, font='Courier 10', autoscroll_only_at_bottom=True, echo_stdout_stderr=True)]], expand_x=True, expand_y=True)]
+		], expand_x=True, expand_y=True)
+	]]
+
+	locked = False
+
+	def __init__(self):
+		self.window = sg.Window("GMapMaker GUI", self.layout, finalize=True)
+
+		self.previousMapNumberValue = self.window['mapNumber'].get()
+		self.previousSuffixValue = self.window['suffix'].get()
+
+	def setDisabled(self, newState):
+		if not self.locked:
+			for input in ['codePage', 'download', 'mapNumber', 'suffix', 'crop', 'split', 'generate']:
+				self.window[input].update(disabled=newState)
+
+	def lock(self):
+		self.setDisabled(True)
+		self.locked = True
+
+	def unlock(self):
+		self.setDisabled(False)
+		self.locked = False
+
+	def isLocked(self):
+		return self.locked
+
+	def read(self):
+		return self.window.read()
+
+	def close(self):
+		return self.window.close()
+
+	def __getitem__(self, key):
+		return self.window[key]
 
 
 
 def main():
-	# vytvoření okna s ovládacími prvky
-	window = sg.Window("GMapMaker GUI", layout)
+	o = Options()
+	w = Window()
+	q = Queue()
 
-	inputsToUpdate = [window['codePage'], window['download'], window['mapNumber'], window['suffix'], window['crop'], window['split'], window['generate']]
 
-	previousMapNumberValue = window['mapNumber'].get()
-	previousSuffixValue = window['suffix'].get()
+	def generateMapJob(o, queue):
+		try:
+			generateMap(False, o)
+		except Exception as e:
+			error(str(e))
+
+			import traceback
+			traceback.print_exc()
+		finally:
+			queue.put(True)
+
+
+	generatorThread = Thread(target=generateMapJob, args=(o, q))
+
+
+	# Create and Start Window thread
+	def windowJob(queue, window: Window):
+		while True:
+			data = queue.get()
+			window.unlock()
+	windowThread = Thread(target=windowJob, args=(q, w))
+	windowThread.start()
+
 
 	# obsluha smyčky událostí (event loop)
 	while True:
 		# přečtení události
-		event, values = window.read()
+		event, values = w.read()
 
-		print("Event: ", event, "    Values: ", values)
+		# print("Event: ", event, "    Values: ", values)
 
-		if event == 'chooseArea':
+		if event == sg.WIN_CLOSED or event == 'Cancel':
+			break
+
+		elif event == 'chooseArea':
 			areaId = values['chooseArea'][0]
-			for input in inputsToUpdate:
-				input.update(disabled=areaId in rootTreeItems)
+			w.setDisabled(areaId in w.rootTreeItems)
 
 			mapNumber = ''
-			if areaId not in rootTreeItems:
+			if areaId not in w.rootTreeItems:
 				founded = False
 				for userArea in USER_AREAS:
 					if userArea == areaId:
@@ -114,78 +171,47 @@ def main():
 							if state == areaId:
 								mapNumber = STATES[continent][areaId].number
 
-			window['mapNumber'].update(value=mapNumber)
+			w['mapNumber'].update(value=mapNumber)
 
 		elif event == 'mapNumber':
-			newValue = window['mapNumber'].get()
+			newValue = w.window['mapNumber'].get()
 			if newValue.isascii() and newValue.isdigit() and int(newValue) <= 9999:
 				previousMapNumberValue = newValue
 			else:
-				window['mapNumber'].update(value=previousMapNumberValue)
+				w['mapNumber'].update(value=previousMapNumberValue)
 
 		elif event == 'suffix':
-			newValue = window['suffix'].get()
+			newValue = w.window['suffix'].get()
 			if re.match(r'^[a-zA-Z0-9_\-]+$', newValue):
 				previousSuffixValue = newValue
 			else:
-				window['suffix'].update(value=previousSuffixValue)
+				w['suffix'].update(value=previousSuffixValue)
 
 		elif event == 'generate':
-			for input in inputsToUpdate:
-				input.update(disabled=True)
-
-			def parseDownloadType(value):
-				if value in ['Jsou-li starší než 1 den', 'Jsou-li starší než 3 dny', 'Jsou-li starší než týden']:
-					return 'auto'
-				elif value == 'Nikdy':
-					return 'skip'
-				else:
-					return 'force'
-
-			def parseMaximumDataAge(value):
-				if value == 'Jsou-li starší než týden':
-					return 7 * 24 * 3600
-				elif value == 'Jsou-li starší než 3 dny':
-					return 3 * 24 * 3600
-				else:
-					return 1 * 24 * 3600
-
-			def parseCodePage(codePage):
-				if codePage == 'Windows-1250':
-					return '1250'
-				elif codePage == 'Windows-1252':
-					return '1252'
-				elif codePage == 'Latin-2':
-					return 'latin2'
-				elif codePage == 'Unicode':
-					return 'unicode'
-				else:
-					return 'ascii'
+			w.lock()
 
 
-			o = Options()
 			o.split          = values['split'] == 'Ano'
 			o.area           = values['chooseArea'][0]
-			o.downloadMap    = parseDownloadType(values['download'])
-			o.maximumDataAge = parseMaximumDataAge(values['download'])
+			o.downloadMap    = downloadType(values['download'])
+			o.maximumDataAge = maximumDataAge(values['download'])
 			o.extend         = 0
 			o.quiet          = False
 			o.logFile        = False
-			o.code           = parseCodePage(values['codePage'])
+			o.code           = codePage(values['codePage'])
 			o.crop           = values['crop'] == 'Ano'
+			o.extend         = None
 			o.mapNumber      = int(values['mapNumber'])
 			o.variant        = None
 			o.en             = False
 			o.sufix          = values['suffix']
 
-			generateMap(False, o)
+			generatorThread.start()
 
-		# Reakce na událost "uzavření okna"
-		elif event == sg.WIN_CLOSED:
-			break
+
 
 	# po výskoku ze smyčky událostí aplikaci ukončíme
-	window.close()
+	w.close()
 
 
 if __name__ == "__main__":

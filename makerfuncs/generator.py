@@ -1,5 +1,5 @@
 import os, glob, zipfile, hashlib, json, platform
-import subprocess
+import subprocess, threading
 
 from makerfuncs.prints import say, error, log
 from makerfuncs.Lang import _
@@ -20,22 +20,14 @@ def _sha1(filename):
 
 
 def run(program, o):
-	program = ' '.join(program.split())
-	say(program, o, '[RUN] ')
-	process = subprocess.Popen(program, universal_newlines = True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	say(' '.join(program.split()), o, '[RUN] ')
 
-	while True:
-		output = process.stdout.readline()
+	process = subprocess.Popen(' '.join(program.split()), universal_newlines = True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-		if output == '' and process.poll() is not None:
-			break;
+	for output in process.stdout:
 		if output:
 			say(output, o, '', '')
 			log(output, o)
-
-	if process.poll() != 0:
-		error('stderr: ' + process.stderr.read(), o)
-		raise ValueError(program + ' ' + _('vratil') + ' ' + str(process.poll()) + ' (ocekavana 0)')
 
 
 
@@ -72,10 +64,10 @@ def crop(o):
 		say(_('Vytvarim vyrez oblasti'), o)
 
 		osmconvert = ('' if platform.system() == 'Windows' else './') + 'osmconvert' + platform.architecture()[0][0:2] + ('.exe' if platform.system() == 'Windows' else '')
-	
+
 		os.chdir( 'osmconvert' )
 		run(osmconvert + ' \
-			../' + o.area.mapDataName + 
+			../' + o.area.mapDataName +
 			' -B=../' + o.temp + 'polygon.poly \
 			--complete-ways --complete-multipolygons --complete-boundaries \
 			--out-pbf \
@@ -113,7 +105,7 @@ def _splitFiles(o):
 
 			# Spustim splitter
 			run('java ' + o.JAVAMEM + ' -jar \
-				./splitter-r' + str(o.splitter) + '/splitter.jar ' + 
+				./splitter-r' + str(o.splitter) + '/splitter.jar ' +
 				input_file +
 				' --max-areas=4096 \
 				--max-nodes=1600000 \
@@ -129,7 +121,7 @@ def _splitFiles(o):
 		# Rozdelim soubor s vrstevnicemi
 		if not os.path.isdir( o.pbf + o.area.id + '-SPLITTED-SRTM' ):
 			run('java ' + o.JAVAMEM + ' -jar \
-				./splitter-r' + str(o.splitter) + '/splitter.jar ' + 
+				./splitter-r' + str(o.splitter) + '/splitter.jar ' +
 				input_srtm_file +
 				' --max-areas=4096 \
 				--max-nodes=1600000 \
