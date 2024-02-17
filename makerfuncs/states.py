@@ -335,7 +335,7 @@ STATES = {
 			nameEn = 'China',
 			number = 7335,
 		),
-		'GCC_STATES': State(
+		'GCC-STATES': State(
 			url    = 'gcc-states',
 			nameCs = 'Rada Perskeho Zalivu',
 			nameEn = 'Gulf Cooperation Council',
@@ -365,7 +365,7 @@ STATES = {
 			nameEn = 'Iraq',
 			number = 7360,
 		),
-		'IL_PS': State(
+		'IL-PS': State(
 			url    = 'israel-and-palestine',
 			nameCs = 'Izrael a Palestina',
 			nameEn = 'Israel and Palestine',
@@ -407,7 +407,7 @@ STATES = {
 			nameEn = 'Lebanon',
 			number = 7395,
 		),
-		'MY_SG_BN': State(
+		'MY-SG-BN': State(
 			url    = 'malaysia-singapore-brunei',
 			nameCs = 'Malajsie, Singapur a Brunej',
 			nameEn = 'Malaysia, Singapore and Brunei',
@@ -764,7 +764,7 @@ STATES = {
 			nameEn = 'Sao Tome and Principe',
 			number = 7705,
 		),
-		'SN_GM': State(
+		'SN-GM': State(
 			url    = 'senegal-and-gambia',
 			nameCs = 'Senegal a Gambie',
 			nameEn = 'Senegal and Gambia',
@@ -1208,7 +1208,7 @@ STATES = {
 			nameEn = 'Guatemala',
 			number = 8120,
 		),
-		'HT_DO': State(
+		'HT-DO': State(
 			url    = 'haiti-and-domrep',
 			nameCs = 'Haiti a Dominikanska republika',
 			nameEn = 'Haiti and Dominican Republic',
