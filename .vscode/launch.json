@@ -12,6 +12,14 @@
             "console": "integratedTerminal",
             "args": ["-a", "AD", "--maximum-data-age", "7d"],
             "justMyCode": false
+        },
+        {
+            "name": "gmapmaker-gui.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "gmapmaker-gui.py",
+            "console": "integratedTerminal",
+            "justMyCode": false
         }
     ]
 }

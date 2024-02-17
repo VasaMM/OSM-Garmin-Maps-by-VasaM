@@ -1393,3 +1393,15 @@ STATES = {
 		),
 	},
 }
+
+
+continentNames = {
+	'europe': 'Evropa',
+	'asia': 'Asie',
+	'africa': 'Afrika',
+	'north-america': 'Severní Amerika',
+	'central-america': 'Střední Amerika',
+	'south-america': 'Jižní Amerika',
+	'australia-oceania': 'Austrálie a Oceánie',
+	'russia': 'Rusko'
+}

@@ -45,6 +45,14 @@ def fileHeader(o: Options) -> None:
 		say(_('File from ') + str(o.area.timestamp), o)
 
 
+def maximumDataAge(age):
+	if age == 'Jsou-li starší než týden':
+		return 7 * 24 * 3600
+	elif age == 'Jsou-li starší než 3 dny':
+		return 3 * 24 * 3600
+	else:
+		return 1 * 24 * 3600
+
 
 # Return old in hours
 def age(age: str) -> int:
@@ -59,12 +67,25 @@ def age(age: str) -> int:
 
 
 def downloadType(data: str) -> str:
-	if data == '[f]orce':
+	if data in ['[f]orce', 'Vždy']:
 		return 'force'
-	elif data == '[s]kip':
+	elif data in ['[s]kip', 'Nikdy']:
 		return 'skip'
-	elif data == '[a]uto':
+	elif data in ['[a]uto', 'Jsou-li starší než 1 den', 'Jsou-li starší než 3 dny', 'Jsou-li starší než týden']:
 		return 'auto'
+
+
+def codePage(codePage):
+	if codePage == 'Windows-1250':
+		return '1250'
+	elif codePage == 'Windows-1252':
+		return '1252'
+	elif codePage == 'Latin-2':
+		return 'latin2'
+	elif codePage == 'Unicode':
+		return 'unicode'
+	else:
+		return 'ascii'
 
 
 def _findState(id: str) -> State:
@@ -89,7 +110,7 @@ def _makeAreaObject(id: str, obj: object, options: Options, continent: str = Non
 			obj.url = USER_AREAS[obj.parent].url
 
 		else:
-			raise ValueError(_('Ivalid parent ID') + ' \'' + obj.parent + '\' ' + _('in') + ' \'' + id + '\'')
+			raise ValueError(_('Invalid parent ID') + ' \'' + obj.parent + '\' ' + _('in') + ' \'' + id + '\'')
 
 		obj.mapDataName = os.path.join(options.pbf, obj.parent + '.osm.pbf')
 
@@ -105,31 +126,7 @@ def _makeAreaObject(id: str, obj: object, options: Options, continent: str = Non
 
 def area(o: Options) -> None:
 	if o.areaId is None:
-		while True:
-			print('\n' + _('Select a continent'))
-			for continent in STATES:
-				print(continent)
-
-			continent = input(_('Selected: '))
-			if continent not in STATES:
-				continue
-			else:
-				break
-
-		while True:
-			print('\n' + _('Select a state'))
-			for state in STATES[continent]:
-				if Lang.getLanguage() == 'cs':
-					print(state, ' (', STATES[continent][state].nameCs, ')', sep='')
-				else:
-					print(state, ' (', STATES[continent][state].nameEn, ')', sep='')
-
-			state = input(_('Selected: '))
-			if state not in STATES[continent]:
-				continue
-			else:
-				o.areaId = state
-				break
+		raise ValueError(_('Area isn\'t set!'))
 
 	say(_('Decoding area ') + o.areaId, o)
 

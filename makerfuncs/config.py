@@ -5,7 +5,7 @@ class Item:
 
 	def set(self, value):
 		if type(value) != self.valueType:
-			raise RuntimeError('Ivalid type of value! ' + value + ': ' + self.valueType + ' expected but ' + type(value) + ' getted.')
+			raise RuntimeError('Invalid type of value! ' + value + ': ' + self.valueType + ' expected but ' + type(value) + ' getted.')
 		self.value = value
 		self.setted = True
 
@@ -34,7 +34,7 @@ class Item:
 		self.value = None
 		self.valueType = valueType
 		if type(defaultValue) != valueType:
-			raise RuntimeError('Ivalid type of value! ' + str(defaultValue) + ': ' + str(valueType) + ' expected but ' + str(type(defaultValue)) + ' getted.')
+			raise RuntimeError('Invalid type of value! ' + str(defaultValue) + ': ' + str(valueType) + ' expected but ' + str(type(defaultValue)) + ' getted.')
 		self.default = defaultValue
 
 	def __str__(self):

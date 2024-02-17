@@ -7,6 +7,8 @@ class Options:
     MAX_JOBS: int
     VERSION: int
 
+    gui: bool
+
     img: str
     pbf: str
     polygons: str

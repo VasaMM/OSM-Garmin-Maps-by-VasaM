@@ -151,7 +151,7 @@ def mapData(o: Options):
 	if o.downloadMap == 'force' or o.downloaded is True:
 		try:
 			say(_('Downloading map data'), o)
-			download(o.area.url, o.area.mapDataName)
+			download(o.area.url, o.area.mapDataName, quiet=o.gui)
 			parser.fileHeader(o)
 
 		except:
@@ -163,4 +163,4 @@ def mapData(o: Options):
 def polygon(o: Options):
 	if hasattr(o.area, 'continent') and not os.path.isfile(os.path.join(o.polygons, o.area.id + '.poly')):
 		say(_('Download polygon'), o)
-		download(o.area.url[0:-15] + '.poly', os.path.join(o.polygons, o.area.id + '.poly'))
+		download(o.area.url[0:-15] + '.poly', os.path.join(o.polygons, o.area.id + '.poly'), quiet=o.gui)

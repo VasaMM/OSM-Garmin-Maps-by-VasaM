@@ -8,9 +8,11 @@ from makerfuncs.prints import say, error, end
 from makerfuncs.Lang import Lang, _
 
 
-def main():
-	# Object with configuration and options
-	o = Options()
+def generate(o: Options = None) -> None:
+	# Create object with configuration and options
+	if o is None:
+		o = Options()
+
 	o.JAVAMEM  = '-Xmx4g' # Maximum amount of available RAM, see https://stackoverflow.com/questions/14763079/what-are-the-xms-and-xmx-parameters-when-starting-jvm
 	o.MAX_JOBS = 4        # Maximum od cores
 	o.VERSION  = 110      # Version
@@ -26,7 +28,8 @@ def main():
 			setattr(o, key, item.getValue())
 
 		# Load arguments
-		args.parse(o)
+		if o.gui is False:
+			args.parse(o)
 
 		# Set english language
 		if o.en:
@@ -79,4 +82,4 @@ def main():
 
 
 if __name__ == "__main__":
-	main()
+	generate()
