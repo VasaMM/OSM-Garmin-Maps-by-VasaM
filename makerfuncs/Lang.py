@@ -43,7 +43,7 @@ class LangClass:
 		'Generating map': 'Generuji mapu',
 		'I don\'t have data url - skip downloading': 'Neznam URL adresu - preskakuji',
 		'in': 'v',
-		'Invalid area': 'Neplatna oblast ',
+		'Invalid area ': 'Neplatna oblast ',
 		'Invalid parent ID': 'Neplatne ID rodice',
 		'Make info file': 'Vytvarim info soubor',
 		'Make map for Garmin...': 'Vytvarim mapu pro Garmin...',
