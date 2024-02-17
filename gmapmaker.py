@@ -25,7 +25,7 @@ def main():
 
 		# Objekt pro ulozeni globalnich promennych a nastaveni
 		o = Options()
-	
+
 		# Nactu konfiguracni soubor
 		config.load(o)
 
@@ -69,7 +69,7 @@ def main():
 
 	except KeyboardInterrupt:
 		error("\n" + _('Ukonceno uzivatelem'))
-		
+
 
 	except Exception as e:
 		error(str(e))
