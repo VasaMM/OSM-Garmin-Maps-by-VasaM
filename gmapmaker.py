@@ -11,13 +11,15 @@ from makerfuncs.Lang import Lang, _
 # Nastaveni a globalni promenne
 class Options:
 	def __init__(self):
-		self.JAVAMEM  = '-Xmx4g'   # Maximalni velikost RAM, kterou lze pouzit, viz https://stackoverflow.com/questions/14763079/what-are-the-xms-and-xmx-parameters-when-starting-jvm
-		self.MAX_JOBS = 4          # Maximalni pocet vlaken
+		self.JAVAMEM  = '-Xmx4g' # Maximalni velikost RAM, kterou lze pouzit, viz https://stackoverflow.com/questions/14763079/what-are-the-xms-and-xmx-parameters-when-starting-jvm
+		self.MAX_JOBS = 4        # Maximalni pocet vlaken
 
-		self.VERSION = 101		   # Verze generovane mapy
+		self.gui = False
+
+		self.VERSION = 101       # Verze generovane mapy
 
 
-def main(parseArgs = False, o = None):
+def main(o = None):
 	try:
 		# TODO vytvorit TMP slozku
 
@@ -29,11 +31,11 @@ def main(parseArgs = False, o = None):
 		config.load(o)
 
 		# Nactu a zpracuji argumenty
-		if parseArgs:
+		if not o.gui:
 			args.parse(o)
 
 		# Nastavim jazyk
-		if o.en:
+		if not o.gui and o.en:
 			Lang.bindLanguage('en')
 
 		# Zaznamenam cas spusteni

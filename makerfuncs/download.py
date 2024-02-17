@@ -29,8 +29,8 @@ def _makeBar(length, percent, done = '=', pointer = '>', fill = ' ', start = '['
 def _printProgress(percent, size, length, speed, eta, unit, unitSize):
 	bar = _makeBar(30, percent)
 
-	# sys.stdout.write("\r") # Clear to the end of line
-	# print("{0:3}%  {1}  {2} {6} / {3} {6}   {4:.2f} {6}/s   eta {5}      \r".format(percent, bar, size // unitSize, length // unitSize, speed, eta, unit), end='')
+	sys.stdout.write("\r") # Clear to the end of line
+	print("{0:3}%  {1}  {2} {6} / {3} {6}   {4:.2f} {6}/s   eta {5}      \r".format(percent, bar, size // unitSize, length // unitSize, speed, eta, unit), end='')
 
 
 
@@ -81,7 +81,8 @@ def download(url, output, quiet = False):
 			time_diff = (datetime.now() - tmp_time).total_seconds()
 
 			if not data:
-				_printProgress(100, length, length, 0, 0, unit, unitSize)
+				if not quiet:
+					_printProgress(100, length, length, 0, 0, unit, unitSize)
 				break
 
 			output.write(data)
@@ -153,7 +154,7 @@ def mapData(o):
 	if o.downloadMap == 'force' or o.downloaded is True:
 		try:
 			say(_('Stahuji mapova data'), o)
-			download(o.area.url, o.area.mapDataName)
+			download(o.area.url, o.area.mapDataName, quiet=o.gui)
 			parser.fileHeader(o)
 
 		except:
@@ -165,4 +166,4 @@ def mapData(o):
 def polygon(o):
 	if hasattr(o.area, 'continent') and not os.path.isfile(o.polygons + o.area.id + '.poly'):
 		say(_('Stahuji polygon'), o)
-		download(o.area.url[0:-15] + '.poly', o.polygons + o.area.id + '.poly')
+		download(o.area.url[0:-15] + '.poly', o.polygons + o.area.id + '.poly', quiet=o.gui)
