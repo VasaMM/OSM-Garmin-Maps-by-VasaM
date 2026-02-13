@@ -1,7 +1,5 @@
 import textwrap, argparse, re
-from argparse import RawTextHelpFormatter
 from makerfuncs import parser
-from makerfuncs.prints import say
 from makerfuncs.Lang import _
 
 
@@ -34,7 +32,6 @@ EN: Script for generating OSM maps for Garmin navigations
 Author: VasaM
 License: CC BY 4.0
 Version: ''' + "{:.2f}".format(o.VERSION / 100) + '''
-Date: 11. 08. 2021
 Web: https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM''')
 		)
 
@@ -79,13 +76,13 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 	argParser.add_argument(
 		'--variant',
 		choices=['0', '1', '2', '3', '4'],
-		help='Vynuti konkretni cislo varianty (jinak automaticky)'
+		help='Pricte cislo varianty k map-number, 0 vychozi. Obvykle 0 - výchozí kódování (1250), 1 - ascii, 2 - unicode\nAdds variant number to map-number, 0 default. Usually 0 - default encoding (1250), 1 - ascii, 2 - unicode'
 	)
-	argParser.add_argument(
-		'--extend', '-e',
-		type=float,
-		help='Zvetsi polygon o zadany pocet kilometrů (zatim nefunguje)\nExtend the polygon by the specified number of kilometers (not working yet)'
-	)
+	# argParser.add_argument(
+	# 	'--extend', '-e',
+	# 	type=float,
+	# 	help='Zvetsi polygon o zadany pocet kilometrů (zatim nefunguje)\nExtend the polygon by the specified number of kilometers (not working yet)'
+	# )
 	argParser.add_argument(
 		'--sufix',
 		type=str,
@@ -99,7 +96,7 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 	argParser.add_argument(
 		'--no-split',
 		action='store_true',
-		help='Zakaze deleni mapy na podsoubory - vhodne jen pro velmi male oblasti'
+		help='Zakaze deleni mapy na podsoubory - vhodne jen pro velmi male oblasti\nDisables splitting the map into subfiles - suitable only for very small areas'
 	)
 	argParser.add_argument(
 		'--quiet', '-q',
@@ -109,13 +106,13 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 	argParser.add_argument(
 		'--logging', '-l',
 		action='store_true',
-		help='Vytvori logovaci soubor makeMap.log'
+		help='Vytvori logovaci soubor makeMap.log\nCreates a log file makeMap.log'
 	)
 	argParser.add_argument(
 		'--version', '-v',
 		action='version',
 		version='%(prog)s ' + "{:.2f}".format(o.VERSION / 100),
-		help='Zobrazí aktuální verzi'
+		help='Zobrazí aktuální verzi\nDisplays the current version'
 	)
 	argParser.add_argument(
 		'--en',
@@ -132,7 +129,7 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 	o.area           = args.area
 	o.downloadMap    = parser.downloadType(args.download)
 	o.maximumDataAge = parser.age(args.maximum_data_age)
-	o.extend         = args.extend
+	# o.extend         = args.extend
 	o.quiet          = args.quiet
 	o.logFile        = args.logging
 	o.code           = parser.CodePage(args.code_page)

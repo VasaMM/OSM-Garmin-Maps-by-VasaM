@@ -91,7 +91,7 @@ def load(o):
 
 		o.polygon = _loadGeojson(o.polygons + o.area.id + '.geojson')
 		_savePoly(o.polygons + o.area.id + '.poly', o.polygon)
-		
+
 
 	# Existuje *.poly soubor, vytvorim *.geojson, pokud jeste neexistuje
 	elif not os.path.isfile(o.polygons + o.area.id + '.geojson'):
@@ -103,8 +103,8 @@ def load(o):
 	else:
 		o.polygon = _loadGeojson(o.polygons + o.area.id + '.geojson')
 
-	if o.extend is not None:
-		_extend(o)
-		o.crop = True
+	# if o.extend is not None:
+	# 	_extend(o)
+	# 	o.crop = True
 
 	_savePoly(o.temp + 'polygon.poly', o.polygon)
