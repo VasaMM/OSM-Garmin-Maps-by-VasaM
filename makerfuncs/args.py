@@ -45,9 +45,9 @@ Web: https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM''')
 	)
 	argParser.add_argument(
 		'--code-page', '-c',
-		choices=['unicode', 'ascii', '1250', '1252', 'latin2'],
+		choices=['unicode', 'ascii', '1250', '1252', 'latin1', 'latin2'],
 		default='1250',
-		help='Kodova stranka ve vygenerovane mape\nCode page in the generated map'
+		help='Kodova stranka ve vygenerovane mape, vychozi je 1250\nCode page in the generated map, default is 1250'
 	)
 	# argParser.add_argument(
 	# 	'--map-language', '-g',
@@ -135,7 +135,7 @@ Maximum age of map data for automatic download. Value in the form [0-9]+[hdm], w
 	o.extend         = args.extend
 	o.quiet          = args.quiet
 	o.logFile        = args.logging
-	o.code           = args.code_page
+	o.code           = parser.CodePage(args.code_page)
 	o.crop           = args.crop
 	o.mapNumber      = args.map_number
 	o.variant        = args.variant
