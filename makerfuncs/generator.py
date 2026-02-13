@@ -37,7 +37,7 @@ def run(program, o):
 def contours(o):
 	say(_('Generuji vrstevnice'), o)
 	# Zjistim, zda mam hotove vrstevnice
-	if not os.path.isfile(o.pbf + o.area.id + '-SRTM.osm.pbf'):
+	if ( o.split and not os.path.exists( o.pbf + o.area.id + '-SPLITTED-SRTM' ) ) or ( not o.split and not os.path.isfile(o.pbf + o.area.id + '-SRTM.osm.pbf') ):
 		run('pyhgtmap \
 			--polygon=' + o.temp + 'polygon.poly \
 			-o ' + o.pbf + o.area.id + '-SRTM \
