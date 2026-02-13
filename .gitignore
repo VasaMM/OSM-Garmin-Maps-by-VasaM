@@ -7,11 +7,9 @@ maps/*
 polygons/*
 
 _pic/*
-_pbf(smazat)/*
-_osmosis(smazat)/*
-_mapsplit(smazat)/*
-_old(smazat)/*
 temp/*
+venv*/*
+mapedit*/*
 
 *__pycache__*
 
