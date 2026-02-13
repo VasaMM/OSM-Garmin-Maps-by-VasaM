@@ -1,4 +1,4 @@
-import zipfile, os
+import os
 
 
 def prepareUserAreas():
@@ -10,7 +10,6 @@ def prepareUserAreas():
 
 	with open('userAreas/myAreas.py', 'w') as file:
 		file.write('from makerfuncs.Area import Area\n')
-		file.write('from makerfuncs.states import STATES\n')
 		file.write('\n')
 		file.write('USER_AREAS = {\n')
 		file.write('	\'OL\': Area(\n')
@@ -25,8 +24,8 @@ def prepareUserAreas():
 
 def prepare():
 	prepareUserAreas()
-	
-	from makerfuncs import config, download as d
+
+	from makerfuncs import config
 	import update as u
 
 	default = {
@@ -56,7 +55,7 @@ def prepare():
 			data[item] = default[item]
 		if data[item][-1] != '/':
 			data[item] = data[item] + '/'
-		
+
 		try:
 			os.mkdir(data[item])
 		except:
