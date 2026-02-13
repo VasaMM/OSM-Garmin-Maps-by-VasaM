@@ -74,7 +74,7 @@ def update():
 
 
 	# Data sea
-	if (not os.path.isdir(config.get('sea'))):
+	if (not os.path.isdir(config.get('sea'))) or (not os.listdir(config.get('sea'))):
 		d.download('http://osm.thkukuk.de/data/sea-latest.zip', './sea.zip')
 		with zipfile.ZipFile('./sea.zip', 'r') as zipRef:
 			zipRef.extractall(config.get('sea'))
@@ -84,7 +84,7 @@ def update():
 		print("Directory '" + config.get('sea') + "' already exists - skipping...")
 
 	# Data bounds
-	if (not os.path.isdir(config.get('bounds'))):
+	if (not os.path.isdir(config.get('bounds'))) or (not os.listdir(config.get('bounds'))):
 		d.download('http://osm.thkukuk.de/data/bounds-latest.zip', './bounds.zip')
 		with zipfile.ZipFile('./bounds.zip', 'r') as zipRef:
 			zipRef.extractall(config.get('bounds'))
