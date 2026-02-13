@@ -6,7 +6,7 @@
 import sys, os
 from ftplib import FTP
 from makerfuncs import config
-from makerfuncs.download import _makeBar, _printProgres
+from makerfuncs.download import _makeBar, _printProgress
 
 
 
@@ -41,10 +41,10 @@ def upload(states):
 						def update(self, _):
 							self.uploaded += blockSize
 							# TODO Calculate speed and ETA
-							_printProgres(round(self.uploaded / fileSize * 100), self.uploaded, fileSize, 0, 0, 'MB', 1048576)
+							_printProgress(round(self.uploaded / fileSize * 100), self.uploaded, fileSize, 0, 0, 'MB', 1048576)
 
 						def finish(self):
-							_printProgres(100, fileSize, fileSize, 0, 0, 'MB', 1048576)
+							_printProgress(100, fileSize, fileSize, 0, 0, 'MB', 1048576)
 							print()
 
 					progressBar = ProgressBar()
