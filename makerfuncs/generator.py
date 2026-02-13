@@ -183,6 +183,13 @@ def _makeZip(o):
 def _makeInfo(o):
 	say(_('Vytvarim info soubor'), o)
 
+	codeMap = {
+		"0": "ASCII",
+		"85001": "Unicode",
+		"latin1": "1252",
+		"latin2": "1250"
+	}
+
 	infoData = {
 		'ID':        o.area.id,
 		'version':   str(o.VERSION),
@@ -190,7 +197,7 @@ def _makeInfo(o):
 		'timestamp': str(o.area.timestamp.timestamp()),
 		'hashImg':   _sha1( o.img + o.area.id + o.sufix + '.img' ),
 		'hashZip':   _sha1( o.img + o.area.id + o.sufix + '.zip' ),
-		'codePage':  o.code
+		'codePage':  codeMap.get(key=str(o.code), default=str(o.code))
 	}
 
 	with open( o.img + o.area.id + o.sufix + '.info', 'w' ) as info:

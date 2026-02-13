@@ -40,6 +40,19 @@ def age(age):
 		return int(age[0:-1]) * 3600 * 24 * 30
 
 
+def CodePage(data):
+	if data == 'unicode':
+		return '65001'
+	elif data == 'ascii':
+		return '0'
+	elif data in 'latin1':
+		return '1252'
+	elif data == 'latin2':
+		return '1250'
+	else:
+		return data
+
+
 def downloadType(data):
 	if data == '[f]orce':
 		return 'force'
@@ -62,14 +75,14 @@ def _makeAreaObject(id, obj, options, continent = None):
 
 	if hasattr(obj, 'parent') and obj.parent is not None:
 		say(_('Oblast je zavisla na datech oblasti ') + obj.parent, options)
-		
+
 		state = _findState(obj.parent)
 		if state is not None:
 			obj.url = "http://download.geofabrik.de/%s/%s-latest.osm.pbf" % (state[1], state[0].url)
 
 		elif obj.parent in USER_AREAS:
 			obj.url = USER_AREAS[obj.parent].url
-		
+
 		else:
 			raise ValueError(_('Neplatne ID rodice') + ' \'' + obj.parent + '\' ' + _('v') + ' \'' + id + '\'')
 
