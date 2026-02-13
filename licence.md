@@ -13,6 +13,6 @@ Vrstevnice pocházejí z projektu Viewfinder [http://www.viewfinderpanoramas.org
 
 K vytvoření map jsou použity programy *mkgmap* a *splitter* ze stránek [https://www.mkgmap.org.uk/](https://www.mkgmap.org.uk/), jejichž autorem je Steve Ratcliffe.
 
-Vrstevnice generuje program [phyghtmap](http://katze.tfiu.de/projects/phyghtmap), autorem je Panarchos.
+Vrstevnice generuje program [pyhgtmap](https://github.com/agrenott/pyhgtmap), jehož autorem je agrenott.
 
 Tento skript i jím vytvořené mapy (dostupné [zde](https://www.garmin.vasam.cz)) jsou mým dílem a jsou šířeny pod licencí Creative Commons. Veškeré soubory můžete dále šířit a upravovat bez mého svolení pod podmínkou, že výsledek bude obsahovat odkaz zpět na tyto stránky a jméno autora – VasaM.

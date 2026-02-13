@@ -38,7 +38,7 @@ def contours(o):
 	say(_('Generuji vrstevnice'), o)
 	# Zjistim, zda mam hotove vrstevnice
 	if not os.path.isfile(o.pbf + o.area.id + '-SRTM.osm.pbf'):
-		run('phyghtmap \
+		run('pyhgtmap \
 			--polygon=' + o.temp + 'polygon.poly \
 			-o ' + o.pbf + o.area.id + '-SRTM \
 			--pbf \

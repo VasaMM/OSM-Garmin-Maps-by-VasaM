@@ -1,13 +1,12 @@
 # Skript pro generování OSM map pro Garmin
 
 ## Licence
-[![Licence Creative Commons](https://i.creativecommons.org/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)  
+[![Licence Creative Commons](https://i.creativecommons.org/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
 Toto dílo podléhá licenci [Creative Commons Uveďte původ 4.0 Mezinárodní License](https://creativecommons.org/licenses/by/4.0/).
 
 ## Požadavky
 * Java verze 8
 * Python verze 3 (testováno na 3.8.5)
-* Program [phyghtmap](http://katze.tfiu.de/projects/phyghtmap/), viz [instalace](#Instalace)
 <!-- * Program [osmium](https://osmcode.org/osmium-tool/) -->
 
 ## Instalace
@@ -22,26 +21,19 @@ Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou něja
 	1) [Zde](https://www.java.com/en/download/manual.jsp) stáhnete instalátor pro Windows. Pokud máte 64bitový systém, doporučuji *Windows Offline (64-bit)*. Můžete použít výchozí nastavení instalace.
 	2) Pro linux použijte `sudo apt install default-jre -y`
 
-3) Nainstalujte phyghtmap
-	1) [Odsud](http://katze.tfiu.de/projects/phyghtmap/download.html) stáhněte program *phyghtmap*, označení *source distribution*. Doporučuji nejnovější verzi. Např. v srpnu 2021 to je *phyghtmap_2.23.orig.tar.gz*. **Pozor**, verze 2.21 (a zřejmě i starší) obsahuje ve Windows chybu, vytvořil jsem opravenou [kopii](https://www.garmin.vasam.cz/downloads/phyghtmap-2.21_fixed.zip).
-	2) Archiv rozbalte a ve složce se souborem *setup.py* spusťte konzoli.
-	3) Příkazem `pip3 install matplotlib bs4 lxml` nainstalujte potřebné knihovny.
-	4) Příkazem `python setup.py install` nainstalujte *phyghtmap*.
-	5) Ověřte si úspěšnost instalace příkazem `phyghtmap --version`. Mělo by se vám zobrazit `phyghtmap 2.23`. Pokud vše funguje, můžete rozbalený archiv smazat.
-
-4) Nainstalujte tento skript *gmapmaker*
+3) Nainstalujte tento skript *gmapmaker*
 	1) Uložte si obsah celého repozitáře (vpravo nahoře: *Code* - *Download ZIP*).
 	2) Archiv rozbalte v místě, kde chcete generátor provozovat. Mapové soubory, které budou stahovány, zabírají stovky megabajtů, u velkých států jako Německo to mohou být i gigabajty.
-	3) Příkazem `pip3 install osmium pyclipper geojson` nainstalujte potřebné knihovny.
+	3) Příkazem `pip install pyhgtmap osmium pyclipper geojson` nainstalujte potřebné knihovny.
 
-5) Proveďte inicializaci skriptu pomocí `python prepare.py`.
+4) Proveďte inicializaci skriptu pomocí `python prepare.py`.
 	* Přeskočením odpovědi (klávesa *enter*) se použije výchozí nastavení.
 	* Tento skript automaticky stáhne potřebné soubory ([sea](https://www.mkgmap.org.uk/download/mkgmap.html) a [bounds](https://www.mkgmap.org.uk/download/mkgmap.html)) a programy ([mkgmap](https://www.mkgmap.org.uk/download/mkgmap.html), [splitter](https://www.mkgmap.org.uk/download/splitter.html) a [Osmconvert](https://wiki.openstreetmap.org/wiki/Osmconvert#Binaries)) - celkem cca 1,5 GB. Případná aktualizace je možná pomocí `python update.py`.
-	* Vhodná verze programu *Osmconvert* (Windows/Linux a 32bit/64bit) je detekována automaticky. Pokud ke skriptu *gmapmaker* přistupujete z různých systémů, je nutné spustit `python update.py` v každém z nich. Omezení systému Windows zároveň neumožňuje programu *Osmconvert* zpracovat soubory větší než 2 GB. Tento program slouží k vytvoření výřezu (přepínače `--crop` a `--extend`), proto je nutné pro větší oblasti (většina států) použít buď systém Linux nebo si stáhnout speciální verzi [binary for Windows 64 bit](https://wiki.openstreetmap.org/wiki/Osmconvert#Windows) a tou nahradit automaticky stažený soubor *osmconvert64.exe*. **POZOR** toto funguje jen pro 64bitový systém Windows, pro 32bitový systém Windows řešení není. Linuxu se tento problém netýká.
-	
-6) Ověřte si funkčnost skriptu příkazem `python gmapmaker.py --version`.
+	* Vhodná verze programu *Osmconvert* (Windows/Linux a 32bit/64bit) je detekována automaticky. Pokud ke skriptu *gmapmaker* přistupujete z různých systémů, je nutné spustit `python update.py` v každém z nich. Omezení systému Windows zároveň neumožňuje programu *Osmconvert* zpracovat soubory větší než 2 GB. Tento program slouží k vytvoření výřezu (přepínače `--crop`<!--  a `--extend` -->), proto je nutné pro větší oblasti (většina států) použít buď systém Linux nebo si stáhnout speciální verzi [binary for Windows 64 bit](https://wiki.openstreetmap.org/wiki/Osmconvert#Windows) a tou nahradit automaticky stažený soubor *osmconvert64.exe*. **POZOR** toto funguje jen pro 64bitový systém Windows, pro 32bitový systém Windows řešení není. Linuxu se tento problém netýká.
 
-7) V souboru *gmapmaker.py* na prvních řádcích lze definovat maximální rozsah paměti RAM, povolený počet vláken procesoru a verzi mapy. (**FIXME** v budoucnu bude přesunuto do skriptu *prepare*).
+5) Ověřte si funkčnost skriptu příkazem `python gmapmaker.py --version`.
+
+6) V souboru *gmapmaker.py* na prvních řádcích lze definovat maximální rozsah paměti RAM, povolený počet vláken procesoru a verzi mapy. (**FIXME** v budoucnu bude přesunuto do skriptu *prepare*).
 
 ### FAQ pro instalaci a možné chyby
 * [*Jak zjistit, zda počítač používá 32bitovou nebo 64bitovou verzi operačního systému Windows*](https://support.microsoft.com/cs-cz/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64)
@@ -83,7 +75,7 @@ Státy jsou definovány ve skriptu *python/areas.py*. Vlastní oblasti lze defin
 * `parent` rodičovská mapa, vhodné pro vytváření podoblastí z různých států (budou automaticky stažena/použita mapová data rodiče)
 * `crop` výchozí `False`, `True` vynutí oříznutí dat podle polygonu (**POZOR, zatím nefunguje**).
 
-Dále je nutné připravit polygon a to buď ve formátu *.poly* nebo *.geojson* a umístit ho pod stejným názvem do složky s polygony. Mapová data je pak nutné buď také stáhnout a nachystat do patřičné složky nebo definovat rodiče (viz výše). 
+Dále je nutné připravit polygon a to buď ve formátu *.poly* nebo *.geojson* a umístit ho pod stejným názvem do složky s polygony. Mapová data je pak nutné buď také stáhnout a nachystat do patřičné složky nebo definovat rodiče (viz výše).
 
 
 ### Hotové mapy
