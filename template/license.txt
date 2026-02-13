@@ -1,4 +1,4 @@
-Autor: VasaM  
+Autor: VasaM
 Web: https://www.garmin.vasam.cz
 Licence: Creative Commons Uveďte původ 4.0 Mezinárodní License (https://creativecommons.org/licenses/by/4.0/)
 
@@ -6,11 +6,11 @@ Licence: Creative Commons Uveďte původ 4.0 Mezinárodní License (https://crea
 Mapovy generator vyuziva Open Street Maps (OSM) sirene pod licenci Creative Commons - uvedte autora-Zachovejte licenci 2.0 (CC-BY-SA). Vice viz (c) Prispevatele OpenStreetMap (https://www.openstreetmap.org/copyright).
 
 Mapova data jsou stahovana ze serveru https://download.geofabrik.de.
-Vrstevnice pochazi z projektu Viewfinder (http://www.viewfinderpanoramas.org)
+Vrstevnice pochazeji z projektu Viewfinder (http://www.viewfinderpanoramas.org)
 
-K vytvoreni map jsou pouzity program mkgmap a splitter, ktere pochazi ze stranek https://www.mkgmap.org.uk/, autorem je Steve Ratcliffe.
+K vytvoreni map jsou pouzity programy mkgmap a splitter ze stranek https://www.mkgmap.org.uk/, jejichz autorem je Steve Ratcliffe.
 
 Vrstevnice generuje program phyghtmap (http://katze.tfiu.de/projects/phyghtmap), autorem je Panarchos.
 
-Tento skript i jim vytvorene mapy jsou mym dilem sirene pod licenci Creative Commons, tedy veskere soubory muzete dale sirit a upravovat bez meho svolni pod podminkou, ze vysledek bude obsahovat odkaz zpet na tyto stranky a autora.
+Tento skript i jim vytvorene mapy jsou mym dilem a jsou sireny pod licenci Creative Commons. Veskere soubory muzete dale sirit a upravovat bez meho svoleni pod podminkou, ze vysledek bude obsahovat odkaz zpet na tyto stranky (https://www.garmin.vasam.cz) a jméno autora – VasaM.
 --------------------------------------------------

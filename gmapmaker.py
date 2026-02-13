@@ -29,7 +29,7 @@ def main():
 		# Nactu konfiguracni soubor
 		config.load(o)
 
-		# Nactu a zpracuji arumenty
+		# Nactu a zpracuji argumenty
 		args.parse(o)
 
 		# Nastavim jazyk

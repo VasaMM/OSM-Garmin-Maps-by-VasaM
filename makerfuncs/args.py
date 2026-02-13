@@ -22,7 +22,7 @@ def _ageType(data):
 
 
 
-# Nactu arumenty
+# Nactu argumenty
 def parse(o):
 	argParser = argparse.ArgumentParser(
 		prog = 'gmapmaker',
@@ -60,7 +60,7 @@ Web: https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM''')
 		type=_downloadType,
 		choices=['[f]orce', '[s]kip', '[a]uto'],
 		default='[a]uto',
-		help='force - Mapova data se pri každem spusteni znovu stahnou | Every time it starts, the data is downloaded again\n\
+		help='force - Mapova data se pri kazdem spusteni znovu stahnou | Every time it starts, the data is downloaded again\n\
 skip - Mapova data se nebudou stahovat | Map data will not be downloaded\n\
 auto - Mapova data se stahnou pouze pokud jsou starsi než --maximum-date-age <vychozi>| Map data will be downloaded only if they is older than --maximum-date-age <default>'
 	)
