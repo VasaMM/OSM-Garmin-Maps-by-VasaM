@@ -197,7 +197,7 @@ def _makeInfo(o):
 		'timestamp': str(o.area.timestamp.timestamp()),
 		'hashImg':   _sha1( o.img + o.area.id + o.sufix + '.img' ),
 		'hashZip':   _sha1( o.img + o.area.id + o.sufix + '.zip' ),
-		'codePage':  codeMap.get(key=str(o.code), default=str(o.code))
+		'codePage':  codeMap.get(str(o.code), (o.code)) # get(key, default)
 	}
 
 	with open( o.img + o.area.id + o.sufix + '.info', 'w' ) as info:
