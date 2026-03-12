@@ -185,7 +185,7 @@ def _makeInfo(o):
 
 	codeMap = {
 		"0": "ASCII",
-		"85001": "Unicode",
+		"65001": "Unicode",
 		"latin1": "1252",
 		"latin2": "1250"
 	}
