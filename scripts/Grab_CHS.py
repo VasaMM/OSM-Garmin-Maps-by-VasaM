@@ -28,12 +28,12 @@ for i in range( 1, rockCount + 1 ):
 	name_box = soup.find( 'h1', attrs={ 'class': 'menu5 small-h1' } )
 	name = name_box.text.strip()
 
-	# Ziskma souradnice
+	# Ziskam souradnice
 	coordinates_box = soup.find( 'a', attrs={ 'class': 'map mapycz' } )
 	if ( coordinates_box == None ):
 		print( i, ':  ', name, sep='' )
 		continue
-	
+
 	coordinates = coordinates_box.attrs[ 'href' ]
 	m = re.search( 'y=([0-9]+.[0-9]+)&x=([0-9]+.[0-9]+)', coordinates )
 	coordinates = ( m.group( 1 ), m.group( 2 ) )

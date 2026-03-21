@@ -39,10 +39,10 @@ Pokud si při instalaci nebudete vědět s něčím rady nebo se vyskytnou něja
 * [*Jak zjistit, zda počítač používá 32bitovou nebo 64bitovou verzi operačního systému Windows*](https://support.microsoft.com/cs-cz/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64)
 * Konzoli na windows spustíte následovně: `Win + R`, napsat `cmd`, *OK*. Druhou možností je napsat `cmd` přímo do adresního řádku průzkumníku.
 * Na linuxu může být pro nástroj pip3 (popř. i pro python setup.py) vyžadován přepínač `--user` (`pip3 install --user name1 name2`) nebo `sudo` (`sudo pip3 install name1 name2`).
-* Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
+* Pokud se zobrazí chyba informující o nepřítomnosti pythonu, [restartujte průzkumník](https://wintip.cz/425-jak-restartovat-pruzkumnik-windows-proces-explorer-exe).
 * Instalace knihovny *osmium* může způsobovat problémy. Může pomoct použít starší verzi Pythonu, např. verzi 3.8.10.
 * Na Windows 10 může být problém s antivirem, viz [zde](https://github.com/VasaMM/OSM-Garmin-Maps-by-VasaM/issues/2#issuecomment-532711693).
-* Hlasí-li skript problémy s daty *sea*, smažte odpovídající složku a spusťte `python update.py`.
+* Hlásí-li skript problémy s daty *sea*, smažte odpovídající složku a spusťte `python update.py`.
 
 
 ## Použití
@@ -55,7 +55,7 @@ Je-li skript spuštěn bez parametrů `python ./gmapmaker.py` vyžádá si od u�
 	* *auto* - Mapová data se stáhnou pouze pokud jsou starší než --maximum-date-age (**výchozí**).
 * `--maximum-data-age <age>` určuje maximální stáří mapových dat při automatickém stahování. Hodnota ve tvaru [0-9]+[hdm], kde *h* značí hodinu, *d* značí den (24 hodin) a m značí měsíc (30 dní) (**výchozí hodnota 1d**).
 * `--map-number <number>` vynutí konkretní map ID.
-* `--variant <variant>` vynutí konkretní variantu mapy (hodnota 1 - 5). Varianta mapy ovlivňuje její ID. Jinka je generována automaticky.
+* `--variant <variant>` vynutí konkretní variantu mapy (hodnota 1 - 5). Varianta mapy ovlivňuje její ID. Jinak je generována automaticky.
 <!-- * `-e <km>`, `--extend <km>` zvětší polygon o zadaný počet kilometrů (**POZOR, zatím nefunguje**). -->
 * `--sufix <sufix>` přípona za jménem mapy.
 * `--no-split` zakáže dělení mapy na podsoubory - vhodné jen pro velmi malé oblasti.
@@ -63,7 +63,7 @@ Je-li skript spuštěn bez parametrů `python ./gmapmaker.py` vyžádá si od u�
 * `-q`, `--quiet` žádné výpisy na stdout.
 * `-l`, `--logging` vytvoří logovací soubor *gmapmaker.log*.
 * `-h`, `--help` zobrazí nápovědu.
-* `--en` přepne skript do anličtiny
+* `--en` přepne skript do angličtiny
 
 
 ## Seznam států
@@ -84,4 +84,4 @@ Hotové mapy najdete na stránce [https://www.garmin.vasam.cz](https://www.garmi
 
 **Pozor, tento skript používáte na vlastní riziko a já, jakožto autor nenesu žádnou odpovědnost za škody jim způsobené!**
 
-Chyby, připomínky, návrhy hlašte v diskuzi na adrese [http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/](http://www.geocaching.cz/topic/31987-osm-topo-mapa-pro-garmin/), emailem [osm@vasam.cz](mailto:osm@vasam.cz) nebo zde na GitHubu.
+Chyby, připomínky, návrhy hlaste v diskuzi na adrese zde na GitHubu nebo emailem [osm@vasam.cz](mailto:osm@vasam.cz).
