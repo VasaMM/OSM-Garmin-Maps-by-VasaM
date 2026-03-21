@@ -4,9 +4,9 @@
 #    0x02 trunk
 #    0x03 primary road
 #    0x04 secondary road
-#    0x05 tertiary 
+#    0x05 tertiary
 #    0x06 unclassified, motorway-trunk-primary links
-#    0x07 service road, street road 
+#    0x07 service road, street road
 #    0x08 footway
 #    0x09 cycleway
 #    0x0a path
@@ -41,7 +41,7 @@ junction=roundabout & (highway=primary | highway=primary_link) [0x0c road_class=
 junction=roundabout & (highway=secondary | highway=secondary_link) [0x0c road_class=2 road_speed=2 resolution 20]
 junction=roundabout & (highway=tertiary | highway=tertiary_link) [0x0c road_class=1 road_speed=1 resolution 21]
 junction=roundabout & highway=unclassified [0x0c road_class=1 road_speed=1 resolution 21]
-junction=roundabout & highway=* [0x0c road_class=0 road_speed=1 resolution 22] 
+junction=roundabout & highway=* [0x0c road_class=0 road_speed=1 resolution 22]
 
 # Overways
 bridge=* & bridge!=no & highway!=proposed & bridge!=proposed & railway!=proposed [0x10e0e level 1 continue]
@@ -85,7 +85,7 @@ cycleway=lane | ycleway=opposite_lane | cycleway=share_busway [0x10e0a level 2 c
 
 
 # Highway
-highway=* & access=no [0x10e10 level 2]
+highway=* & access=no & foot!=yes [0x10e10 level 2]
 highway=motorway                             { name '${name}: ${ref}' | '${name}' | '${ref}' } [0x01 road_class 4 road_speed 7 level 5]
 highway=trunk                                { name '${name}: ${ref}' | '${name}' | '${ref}' } [0x02 road_class 4 road_speed 6 level 5]
 highway=primary | highway=primary_link       { name '${name}: ${ref}' | '${name}' | '${ref}' } [0x03 road_class 3 road_speed 5 level 4]
