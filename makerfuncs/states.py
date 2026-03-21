@@ -457,7 +457,7 @@ STATES = {
 		),
 		'KR': State(
 			url    = 'south-korea',
-			nameCs = 'Jirni Korea',
+			nameCs = 'Jizni Korea',
 			nameEn = 'South Korea',
 			number = 7445,
 		),

@@ -19,7 +19,7 @@ with open('staty.csv', 'r', encoding='utf-8') as csvFile:
 		# Rozdelim na bunky
 		data = line.split(';')
 
-		# Odtsranim \n na konci
+		# Odstranim \n na konci
 		data[6] = data[6][0:-1]
 
 		# Zapisu
@@ -31,7 +31,7 @@ with open('staty.csv', 'r', encoding='utf-8') as csvFile:
 
 # Zpracuji stazene html soubory
 files = [
-	'europe', 
+	'europe',
 	'asia',
 	'africa',
 	'north-america',
@@ -65,7 +65,7 @@ for file in files:
 		# Projdu subregiony
 		for subregion in subregions:
 			state = subregion.find('a')
-			
+
 			# Doplnim adresu do tabulky
 			added = False
 			for code, data in codes.items():
@@ -123,7 +123,7 @@ with open('states.php', 'w') as out:
 			# number += 5
 			out.write("\t\t\t'%s' => '%s',\n" % (code, (states[area][code]['cs'])))
 			# out.write("\t\t\t'%s' => array('cs' => '%s', 'en' => '%s' ),\n" % (code, (states[area][code]['cs']), (states[area][code]['en'])))
-			
+
 
 		out.write("\t\t),\n")
 
@@ -171,7 +171,7 @@ with open('states.php', 'w') as out:
 # 			'OL' => 'Olomouc',
 # 			'MA' => 'Maroko',
 # 			'NY' => 'New York',
-# 			'Canary_islands' => 'Kanarské ostrovy',
+# 			'Canary_islands' => 'Kanárské ostrovy',
 # 		),
 # 	);
 # ?>
