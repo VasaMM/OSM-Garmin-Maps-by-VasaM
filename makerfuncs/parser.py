@@ -78,7 +78,7 @@ def _makeAreaObject(id, obj, options, continent = None):
 
 		state = _findState(obj.parent)
 		if state is not None:
-			obj.url = "http://download.geofabrik.de/%s/%s-latest.osm.pbf" % (state[1], state[0].url)
+			obj.url = "https://download.geofabrik.de/%s/%s-latest.osm.pbf" % (state[1], state[0].url)
 
 		elif obj.parent in USER_AREAS:
 			obj.url = USER_AREAS[obj.parent].url
@@ -89,7 +89,7 @@ def _makeAreaObject(id, obj, options, continent = None):
 		obj.mapDataName = options.pbf + obj.parent + '.osm.pbf'
 
 	else:
-		obj.url = "http://download.geofabrik.de/%s/%s-latest.osm.pbf" % (continent, obj.url)
+		obj.url = "https://download.geofabrik.de/%s/%s-latest.osm.pbf" % (continent, obj.url)
 		obj.mapDataName = options.pbf + id + '.osm.pbf'
 
 	if continent is not None:

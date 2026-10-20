@@ -13,8 +13,8 @@ mapedit*/*
 
 *__pycache__*
 
-mkgmap-r*/*
-splitter-r*/*
+mkgmap-r*
+splitter-r*
 userAreas/*
 osmconvert/*
 
@@ -22,3 +22,6 @@ osmconvert/*
 *.lnk
 *.log
 gmapmaker.config
+
+# Docker build data and outputs
+output/

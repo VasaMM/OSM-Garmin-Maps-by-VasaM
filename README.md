@@ -4,6 +4,11 @@
 [![Licence Creative Commons](https://i.creativecommons.org/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
 Toto dílo podléhá licenci [Creative Commons Uveďte původ 4.0 Mezinárodní License](https://creativecommons.org/licenses/by/4.0/).
 
+## Docker (macOS / Linux)
+
+Generátor lze spustit bez instalace Pythonu, Javy a dalších závislostí do systému.
+Viz [návod pro Docker](docker/README.md); výsledné mapy a cache se ukládají do `output/`.
+
 ## Požadavky
 * Java verze 8
 * Python verze 3 (testováno na 3.8.5)

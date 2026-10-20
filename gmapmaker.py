@@ -1,6 +1,7 @@
  #!/usr/bin/env python3
 
 from datetime import datetime
+import os
 
 from makerfuncs import *
 from makerfuncs.prints import say, error, end
@@ -11,8 +12,8 @@ from makerfuncs.Lang import Lang, _
 # Nastaveni a globalni promenne
 class Options:
 	def __init__(self):
-		self.JAVAMEM  = '-Xmx8g'   # Maximalni velikost RAM, kterou lze pouzit, viz https://stackoverflow.com/questions/14763079/what-are-the-xms-and-xmx-parameters-when-starting-jvm
-		self.MAX_JOBS = 8          # Maximalni pocet vlaken
+		self.JAVAMEM  = os.environ.get('JAVA_MEM', '-Xmx8g')   # Maximalni velikost RAM, kterou lze pouzit, viz https://stackoverflow.com/questions/14763079/what-are-the-xms-and-xmx-parameters-when-starting-jvm
+		self.MAX_JOBS = int(os.environ.get('MAX_JOBS', '8'))          # Maximalni pocet vlaken
 
 		self.VERSION = 104         # Verze generovane mapy
 

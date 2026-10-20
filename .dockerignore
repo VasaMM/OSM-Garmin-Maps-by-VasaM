@@ -1,0 +1,15 @@
+.git
+output
+maps
+pbf
+hgt
+sea
+bounds
+temp
+polygons
+userAreas
+venv*
+mkgmap-r*
+splitter-r*
+*.log
+__pycache__

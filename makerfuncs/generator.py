@@ -37,7 +37,7 @@ def run(program, o):
 def contours(o):
 	say(_('Generuji vrstevnice'), o)
 	# Zjistim, zda mam hotove vrstevnice
-	if ( o.split and not os.path.exists( o.pbf + o.area.id + '-SPLITTED-SRTM' ) ) or ( not o.split and not os.path.isfile(o.pbf + o.area.id + '-SRTM.osm.pbf') ):
+	if not os.path.isfile(o.pbf + o.area.id + '-SRTM.osm.pbf') and not (o.split and os.path.isdir(o.pbf + o.area.id + '-SPLITTED-SRTM')):
 		run('pyhgtmap \
 			--polygon=' + o.temp + 'polygon.poly \
 			-o ' + o.pbf + o.area.id + '-SRTM \
@@ -169,14 +169,14 @@ def _makeBat(name, o):
 def _makeZip(o):
 	say(_('Vytvarim zip soubor'), o)
 
-	os.chdir( o.img )
-	zip = zipfile.ZipFile( './' + o.area.id + o.sufix + '.zip', 'w' )
-	for dirname, subdirs, files in os.walk( './' + o.area.id + o.sufix ):
-		zip.write( dirname )
-		for filename in files:
-			zip.write( os.path.join( dirname, filename ) )
-	zip.close()
-	os.chdir( '..' )
+	# Do not change cwd: output may be nested (e.g. output/maps/).
+	root = os.path.join(o.img, o.area.id + o.sufix)
+	with zipfile.ZipFile(root + '.zip', 'w') as archive:
+		for dirname, subdirs, files in os.walk(root):
+			archive.write(dirname, os.path.relpath(dirname, o.img))
+			for filename in files:
+				path = os.path.join(dirname, filename)
+				archive.write(path, os.path.relpath(path, o.img))
 
 
 
@@ -222,7 +222,7 @@ def garmin(o):
 	run('java ' + o.JAVAMEM + ' -jar ./mkgmap-r' + str(o.mkgmap) + '/mkgmap.jar \
 		-c ./garmin-style/mkgmap-settings.conf \
 		--bounds=' + o.bounds + ' \
-		--precomp-sea=' + o.sea + 'sea/ \
+		--precomp-sea=' + (o.sea if os.path.isfile(o.sea) else o.sea + 'sea/') + ' \
 		--dem=' + o.hgt +'VIEW3/ \
 		--max-jobs=' + str( o.MAX_JOBS ) + ' \
 		--mapname="' + str(o.area.number).zfill(4) + '0001\" \

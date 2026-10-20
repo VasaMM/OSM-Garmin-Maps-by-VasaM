@@ -1,0 +1,7 @@
+# HGT inputs do not require the optional GDAL/GeoTIFF integration.
+pyhgtmap==4.1
+osmium>=4.0,<5
+pyclipper>=1.3,<2
+geojson>=3.1,<4
+# nptyping (pyhgtmap on Python 3.12) requires the NumPy 1.x API.
+numpy>=1.26,<2
