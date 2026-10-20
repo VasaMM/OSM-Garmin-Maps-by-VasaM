@@ -40,8 +40,8 @@ landuse=residential [0x10102 level 3]
 
 
 # Forests
-( landuse=forest | natural=wood ) & leaf_type=broadleaved [0x10f19 level 4] 	# Listnaty
-( landuse=forest | natural=wood ) & leaf_type=needleleaved [0x10f1a level 4]	# Jehlicnaty
+( landuse=forest | natural=wood ) & leaf_type=broadleaved [0x10f1a level 4] 	# Listnaty
+( landuse=forest | natural=wood ) & leaf_type=needleleaved [0x10f19 level 4]	# Jehlicnaty
 ( landuse=forest | natural=wood ) & leaf_type=mixed [0x10f18 level 4]
 landuse=forest | natural=wood [0x50 level 4]
 
